@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_margin_top"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <ImageView
+        android:id="@+id/people_image_view"
+        android:layout_width="50dp"
+        android:layout_height="86dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+
+    <TextView
+        android:id="@+id/people_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginLeft="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginRight="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
+        android:layout_marginTop="@dimen/holder_item_movie_textview_margin"
+        android:textSize="@dimen/holder_item_movie_title_size"
+        android:textStyle="bold"
+        android:maxLength="29"
+        android:textColor="@color/color_white"
+        app:layout_constraintStart_toEndOf="@+id/people_image_view"
+        app:layout_constraintTop_toTopOf="@+id/people_image_view" />
+
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/arrow_list_item_height"
+        android:layout_marginLeft="2dp"
+        android:tint="@color/color_white"
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/arrow_list_item_height"
+        android:background="@drawable/item_decoration"
+        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_view"
+        app:layout_constraintStart_toEndOf="@id/people_image_view"
+
+        />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="loading_widget_dimen">72dp</dimen>
+    <dimen name="actionbar_rule_width">6dp</dimen>
+    <dimen name="actionbar_rule_width_neg">-6dp</dimen>
+    <dimen name="tabbar_rule_width">1dp</dimen>
+    <dimen name="tababr_rule_width_neg">-1dp</dimen>
+    <dimen name="image_margin_horizontal">16dp</dimen>
+    <dimen name="activity_margin_top">5dp</dimen>
+    <dimen name="holder_header_item_height">140dp</dimen>
+    <dimen name="framelayout_height_size">320dp</dimen>
+    <dimen name="holder_botttom_height">40dp</dimen>
+    <dimen name="holder_item_movie_image_view_margin">2dp</dimen>
+    <dimen name="holder_item_movie_textview_margin">8dp</dimen>
+    <dimen name="holder_item_list_movie_margin">16dp</dimen>
+    <dimen name="segmented_group_height">25dp</dimen>
+    <dimen name="holder_movie_layout_padding">4dp</dimen>
+    <dimen name="holder_movie_layout_padding_start">16dp</dimen>
+    <dimen name="holder_movie_imageview_padding_bottom">10dp</dimen>
+    <dimen name="holder_movie_listview_padding_start">9dp</dimen>
+    <dimen name="holder_movie_facts_textview_padding_right">20dp</dimen>
+    <dimen name="holder_profile_movie_layout_padding_bottom">15dp</dimen>
+    <dimen name="holder_profile_movie_rate_margin_right">40dp</dimen>
+    <dimen name="movie_summary_image_size">96dp</dimen>
+    <dimen name="movie_summary_image_width">70dp</dimen>
+    <dimen name="arrow_icon_height">20dp</dimen>
+    <dimen name="arrow_list_item_height">35dp</dimen>
+    <dimen name="video_thumbnails_size">90dp</dimen>
+    <dimen name="holder_popular_movie_size">200dp</dimen>
+
+
+    <dimen name="holder_item_movie_textview_size">11sp</dimen>
+    <dimen name="holder_item_movie_title_size">14sp</dimen>
+    <dimen name="login_text_size">17sp</dimen>
+    <dimen name="toolbar_text_size">15sp</dimen>
+    <dimen name="holder_movie_facts_text_size">10sp</dimen>
+    <dimen name="holder_profile_movie_text_size">11sp</dimen>
+
+</resources>

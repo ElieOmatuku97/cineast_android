@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_black_app">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_images"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_black_app"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageButton
+        android:id="@+id/gallery_widget_close_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/image_margin_horizontal"
+        android:layout_marginEnd="@dimen/image_margin_horizontal"
+        android:background="@color/cosmos_trans_black"
+        android:visibility="visible"
+        android:padding="@dimen/activity_margin_top"
+        app:srcCompat="@drawable/ic_close_white_24dp"
+        app:layout_constraintTop_toTopOf="@+id/viewpager_images"
+        app:layout_constraintEnd_toEndOf="@+id/viewpager_images" />
+
+
+</android.support.constraint.ConstraintLayout>

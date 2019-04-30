@@ -1,0 +1,56 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_orange_app</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_orange_app</item>
+        <item name="colorControlNormal">@color/color_orange_app</item>
+        <item name="searchViewStyle">@style/AppTheme.SearchView</item>
+        <item name="preferenceTheme">@style/AppTheme.prefsTheme</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+    </style>
+
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+    </style>
+
+    <style name="AppThemeSplash" parent="@style/AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">@color/color_orange_app</item>
+        <item name="colorControlHighlight">@color/color_grey</item>
+        <item name="colorControlActivated">@color/color_orange_app</item>
+        <item name="android:textColorHint">@color/color_grey</item>
+        <item name="searchViewStyle">@style/AppTheme.SearchView</item>
+        <item name="preferenceTheme">@style/AppTheme.prefsTheme</item>
+    </style>
+
+    <style name="ToolbarTextStyle" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">@dimen/toolbar_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/color_white</item>
+    </style>
+
+    <style name="AppTheme.SearchView" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search_white_24dp</item>
+        <item name="closeIcon">@drawable/ic_close_white_24dp</item>
+        <item name="searchHintIcon">@drawable/ic_search_white_24dp</item>
+    </style>
+
+    <style name="AppTheme.prefsTheme" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="android:textColor">@color/color_orange_app</item>
+        <item name="colorAccent">@color/color_white</item>
+        <item name="colorSecondary">@color/color_white</item>
+    </style>
+
+</resources>

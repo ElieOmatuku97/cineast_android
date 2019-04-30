@@ -1,0 +1,58 @@
+<resources>
+    <!-- Client -->
+  <!--  <string name="app_name">RestApiPractice</string>  -->
+    <string name="rest_base_url">http://api.themoviedb.org/3/</string>
+    <string name="api_key">490e29e92ea126a6878a02b2779beb24</string>
+    <string name="image_small">http://image.tmdb.org/t/p/w342//</string>
+    <string name="image_header">http://image.tmdb.org/t/p/w1280//</string>
+    <string name="param_video_size">3.jpg</string>
+    <string name="authenticate_url">https://www.themoviedb.org/authenticate</string>
+
+
+    <!-- Toolbar title -->
+    <string name="nav_title_discover">Discover</string>
+    <string name="nav_title_search">Search</string>
+    <string name="nav_title_my_tmdb">My TMDb</string>
+
+    <string name="now_playing">Now Playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="movies">Movies</string>
+    <string name="trailers">Trailers</string>
+    <string name="plot_summary">Plot Summary</string>
+    <string name="rate">Rate</string>
+    <string name="overview">Overview</string>
+    <string name="people">People</string>
+    <string name="similar">Similar</string>
+    <string name="movie_facts">Movie Facts</string>
+    <string name="release">release</string>
+    <string name="runtime">runtime</string>
+    <string name="budget">budget</string>
+    <string name="revenue">revenue</string>
+    <string name="known_for">Known for</string>
+    <string name="biography">Biography</string>
+    <string name="cast">Cast</string>
+    <string name="crew">Crew</string>
+
+    <string name="popular_people">Popular People</string>
+    <string name="see_all">See all</string>
+
+    <string name="share_label">Share</string>
+    <string name="share_title">Share via</string>
+
+    <string name="not_logged_in">Not Logged in</string>
+    <string name="login">Login</string>
+
+    <string name="search_label">Search</string>
+    <string name="search_hint">Search</string>
+
+
+    <string name="settings_favorites">Favorites</string>
+    <string name="settings_watchlist">Watchlist</string>
+    <string name="settings_rated">Rated</string>
+    <string name="settings_edit">Edit</string>
+    <string name="settings_logout">Logout</string>
+    <string name="settings_login">Login</string>
+    <string name="settings_tmdb">TmdbAccount</string>
+</resources>

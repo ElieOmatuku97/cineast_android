@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/people_image_view"
+        android:layout_width="@dimen/movie_summary_image_width"
+        android:layout_height="@dimen/movie_summary_image_size"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/people_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginLeft="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginRight="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginStart="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginTop="@dimen/holder_item_movie_textview_margin"
+        android:textStyle="bold"
+        android:textColor="@color/color_white"
+        android:maxLines="1"
+        android:maxLength="11"
+        android:ellipsize="end"
+        android:textSize="@dimen/holder_item_movie_textview_size"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/people_image_view" />
+
+    <TextView
+        android:id="@+id/people_job_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginLeft="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginRight="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginStart="@dimen/holder_item_movie_textview_margin"
+        android:textSize="@dimen/holder_item_movie_textview_size"
+        android:textColor="@color/color_grey"
+        android:visibility="gone"
+        android:maxLines="1"
+        android:maxLength="11"
+        android:ellipsize="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/people_name_view" />
+</android.support.constraint.ConstraintLayout>

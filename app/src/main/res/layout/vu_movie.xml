@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_actionbar"
+                android:minHeight="?android:attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:titleTextAppearance="@style/ToolbarTextStyle"
+                app:titleTextColor="@color/color_orange_app" />
+
+
+        </android.support.design.widget.AppBarLayout>
+
+       <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           android:background="@color/color_black_app"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+           <android.support.v7.widget.RecyclerView
+               android:id="@+id/list_view_container"
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_marginTop="@dimen/activity_margin_top"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               />
+
+           <FrameLayout
+               android:id="@+id/fragment_container"
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:background="@color/color_black_app"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/list_view_container"
+               app:layout_constraintBottom_toBottomOf="parent"
+              />
+
+       </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
+
+
+
+
+
+
+
+
+
