@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "elieomatuku.restapipractice"
+        applicationId "elieomatuku.cineast_android"
         minSdkVersion 17
         targetSdkVersion 28
         versionCode 1

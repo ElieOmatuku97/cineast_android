@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.support.v4.view.ViewPager
@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
 import com.eftimoff.viewpagertransformers.TabletTransformer
-import elieomatuku.restapipractice.adapter.MovieGalleryPagerAdapter
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.Poster
+import elieomatuku.cineast_android.adapter.MovieGalleryPagerAdapter
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.Poster
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.fragment_image_gallery.view.*
 

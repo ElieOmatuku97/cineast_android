@@ -1,7 +1,7 @@
-package elieomatuku.restapipractice
+package elieomatuku.cineast_android
 
-import elieomatuku.restapipractice.business.business.model.data.Genre
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.business.business.model.data.Genre
+import elieomatuku.cineast_android.utils.UiUtils
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
