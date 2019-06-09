@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.support.v7.widget.Toolbar

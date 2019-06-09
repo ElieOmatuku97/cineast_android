@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
+import elieomatuku.cineast_android.R
 import io.chthonic.mythos.mvp.FragmentWrapper
 
 

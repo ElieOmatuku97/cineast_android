@@ -1,11 +1,11 @@
-package elieomatuku.restapipractice.viewholder
+package elieomatuku.cineast_android.viewholder
 
 import android.support.v7.widget.AppCompatRadioButton
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
+import elieomatuku.cineast_android.R
 import kotlinx.android.synthetic.main.holder_menu_people.view.*
 
 class MenuPeopleHolder (itemView: View): RecyclerView.ViewHolder(itemView) {

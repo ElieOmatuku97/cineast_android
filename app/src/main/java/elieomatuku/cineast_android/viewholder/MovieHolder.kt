@@ -1,14 +1,14 @@
-package elieomatuku.restapipractice.viewholder
+package elieomatuku.cineast_android.viewholder
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.adapter.MovieAdapter
-import elieomatuku.restapipractice.business.business.model.data.Movie
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.adapter.MovieAdapter
+import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
 

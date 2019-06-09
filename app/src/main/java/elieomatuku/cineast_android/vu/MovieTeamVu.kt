@@ -1,13 +1,13 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.adapter.PeopleAdapter
-import elieomatuku.restapipractice.business.business.model.data.Cast
-import elieomatuku.restapipractice.business.business.model.data.Crew
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.adapter.PeopleAdapter
+import elieomatuku.cineast_android.business.business.model.data.Cast
+import elieomatuku.cineast_android.business.business.model.data.Crew
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

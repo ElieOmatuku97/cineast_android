@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.support.v7.widget.LinearLayoutManager
@@ -6,10 +6,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.adapter.SimilarAdapter
-import elieomatuku.restapipractice.business.business.model.data.Movie
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.adapter.SimilarAdapter
+import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

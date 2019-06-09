@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.support.design.widget.BottomNavigationView
@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.adapter.HomeFragmentPagerAdapter
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.adapter.HomeFragmentPagerAdapter
+import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.vu_main.view.*
 

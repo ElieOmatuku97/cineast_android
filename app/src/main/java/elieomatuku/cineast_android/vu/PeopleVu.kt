@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.graphics.Canvas
@@ -15,14 +15,14 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.activity.PeopleActivity
-import elieomatuku.restapipractice.adapter.PeopleItemAdapter
-import elieomatuku.restapipractice.business.business.model.data.*
-import elieomatuku.restapipractice.fragment.MovieGalleryFragment
-import elieomatuku.restapipractice.fragment.OverviewPeopleFragment
-import elieomatuku.restapipractice.presenter.MovieGalleryPresenter
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.PeopleActivity
+import elieomatuku.cineast_android.adapter.PeopleItemAdapter
+import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.fragment.MovieGalleryFragment
+import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
+import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.viewholder.itemHolder
+package elieomatuku.cineast_android.viewholder.itemHolder
 
 
 import android.support.v7.app.AppCompatActivity
@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.Genre
-import elieomatuku.restapipractice.business.business.model.data.Movie
-import elieomatuku.restapipractice.fragment.WebviewFragment
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.Genre
+import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_movie.view.*
 import android.text.Html

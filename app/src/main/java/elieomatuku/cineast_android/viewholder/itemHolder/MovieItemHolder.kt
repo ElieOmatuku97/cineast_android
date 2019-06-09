@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.viewholder.itemHolder
+package elieomatuku.cineast_android.viewholder.itemHolder
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_item_movie.view.*
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 

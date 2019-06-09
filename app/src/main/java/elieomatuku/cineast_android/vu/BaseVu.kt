@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.content.Intent
@@ -8,10 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
-import elieomatuku.restapipractice.activity.BaseActivity
-import elieomatuku.restapipractice.activity.MovieActivity
-import elieomatuku.restapipractice.activity.PeopleActivity
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.activity.BaseActivity
+import elieomatuku.cineast_android.activity.MovieActivity
+import elieomatuku.cineast_android.activity.PeopleActivity
+import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.Vu
 import kotlinx.android.synthetic.main.layout_loading.view.*

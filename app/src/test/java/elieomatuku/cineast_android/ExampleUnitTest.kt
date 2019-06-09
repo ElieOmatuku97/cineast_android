@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice
+package elieomatuku.cineast_android
 
 import org.junit.Test
 

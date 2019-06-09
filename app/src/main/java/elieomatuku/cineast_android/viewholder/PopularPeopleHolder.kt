@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.viewholder
+package elieomatuku.cineast_android.viewholder
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,12 +8,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.activity.ItemListActivity
-import elieomatuku.restapipractice.adapter.PopularPeopleItemAdapter
-import elieomatuku.restapipractice.business.business.model.data.People
-import elieomatuku.restapipractice.business.business.model.data.Person
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
+import elieomatuku.cineast_android.business.business.model.data.People
+import elieomatuku.cineast_android.business.business.model.data.Person
+import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 

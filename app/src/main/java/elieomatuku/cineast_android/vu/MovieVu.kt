@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.vu
+package elieomatuku.cineast_android.vu
 
 import android.app.Activity
 import android.graphics.Canvas
@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.*
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.adapter.MovieItemAdapter
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.adapter.MovieItemAdapter
 import kotlinx.android.synthetic.main.vu_movie.view.*
 import android.support.v7.widget.RecyclerView
 import android.graphics.drawable.Drawable
@@ -16,11 +16,11 @@ import android.os.Parcelable
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.res.ResourcesCompat
-import elieomatuku.restapipractice.fragment.MovieGalleryFragment
-import elieomatuku.restapipractice.fragment.OverviewFragment
-import elieomatuku.restapipractice.activity.MovieActivity
-import elieomatuku.restapipractice.business.business.model.data.*
-import elieomatuku.restapipractice.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.fragment.MovieGalleryFragment
+import elieomatuku.cineast_android.fragment.OverviewFragment
+import elieomatuku.cineast_android.activity.MovieActivity
+import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
