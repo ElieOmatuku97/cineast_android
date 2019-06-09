@@ -1,7 +1,7 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
-import elieomatuku.restapipractice.vu.MoviePosterVu
+import elieomatuku.cineast_android.vu.MoviePosterVu
 
 
 class  MoviePosterPresenter: BasePresenter<MoviePosterVu>(){

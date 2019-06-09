@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.restapipractice.business.business.model.data.Poster
-import elieomatuku.restapipractice.vu.MovieGalleryVu
+import elieomatuku.cineast_android.business.business.model.data.Poster
+import elieomatuku.cineast_android.vu.MovieGalleryVu
 
 
 class MovieGalleryPresenter: BasePresenter<MovieGalleryVu> () {

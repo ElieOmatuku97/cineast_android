@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.activity
+package elieomatuku.cineast_android.activity
 
 
 
@@ -8,12 +8,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.Person
-import elieomatuku.restapipractice.presenter.PeoplePresenter
-import elieomatuku.restapipractice.utils.MovieUtils
-import elieomatuku.restapipractice.utils.UiUtils
-import elieomatuku.restapipractice.vu.PeopleVu
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.Person
+import elieomatuku.cineast_android.presenter.PeoplePresenter
+import elieomatuku.cineast_android.utils.MovieUtils
+import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.vu.PeopleVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import io.reactivex.android.schedulers.AndroidSchedulers

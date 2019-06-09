@@ -1,11 +1,11 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.restapipractice.business.business.model.data.Movie
-import elieomatuku.restapipractice.presenter.PresenterCacheLazy
-import elieomatuku.restapipractice.presenter.SimilarMoviePresenter
-import elieomatuku.restapipractice.vu.SimilarMovieVu
+import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.presenter.SimilarMoviePresenter
+import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 import java.util.ArrayList

@@ -1,12 +1,12 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.Widget
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.Widget
 
 class ResultsFragment(): Fragment() {
     companion object {

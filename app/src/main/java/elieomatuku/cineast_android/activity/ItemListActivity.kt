@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.activity
+package elieomatuku.cineast_android.activity
 
 import android.os.Bundle
-import elieomatuku.restapipractice.presenter.ItemListPresenter
-import elieomatuku.restapipractice.utils.UiUtils
-import elieomatuku.restapipractice.vu.ItemListVu
+import elieomatuku.cineast_android.presenter.ItemListPresenter
+import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.vu.ItemListVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 

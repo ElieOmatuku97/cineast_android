@@ -1,6 +1,6 @@
-package elieomatuku.restapipractice.business.business.rest
+package elieomatuku.cineast_android.business.business.rest
 
-import elieomatuku.restapipractice.business.business.model.data.AccessToken
+import elieomatuku.cineast_android.business.business.model.data.AccessToken
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

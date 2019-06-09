@@ -1,11 +1,11 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.restapipractice.business.business.model.data.PeopleCast
-import elieomatuku.restapipractice.presenter.PeopleCastPresenter
-import elieomatuku.restapipractice.presenter.PresenterCacheLazy
-import elieomatuku.restapipractice.vu.PeopleCastVu
+import elieomatuku.cineast_android.business.business.model.data.PeopleCast
+import elieomatuku.cineast_android.presenter.PeopleCastPresenter
+import elieomatuku.cineast_android.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.vu.PeopleCastVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

@@ -1,12 +1,12 @@
-package elieomatuku.restapipractice.activity
+package elieomatuku.cineast_android.activity
 
 
 
 import android.os.Bundle
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.presenter.MainPresenter
-import elieomatuku.restapipractice.utils.UiUtils
-import elieomatuku.restapipractice.vu.MainVu
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presenter.MainPresenter
+import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.vu.MainVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import timber.log.Timber

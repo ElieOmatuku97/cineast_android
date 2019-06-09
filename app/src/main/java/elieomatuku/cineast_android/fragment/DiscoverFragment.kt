@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
 
-import elieomatuku.restapipractice.presenter.DiscoverPresenter
-import elieomatuku.restapipractice.presenter.PresenterCacheLazy
-import elieomatuku.restapipractice.vu.DiscoverVu
+import elieomatuku.cineast_android.presenter.DiscoverPresenter
+import elieomatuku.cineast_android.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.vu.DiscoverVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

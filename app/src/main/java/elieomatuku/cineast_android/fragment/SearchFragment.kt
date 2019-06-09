@@ -1,17 +1,17 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
 
 import android.app.SearchManager
 import android.content.Context
-import elieomatuku.restapipractice.presenter.PresenterCacheLazy
-import elieomatuku.restapipractice.presenter.SearchPresenter
-import elieomatuku.restapipractice.vu.SearchVu
+import elieomatuku.cineast_android.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.presenter.SearchPresenter
+import elieomatuku.cineast_android.vu.SearchVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 import android.os.Bundle
 import android.support.v7.widget.SearchView
 import android.view.*
-import elieomatuku.restapipractice.R
+import elieomatuku.cineast_android.R
 
 
 class SearchFragment: MVPFragment<SearchPresenter, SearchVu>() {

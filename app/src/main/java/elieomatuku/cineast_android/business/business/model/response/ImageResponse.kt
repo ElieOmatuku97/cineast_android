@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.business.business.model.response
+package elieomatuku.cineast_android.business.business.model.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import elieomatuku.restapipractice.business.business.model.data.Backdrop
-import elieomatuku.restapipractice.business.business.model.data.Poster
+import elieomatuku.cineast_android.business.business.model.data.Backdrop
+import elieomatuku.cineast_android.business.business.model.data.Poster
 
 class ImageResponse {
     @SerializedName("backdrops")

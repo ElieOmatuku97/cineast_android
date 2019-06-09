@@ -1,6 +1,6 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 
-import elieomatuku.restapipractice.vu.MyTMBDVu
+import elieomatuku.cineast_android.vu.MyTMBDVu
 
 class MyTMBDPresenter: BasePresenter<MyTMBDVu>()

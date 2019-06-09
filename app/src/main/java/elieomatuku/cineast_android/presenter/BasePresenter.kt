@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import io.chthonic.mythos.mvp.Presenter

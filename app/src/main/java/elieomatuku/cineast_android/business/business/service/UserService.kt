@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.business.business.service
+package elieomatuku.cineast_android.business.business.service
 
 import android.app.Application
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.callback.AsyncResponse
-import elieomatuku.restapipractice.business.business.model.data.AccessToken
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.business.model.data.AccessToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
-import elieomatuku.restapipractice.presenter.MoviePosterPresenter
-import elieomatuku.restapipractice.presenter.PresenterCacheLazy
-import elieomatuku.restapipractice.vu.MoviePosterVu
+import elieomatuku.cineast_android.presenter.MoviePosterPresenter
+import elieomatuku.cineast_android.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.vu.MoviePosterVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

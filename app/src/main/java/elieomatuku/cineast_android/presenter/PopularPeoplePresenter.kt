@@ -1,14 +1,14 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.restapipractice.App
-import elieomatuku.restapipractice.business.business.callback.AsyncResponse
-import elieomatuku.restapipractice.business.business.service.DiscoverService
-import elieomatuku.restapipractice.business.business.model.data.People
-import elieomatuku.restapipractice.business.business.model.data.Person
-import elieomatuku.restapipractice.business.business.model.response.PeopleResponse
-import elieomatuku.restapipractice.vu.PopularPeopleVu
+import elieomatuku.cineast_android.App
+import elieomatuku.cineast_android.business.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.business.service.DiscoverService
+import elieomatuku.cineast_android.business.business.model.data.People
+import elieomatuku.cineast_android.business.business.model.data.Person
+import elieomatuku.cineast_android.business.business.model.response.PeopleResponse
+import elieomatuku.cineast_android.vu.PopularPeopleVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.business.business.callback
+package elieomatuku.cineast_android.business.business.callback
 
 interface AsyncResponse<T> {
     fun onSuccess(result: T?)

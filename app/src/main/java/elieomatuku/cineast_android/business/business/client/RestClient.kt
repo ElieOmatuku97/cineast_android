@@ -1,7 +1,7 @@
-package elieomatuku.restapipractice.business.business.client
+package elieomatuku.cineast_android.business.business.client
 
 import android.content.res.Resources
-import elieomatuku.restapipractice.R
+import elieomatuku.cineast_android.R
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

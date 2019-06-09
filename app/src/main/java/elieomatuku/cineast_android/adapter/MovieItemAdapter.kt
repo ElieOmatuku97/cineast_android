@@ -1,14 +1,14 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.restapipractice.fragment.OverviewFragment
-import elieomatuku.restapipractice.fragment.MovieTeamFragment
-import elieomatuku.restapipractice.fragment.SimilarMovieFragment
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.*
-import elieomatuku.restapipractice.viewholder.itemHolder.*
+import elieomatuku.cineast_android.fragment.OverviewFragment
+import elieomatuku.cineast_android.fragment.MovieTeamFragment
+import elieomatuku.cineast_android.fragment.SimilarMovieFragment
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.viewholder.itemHolder.*
 import io.reactivex.subjects.PublishSubject
 
 class MovieItemAdapter(private val movieInfo: MovieInfo,

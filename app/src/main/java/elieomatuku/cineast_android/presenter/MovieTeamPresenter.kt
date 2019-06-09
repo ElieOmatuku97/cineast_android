@@ -1,11 +1,11 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
-import elieomatuku.restapipractice.business.business.model.data.Cast
-import elieomatuku.restapipractice.business.business.model.data.Crew
-import elieomatuku.restapipractice.business.business.model.data.Person
-import elieomatuku.restapipractice.fragment.MovieTeamFragment
-import elieomatuku.restapipractice.vu.MovieTeamVu
+import elieomatuku.cineast_android.business.business.model.data.Cast
+import elieomatuku.cineast_android.business.business.model.data.Crew
+import elieomatuku.cineast_android.business.business.model.data.Person
+import elieomatuku.cineast_android.fragment.MovieTeamFragment
+import elieomatuku.cineast_android.vu.MovieTeamVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 

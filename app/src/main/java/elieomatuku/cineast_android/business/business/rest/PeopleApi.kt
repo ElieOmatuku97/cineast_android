@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.business.business.rest
+package elieomatuku.cineast_android.business.business.rest
 
-import elieomatuku.restapipractice.business.business.model.data.PeopleDetails
-import elieomatuku.restapipractice.business.business.model.response.ImageResponse
-import elieomatuku.restapipractice.business.business.model.response.PeopleCreditsResponse
-import elieomatuku.restapipractice.business.business.model.response.PeopleResponse
+import elieomatuku.cineast_android.business.business.model.data.PeopleDetails
+import elieomatuku.cineast_android.business.business.model.response.ImageResponse
+import elieomatuku.cineast_android.business.business.model.response.PeopleCreditsResponse
+import elieomatuku.cineast_android.business.business.model.response.PeopleResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

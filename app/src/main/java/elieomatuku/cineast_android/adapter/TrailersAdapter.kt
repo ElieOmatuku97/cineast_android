@@ -1,8 +1,8 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.restapipractice.viewholder.itemHolder.TrailerItemHolder
+import elieomatuku.cineast_android.viewholder.itemHolder.TrailerItemHolder
 
 class TrailersAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var trailers: List<String> = listOf()

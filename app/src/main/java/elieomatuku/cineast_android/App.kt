@@ -1,13 +1,13 @@
-package elieomatuku.restapipractice
+package elieomatuku.cineast_android
 
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
 import com.squareup.leakcanary.LeakCanary
-import elieomatuku.restapipractice.business.business.service.RestService
-import elieomatuku.restapipractice.business.business.service.DiscoverService
-import elieomatuku.restapipractice.business.business.client.RestClient
-import elieomatuku.restapipractice.business.business.service.UserService
+import elieomatuku.cineast_android.business.business.service.RestService
+import elieomatuku.cineast_android.business.business.service.DiscoverService
+import elieomatuku.cineast_android.business.business.client.RestClient
+import elieomatuku.cineast_android.business.business.service.UserService
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance

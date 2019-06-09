@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.restapipractice.business.business.model.data.Cast
-import elieomatuku.restapipractice.viewholder.itemHolder.CastItemHolder
+import elieomatuku.cineast_android.business.business.model.data.Cast
+import elieomatuku.cineast_android.viewholder.itemHolder.CastItemHolder
 import io.reactivex.subjects.PublishSubject
 
 class CastAdapter(private val cast: List<Cast>, private val onCastClickPublisher: PublishSubject<Cast>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {

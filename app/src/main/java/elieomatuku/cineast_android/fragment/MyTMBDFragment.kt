@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
 
 
@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
-import elieomatuku.restapipractice.App
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.callback.AsyncResponse
-import elieomatuku.restapipractice.business.business.model.data.AccessToken
-import elieomatuku.restapipractice.business.business.service.UserService
-import elieomatuku.restapipractice.utils.UiUtils
+import elieomatuku.cineast_android.App
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.business.model.data.AccessToken
+import elieomatuku.cineast_android.business.business.service.UserService
+import elieomatuku.cineast_android.utils.UiUtils
 import org.kodein.di.generic.instance
 import timber.log.Timber
 

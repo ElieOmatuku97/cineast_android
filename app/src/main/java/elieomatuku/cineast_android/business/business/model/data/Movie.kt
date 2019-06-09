@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.business.business.model.data
+package elieomatuku.cineast_android.business.business.model.data
 
 import kotlinx.android.parcel.Parcelize
 

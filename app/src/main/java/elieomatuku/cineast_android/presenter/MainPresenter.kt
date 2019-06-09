@@ -1,7 +1,7 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 
-import elieomatuku.restapipractice.vu.MainVu
+import elieomatuku.cineast_android.vu.MainVu
 
 
 class MainPresenter : BasePresenter<MainVu>()

@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
-import elieomatuku.restapipractice.fragment.MoviePosterFragment
-import elieomatuku.restapipractice.business.business.model.data.Poster
-import elieomatuku.restapipractice.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.fragment.MoviePosterFragment
+import elieomatuku.cineast_android.business.business.model.data.Poster
+import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
 
 
 class MovieGalleryPagerAdapter(fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager) {

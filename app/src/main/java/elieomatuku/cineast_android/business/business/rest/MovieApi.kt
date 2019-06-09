@@ -1,8 +1,8 @@
-package elieomatuku.restapipractice.business.business.rest
+package elieomatuku.cineast_android.business.business.rest
 
-import elieomatuku.restapipractice.business.business.model.data.Movie
-import elieomatuku.restapipractice.business.business.model.data.MovieDetails
-import elieomatuku.restapipractice.business.business.model.response.*
+import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.business.business.model.data.MovieDetails
+import elieomatuku.cineast_android.business.business.model.response.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

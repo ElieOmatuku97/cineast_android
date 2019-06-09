@@ -1,8 +1,8 @@
-package elieomatuku.restapipractice.activity
+package elieomatuku.cineast_android.activity
 
 import android.os.Bundle
 import android.support.v4.app.LoaderManager
-import elieomatuku.restapipractice.vu.ToolbarVu
+import elieomatuku.cineast_android.vu.ToolbarVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.Presenter
 

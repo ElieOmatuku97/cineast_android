@@ -1,8 +1,8 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
-import elieomatuku.restapipractice.presenter.PopularMoviesPresenter
-import elieomatuku.restapipractice.presenter.PresenterCacheLazy
-import elieomatuku.restapipractice.vu.PopularMoviesVu
+import elieomatuku.cineast_android.presenter.PopularMoviesPresenter
+import elieomatuku.cineast_android.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.vu.PopularMoviesVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

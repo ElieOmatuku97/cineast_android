@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.restapipractice.business.business.model.data.PeopleCast
-import elieomatuku.restapipractice.viewholder.itemHolder.MovieItemHolder
+import elieomatuku.cineast_android.business.business.model.data.PeopleCast
+import elieomatuku.cineast_android.viewholder.itemHolder.MovieItemHolder
 import io.reactivex.subjects.PublishSubject
 
 class PeopleCastAdapter(private val peopleCast: List<PeopleCast> ,  private val onItemClickPublisher: PublishSubject<Int> ): RecyclerView.Adapter<RecyclerView.ViewHolder>(){

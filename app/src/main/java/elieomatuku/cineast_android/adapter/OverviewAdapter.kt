@@ -1,15 +1,15 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.Movie
-import elieomatuku.restapipractice.business.business.model.data.MovieDetails
-import elieomatuku.restapipractice.business.business.model.data.Trailer
-import elieomatuku.restapipractice.viewholder.SummaryHolder
-import elieomatuku.restapipractice.viewholder.itemHolder.BottomHolder
-import elieomatuku.restapipractice.viewholder.itemHolder.MovieFactsHolder
-import elieomatuku.restapipractice.viewholder.itemHolder.TrailersHolder
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.business.business.model.data.MovieDetails
+import elieomatuku.cineast_android.business.business.model.data.Trailer
+import elieomatuku.cineast_android.viewholder.SummaryHolder
+import elieomatuku.cineast_android.viewholder.itemHolder.BottomHolder
+import elieomatuku.cineast_android.viewholder.itemHolder.MovieFactsHolder
+import elieomatuku.cineast_android.viewholder.itemHolder.TrailersHolder
 
 class OverviewAdapter(private val movie: Movie, private val trailers: List<Trailer>, private val movieDetails: MovieDetails)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

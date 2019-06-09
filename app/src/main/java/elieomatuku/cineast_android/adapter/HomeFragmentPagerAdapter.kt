@@ -1,12 +1,12 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import elieomatuku.restapipractice.fragment.DiscoverFragment
-import elieomatuku.restapipractice.fragment.MyTMBDFragment
-import elieomatuku.restapipractice.fragment.SearchFragment
-import elieomatuku.restapipractice.R
+import elieomatuku.cineast_android.fragment.DiscoverFragment
+import elieomatuku.cineast_android.fragment.MyTMBDFragment
+import elieomatuku.cineast_android.fragment.SearchFragment
+import elieomatuku.cineast_android.R
 
 class HomeFragmentPagerAdapter(fm: FragmentManager?): FragmentPagerAdapter(fm) {
 

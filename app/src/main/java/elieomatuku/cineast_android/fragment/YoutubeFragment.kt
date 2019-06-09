@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.fragment
+package elieomatuku.cineast_android.fragment
 
 import android.support.v4.app.Fragment
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.pierfrancescosoffritti.youtubeplayer.player.AbstractYouTubePlayerList
 import com.pierfrancescosoffritti.youtubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayer
 import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView
-import elieomatuku.restapipractice.R
+import elieomatuku.cineast_android.R
 import kotlinx.android.synthetic.main.widget_youtube.view.*
 
 

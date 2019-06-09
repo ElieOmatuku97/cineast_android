@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.business.business.model.data
+package elieomatuku.cineast_android.business.business.model.data
 
 abstract class Person  : Widget() {
     abstract val id: Int?

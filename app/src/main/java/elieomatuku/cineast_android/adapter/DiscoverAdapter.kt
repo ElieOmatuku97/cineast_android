@@ -1,12 +1,12 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.*
-import elieomatuku.restapipractice.utils.UiUtils
-import elieomatuku.restapipractice.viewholder.*
-import elieomatuku.restapipractice.viewholder.itemHolder.LoginViewHolder
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.viewholder.*
+import elieomatuku.cineast_android.viewholder.itemHolder.LoginViewHolder
 import io.reactivex.subjects.PublishSubject
 
 class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, private val onPersonClickPublisher: PublishSubject<Person>,

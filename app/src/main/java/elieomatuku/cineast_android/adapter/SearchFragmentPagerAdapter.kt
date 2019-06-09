@@ -1,12 +1,12 @@
-package elieomatuku.restapipractice.adapter
+package elieomatuku.cineast_android.adapter
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.Widget
-import elieomatuku.restapipractice.fragment.PopularMoviesFragment
-import elieomatuku.restapipractice.fragment.PopularPeopleFragment
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.Widget
+import elieomatuku.cineast_android.fragment.PopularMoviesFragment
+import elieomatuku.cineast_android.fragment.PopularPeopleFragment
 import timber.log.Timber
 
 

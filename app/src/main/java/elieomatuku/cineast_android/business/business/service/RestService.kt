@@ -1,9 +1,9 @@
-package elieomatuku.restapipractice.business.business.service
+package elieomatuku.cineast_android.business.business.service
 
-import elieomatuku.restapipractice.business.business.client.RestClient
-import elieomatuku.restapipractice.business.business.rest.AuthenticationApi
-import elieomatuku.restapipractice.business.business.rest.MovieApi
-import elieomatuku.restapipractice.business.business.rest.PeopleApi
+import elieomatuku.cineast_android.business.business.client.RestClient
+import elieomatuku.cineast_android.business.business.rest.AuthenticationApi
+import elieomatuku.cineast_android.business.business.rest.MovieApi
+import elieomatuku.cineast_android.business.business.rest.PeopleApi
 
 
 class RestService(private val restClient: RestClient) {
