@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.viewholder.itemHolder
+package elieomatuku.cineast_android.viewholder.itemHolder
 
 import android.support.v7.widget.AppCompatRadioButton
 import android.support.v7.widget.RecyclerView
@@ -6,10 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.Movie
-import elieomatuku.restapipractice.business.business.model.data.MovieDetails
-import elieomatuku.restapipractice.business.business.model.data.Trailer
+import elieomatuku.cineast_android.R
 import kotlinx.android.synthetic.main.holder_menu_movie.view.*
 
 

@@ -1,15 +1,15 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import elieomatuku.restapipractice.App
-import elieomatuku.restapipractice.fragment.SimilarMovieFragment
-import elieomatuku.restapipractice.business.business.callback.AsyncResponse
-import elieomatuku.restapipractice.business.business.model.response.GenreResponse
-import elieomatuku.restapipractice.business.business.service.DiscoverService
-import elieomatuku.restapipractice.business.business.model.data.*
-import elieomatuku.restapipractice.vu.SimilarMovieVu
+import elieomatuku.cineast_android.App
+import elieomatuku.cineast_android.fragment.SimilarMovieFragment
+import elieomatuku.cineast_android.business.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.business.model.response.GenreResponse
+import elieomatuku.cineast_android.business.business.service.DiscoverService
+import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import java.util.ArrayList

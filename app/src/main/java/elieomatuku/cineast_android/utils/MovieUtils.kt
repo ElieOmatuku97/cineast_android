@@ -1,7 +1,6 @@
-package elieomatuku.restapipractice.utils
+package elieomatuku.cineast_android.utils
 
 import android.net.Uri
-import elieomatuku.restapipractice.business.business.model.data.Movie
 
 object MovieUtils {
 

@@ -1,8 +1,6 @@
-package elieomatuku.restapipractice.presenter
+package elieomatuku.cineast_android.presenter
 
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import io.chthonic.mythos.mvp.Presenter
 import io.chthonic.mythos.mvp.PresenterCache
 

@@ -1,4 +1,4 @@
-package elieomatuku.restapipractice.utils
+package elieomatuku.cineast_android.utils
 
 import android.annotation.TargetApi
 import android.app.Activity
@@ -11,7 +11,6 @@ import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
@@ -21,16 +20,14 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.widget.PopupWindow
-import elieomatuku.restapipractice.R
-import elieomatuku.restapipractice.business.business.model.data.*
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.business.model.data.*
 import android.view.MenuItem
 import android.webkit.*
-import elieomatuku.restapipractice.activity.ItemListActivity
-import elieomatuku.restapipractice.adapter.DiscoverAdapter
-import elieomatuku.restapipractice.fragment.WebviewFragment
-import elieomatuku.restapipractice.presenter.DiscoverPresenter
-import io.chthonic.mythos.mvp.Presenter
-import io.chthonic.mythos.mvp.PresenterCache
+import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.adapter.DiscoverAdapter
+import elieomatuku.cineast_android.fragment.WebviewFragment
+import elieomatuku.cineast_android.presenter.DiscoverPresenter
 
 
 object  UiUtils {
