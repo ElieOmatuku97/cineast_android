@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="elieomatuku.restapipractice">
+    package="elieomatuku.cineast_android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".App"
+        android:name="elieomatuku.cineast_android.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_descriptor">
 
-        <activity android:name=".activity.MainActivity"
+        <activity android:name="elieomatuku.cineast_android.activity.MainActivity"
             android:theme="@style/AppThemeSplash"
             >
 
@@ -31,9 +31,9 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MovieActivity" />
-        <activity android:name=".activity.PeopleActivity" />
-        <activity android:name=".activity.ItemListActivity"/>
+        <activity android:name="elieomatuku.cineast_android.activity.MovieActivity" />
+        <activity android:name="elieomatuku.cineast_android.activity.PeopleActivity" />
+        <activity android:name="elieomatuku.cineast_android.activity.ItemListActivity"/>
     </application>
 
 </manifest>
