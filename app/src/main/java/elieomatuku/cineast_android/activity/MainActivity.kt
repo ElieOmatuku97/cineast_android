@@ -9,6 +9,7 @@ import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.vu.MainVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
+import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
 
@@ -17,6 +18,14 @@ class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){
         private val MVP_UID by lazy {
             MainActivity.hashCode()
         }
+    }
+
+    val rxSubs : io.reactivex.disposables.CompositeDisposable by lazy {
+        io.reactivex.disposables.CompositeDisposable()
+    }
+
+    val sessionPublisher: PublishSubject<String> by lazy {
+        PublishSubject.create<String>()
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<MainPresenter, MainVu> {
@@ -36,4 +45,10 @@ class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){
         }
         mvpDispatcher.vu?.toolbar?.title = this.getString(R.string.nav_title_discover)
     }
+
+    override fun onPause() {
+        rxSubs.clear()
+        super.onPause()
+    }
+
 }

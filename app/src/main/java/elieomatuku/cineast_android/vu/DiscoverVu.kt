@@ -81,7 +81,7 @@ class DiscoverVu (inflater: LayoutInflater,
     }
 
     private fun getWidgetMap(popularPeople: List<People>, movieContainer: MovieContainer): MutableMap <String, List<Widget>> {
-        return mutableMapOf(Pair(DiscoverPresenter.POPULAR_MOVIE_KEY, movieContainer.popularMovie), Pair(DiscoverPresenter.POPULAR_PEOPLE_KEY, popularPeople),
+        return mutableMapOf<String, List<Widget>>(Pair(DiscoverPresenter.POPULAR_MOVIE_KEY, movieContainer.popularMovie), Pair(DiscoverPresenter.POPULAR_PEOPLE_KEY, popularPeople),
                  Pair(DiscoverPresenter.NOW_PLAYING_KEY, movieContainer.nowPlayingMovie), Pair(DiscoverPresenter.UPCOMING_MOVIE_KEY,movieContainer.upcomingMovie),
                  Pair(DiscoverPresenter.TOP_RATED_MOVIE_KEY,movieContainer.topRated))
     }

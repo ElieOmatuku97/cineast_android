@@ -209,30 +209,45 @@ class DiscoverPresenter:  BasePresenter <DiscoverVu>(){
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
-        popularMovie?.let {
 
-            //Todo: check if not empty
-            outState.putParcelableArrayList(POPULAR_MOVIE_KEY, it as ArrayList<out Parcelable>)
+
+        popularMovie?.let {
+            if (!it.isEmpty()) {
+                outState.putParcelableArrayList(POPULAR_MOVIE_KEY, it as ArrayList<out Parcelable>)
+            }
         }
 
         upcomingMovie?.let {
-            outState.putParcelableArrayList(UPCOMING_MOVIE_KEY, it as ArrayList<out Parcelable>)
+
+            if (!it.isEmpty()) {
+                outState.putParcelableArrayList(UPCOMING_MOVIE_KEY, it as ArrayList<out Parcelable>)
+            }
         }
 
         popularPeople?.let{
-            outState.putParcelableArrayList(POPULAR_PEOPLE_KEY, it as ArrayList<out Parcelable>)
+            if (!it.isEmpty()) {
+                outState.putParcelableArrayList(POPULAR_PEOPLE_KEY, it as ArrayList<out Parcelable>)
+            }
         }
 
         nowPlayingMovie?.let {
-            outState.putParcelableArrayList(NOW_PLAYING_KEY, it as ArrayList<out Parcelable>)
+
+            if (!it.isEmpty()) {
+                outState.putParcelableArrayList(NOW_PLAYING_KEY, it as ArrayList<out Parcelable>)
+            }
         }
 
         topRatedMovie?.let {
-            outState.putParcelableArrayList(TOP_RATED_MOVIE_KEY, it as ArrayList<out Parcelable>)
+            if (!it.isEmpty()) {
+                outState.putParcelableArrayList(TOP_RATED_MOVIE_KEY, it as ArrayList<out Parcelable>)
+            }
         }
 
         genres?.let {
-            outState.putParcelableArrayList(MOVIE_GENRES_KEY, it as ArrayList<out Parcelable>)
+
+            if (!it.isEmpty()) {
+                outState.putParcelableArrayList(MOVIE_GENRES_KEY, it as ArrayList<out Parcelable>)
+            }
         }
     }
 }
