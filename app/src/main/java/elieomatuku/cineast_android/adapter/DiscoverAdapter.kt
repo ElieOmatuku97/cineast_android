@@ -24,6 +24,7 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
 
     var widget : List<Widget> = listOf()
     var widgetMap: Map<String, List<Widget>> = mapOf()
+    var isLoggedIn: Boolean = false
 
     private var filteredWidget : MutableMap<Int, List<Widget>?> = mutableMapOf()
 
@@ -116,6 +117,8 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
                 (holder as LoginViewHolder).itemView.setOnClickListener {
                     loginClickPublisher.onNext(true)
                 }
+
+                holder.update(isLoggedIn)
             }
         }
     }

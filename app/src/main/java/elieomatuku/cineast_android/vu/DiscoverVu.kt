@@ -74,8 +74,9 @@ class DiscoverVu (inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    fun setWigdet(popularPeople: List<People>, movieContainer: MovieContainer){
+    fun setWigdet(popularPeople: List<People>, movieContainer: MovieContainer, isLoggedIn: Boolean){
         adapter.widgetMap = getWidgetMap(popularPeople, movieContainer)
+        adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
     }
@@ -95,7 +96,12 @@ class DiscoverVu (inflater: LayoutInflater,
                     .build()
                     .toString()
 
-            UiUtils.gotoWebview (authenticateUrl, activity as AppCompatActivity)
+            UiUtils.gotoLoginWebview(authenticateUrl, activity as AppCompatActivity)
         }
+    }
+
+    fun updateLoginState(isLoggedIn: Boolean) {
+        adapter.isLoggedIn = isLoggedIn
+        adapter.notifyDataSetChanged()
     }
 }

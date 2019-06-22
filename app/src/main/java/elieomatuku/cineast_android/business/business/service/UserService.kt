@@ -14,12 +14,10 @@ import timber.log.Timber
 
 
 class UserService (private val restService: RestService, private val application: Application) {
-
     private val persistClient: ValueStore by lazy {
         val storeKey = "cineast_prefs"
         PrefsStore(storeKey, application)
     }
-
 
     fun getAccessToken (asyncResponse: AsyncResponse<AccessToken>) {
         restService.authenticationApi.getAccessToken(application.applicationContext.getString(R.string.api_key)).enqueue( object : Callback <AccessToken> {
@@ -60,14 +58,13 @@ class UserService (private val restService: RestService, private val application
 
     }
 
-
     fun getRequestToken(): String? {
         return persistClient.get(RestUtils.REQUEST_TOKEN_KEY, null)
     }
 
-
     fun logout() {
         persistClient.remove(RestUtils.SESSION_ID_KEY)
+        persistClient.remove(RestUtils.REQUEST_TOKEN_KEY)
 
     }
 

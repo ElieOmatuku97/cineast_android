@@ -6,7 +6,6 @@ import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.business.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.business.service.UserService
-import io.reactivex.subjects.PublishSubject
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
@@ -48,7 +47,6 @@ class LoginWebviewFragment : WebviewFragment() {
                 Timber.d("error : $error")
             }
         })
-
         super.closeIconListener()
     }
 

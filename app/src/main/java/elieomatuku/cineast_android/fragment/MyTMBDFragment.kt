@@ -7,9 +7,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.MainActivity
@@ -54,42 +51,36 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
         updateState(userService.isLoggedIn())
     }
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Timber.d("MyTMBDFragment onCreateView")
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-
     override fun onResume() {
         super.onResume()
-
 
         updateState(userService.isLoggedIn())
 
         logInBtn.setOnPreferenceClickListener {
-            Timber.d("Preference clicked")
-            userService.getAccessToken(object: AsyncResponse <AccessToken>{
-                override fun onSuccess(result: AccessToken?) {
-                    Timber.d("token result:  $result")
-                    if (result != null) {
-                        val authenticateUrl = Uri.parse(it.context.getString(R.string.authenticate_url))
-                                .buildUpon()
-                                .appendPath(result.request_token)
-                                .build()
-                                .toString()
 
+            if (!userService.isLoggedIn()) {
+                userService.getAccessToken(object : AsyncResponse<AccessToken> {
+                    override fun onSuccess(result: AccessToken?) {
+                        Timber.d("token result:  $result")
+                        if (result != null) {
+                            val authenticateUrl = Uri.parse(it.context.getString(R.string.authenticate_url))
+                                    .buildUpon()
+                                    .appendPath(result.request_token)
+                                    .build()
+                                    .toString()
 
-                        Timber.d("authenticateUrl: $authenticateUrl")
-
-                        UiUtils.gotoLoginWebview (authenticateUrl, this@MyTMBDFragment.activity as AppCompatActivity)
+                            UiUtils.gotoLoginWebview(authenticateUrl, this@MyTMBDFragment.activity as AppCompatActivity)
+                        }
                     }
-                }
 
-                override fun onFail(error: String) {
-                   Timber.d("error : $error")
-                }
-            })
+                    override fun onFail(error: String) {
+                        Timber.d("error : $error")
+                    }
+                })
+            } else {
+                updateState(false)
+                userService.logout()
+            }
             true
         }
 
@@ -105,10 +96,12 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
 
     private fun updateState(isLoggedIn: Boolean) {
         if (isLoggedIn) {
+            logInBtn.title = activity?.getString(R.string.settings_logout)
             favoritesBtn.isVisible =  true
             watchListBtn.isVisible = true
             ratedBtn.isVisible = true
         } else {
+            logInBtn.title = activity?.getString(R.string.settings_login)
             favoritesBtn.isVisible = false
             watchListBtn.isVisible = false
             ratedBtn.isVisible = false

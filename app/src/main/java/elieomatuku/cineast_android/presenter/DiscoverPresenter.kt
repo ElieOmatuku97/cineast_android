@@ -64,7 +64,7 @@ class DiscoverPresenter:  BasePresenter <DiscoverVu>(){
 
             if (movieContainer != null) {
                 if (popularPeople != null) {
-                    vu.setWigdet(popularPeople as List<People>, movieContainer)
+                    vu.setWigdet(popularPeople as List<People>, movieContainer, userService.isLoggedIn())
                 }
             }
         }
@@ -96,16 +96,22 @@ class DiscoverPresenter:  BasePresenter <DiscoverVu>(){
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({clicked  ->
                     if (clicked) {
-                        userService.getAccessToken(object : AsyncResponse<AccessToken> {
-                            override fun onSuccess(result: AccessToken?) {
-                                vu.gotoWebview(result)
 
-                            }
+                        if (!userService.isLoggedIn()) {
+                            userService.getAccessToken(object : AsyncResponse<AccessToken> {
+                                override fun onSuccess(result: AccessToken?) {
+                                    vu.gotoWebview(result)
+                                    vu.updateLoginState(userService.isLoggedIn())
+                                }
+                                override fun onFail(error: String) {
+                                    Timber.d("error : $error")
+                                }
+                            })
 
-                            override fun onFail(error: String) {
-                                Timber.d("error : $error")
-                            }
-                        })
+                        } else {
+                            userService.logout()
+                            vu.updateLoginState(false)
+                        }
                     }
                 }))
     }
@@ -174,7 +180,7 @@ class DiscoverPresenter:  BasePresenter <DiscoverVu>(){
 
                     if ( movieContainer != null) {
                         if (popularPeople != null) {
-                            vu?.setWigdet(popularPeople as List<People>, movieContainer)
+                            vu?.setWigdet(popularPeople as List<People>, movieContainer, userService.isLoggedIn())
                         }
                     }
                 }
