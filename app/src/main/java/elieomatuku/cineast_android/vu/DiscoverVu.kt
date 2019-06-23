@@ -54,6 +54,14 @@ class DiscoverVu (inflater: LayoutInflater,
         rootView.recyclerview
     }
 
+    private val sessionPublisher : PublishSubject<String> by lazy {
+        (activity as elieomatuku.cineast_android.activity.MainActivity).sessionPublisher
+    }
+
+    val sessionObservable: Observable<String> by lazy {
+        sessionPublisher.hide()
+    }
+
     val adapter: DiscoverAdapter by lazy {
          DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
     }
@@ -74,14 +82,15 @@ class DiscoverVu (inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    fun setWigdet(popularPeople: List<People>, movieContainer: MovieContainer){
+    fun setWigdet(popularPeople: List<People>, movieContainer: MovieContainer, isLoggedIn: Boolean){
         adapter.widgetMap = getWidgetMap(popularPeople, movieContainer)
+        adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
     }
 
     private fun getWidgetMap(popularPeople: List<People>, movieContainer: MovieContainer): MutableMap <String, List<Widget>> {
-        return mutableMapOf(Pair(DiscoverPresenter.POPULAR_MOVIE_KEY, movieContainer.popularMovie), Pair(DiscoverPresenter.POPULAR_PEOPLE_KEY, popularPeople),
+        return mutableMapOf<String, List<Widget>>(Pair(DiscoverPresenter.POPULAR_MOVIE_KEY, movieContainer.popularMovie), Pair(DiscoverPresenter.POPULAR_PEOPLE_KEY, popularPeople),
                  Pair(DiscoverPresenter.NOW_PLAYING_KEY, movieContainer.nowPlayingMovie), Pair(DiscoverPresenter.UPCOMING_MOVIE_KEY,movieContainer.upcomingMovie),
                  Pair(DiscoverPresenter.TOP_RATED_MOVIE_KEY,movieContainer.topRated))
     }
@@ -95,7 +104,12 @@ class DiscoverVu (inflater: LayoutInflater,
                     .build()
                     .toString()
 
-            UiUtils.gotoWebview (authenticateUrl, activity as AppCompatActivity)
+            UiUtils.gotoLoginWebview(authenticateUrl, activity as AppCompatActivity)
         }
+    }
+
+    fun updateLoginState(isLoggedIn: Boolean) {
+        adapter.isLoggedIn = isLoggedIn
+        adapter.notifyDataSetChanged()
     }
 }

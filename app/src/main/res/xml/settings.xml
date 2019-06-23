@@ -8,13 +8,14 @@
         <Preference
             persistent="false"
             android:key="@string/pref_favorites"
-            android:title="@string/settings_favorites" />
+            android:title="@string/settings_favorites"
+            />
 
         <Preference
             persistent="false"
             android:title="@string/settings_watchlist"
             android:key="@string/pref_watchlist"
-            android:enabled="false"/>
+            />
 
         <Preference
             persistent="false"
