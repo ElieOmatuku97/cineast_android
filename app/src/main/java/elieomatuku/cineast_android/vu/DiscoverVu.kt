@@ -54,6 +54,14 @@ class DiscoverVu (inflater: LayoutInflater,
         rootView.recyclerview
     }
 
+    private val sessionPublisher : PublishSubject<String> by lazy {
+        (activity as elieomatuku.cineast_android.activity.MainActivity).sessionPublisher
+    }
+
+    val sessionObservable: Observable<String> by lazy {
+        sessionPublisher.hide()
+    }
+
     val adapter: DiscoverAdapter by lazy {
          DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
     }

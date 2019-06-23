@@ -101,7 +101,6 @@ class DiscoverPresenter:  BasePresenter <DiscoverVu>(){
                             userService.getAccessToken(object : AsyncResponse<AccessToken> {
                                 override fun onSuccess(result: AccessToken?) {
                                     vu.gotoWebview(result)
-                                    vu.updateLoginState(userService.isLoggedIn())
                                 }
                                 override fun onFail(error: String) {
                                     Timber.d("error : $error")
@@ -113,6 +112,12 @@ class DiscoverPresenter:  BasePresenter <DiscoverVu>(){
                             vu.updateLoginState(false)
                         }
                     }
+                }))
+
+        rxSubs.add(vu.sessionObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({sessionId ->
+                    vu.updateLoginState(!sessionId.isNullOrEmpty())
                 }))
     }
 
