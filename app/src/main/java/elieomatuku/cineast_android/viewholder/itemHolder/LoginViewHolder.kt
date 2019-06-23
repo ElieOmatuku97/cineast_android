@@ -5,12 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.jakewharton.rxbinding2.view.visibility
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.service.UserService
 import kotlinx.android.synthetic.main.holder_login.view.*
-import org.kodein.di.generic.instance
 
 
 class LoginViewHolder(itemView: View): RecyclerView.ViewHolder (itemView) {
