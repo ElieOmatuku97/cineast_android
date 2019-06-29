@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.os.Handler
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.activity.MainActivity
-import elieomatuku.cineast_android.business.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.business.service.UserService
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.service.UserService
 import org.kodein.di.generic.instance
 import timber.log.Timber
 

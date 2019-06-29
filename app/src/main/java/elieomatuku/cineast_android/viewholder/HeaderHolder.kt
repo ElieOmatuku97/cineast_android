@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.HeaderAdapter
-import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.Movie
 import kotlinx.android.synthetic.main.holder_header.view.*
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber

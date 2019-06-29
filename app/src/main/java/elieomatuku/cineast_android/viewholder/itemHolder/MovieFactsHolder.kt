@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.MovieDetails
+import elieomatuku.cineast_android.business.model.data.MovieDetails
 import kotlinx.android.synthetic.main.holder_movie_facts.view.*
 import java.text.DecimalFormat
 

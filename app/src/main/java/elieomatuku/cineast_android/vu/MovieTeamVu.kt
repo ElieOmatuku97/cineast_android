@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.PeopleAdapter
-import elieomatuku.cineast_android.business.business.model.data.Cast
-import elieomatuku.cineast_android.business.business.model.data.Crew
+import elieomatuku.cineast_android.business.model.data.Cast
+import elieomatuku.cineast_android.business.model.data.Crew
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

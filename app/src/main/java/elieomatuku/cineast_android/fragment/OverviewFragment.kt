@@ -9,9 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.OverviewAdapter
-import elieomatuku.cineast_android.business.business.model.data.Movie
-import elieomatuku.cineast_android.business.business.model.data.MovieDetails
-import elieomatuku.cineast_android.business.business.model.data.Trailer
+import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.MovieDetails
+import elieomatuku.cineast_android.business.model.data.Trailer
 import kotlinx.android.synthetic.main.fragment_overview.view.*
 import java.util.ArrayList
 

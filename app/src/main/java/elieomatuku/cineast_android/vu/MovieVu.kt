@@ -19,7 +19,7 @@ import android.support.v4.content.res.ResourcesCompat
 import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
-import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable

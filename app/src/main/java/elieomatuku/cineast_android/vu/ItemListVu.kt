@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieAdapter
 import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
-import elieomatuku.cineast_android.business.business.model.data.Movie
-import elieomatuku.cineast_android.business.business.model.data.Person
-import elieomatuku.cineast_android.business.business.model.data.Widget
+import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.Person
+import elieomatuku.cineast_android.business.model.data.Widget
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

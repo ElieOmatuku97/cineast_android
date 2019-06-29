@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.business.business.model.data.PeopleCast
+import elieomatuku.cineast_android.business.model.data.PeopleCast
 import elieomatuku.cineast_android.presenter.PeopleCastPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.vu.PeopleCastVu

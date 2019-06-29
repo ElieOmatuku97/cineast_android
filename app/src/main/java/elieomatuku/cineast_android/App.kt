@@ -4,10 +4,10 @@ import android.app.Application
 import android.content.Context
 import android.content.res.Resources
 import com.squareup.leakcanary.LeakCanary
-import elieomatuku.cineast_android.business.business.service.RestService
-import elieomatuku.cineast_android.business.business.service.DiscoverService
-import elieomatuku.cineast_android.business.business.client.RestClient
-import elieomatuku.cineast_android.business.business.service.UserService
+import elieomatuku.cineast_android.business.service.RestService
+import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.client.RestClient
+import elieomatuku.cineast_android.business.service.UserService
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance

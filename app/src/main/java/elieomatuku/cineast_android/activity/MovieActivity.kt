@@ -7,8 +7,8 @@ import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.Movie
-import elieomatuku.cineast_android.business.business.service.UserService
+import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.presenter.MoviePresenter
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils

@@ -10,9 +10,9 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.MainActivity
-import elieomatuku.cineast_android.business.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.business.model.data.AccessToken
-import elieomatuku.cineast_android.business.business.service.UserService
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.AccessToken
+import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance

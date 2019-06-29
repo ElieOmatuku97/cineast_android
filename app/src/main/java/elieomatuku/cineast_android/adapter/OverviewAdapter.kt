@@ -3,9 +3,9 @@ package elieomatuku.cineast_android.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.Movie
-import elieomatuku.cineast_android.business.business.model.data.MovieDetails
-import elieomatuku.cineast_android.business.business.model.data.Trailer
+import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.MovieDetails
+import elieomatuku.cineast_android.business.model.data.Trailer
 import elieomatuku.cineast_android.viewholder.SummaryHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.BottomHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.MovieFactsHolder

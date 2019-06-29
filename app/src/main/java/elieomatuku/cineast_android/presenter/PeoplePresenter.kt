@@ -3,11 +3,11 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.business.service.RestService
-import elieomatuku.cineast_android.business.business.service.DiscoverService
-import elieomatuku.cineast_android.business.business.model.data.*
-import elieomatuku.cineast_android.business.business.model.response.ImageResponse
-import elieomatuku.cineast_android.business.business.model.response.PeopleCreditsResponse
+import elieomatuku.cineast_android.business.service.RestService
+import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.business.model.response.ImageResponse
+import elieomatuku.cineast_android.business.model.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.vu.PeopleVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance

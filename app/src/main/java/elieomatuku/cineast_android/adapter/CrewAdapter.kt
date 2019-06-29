@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.business.business.model.data.Crew
+import elieomatuku.cineast_android.business.model.data.Crew
 import elieomatuku.cineast_android.viewholder.itemHolder.CrewItemHolder
 import io.reactivex.subjects.PublishSubject
 

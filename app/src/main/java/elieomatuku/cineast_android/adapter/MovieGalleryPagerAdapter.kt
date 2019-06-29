@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.util.Log
 import elieomatuku.cineast_android.fragment.MoviePosterFragment
-import elieomatuku.cineast_android.business.business.model.data.Poster
+import elieomatuku.cineast_android.business.model.data.Poster
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
 
 

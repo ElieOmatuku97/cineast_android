@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.Widget
+import elieomatuku.cineast_android.business.model.data.Widget
 import elieomatuku.cineast_android.fragment.PopularMoviesFragment
 import elieomatuku.cineast_android.fragment.PopularPeopleFragment
 import timber.log.Timber
