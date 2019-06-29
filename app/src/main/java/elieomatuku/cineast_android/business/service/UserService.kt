@@ -5,10 +5,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.MoshiSerializer
 import elieomatuku.cineast_android.business.client.Serializer
-import elieomatuku.cineast_android.business.model.data.AccessToken
-import elieomatuku.cineast_android.business.model.data.Account
-import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.business.model.data.Session
+import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.rest.MovieApi
 import elieomatuku.cineast_android.utils.RestUtils
@@ -121,6 +118,23 @@ class UserService (private val restService: RestService, private val movieApi: M
                     asyncResponse.onFail(t.toString())
                 }
             })
+        }
+    }
+
+
+    fun addMovieToWatchList(movie: Movie) {
+        persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
+            movieApi.addMovieToWatchList(application.applicationContext.getString(R.string.api_key), it, "movie", movie.id, true).enqueue(
+                    object : Callback<AddWatchListResponse> {
+                        override fun onResponse(call: Call<AddWatchListResponse>, response: Response<AddWatchListResponse>) {
+                            Timber.d("response: ${response.body()}")
+                        }
+
+                        override fun onFailure(call: Call<AddWatchListResponse>, t: Throwable) {
+                            Timber.d("error add movie to watch list: $t")
+                        }
+                    }
+            )
         }
     }
 }

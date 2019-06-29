@@ -1,8 +1,10 @@
 package elieomatuku.cineast_android.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.res.ResourcesCompat
 import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.App
@@ -109,6 +111,10 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
                 onShareMenuClicked(this)
             }
 
+            R.id.action_watchlist -> {
+                onWatchListMenuClicked(this, item)
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
         return true
@@ -125,6 +131,28 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         // Make sure there is an activity that supports the intent
         if (shareIntent?.resolveActivity(activity.packageManager) != null ){
             activity.startActivity(Intent.createChooser(shareIntent, activity.getString(R.string.share_title)))
+        }
+    }
+
+    private fun onWatchListMenuClicked(activity: Activity, item: MenuItem) {
+        Timber.d("currentMovie: $currentMovie")
+        currentMovie?.let {
+            updateWatchListIcon(item, activity)
+            userService.addMovieToWatchList(it)
+        }
+    }
+
+    private fun updateWatchListIcon(item: MenuItem, context: Context) {
+        val colorRes = R.color.color_orange_app
+        item.isChecked = !item.isChecked
+        val checked = item.isChecked
+
+        if (item.isChecked) {
+            item.icon = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_nav_watch_list_selected, context.theme)
+
+        } else {
+            item.icon = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_nav_watch_list_unselected, context.theme)
+            UiUtils.tintMenuItem(item, context, colorRes)
         }
     }
 }

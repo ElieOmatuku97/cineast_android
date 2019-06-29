@@ -1,12 +1,11 @@
 package elieomatuku.cineast_android.business.rest
 
+import elieomatuku.cineast_android.business.model.data.AddWatchListResponse
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.model.data.MovieDetails
 import elieomatuku.cineast_android.business.model.response.*
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MovieApi {
     @GET("movie/top_rated")
@@ -51,4 +50,15 @@ interface MovieApi {
 
     @GET("account/{account_id}/watchlist/movies")
     fun getWatchList(@Query("api_key") apiKey: String, @Query("session_id") sessionId: String):  Call<MovieResponse>
+
+
+    @FormUrlEncoded
+    @POST("account/{account_id}/watchlist")
+    fun addMovieToWatchList(@Query("api_key") apyKey: String,
+                            @Query("session_id") sessionId: String,
+                            @Field("media_type") mediaType: String,
+                            @Field("media_id") mediaId: Int,
+                            @Field("watchlist") watchList: Boolean): Call<AddWatchListResponse>
+
+
 }
