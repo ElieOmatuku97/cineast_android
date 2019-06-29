@@ -5,8 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.business.business.service.UserService
 import elieomatuku.cineast_android.presenter.MoviePresenter
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils
@@ -15,6 +17,7 @@ import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
+import org.kodein.di.generic.instance
 import timber.log.Timber
 
 class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
@@ -25,6 +28,7 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
     }
 
     private var currentMovie: Movie? = null
+    private val userService : UserService by App.kodein.instance()
 
     val moviePresentedPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()
@@ -38,7 +42,6 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         return MVPDispatcher(MVP_UID,
                 PresenterCacheLoaderCallback(this, { MoviePresenter() }),
                 ::MovieVu)
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +87,17 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
                 it.isVisible = MovieUtils.supportsShare(currentMovie?.id)
 
         }
+
+        menu?.findItem(R.id.action_watchlist)?.let {
+                it.isVisible = userService.isLoggedIn()
+
+        }
+
+        menu?.findItem(R.id.action_favorites)?.let {
+                it.isVisible = userService.isLoggedIn()
+
+        }
+
         return true
     }
 

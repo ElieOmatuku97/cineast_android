@@ -3,11 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_favorites"
+        android:icon="@drawable/ic_star_border_black_unselected"
+        android:title="@string/share_label"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
+        android:id="@+id/action_watchlist"
+        android:icon="@drawable/ic_nav_watch_list_unselected"
+        android:title="@string/share_label"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share_accent_24dp"
         android:title="@string/share_label"
-        app:showAsAction="ifRoom"
         android:visible="false"
+        app:showAsAction="ifRoom"
         />
 
 </menu>
