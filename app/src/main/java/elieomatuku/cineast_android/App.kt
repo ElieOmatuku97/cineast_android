@@ -38,7 +38,8 @@ class App: Application() {
             bind<RestService>() with singleton { RestService(instance()) }
             bind<DiscoverService>() with singleton { DiscoverService(instance()) }
             bind<UserService>() with singleton {
-                UserService(instance(), instance())
+                val restService: RestService = instance()
+                UserService(instance(), restService.movieApi, instance())
             }
         }
 

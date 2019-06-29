@@ -47,4 +47,8 @@ interface MovieApi {
 
     @GET ("search/movie")
     fun getMoviesWithSearch(@Query("api_key") apiKey: String, @Query("query") query: String): Call <MovieResponse>
+
+
+    @GET("account/{account_id}/watchlist/movies")
+    fun getWatchList(@Query("api_key") apiKey: String, @Query("session_id") sessionId: String):  Call<MovieResponse>
 }

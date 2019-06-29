@@ -2,6 +2,7 @@ package elieomatuku.cineast_android.business.rest
 
 import elieomatuku.cineast_android.business.model.data.AccessToken
 import elieomatuku.cineast_android.business.model.data.Session
+import elieomatuku.cineast_android.business.model.data.Account
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -13,4 +14,8 @@ interface AuthenticationApi {
     @FormUrlEncoded
     @POST("authentication/session/new")
     fun getSession(@Query("api_key") apyKey: String, @Field("request_token")  requestToken: String?): Call<Session>
+
+
+    @GET("account")
+    fun getAccount(@Query("api_key") apyKey: String, @Query("session_id") sessionId: String): Call<Account>
 }
