@@ -26,8 +26,8 @@ class UserService (private val restService: RestService, private val movieApi: M
         MoshiSerializer<Account>(Account::class.java)
     }
 
-    fun getAccessToken (asyncResponse: AsyncResponse<AccessToken>) {
-        restService.authenticationApi.getAccessToken(application.applicationContext.getString(R.string.api_key)).enqueue( object : Callback <AccessToken> {
+    fun getAccessToken(asyncResponse: AsyncResponse<AccessToken>) {
+        restService.authenticationApi.getAccessToken(application.applicationContext.getString(R.string.api_key)).enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>?) {
                 Timber.d("AccessToken: $response")
 
@@ -47,9 +47,8 @@ class UserService (private val restService: RestService, private val movieApi: M
         })
     }
 
-
-    fun getSession(requestToken: String?,  asyncResponse: AsyncResponse<String>) {
-        restService.authenticationApi.getSession(application.applicationContext.getString(R.string.api_key), requestToken).enqueue( object : Callback<Session> {
+    fun getSession(requestToken: String?, asyncResponse: AsyncResponse<String>) {
+        restService.authenticationApi.getSession(application.applicationContext.getString(R.string.api_key), requestToken).enqueue(object : Callback<Session> {
             override fun onResponse(call: Call<Session>, response: Response<Session>) {
                 response.body()?.session_id?.let {
                     persistClient.set(RestUtils.SESSION_ID_KEY, it)
@@ -64,9 +63,9 @@ class UserService (private val restService: RestService, private val movieApi: M
         })
     }
 
-    fun setAccount(sessionId: String?)  {
+    fun setAccount(sessionId: String?) {
         sessionId?.let {
-            restService.authenticationApi.getAccount(application.applicationContext.getString(R.string.api_key), it).enqueue( object : Callback<Account> {
+            restService.authenticationApi.getAccount(application.applicationContext.getString(R.string.api_key), it).enqueue(object : Callback<Account> {
                 override fun onResponse(call: Call<Account>, response: Response<Account>) {
                     Timber.d("account: ${response.body()}")
 
@@ -83,10 +82,9 @@ class UserService (private val restService: RestService, private val movieApi: M
         }
     }
 
-
     fun getAccount(): Account? {
         return persistClient.get(RestUtils.ACCOUNT_ID_KEY, null)?.let {
-             accountSerializer.fromJson(it)
+            accountSerializer.fromJson(it)
         }
     }
 
@@ -105,7 +103,7 @@ class UserService (private val restService: RestService, private val movieApi: M
         return !persistClient.get(RestUtils.SESSION_ID_KEY, null).isNullOrEmpty()
     }
 
-    fun getWatchList(asyncResponse: AsyncResponse<List<Movie>>)  {
+    fun getWatchList(asyncResponse: AsyncResponse<List<Movie>>) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             movieApi.getWatchList(application.applicationContext.getString(R.string.api_key), it).enqueue(object : Callback<MovieResponse> {
                 override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
@@ -120,7 +118,6 @@ class UserService (private val restService: RestService, private val movieApi: M
             })
         }
     }
-
 
     fun addMovieToWatchList(movie: Movie) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
@@ -137,4 +134,5 @@ class UserService (private val restService: RestService, private val movieApi: M
             )
         }
     }
+
 }

@@ -11,4 +11,10 @@ data class MovieInfo (val movie: Movie?,
                       val screenName: String?,
                       val cast: List<Cast>?,
                       val crew: List<Crew>?,
-                      val similarMovies: List<Movie>?) : Parcelable
+                      val similarMovies: List<Movie>?) : Parcelable {
+
+
+
+    val movieId = movie?.id
+
+}

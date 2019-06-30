@@ -30,10 +30,15 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
     }
 
     private var currentMovie: Movie? = null
+    private var isInWatchList: Boolean = false
     private val userService : UserService by App.kodein.instance()
 
     val moviePresentedPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()
+    }
+
+    val watchListCheckPublisher: PublishSubject<Boolean> by lazy {
+        PublishSubject.create<Boolean>()
     }
 
     private val rxSubs : io.reactivex.disposables.CompositeDisposable by lazy {
@@ -61,6 +66,14 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
                 }, {t: Throwable ->
                     Timber.e( "moviePresentedPublisher failed")
+                }))
+
+        rxSubs.add(watchListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
+                .subscribe( {event: Boolean ->
+                    onWatchListCheckPublishedNext(event, this)
+
+                }, {t: Throwable ->
+                    Timber.e( "watchListCheckPublisher failed")
                 }))
         super.onResume()
     }
@@ -91,8 +104,15 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         }
 
         menu?.findItem(R.id.action_watchlist)?.let {
-                it.isVisible = userService.isLoggedIn()
+                val menuItem = it
+                Timber.d("isInWatchList: $isInWatchList")
+                currentMovie?.let {
+                    menuItem.isChecked = isInWatchList
 
+                }
+
+                updateWatchListIcon(it, this@MovieActivity)
+                it.isVisible = userService.isLoggedIn()
         }
 
         menu?.findItem(R.id.action_favorites)?.let {
@@ -126,6 +146,14 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         activity.invalidateOptionsMenu()
     }
 
+
+    private fun onWatchListCheckPublishedNext(event: Boolean, activity: Activity) {
+        Timber.d("onWatchListCheckPublishedNext: activity = ${event}")
+        isInWatchList = event
+        activity.invalidateOptionsMenu()
+    }
+
+
     private fun onShareMenuClicked(activity: Activity) {
         val shareIntent: Intent? = UiUtils.getShareIntent(currentMovie?.title, currentMovie?.id)
         // Make sure there is an activity that supports the intent
@@ -137,6 +165,8 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
     private fun onWatchListMenuClicked(activity: Activity, item: MenuItem) {
         Timber.d("currentMovie: $currentMovie")
         currentMovie?.let {
+            item.isChecked = !item.isChecked
+            val checked = item.isChecked
             updateWatchListIcon(item, activity)
             userService.addMovieToWatchList(it)
         }
@@ -144,9 +174,6 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
     private fun updateWatchListIcon(item: MenuItem, context: Context) {
         val colorRes = R.color.color_orange_app
-        item.isChecked = !item.isChecked
-        val checked = item.isChecked
-
         if (item.isChecked) {
             item.icon = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_nav_watch_list_selected, context.theme)
 
@@ -155,4 +182,6 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
             UiUtils.tintMenuItem(item, context, colorRes)
         }
     }
+
+
 }
