@@ -164,11 +164,19 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
     private fun onWatchListMenuClicked(activity: Activity, item: MenuItem) {
         Timber.d("currentMovie: $currentMovie")
-        currentMovie?.let {
-            item.isChecked = !item.isChecked
-            val checked = item.isChecked
-            updateWatchListIcon(item, activity)
-            userService.addMovieToWatchList(it)
+        item.isChecked = !item.isChecked
+        val checked = item.isChecked
+        updateWatchListIcon(item, activity)
+
+        if (checked) {
+            currentMovie?.let {
+                userService.addMovieToWatchList(it)
+            }
+
+        } else {
+            currentMovie?.let {
+                userService.removeMovieFromWatchList(it)
+            }
         }
     }
 
@@ -182,6 +190,4 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
             UiUtils.tintMenuItem(item, context, colorRes)
         }
     }
-
-
 }

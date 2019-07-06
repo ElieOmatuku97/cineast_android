@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.business.service
 
 import android.app.Application
+import com.google.gson.Gson
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.MoshiSerializer
@@ -10,13 +11,19 @@ import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.rest.MovieApi
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.utils.ValueStore
+import okhttp3.MediaType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import okhttp3.RequestBody
+
+
 
 
 class UserService (private val restService: RestService, private val movieApi: MovieApi, private val application: Application) {
+    private val MOVIE = "movie"
+
     private val persistClient: ValueStore by lazy {
         val storeKey = "cineast_prefs"
         PrefsStore(storeKey, application)
@@ -119,20 +126,43 @@ class UserService (private val restService: RestService, private val movieApi: M
         }
     }
 
+
     fun addMovieToWatchList(movie: Movie) {
+        updateWatchList(movie, true)
+
+    }
+
+    fun removeMovieFromWatchList(movie: Movie) {
+        updateWatchList(movie, false)
+    }
+
+    private fun updateWatchList(movie: Movie, watchList: Boolean) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
-            movieApi.addMovieToWatchList(application.applicationContext.getString(R.string.api_key), it, "movie", movie.id, true).enqueue(
+            val media = Media(MOVIE, movie.id, watchList)
+
+            movieApi.updateWatchList(application.applicationContext.getString(R.string.api_key), it , getRequestBody(media)).enqueue(
                     object : Callback<AddWatchListResponse> {
                         override fun onResponse(call: Call<AddWatchListResponse>, response: Response<AddWatchListResponse>) {
                             Timber.d("response: ${response.body()}")
                         }
 
                         override fun onFailure(call: Call<AddWatchListResponse>, t: Throwable) {
-                            Timber.d("error add movie to watch list: $t")
+                            Timber.e("error add movie to watch list: $t")
                         }
                     }
             )
         }
     }
 
+    private fun getRequestBody(media: Media) : RequestBody{
+        val mediaType = MediaType.parse("application/json")
+        return RequestBody.create(mediaType, toJson(media))
+    }
+
+    private fun toJson(media: Media): String {
+        val gson = Gson()
+        val jsonString: String = gson.toJson(media)
+
+        return jsonString
+    }
 }
