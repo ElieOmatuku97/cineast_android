@@ -96,7 +96,8 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
                     handler.post {
                         result?.let {
                             val movies = it
-                            activity?.applicationContext?.let {
+
+                            this@MyTMBDFragment.context?.let {
                                 UiUtils.startItemListActivity(it, movies, R.string.settings_watchlist)
                             }
 
