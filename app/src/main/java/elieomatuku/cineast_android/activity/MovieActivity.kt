@@ -62,7 +62,7 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
     override fun onResume() {
         rxSubs.add(moviePresentedPublisher.observeOn(AndroidSchedulers.mainThread())
                 .subscribe({event: Movie ->
-                    onPresenterPublishedNext(event, this)
+                    onPresenterPublishedNext(event)
 
                 }, {t: Throwable ->
                     Timber.e( "moviePresentedPublisher failed")
@@ -70,7 +70,7 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
         rxSubs.add(watchListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
                 .subscribe( {event: Boolean ->
-                    onWatchListCheckPublishedNext(event, this)
+                    onWatchListCheckPublishedNext(event)
 
                 }, {t: Throwable ->
                     Timber.e( "watchListCheckPublisher failed")
@@ -111,7 +111,7 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
                 }
 
-                updateWatchListIcon(it, this@MovieActivity)
+                updateWatchListIcon(it)
                 it.isVisible = userService.isLoggedIn()
         }
 
@@ -128,11 +128,11 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
             android.R.id.home -> onSupportNavigateUp()
 
             R.id.action_share -> {
-                onShareMenuClicked(this)
+                onShareMenuClicked()
             }
 
             R.id.action_watchlist -> {
-                onWatchListMenuClicked(this, item)
+                onWatchListMenuClicked(item)
             }
 
             else -> super.onOptionsItemSelected(item)
@@ -140,33 +140,33 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         return true
     }
 
-    private fun onPresenterPublishedNext(event: Movie, activity: Activity) {
+    private fun onPresenterPublishedNext(event: Movie) {
         Timber.d("onPresenterPublishedNext: activity = ${event}")
         currentMovie = event
-        activity.invalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
 
-    private fun onWatchListCheckPublishedNext(event: Boolean, activity: Activity) {
+    private fun onWatchListCheckPublishedNext(event: Boolean) {
         Timber.d("onWatchListCheckPublishedNext: activity = ${event}")
         isInWatchList = event
-        activity.invalidateOptionsMenu()
+        invalidateOptionsMenu()
     }
 
 
-    private fun onShareMenuClicked(activity: Activity) {
+    private fun onShareMenuClicked() {
         val shareIntent: Intent? = UiUtils.getShareIntent(currentMovie?.title, currentMovie?.id)
         // Make sure there is an activity that supports the intent
-        if (shareIntent?.resolveActivity(activity.packageManager) != null ){
-            activity.startActivity(Intent.createChooser(shareIntent, activity.getString(R.string.share_title)))
+        if (shareIntent?.resolveActivity(packageManager) != null ){
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_title)))
         }
     }
 
-    private fun onWatchListMenuClicked(activity: Activity, item: MenuItem) {
+    private fun onWatchListMenuClicked(item: MenuItem) {
         Timber.d("currentMovie: $currentMovie")
         item.isChecked = !item.isChecked
         val checked = item.isChecked
-        updateWatchListIcon(item, activity)
+        updateWatchListIcon(item)
 
         if (checked) {
             currentMovie?.let {
@@ -180,14 +180,14 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         }
     }
 
-    private fun updateWatchListIcon(item: MenuItem, context: Context) {
+    private fun updateWatchListIcon(item: MenuItem) {
         val colorRes = R.color.color_orange_app
         if (item.isChecked) {
-            item.icon = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_nav_watch_list_selected, context.theme)
+            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_selected, theme)
 
         } else {
-            item.icon = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_nav_watch_list_unselected, context.theme)
-            UiUtils.tintMenuItem(item, context, colorRes)
+            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_unselected, theme)
+            UiUtils.tintMenuItem(item, this, colorRes)
         }
     }
 }

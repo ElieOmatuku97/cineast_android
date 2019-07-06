@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.MovieAdapter
 import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
 import elieomatuku.cineast_android.business.model.data.Movie
@@ -56,6 +57,13 @@ class ItemListVu (inflater: LayoutInflater,
     val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
 
+    val watchListCheckPublisher: PublishSubject<Boolean> ? by lazy {
+        if (activity is ItemListActivity) {
+            activity.userListCheckPublisher
+        } else {
+            null
+        }
+    }
 
     fun updateVu(widgets: List<Widget>?, screenNameRes: Int? = null) {
         if (screenNameRes != null) {

@@ -7,10 +7,12 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.GenreResponse
+import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.vu.ItemListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import timber.log.Timber
+import java.util.*
 
 class ItemListPresenter: BasePresenter <ItemListVu>() {
     companion object {
@@ -29,8 +31,10 @@ class ItemListPresenter: BasePresenter <ItemListVu>() {
         super.onLink(vu, inState, args)
         val listOfWidgets: List<Widget>  = args.getParcelableArrayList(WIDGET_KEY)
         val screenNameRes = args.getInt(SCREEN_NAME_KEY)
+        val isUserList = args.getBoolean(UiUtils.USER_LIST_KEY)
         vu.updateVu(listOfWidgets, screenNameRes)
 
+        vu.watchListCheckPublisher?.onNext(isUserList)
         discoverClient.getGenres(genreAsyncResponse)
         rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())

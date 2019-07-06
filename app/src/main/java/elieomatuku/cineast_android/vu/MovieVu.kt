@@ -121,7 +121,6 @@ class MovieVu(inflater: LayoutInflater,
         if (fragment != null && fm != null) {
             fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
         }
-
     }
 
     inner class DividerItemDecorator(private val mDivider: Drawable) : RecyclerView.ItemDecoration() {
