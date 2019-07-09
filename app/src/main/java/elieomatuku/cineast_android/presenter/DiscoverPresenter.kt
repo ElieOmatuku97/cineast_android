@@ -82,6 +82,8 @@ class DiscoverPresenter:  BasePresenter <DiscoverVu>(){
                    Timber.d( "movieSelectObservable failed:$t")
                 }))
 
+
+
         rxSubs.add(vu.personSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({actor: Person ->

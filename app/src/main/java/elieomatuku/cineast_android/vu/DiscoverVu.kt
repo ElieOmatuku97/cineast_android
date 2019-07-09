@@ -35,6 +35,7 @@ class DiscoverVu (inflater: LayoutInflater,
         get() = movieSelectPublisher.hide()
 
 
+
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()
     }

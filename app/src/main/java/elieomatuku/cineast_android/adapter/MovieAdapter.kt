@@ -9,7 +9,7 @@ import io.reactivex.subjects.PublishSubject
 
 
 class MovieAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>,
-                   private val itemListLayoutRes: Int? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+                   private val itemListLayoutRes: Int? = null, private val onMovieRemovedPublisher: PublishSubject<Movie>? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun getItemCount(): Int {
         return movies.size
     }
@@ -27,5 +27,13 @@ class MovieAdapter(private val movies: List<Movie>, private val onItemClickPubli
             Log.d(MovieAdapter::class.java.simpleName, "CLICKED && movie:  ${movies[position]}")
             onItemClickPublisher.onNext(movies[position])
         }
+    }
+
+
+    fun deleteItem(position: Int) {
+        val movie = movies[position]
+        onMovieRemovedPublisher?.onNext(movie)
+        (movies as MutableList).removeAt(position)
+        notifyItemRemoved(position)
     }
 }

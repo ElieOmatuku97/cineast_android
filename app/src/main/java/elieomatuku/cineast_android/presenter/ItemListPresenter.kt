@@ -7,6 +7,7 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.GenreResponse
+import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.vu.ItemListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,7 +25,8 @@ class ItemListPresenter: BasePresenter <ItemListVu>() {
         const val PEOPLE_KEY = "people"
     }
 
-    private val discoverClient: DiscoverService by App.kodein.instance()
+    private val discoverService: DiscoverService by App.kodein.instance()
+    private val userService: UserService by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: ItemListVu, inState: Bundle?, args: Bundle) {
@@ -32,10 +34,10 @@ class ItemListPresenter: BasePresenter <ItemListVu>() {
         val listOfWidgets: List<Widget>  = args.getParcelableArrayList(WIDGET_KEY)
         val screenNameRes = args.getInt(SCREEN_NAME_KEY)
         val isUserList = args.getBoolean(UiUtils.USER_LIST_KEY)
-        vu.updateVu(listOfWidgets, screenNameRes)
+        vu.updateVu(listOfWidgets, screenNameRes, isUserList)
 
         vu.watchListCheckPublisher?.onNext(isUserList)
-        discoverClient.getGenres(genreAsyncResponse)
+        discoverService.getGenres(genreAsyncResponse)
         rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ movie: Movie ->
@@ -58,6 +60,15 @@ class ItemListPresenter: BasePresenter <ItemListVu>() {
                     vu.gotoPeople(params)
                 })
         )
+
+        rxSubs.add(vu.onMovieRemovedObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe( {
+                    userService.removeMovieFromWatchList(it)
+                }, {t: Throwable ->
+                    Timber.e("onMovieRemovedObservable failed $t")
+
+                }))
     }
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
