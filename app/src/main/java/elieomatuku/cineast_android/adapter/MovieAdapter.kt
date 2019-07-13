@@ -29,7 +29,6 @@ class MovieAdapter(private val movies: List<Movie>, private val onItemClickPubli
         }
     }
 
-
     fun deleteItem(position: Int) {
         val movie = movies[position]
         onMovieRemovedPublisher?.onNext(movie)
