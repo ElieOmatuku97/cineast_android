@@ -160,16 +160,35 @@ class MoviePresenter: BasePresenter<MovieVu>() {
                     it.contains(movieInfo.movie)
                 } ?: false
 
-                handler.post {
-                    vu?.hideLoading()
-                    vu?.watchListCheckPublisher?.onNext(isInWatchList)
-                    vu?.updateVu(movieInfo)
-                    Timber.d("isInWatchList: $isInWatchList")
-                }
+                vu?.watchListCheckPublisher?.onNext(isInWatchList)
+                checkIfMovieInFavoriteList(movieInfo)
             }
 
             override fun onFail(error: String) {
                 Timber.e("error from fetching watch list: $error")
+            }
+        })
+    }
+
+
+    private fun checkIfMovieInFavoriteList(movieInfo: MovieInfo) {
+        userService.getFavoriteList(object: AsyncResponse<List<Movie>> {
+            override fun onSuccess(result: List<Movie>?) {
+                Timber.d("favorite list result: ${result} \n movie selected: ${movieInfo.movie}")
+                val isInFavoriteList = result?.let {
+                    it.contains(movieInfo.movie)
+                } ?: false
+
+                handler.post {
+                    vu?.hideLoading()
+                    vu?.favoriteListCheckPublisher?.onNext(isInFavoriteList)
+                    vu?.updateVu(movieInfo)
+                    Timber.d("isInFavoriteList: $isInFavoriteList")
+                }
+            }
+
+            override fun onFail(error: String) {
+                Timber.e("error from fetching favorite list: $error")
             }
         })
     }

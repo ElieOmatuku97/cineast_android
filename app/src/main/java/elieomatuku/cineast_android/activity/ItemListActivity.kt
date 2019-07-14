@@ -1,11 +1,14 @@
 package elieomatuku.cineast_android.activity
 
-import android.app.Activity
+
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.model.data.Widget
 import elieomatuku.cineast_android.presenter.ItemListPresenter
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.vu.ItemListVu
@@ -14,11 +17,47 @@ import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
+import java.util.*
 
 class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
     companion object {
         private val MVP_UID by lazy {
             ItemListActivity.hashCode()
+        }
+
+        const val DISPLAY_FAVORITE_LIST = "favorite_list_key"
+        const val DISPLAY_WATCH_LIST = "watch_list_key"
+
+        fun gotoListActivity (context: Context, widgets: List<Widget>, resources: Int? = null, isUserList: Boolean = false): Intent {
+            val intent = Intent (context, ItemListActivity::class.java)
+            val params = Bundle()
+            params.putParcelableArrayList(UiUtils.WIDGET_KEY, widgets as ArrayList<out Parcelable>)
+
+            if (resources != null) {
+                params.putInt(UiUtils.SCREEN_NAME_KEY, resources)
+            }
+            params.putBoolean(UiUtils.USER_LIST_KEY, isUserList)
+            intent.putExtras(params)
+
+            return intent
+        }
+
+        fun gotoFavoriteList(context: Context, widgets: List<Widget>) {
+            val intent = gotoListActivity(context, widgets, R.string.settings_favorites,  true)
+            val params = Bundle()
+            params.putBoolean(DISPLAY_FAVORITE_LIST, true)
+            intent.putExtras(params)
+
+            context.startActivity(intent)
+        }
+
+        fun gotoWatchList(context: Context, widgets: List<Widget>) {
+            val intent = gotoListActivity(context, widgets, R.string.settings_watchlist,  true)
+            val params = Bundle()
+            params.putBoolean(DISPLAY_WATCH_LIST, true)
+            intent.putExtras(params)
+
+            context.startActivity(intent)
         }
     }
 
@@ -84,9 +123,9 @@ class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
 
         when (item?.itemId) {
             android.R.id.home -> onSupportNavigateUp()
-            R.id.action_edit -> {
-                onEditMenuClicked()
-            }
+//            R.id.action_edit -> {
+//                onEditMenuClicked()
+//            }
 
             else -> super.onOptionsItemSelected(item)
         }
@@ -100,9 +139,9 @@ class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
         invalidateOptionsMenu()
     }
 
-
-    private fun onEditMenuClicked() {
-
-    }
+//
+//    private fun onEditMenuClicked() {
+//
+//    }
 
 }

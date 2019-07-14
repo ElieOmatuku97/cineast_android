@@ -7,6 +7,7 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.MoshiSerializer
 import elieomatuku.cineast_android.business.client.Serializer
 import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.business.model.response.UpdateListResponse
 import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.rest.MovieApi
 import elieomatuku.cineast_android.utils.RestUtils
@@ -126,7 +127,6 @@ class UserService (private val restService: RestService, private val movieApi: M
         }
     }
 
-
     fun addMovieToWatchList(movie: Movie) {
         updateWatchList(movie, true)
 
@@ -138,15 +138,58 @@ class UserService (private val restService: RestService, private val movieApi: M
 
     private fun updateWatchList(movie: Movie, watchList: Boolean) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
-            val media = Media(MOVIE, movie.id, watchList)
+            val media = WatchListMedia(MOVIE, movie.id, watchList)
 
             movieApi.updateWatchList(application.applicationContext.getString(R.string.api_key), it , getRequestBody(media)).enqueue(
-                    object : Callback<AddWatchListResponse> {
-                        override fun onResponse(call: Call<AddWatchListResponse>, response: Response<AddWatchListResponse>) {
+                    object : Callback<UpdateListResponse> {
+                        override fun onResponse(call: Call<UpdateListResponse>, response: Response<UpdateListResponse>) {
                             Timber.d("response: ${response.body()}")
                         }
 
-                        override fun onFailure(call: Call<AddWatchListResponse>, t: Throwable) {
+                        override fun onFailure(call: Call<UpdateListResponse>, t: Throwable) {
+                            Timber.e("error add movie to watch list: $t")
+                        }
+                    }
+            )
+        }
+    }
+
+    fun getFavoriteList(asyncResponse: AsyncResponse<List<Movie>>) {
+        persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
+            movieApi.getFavoritesList(application.applicationContext.getString(R.string.api_key), it).enqueue(object : Callback<MovieResponse> {
+                override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                    response.body()?.results?.let {
+                        asyncResponse.onSuccess(it)
+                    }
+                }
+
+                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                    asyncResponse.onFail(t.toString())
+                }
+            })
+        }
+    }
+
+    fun addMovieToFavoriteList(movie: Movie) {
+        updateFavoriteList(movie, true)
+
+    }
+
+    fun removeMovieFromFavoriteList(movie: Movie) {
+        updateFavoriteList(movie, false)
+    }
+
+    private fun updateFavoriteList(movie: Movie, favorite: Boolean) {
+        persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
+            val media = FavoriteListMedia(MOVIE, movie.id, favorite)
+
+            movieApi.updateFavoritesList(application.applicationContext.getString(R.string.api_key), it , getRequestBody(media)).enqueue(
+                    object : Callback<UpdateListResponse> {
+                        override fun onResponse(call: Call<UpdateListResponse>, response: Response<UpdateListResponse>) {
+                            Timber.d("response: ${response.body()}")
+                        }
+
+                        override fun onFailure(call: Call<UpdateListResponse>, t: Throwable) {
                             Timber.e("error add movie to watch list: $t")
                         }
                     }

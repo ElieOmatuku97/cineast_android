@@ -5,7 +5,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.MovieAdapter
+import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.business.model.data.Movie
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -38,7 +38,7 @@ class PopularMoviesVu (inflater: LayoutInflater,
     private val GRIDVIEW_NUMBER_OF_COLUMNS = 2
 
     var gridLayoutManager: GridLayoutManager ? = null
-    var movieAdapter : MovieAdapter? =  null
+    var movieListAdapter : MovieListAdapter? =  null
 
     override fun onCreate() {
         super.onCreate()
@@ -49,9 +49,9 @@ class PopularMoviesVu (inflater: LayoutInflater,
     }
 
     fun populateGridView(movies: List<Movie>) {
-        movieAdapter =  MovieAdapter(movies, movieSelectPublisher, R.layout.holder_popular_movie)
-        gridView.adapter = movieAdapter
-        movieAdapter?.notifyDataSetChanged()
+        movieListAdapter =  MovieListAdapter(movies, movieSelectPublisher, R.layout.holder_popular_movie)
+        gridView.adapter = movieListAdapter
+        movieListAdapter?.notifyDataSetChanged()
     }
 
     override fun onDestroy() {
@@ -59,6 +59,6 @@ class PopularMoviesVu (inflater: LayoutInflater,
         gridView.adapter = null
         gridView.layoutManager = null
         gridLayoutManager = null
-        movieAdapter = null
+        movieListAdapter = null
     }
 }

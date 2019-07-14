@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.adapter.MovieAdapter
+import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.model.data.Person
@@ -60,7 +60,7 @@ class ItemListVu (inflater: LayoutInflater,
     val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
 
-    val watchListCheckPublisher: PublishSubject<Boolean> ? by lazy {
+    val userListCheckPublisher: PublishSubject<Boolean> ? by lazy {
         if (activity is ItemListActivity) {
             activity.userListCheckPublisher
         } else {
@@ -92,9 +92,9 @@ class ItemListVu (inflater: LayoutInflater,
 
     private fun setUpListView(widgets: List<Widget>, isUserList: Boolean) {
         if (areWidgetsMovies(widgets)) {
-            val movieAdapter =  getMovieAdapter(widgets, isUserList)
-            setSwipeToDelete(isUserList, movieAdapter)
-            listView.adapter = movieAdapter
+            val movieListAdapter =  getMovieAdapter(widgets, isUserList)
+            setSwipeToDelete(isUserList, movieListAdapter)
+            listView.adapter = movieListAdapter
 
         } else {
             listView.adapter = PopularPeopleItemAdapter(widgets as List<Person>, personSelectPublisher, R.layout.holder_people_list)
@@ -108,17 +108,17 @@ class ItemListVu (inflater: LayoutInflater,
         return (widgets[FIRST_WIDGET_TYPE_OCCURENCE] != null) && (widgets[FIRST_WIDGET_TYPE_OCCURENCE] is Movie)
     }
 
-    private fun getMovieAdapter(widgets: List<Widget>, isUserList: Boolean) : MovieAdapter {
+    private fun getMovieAdapter(widgets: List<Widget>, isUserList: Boolean) : MovieListAdapter {
         return if (isUserList){
-            MovieAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
+            MovieListAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
         } else {
-            MovieAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list)
+            MovieListAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list)
         }
     }
 
-    private fun setSwipeToDelete(isUserList: Boolean, movieAdapter: MovieAdapter) {
+    private fun setSwipeToDelete(isUserList: Boolean, movieListAdapter: MovieListAdapter) {
         if (isUserList) {
-            val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(movieAdapter))
+            val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(movieListAdapter))
             itemTouchHelper.attachToRecyclerView(listView)
         }
     }

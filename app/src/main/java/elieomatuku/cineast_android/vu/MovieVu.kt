@@ -67,6 +67,13 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
+    val favoriteListCheckPublisher: PublishSubject<Boolean> ? by lazy {
+        if (activity is MovieActivity) {
+            activity.favoriteListCheckPublisher
+        } else {
+            null
+        } }
+
     fun updateVu(movieInfo: MovieInfo) {
         toolbar?.title = movieInfo.screenName
         updateListView(movieInfo)

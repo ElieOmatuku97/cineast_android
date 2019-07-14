@@ -1,7 +1,5 @@
 package elieomatuku.cineast_android.activity
 
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.res.ResourcesCompat
@@ -31,6 +29,7 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
     private var currentMovie: Movie? = null
     private var isInWatchList: Boolean = false
+    private var isInFavoriteList: Boolean = false
     private val userService : UserService by App.kodein.instance()
 
     val moviePresentedPublisher: PublishSubject<Movie> by lazy {
@@ -38,6 +37,10 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
     }
 
     val watchListCheckPublisher: PublishSubject<Boolean> by lazy {
+        PublishSubject.create<Boolean>()
+    }
+
+    val favoriteListCheckPublisher: PublishSubject<Boolean> by lazy {
         PublishSubject.create<Boolean>()
     }
 
@@ -73,7 +76,15 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
                     onWatchListCheckPublishedNext(event)
 
                 }, {t: Throwable ->
-                    Timber.e( "watchListCheckPublisher failed")
+                    Timber.e( "userListCheckPublisher failed: $t")
+                }))
+
+        rxSubs.add(favoriteListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
+                .subscribe( {event: Boolean ->
+                    onFavoriteListCheckPublishedNext(event)
+
+                }, {t: Throwable ->
+                    Timber.e("favoriteListCheckPublisher failed: $t")
                 }))
         super.onResume()
     }
@@ -116,8 +127,13 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         }
 
         menu?.findItem(R.id.action_favorites)?.let {
+                val menuItem  = it
+                Timber.d("isInFavoriteList: $isInFavoriteList")
+                currentMovie?.let {
+                    menuItem.isChecked = isInFavoriteList
+                }
+                updateFavoriteListIcon(it)
                 it.isVisible = userService.isLoggedIn()
-
         }
 
         return true
@@ -133,6 +149,10 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
             R.id.action_watchlist -> {
                 onWatchListMenuClicked(item)
+            }
+
+            R.id.action_favorites -> {
+                onFavoriteListMenuClicked(item)
             }
 
             else -> super.onOptionsItemSelected(item)
@@ -153,6 +173,10 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         invalidateOptionsMenu()
     }
 
+    private fun onFavoriteListCheckPublishedNext(event: Boolean) {
+        isInFavoriteList = event
+        invalidateOptionsMenu()
+    }
 
     private fun onShareMenuClicked() {
         val shareIntent: Intent? = UiUtils.getShareIntent(currentMovie?.title, currentMovie?.id)
@@ -187,6 +211,34 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
         } else {
             item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_unselected, theme)
+            UiUtils.tintMenuItem(item, this, colorRes)
+        }
+    }
+
+    private fun onFavoriteListMenuClicked(item: MenuItem) {
+        item.isChecked = !item.isChecked
+        val checked = item.isChecked
+        updateFavoriteListIcon(item)
+
+        if (checked) {
+            currentMovie?.let {
+                userService.addMovieToFavoriteList(it)
+            }
+
+        } else {
+            currentMovie?.let {
+                userService.removeMovieFromFavoriteList(it)
+            }
+        }
+    }
+
+    private fun updateFavoriteListIcon(item: MenuItem) {
+        val colorRes = R.color.color_orange_app
+        if (item.isChecked) {
+            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_black_selected, theme)
+
+        } else {
+            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_border_black_unselected, theme)
             UiUtils.tintMenuItem(item, this, colorRes)
         }
     }
