@@ -8,4 +8,9 @@ object RestUtils {
     const val SESSION_ID_KEY = "session_id_key"
     const val ACCOUNT_ID_KEY = "account_id_key"
 
+
+     val API_KEY: String by lazy {
+        elieomatuku.cineast_android.BuildConfig.api_key
+    }
+
 }
