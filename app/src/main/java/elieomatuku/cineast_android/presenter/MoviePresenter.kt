@@ -4,19 +4,23 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.business.service.RestService
-import elieomatuku.cineast_android.business.business.service.DiscoverService
-import elieomatuku.cineast_android.business.business.model.data.*
-import elieomatuku.cineast_android.business.business.model.response.ImageResponse
-import elieomatuku.cineast_android.business.business.model.response.MovieCreditsResponse
-import elieomatuku.cineast_android.business.business.model.response.MovieResponse
-import elieomatuku.cineast_android.business.business.model.response.TrailerResponse
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.service.RestService
+import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.business.model.response.ImageResponse
+import elieomatuku.cineast_android.business.model.response.MovieCreditsResponse
+import elieomatuku.cineast_android.business.model.response.MovieResponse
+import elieomatuku.cineast_android.business.model.response.TrailerResponse
+import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
+import java.util.*
 
 
 class MoviePresenter: BasePresenter<MovieVu>() {
@@ -31,7 +35,9 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         const val MOVIE_SIMILAR_KEY = "movie_similar_key"
         val TAG = MoviePresenter::class.java.simpleName
     }
+
     private val restService: RestService by App.kodein.instance()
+    private val userService: UserService by App.kodein.instance()
     var  movieDetails: MovieDetails? = null
     var trailers: List<Trailer>? = listOf()
     var cast: List<Cast>? = listOf()
@@ -41,9 +47,9 @@ class MoviePresenter: BasePresenter<MovieVu>() {
     override fun onLink(vu: MovieVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        val screenName = args.getString(MoviePresenter.SCREEN_NAME_KEY)
-        val movie: Movie = args.getParcelable(MoviePresenter.MOVIE_KEY)
-        val genres: List <Genre> = args.getParcelableArrayList(MoviePresenter.MOVIE_GENRES_KEY)
+        val screenName = args.getString(SCREEN_NAME_KEY)
+        val movie: Movie = args.getParcelable(MOVIE_KEY)
+        val genres: List <Genre> = args.getParcelableArrayList(MOVIE_GENRES_KEY)
 
 
         movieDetails = inState?.getParcelable(MOVIE_DETAILS_KEY)
@@ -125,14 +131,45 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         restService.movieApi.getSimilarMovie( movie.id, DiscoverService.API_KEY).enqueue(object: Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
                 similarMovies = response?.body()?.results
-                handler.post {
-                    vu?.hideLoading()
-                    val movieInfo = MovieInfo (movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
-                    vu?.updateVu(movieInfo)
+                val movieInfo = MovieInfo(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+
+                if (!userService.isLoggedIn()) {
+                    handler.post {
+                        vu?.hideLoading()
+                        vu?.updateVu(movieInfo)
+                    }
+                } else {
+                    movieInfo.movie?.let {
+                        checkIfMovieInWatchList(movieInfo)
+                    }
+
                 }
             }
             override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
                 Log.d(TAG, "error: $t")
+            }
+        })
+    }
+
+
+    private fun checkIfMovieInWatchList(movieInfo: MovieInfo)  {
+        userService.getWatchList(object: AsyncResponse<List<Movie>> {
+            override fun onSuccess(result: List<Movie>?) {
+                Timber.d("watch list result: ${result} \n movie selected: ${movieInfo.movie}")
+                val isInWatchList = result?.let {
+                    it.contains(movieInfo.movie)
+                } ?: false
+
+                handler.post {
+                    vu?.hideLoading()
+                    vu?.watchListCheckPublisher?.onNext(isInWatchList)
+                    vu?.updateVu(movieInfo)
+                    Timber.d("isInWatchList: $isInWatchList")
+                }
+            }
+
+            override fun onFail(error: String) {
+                Timber.e("error from fetching watch list: $error")
             }
         })
     }

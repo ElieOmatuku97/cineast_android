@@ -5,10 +5,10 @@ import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
-import elieomatuku.cineast_android.business.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.business.model.response.GenreResponse
-import elieomatuku.cineast_android.business.business.service.DiscoverService
-import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.response.GenreResponse
+import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance

@@ -4,8 +4,8 @@ import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.PeopleCast
-import elieomatuku.cineast_android.business.business.model.data.PeopleDetails
+import elieomatuku.cineast_android.business.model.data.PeopleCast
+import elieomatuku.cineast_android.business.model.data.PeopleDetails
 import elieomatuku.cineast_android.fragment.PeopleCastFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.viewholder.MenuPeopleHolder

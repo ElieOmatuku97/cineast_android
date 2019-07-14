@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_header_item.view.*
 

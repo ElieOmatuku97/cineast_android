@@ -3,13 +3,13 @@ package elieomatuku.cineast_android.adapter
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.ViewGroup
-import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.viewholder.itemHolder.MovieItemHolder
 import io.reactivex.subjects.PublishSubject
 
 
 class MovieAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>,
-                   private val itemListLayoutRes: Int? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+                   private val itemListLayoutRes: Int? = null, private val onMovieRemovedPublisher: PublishSubject<Movie>? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun getItemCount(): Int {
         return movies.size
     }
@@ -27,5 +27,12 @@ class MovieAdapter(private val movies: List<Movie>, private val onItemClickPubli
             Log.d(MovieAdapter::class.java.simpleName, "CLICKED && movie:  ${movies[position]}")
             onItemClickPublisher.onNext(movies[position])
         }
+    }
+
+    fun deleteItem(position: Int) {
+        val movie = movies[position]
+        onMovieRemovedPublisher?.onNext(movie)
+        (movies as MutableList).removeAt(position)
+        notifyItemRemoved(position)
     }
 }

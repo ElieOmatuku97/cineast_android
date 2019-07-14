@@ -21,7 +21,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.PopupWindow
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.business.model.data.*
 import android.view.MenuItem
 import android.webkit.*
 import elieomatuku.cineast_android.activity.ItemListActivity
@@ -43,6 +43,7 @@ object  UiUtils {
 
     val WIDGET_KEY = "widget"
     val SCREEN_NAME_KEY = "screen_name"
+    val USER_LIST_KEY = "user_list"
 
 
     fun createLoadingIndicator(activity: Activity): PopupWindow {
@@ -246,13 +247,14 @@ object  UiUtils {
         }
     }
 
-    fun startItemListActivity (context: Context, widgets: List<Widget>, resources: Int? = null) {
+    fun startItemListActivity (context: Context, widgets: List<Widget>, resources: Int? = null, isUserList: Boolean = false) {
         val intent = Intent (context, ItemListActivity::class.java)
         val params = Bundle()
         params.putParcelableArrayList(WIDGET_KEY, widgets as ArrayList<out Parcelable>)
         if (resources != null) {
             params.putInt(SCREEN_NAME_KEY, resources)
         }
+        params.putBoolean(USER_LIST_KEY, isUserList)
         intent.putExtras(params)
         context.startActivity(intent)
     }

@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.Genre
-import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.Genre
+import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_movie.view.*

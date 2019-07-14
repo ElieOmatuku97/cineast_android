@@ -13,7 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
-import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.presenter.DiscoverPresenter
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -33,6 +33,7 @@ class DiscoverVu (inflater: LayoutInflater,
     }
     val movieSelectObservable: Observable<Movie>
         get() = movieSelectPublisher.hide()
+
 
 
     private val personSelectPublisher: PublishSubject<Person> by lazy {

@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android
 
-import elieomatuku.cineast_android.business.business.model.data.Genre
+import elieomatuku.cineast_android.business.model.data.Genre
 import elieomatuku.cineast_android.utils.UiUtils
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,12 +33,12 @@ class UiUtilsTest {
     @Test
     fun testMapMovieGenreIdsWithGenreNames() {
         val movieGenreIds = mutableListOf<Int>(1, 2, 3, 4)
-        val genres = mutableListOf<Genre>(Genre(1 as Integer, "action"), Genre(2 as Integer, "comedy"), Genre(3 as Integer, "drama"))
+        val genres = mutableListOf<Genre>(Genre(1 as Int, "action"), Genre(2 as Int, "comedy"), Genre(3 as Int, "drama"))
 
-        assertEquals(UiUtils.mapMovieGenreIdsWithGenreNames(movieGenreIds = movieGenreIds as List<Integer>, genres = genres), "action, comedy, drama")
-        assertNotEquals(UiUtils.mapMovieGenreIdsWithGenreNames(movieGenreIds as List<Integer>, genres), "comedy, action, drama")
+        assertEquals(UiUtils.mapMovieGenreIdsWithGenreNames(movieGenreIds = movieGenreIds as List<Int>, genres = genres), "action, comedy, drama")
+        assertNotEquals(UiUtils.mapMovieGenreIdsWithGenreNames(movieGenreIds as List<Int>, genres), "comedy, action, drama")
 
-        genres.add(3, Genre(4 as Integer, "sci-fi"))
+        genres.add(3, Genre(4 as Int, "sci-fi"))
         assertEquals(UiUtils.mapMovieGenreIdsWithGenreNames(movieGenreIds, genres), "action, comedy, drama, sci-fi")
         assertNotEquals(UiUtils.mapMovieGenreIdsWithGenreNames(movieGenreIds, genres), "sci-fi, drama, comedy, action")
     }

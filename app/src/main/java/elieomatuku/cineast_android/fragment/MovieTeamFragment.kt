@@ -2,8 +2,8 @@ package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.business.business.model.data.Cast
-import elieomatuku.cineast_android.business.business.model.data.Crew
+import elieomatuku.cineast_android.business.model.data.Cast
+import elieomatuku.cineast_android.business.model.data.Crew
 import elieomatuku.cineast_android.presenter.MovieTeamPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.vu.MovieTeamVu

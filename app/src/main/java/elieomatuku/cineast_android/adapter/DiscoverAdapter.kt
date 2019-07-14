@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.adapter
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.viewholder.*
 import elieomatuku.cineast_android.viewholder.itemHolder.LoginViewHolder

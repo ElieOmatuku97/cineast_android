@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.business.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.viewholder.itemHolder.MovieItemHolder
 import io.reactivex.subjects.PublishSubject
 

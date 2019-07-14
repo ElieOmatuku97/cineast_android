@@ -3,11 +3,11 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.business.model.data.*
-import elieomatuku.cineast_android.business.business.model.response.*
-import elieomatuku.cineast_android.business.business.service.DiscoverService
-import elieomatuku.cineast_android.business.business.service.UserService
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.business.model.response.*
+import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -81,6 +81,8 @@ class DiscoverPresenter:  BasePresenter <DiscoverVu>(){
                 }, {t: Throwable ->
                    Timber.d( "movieSelectObservable failed:$t")
                 }))
+
+
 
         rxSubs.add(vu.personSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())

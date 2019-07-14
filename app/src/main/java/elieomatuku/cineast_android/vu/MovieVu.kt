@@ -19,7 +19,7 @@ import android.support.v4.content.res.ResourcesCompat
 import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
-import elieomatuku.cineast_android.business.business.model.data.*
+import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -54,6 +54,14 @@ class MovieVu(inflater: LayoutInflater,
     val moviePresentedPublisher: PublishSubject<Movie>? by lazy {
         if (activity is MovieActivity) {
             activity.moviePresentedPublisher
+        } else {
+            null
+        }
+    }
+
+    val watchListCheckPublisher: PublishSubject<Boolean> ? by lazy {
+        if (activity is MovieActivity) {
+            activity.watchListCheckPublisher
         } else {
             null
         }
@@ -113,7 +121,6 @@ class MovieVu(inflater: LayoutInflater,
         if (fragment != null && fm != null) {
             fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
         }
-
     }
 
     inner class DividerItemDecorator(private val mDivider: Drawable) : RecyclerView.ItemDecoration() {

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.PeopleCastAdapter
-import elieomatuku.cineast_android.business.business.model.data.PeopleCast
+import elieomatuku.cineast_android.business.model.data.PeopleCast
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
