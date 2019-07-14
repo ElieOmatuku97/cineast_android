@@ -170,8 +170,6 @@ class UserService (private val restService: RestService, private val movieApi: M
         }
     }
 
-
-
     fun addMovieToFavoriteList(movie: Movie) {
         updateFavoriteList(movie, true)
 
@@ -198,7 +196,6 @@ class UserService (private val restService: RestService, private val movieApi: M
             )
         }
     }
-
 
     private fun getRequestBody(media: Media) : RequestBody{
         val mediaType = MediaType.parse("application/json")
