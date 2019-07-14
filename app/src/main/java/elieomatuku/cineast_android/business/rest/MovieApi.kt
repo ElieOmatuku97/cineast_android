@@ -1,11 +1,10 @@
 package elieomatuku.cineast_android.business.rest
 
-import elieomatuku.cineast_android.business.model.data.AddWatchListResponse
+import elieomatuku.cineast_android.business.model.response.UpdateListResponse
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.model.data.MovieDetails
 import elieomatuku.cineast_android.business.model.response.*
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -49,12 +48,19 @@ interface MovieApi {
     @GET ("search/movie")
     fun getMoviesWithSearch(@Query("api_key") apiKey: String, @Query("query") query: String): Call <MovieResponse>
 
-
     @GET("account/{account_id}/watchlist/movies")
     fun getWatchList(@Query("api_key") apiKey: String, @Query("session_id") sessionId: String):  Call<MovieResponse>
 
     @POST("account/{account_id}/watchlist")
     fun updateWatchList(@Query("api_key") apyKey: String,
                         @Query("session_id") sessionId: String,
-                        @Body media: RequestBody): Call<AddWatchListResponse>
+                        @Body media: RequestBody): Call<UpdateListResponse>
+
+    @GET("account/{account_id}/favorite/movies")
+    fun getFavoritesList(@Query("api_key") apiKey: String, @Query("session_id") sessionId: String):  Call<MovieResponse>
+
+    @POST("account/{account_id}/favorite")
+    fun updateFavoritesList(@Query("api_key") apyKey: String,
+                        @Query("session_id") sessionId: String,
+                        @Body media: RequestBody): Call<UpdateListResponse>
 }

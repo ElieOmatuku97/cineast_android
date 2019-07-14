@@ -113,6 +113,30 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
             true
         }
 
+        favoritesBtn.setOnPreferenceClickListener {
+            userService.getFavoriteList( object: AsyncResponse<List<Movie>> {
+                override fun onSuccess(result: List<Movie>?) {
+
+                    handler.post {
+                        result?.let {
+                            val movies = it
+
+                            this@MyTMBDFragment.context?.let {
+                                UiUtils.startItemListActivity(it, movies, R.string.settings_favorites, true)
+                            }
+
+                        }
+                    }
+                }
+
+                override fun onFail(error: String) {
+                    Timber.d("error : $error")
+                }
+            })
+
+            true
+        }
+
         (activity as MainActivity).rxSubs.add( (activity as MainActivity).sessionPublisher.hide()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({sessionId: String? ->

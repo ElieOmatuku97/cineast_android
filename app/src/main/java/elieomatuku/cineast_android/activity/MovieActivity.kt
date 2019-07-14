@@ -116,8 +116,12 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         }
 
         menu?.findItem(R.id.action_favorites)?.let {
-                it.isVisible = userService.isLoggedIn()
+                val menuItem  = it
+                currentMovie?.let {
 
+                }
+                updateFavoriteListIcon(it)
+                it.isVisible = userService.isLoggedIn()
         }
 
         return true
@@ -133,6 +137,10 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
             R.id.action_watchlist -> {
                 onWatchListMenuClicked(item)
+            }
+
+            R.id.action_favorites -> {
+                onFavoriteListMenuClicked(item)
             }
 
             else -> super.onOptionsItemSelected(item)
@@ -187,6 +195,34 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
         } else {
             item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_unselected, theme)
+            UiUtils.tintMenuItem(item, this, colorRes)
+        }
+    }
+
+    private fun onFavoriteListMenuClicked(item: MenuItem) {
+        item.isChecked = !item.isChecked
+        val checked = item.isChecked
+        updateFavoriteListIcon(item)
+
+        if (checked) {
+            currentMovie?.let {
+                userService.addMovieToFavoriteList(it)
+            }
+
+        } else {
+            currentMovie?.let {
+                userService.removeMovieFromFavoriteList(it)
+            }
+        }
+    }
+
+    private fun updateFavoriteListIcon(item: MenuItem) {
+        val colorRes = R.color.color_orange_app
+        if (item.isChecked) {
+            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_black_selected, theme)
+
+        } else {
+            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_border_black_unselected, theme)
             UiUtils.tintMenuItem(item, this, colorRes)
         }
     }
