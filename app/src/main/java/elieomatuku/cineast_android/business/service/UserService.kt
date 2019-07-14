@@ -35,7 +35,7 @@ class UserService (private val restService: RestService, private val movieApi: M
     }
 
     fun getAccessToken(asyncResponse: AsyncResponse<AccessToken>) {
-        restService.authenticationApi.getAccessToken(application.applicationContext.getString(R.string.api_key)).enqueue(object : Callback<AccessToken> {
+        restService.authenticationApi.getAccessToken(RestUtils.API_KEY).enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>?) {
                 Timber.d("AccessToken: $response")
 
@@ -56,7 +56,7 @@ class UserService (private val restService: RestService, private val movieApi: M
     }
 
     fun getSession(requestToken: String?, asyncResponse: AsyncResponse<String>) {
-        restService.authenticationApi.getSession(application.applicationContext.getString(R.string.api_key), requestToken).enqueue(object : Callback<Session> {
+        restService.authenticationApi.getSession(RestUtils.API_KEY, requestToken).enqueue(object : Callback<Session> {
             override fun onResponse(call: Call<Session>, response: Response<Session>) {
                 response.body()?.session_id?.let {
                     persistClient.set(RestUtils.SESSION_ID_KEY, it)
@@ -73,7 +73,7 @@ class UserService (private val restService: RestService, private val movieApi: M
 
     fun setAccount(sessionId: String?) {
         sessionId?.let {
-            restService.authenticationApi.getAccount(application.applicationContext.getString(R.string.api_key), it).enqueue(object : Callback<Account> {
+            restService.authenticationApi.getAccount(RestUtils.API_KEY, it).enqueue(object : Callback<Account> {
                 override fun onResponse(call: Call<Account>, response: Response<Account>) {
                     Timber.d("account: ${response.body()}")
 
@@ -113,7 +113,7 @@ class UserService (private val restService: RestService, private val movieApi: M
 
     fun getWatchList(asyncResponse: AsyncResponse<List<Movie>>) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
-            movieApi.getWatchList(application.applicationContext.getString(R.string.api_key), it).enqueue(object : Callback<MovieResponse> {
+            movieApi.getWatchList(RestUtils.API_KEY, it).enqueue(object : Callback<MovieResponse> {
                 override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                     response.body()?.results?.let {
                         asyncResponse.onSuccess(it)
@@ -140,7 +140,7 @@ class UserService (private val restService: RestService, private val movieApi: M
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             val media = WatchListMedia(MOVIE, movie.id, watchList)
 
-            movieApi.updateWatchList(application.applicationContext.getString(R.string.api_key), it , getRequestBody(media)).enqueue(
+            movieApi.updateWatchList(RestUtils.API_KEY, it , getRequestBody(media)).enqueue(
                     object : Callback<UpdateListResponse> {
                         override fun onResponse(call: Call<UpdateListResponse>, response: Response<UpdateListResponse>) {
                             Timber.d("response: ${response.body()}")
@@ -156,7 +156,7 @@ class UserService (private val restService: RestService, private val movieApi: M
 
     fun getFavoriteList(asyncResponse: AsyncResponse<List<Movie>>) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
-            movieApi.getFavoritesList(application.applicationContext.getString(R.string.api_key), it).enqueue(object : Callback<MovieResponse> {
+            movieApi.getFavoritesList(RestUtils.API_KEY, it).enqueue(object : Callback<MovieResponse> {
                 override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                     response.body()?.results?.let {
                         asyncResponse.onSuccess(it)
@@ -183,7 +183,7 @@ class UserService (private val restService: RestService, private val movieApi: M
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             val media = FavoriteListMedia(MOVIE, movie.id, favorite)
 
-            movieApi.updateFavoritesList(application.applicationContext.getString(R.string.api_key), it , getRequestBody(media)).enqueue(
+            movieApi.updateFavoritesList(RestUtils.API_KEY, it , getRequestBody(media)).enqueue(
                     object : Callback<UpdateListResponse> {
                         override fun onResponse(call: Call<UpdateListResponse>, response: Response<UpdateListResponse>) {
                             Timber.d("response: ${response.body()}")

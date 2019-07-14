@@ -5,13 +5,14 @@ package elieomatuku.cineast_android.business.service
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.Widget
 import elieomatuku.cineast_android.business.model.response.*
+import elieomatuku.cineast_android.utils.RestUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DiscoverService(private val restService: RestService) {
     companion object {
-        const val API_KEY = "490e29e92ea126a6878a02b2779beb24"
+         val API_KEY = RestUtils.API_KEY
     }
 
     fun getPopularMovies(asyncResponse: AsyncResponse<MovieResponse>){
