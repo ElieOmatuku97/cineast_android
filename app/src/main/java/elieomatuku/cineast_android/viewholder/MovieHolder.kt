@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.MovieAdapter
+import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
@@ -37,7 +37,7 @@ class MovieHolder(itemView: View): RecyclerView.ViewHolder (itemView) {
 
     fun update(movies: List<Movie>, resources: Int, onItemClickPublisher: PublishSubject<Movie>){
         sectionTitle.text = itemView.context.getString(resources)
-        listView.adapter = MovieAdapter(movies, onItemClickPublisher)
+        listView.adapter = MovieListAdapter(movies, onItemClickPublisher)
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {

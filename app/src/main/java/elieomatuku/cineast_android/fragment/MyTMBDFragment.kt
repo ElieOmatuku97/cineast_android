@@ -10,6 +10,7 @@ import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.AccessToken
@@ -98,7 +99,7 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
                             val movies = it
 
                             this@MyTMBDFragment.context?.let {
-                                UiUtils.startItemListActivity(it, movies, R.string.settings_watchlist, true)
+                                ItemListActivity.gotoWatchList(it, movies)
                             }
 
                         }
@@ -122,9 +123,8 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
                             val movies = it
 
                             this@MyTMBDFragment.context?.let {
-                                UiUtils.startItemListActivity(it, movies, R.string.settings_favorites, true)
+                                ItemListActivity.gotoFavoriteList(it, movies)
                             }
-
                         }
                     }
                 }

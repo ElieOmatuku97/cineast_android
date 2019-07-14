@@ -76,7 +76,7 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
                     onWatchListCheckPublishedNext(event)
 
                 }, {t: Throwable ->
-                    Timber.e( "watchListCheckPublisher failed: $t")
+                    Timber.e( "userListCheckPublisher failed: $t")
                 }))
 
         rxSubs.add(favoriteListCheckPublisher.observeOn(AndroidSchedulers.mainThread())

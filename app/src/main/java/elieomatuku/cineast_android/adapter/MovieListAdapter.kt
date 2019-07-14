@@ -8,8 +8,8 @@ import elieomatuku.cineast_android.viewholder.itemHolder.MovieItemHolder
 import io.reactivex.subjects.PublishSubject
 
 
-class MovieAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>,
-                   private val itemListLayoutRes: Int? = null, private val onMovieRemovedPublisher: PublishSubject<Movie>? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class MovieListAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>,
+                       private val itemListLayoutRes: Int? = null, private val onMovieRemovedPublisher: PublishSubject<Movie>? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun getItemCount(): Int {
         return movies.size
     }
@@ -24,7 +24,7 @@ class MovieAdapter(private val movies: List<Movie>, private val onItemClickPubli
         itemMovieHolder.update(movie.poster_path, movie.release_date, movie.title, movie.vote_average)
 
         itemMovieHolder.itemView.setOnClickListener {
-            Log.d(MovieAdapter::class.java.simpleName, "CLICKED && movie:  ${movies[position]}")
+            Log.d(MovieListAdapter::class.java.simpleName, "CLICKED && movie:  ${movies[position]}")
             onItemClickPublisher.onNext(movies[position])
         }
     }
