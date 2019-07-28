@@ -197,6 +197,23 @@ class UserService (private val restService: RestService, private val movieApi: M
         }
     }
 
+
+    fun getUserRatedMovies(asyncResponse: AsyncResponse<List<Movie>>) {
+        persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
+            movieApi.getUserRatedMovies(RestUtils.API_KEY, it).enqueue(object : Callback<MovieResponse> {
+                override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                    response.body()?.results?.let {
+                        asyncResponse.onSuccess(it)
+                    }
+                }
+
+                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                    asyncResponse.onFail(t.toString())
+                }
+            })
+        }
+    }
+
     private fun getRequestBody(media: Media) : RequestBody{
         val mediaType = MediaType.parse("application/json")
         return RequestBody.create(mediaType, toJson(media))

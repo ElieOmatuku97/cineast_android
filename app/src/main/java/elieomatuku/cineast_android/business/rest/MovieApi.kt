@@ -63,4 +63,9 @@ interface MovieApi {
     fun updateFavoritesList(@Query("api_key") apyKey: String,
                         @Query("session_id") sessionId: String,
                         @Body media: RequestBody): Call<UpdateListResponse>
+
+
+
+    @GET("account/{account_id}/rated/movies")
+    fun getUserRatedMovies(@Query("api_key") apiKey: String, @Query("session_id") sessionId: String ): Call<MovieResponse>
 }

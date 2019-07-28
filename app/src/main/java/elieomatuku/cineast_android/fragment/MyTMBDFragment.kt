@@ -137,6 +137,30 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
             true
         }
 
+
+        ratedBtn.setOnPreferenceClickListener {
+            userService.getUserRatedMovies( object: AsyncResponse<List<Movie>> {
+                override fun onSuccess(result: List<Movie>?) {
+
+                    handler.post {
+                        result?.let {
+                            val movies = it
+
+                            this@MyTMBDFragment.context?.let {
+                                ItemListActivity.gotoRatedMovies(it, movies)
+                            }
+                        }
+                    }
+                }
+
+                override fun onFail(error: String) {
+                    Timber.d("error : $error")
+                }
+            })
+
+            true
+        }
+
         (activity as MainActivity).rxSubs.add( (activity as MainActivity).sessionPublisher.hide()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({sessionId: String? ->

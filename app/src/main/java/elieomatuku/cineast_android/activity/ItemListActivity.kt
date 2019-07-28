@@ -59,6 +59,11 @@ class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
 
             context.startActivity(intent)
         }
+
+        fun gotoRatedMovies(context: Context, widgets: List<Widget>) {
+            val intent = gotoListActivity(context, widgets, R.string.settings_rated,  false)
+            context.startActivity(intent)
+        }
     }
 
     private var isUserList: Boolean = false
