@@ -2,12 +2,11 @@ package elieomatuku.cineast_android.business.service
 
 import android.app.Application
 import com.google.gson.Gson
-import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.MoshiSerializer
 import elieomatuku.cineast_android.business.client.Serializer
 import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.business.model.response.UpdateListResponse
+import elieomatuku.cineast_android.business.model.response.PostResponse
 import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.rest.MovieApi
 import elieomatuku.cineast_android.utils.RestUtils
@@ -141,12 +140,12 @@ class UserService (private val restService: RestService, private val movieApi: M
             val media = WatchListMedia(MOVIE, movie.id, watchList)
 
             movieApi.updateWatchList(RestUtils.API_KEY, it , getRequestBody(media)).enqueue(
-                    object : Callback<UpdateListResponse> {
-                        override fun onResponse(call: Call<UpdateListResponse>, response: Response<UpdateListResponse>) {
+                    object : Callback<PostResponse> {
+                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
                             Timber.d("response: ${response.body()}")
                         }
 
-                        override fun onFailure(call: Call<UpdateListResponse>, t: Throwable) {
+                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                             Timber.e("error add movie to watch list: $t")
                         }
                     }
@@ -184,19 +183,18 @@ class UserService (private val restService: RestService, private val movieApi: M
             val media = FavoriteListMedia(MOVIE, movie.id, favorite)
 
             movieApi.updateFavoritesList(RestUtils.API_KEY, it , getRequestBody(media)).enqueue(
-                    object : Callback<UpdateListResponse> {
-                        override fun onResponse(call: Call<UpdateListResponse>, response: Response<UpdateListResponse>) {
+                    object : Callback<PostResponse> {
+                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
                             Timber.d("response: ${response.body()}")
                         }
 
-                        override fun onFailure(call: Call<UpdateListResponse>, t: Throwable) {
+                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                             Timber.e("error add movie to watch list: $t")
                         }
                     }
             )
         }
     }
-
 
     fun getUserRatedMovies(asyncResponse: AsyncResponse<List<Movie>>) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
@@ -214,14 +212,32 @@ class UserService (private val restService: RestService, private val movieApi: M
         }
     }
 
-    private fun getRequestBody(media: Media) : RequestBody{
-        val mediaType = MediaType.parse("application/json")
-        return RequestBody.create(mediaType, toJson(media))
+    fun postMovieRate(movie: Movie, value: Double) {
+        persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
+            val rate = Rate(value)
+
+            movieApi.postMovieRate(movie.id, RestUtils.API_KEY, it , getRequestBody(rate)).enqueue(
+                    object : Callback<PostResponse> {
+                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                            Timber.d("response: ${response.body()}")
+                        }
+
+                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
+                            Timber.e("error post rate : $t")
+                        }
+                    }
+            )
+        }
     }
 
-    private fun toJson(media: Media): String {
+    private fun <T> getRequestBody(item: T): RequestBody {
+        val mediaType = MediaType.parse("application/json")
+        return RequestBody.create(mediaType, toJson(item))
+    }
+
+    private fun <T> toJson(item: T): String {
         val gson = Gson()
-        val jsonString: String = gson.toJson(media)
+        val jsonString: String = gson.toJson(item)
 
         return jsonString
     }

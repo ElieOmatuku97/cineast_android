@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android.business.rest
 
-import elieomatuku.cineast_android.business.model.response.UpdateListResponse
+import elieomatuku.cineast_android.business.model.response.PostResponse
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.model.data.MovieDetails
 import elieomatuku.cineast_android.business.model.response.*
@@ -54,7 +54,7 @@ interface MovieApi {
     @POST("account/{account_id}/watchlist")
     fun updateWatchList(@Query("api_key") apyKey: String,
                         @Query("session_id") sessionId: String,
-                        @Body media: RequestBody): Call<UpdateListResponse>
+                        @Body media: RequestBody): Call<PostResponse>
 
     @GET("account/{account_id}/favorite/movies")
     fun getFavoritesList(@Query("api_key") apiKey: String, @Query("session_id") sessionId: String):  Call<MovieResponse>
@@ -62,10 +62,18 @@ interface MovieApi {
     @POST("account/{account_id}/favorite")
     fun updateFavoritesList(@Query("api_key") apyKey: String,
                         @Query("session_id") sessionId: String,
-                        @Body media: RequestBody): Call<UpdateListResponse>
+                        @Body media: RequestBody): Call<PostResponse>
 
 
 
     @GET("account/{account_id}/rated/movies")
     fun getUserRatedMovies(@Query("api_key") apiKey: String, @Query("session_id") sessionId: String ): Call<MovieResponse>
+
+
+    @POST("movie/{movie_id}/rating")
+    fun postMovieRate(@Path("movie_id") movieId: Int,
+                      @Query("api_key") apiKey: String,
+                      @Query("session_id") sessionId: String,
+                      @Body value: RequestBody) : Call<PostResponse>
+
 }

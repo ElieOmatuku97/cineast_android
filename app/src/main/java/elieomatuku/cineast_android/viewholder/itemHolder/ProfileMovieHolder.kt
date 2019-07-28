@@ -22,7 +22,9 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
-
+import elieomatuku.cineast_android.App
+import elieomatuku.cineast_android.business.service.UserService
+import org.kodein.di.generic.instance
 
 
 class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int> ): RecyclerView.ViewHolder(itemView){
@@ -36,6 +38,8 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
         }
     }
 
+    private val userService : UserService by App.kodein.instance()
+
     private val genresView: TextView by lazy {
         itemView.item_genre_view
     }
@@ -46,6 +50,10 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
 
     private val linkTextView: TextView by lazy {
         itemView.item_link_view
+    }
+
+    private val rateBtn: TextView by lazy {
+        itemView.rate_btn
     }
 
     fun update(movie: Movie?, genres: List<Genre>?, homepage: String?) {
@@ -98,6 +106,12 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
 
         } else {
             linkTextView.visibility = View.GONE
+        }
+
+        rateBtn.setOnClickListener {
+            movie?.let {
+                userService.postMovieRate(it, 5.5)
+            }
         }
     }
 
