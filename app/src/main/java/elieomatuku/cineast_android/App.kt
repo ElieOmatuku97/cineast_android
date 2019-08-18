@@ -38,8 +38,7 @@ class App: Application() {
             bind<RestApi>() with singleton { RestApi(instance()) }
             bind<DiscoverService>() with singleton { DiscoverService(instance()) }
             bind<UserService>() with singleton {
-                val restApi: RestApi = instance()
-                UserService(instance(), restApi.movie, instance())
+                UserService(instance(), instance())
             }
         }
 
