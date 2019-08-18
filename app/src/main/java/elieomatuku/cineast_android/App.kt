@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.res.Resources
 import com.squareup.leakcanary.LeakCanary
-import elieomatuku.cineast_android.business.service.RestService
+import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.client.RestClient
 import elieomatuku.cineast_android.business.service.UserService
@@ -35,11 +35,11 @@ class App: Application() {
             bind<Context>() with instance(applicationContext)
             bind<Resources>() with instance(applicationContext.resources)
             bind<RestClient>() with singleton {RestClient(instance())}
-            bind<RestService>() with singleton { RestService(instance()) }
+            bind<RestApi>() with singleton { RestApi(instance()) }
             bind<DiscoverService>() with singleton { DiscoverService(instance()) }
             bind<UserService>() with singleton {
-                val restService: RestService = instance()
-                UserService(instance(), restService.movieApi, instance())
+                val restApi: RestApi = instance()
+                UserService(instance(), restApi.movie, instance())
             }
         }
 

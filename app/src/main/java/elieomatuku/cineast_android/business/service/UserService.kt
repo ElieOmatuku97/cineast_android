@@ -9,6 +9,7 @@ import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.PostResponse
 import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.rest.MovieApi
+import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.utils.ValueStore
 import okhttp3.MediaType
@@ -21,7 +22,7 @@ import okhttp3.RequestBody
 
 
 
-class UserService (private val restService: RestService, private val movieApi: MovieApi, private val application: Application) {
+class UserService (private val restApi: RestApi, private val movieApi: MovieApi, private val application: Application) {
     private val MOVIE = "movie"
 
     private val persistClient: ValueStore by lazy {
@@ -34,7 +35,7 @@ class UserService (private val restService: RestService, private val movieApi: M
     }
 
     fun getAccessToken(asyncResponse: AsyncResponse<AccessToken>) {
-        restService.authenticationApi.getAccessToken(RestUtils.API_KEY).enqueue(object : Callback<AccessToken> {
+        restApi.authentication.getAccessToken(RestUtils.API_KEY).enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>?) {
                 Timber.d("AccessToken: $response")
 
@@ -55,7 +56,7 @@ class UserService (private val restService: RestService, private val movieApi: M
     }
 
     fun getSession(requestToken: String?, asyncResponse: AsyncResponse<String>) {
-        restService.authenticationApi.getSession(RestUtils.API_KEY, requestToken).enqueue(object : Callback<Session> {
+        restApi.authentication.getSession(RestUtils.API_KEY, requestToken).enqueue(object : Callback<Session> {
             override fun onResponse(call: Call<Session>, response: Response<Session>) {
                 response.body()?.session_id?.let {
                     persistClient.set(RestUtils.SESSION_ID_KEY, it)
@@ -72,7 +73,7 @@ class UserService (private val restService: RestService, private val movieApi: M
 
     fun setAccount(sessionId: String?) {
         sessionId?.let {
-            restService.authenticationApi.getAccount(RestUtils.API_KEY, it).enqueue(object : Callback<Account> {
+            restApi.authentication.getAccount(RestUtils.API_KEY, it).enqueue(object : Callback<Account> {
                 override fun onResponse(call: Call<Account>, response: Response<Account>) {
                     Timber.d("account: ${response.body()}")
 

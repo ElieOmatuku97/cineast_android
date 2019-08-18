@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.service.RestService
+import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.model.response.PeopleResponse
@@ -17,7 +17,7 @@ import timber.log.Timber
 
 class SearchPresenter: BasePresenter<SearchVu>() {
 
-    private val restService: RestService by App.kodein.instance()
+    private val restApi: RestApi by App.kodein.instance()
 
     override fun onLink(vu: SearchVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -37,7 +37,7 @@ class SearchPresenter: BasePresenter<SearchVu>() {
 
 
     fun searchMovies(argQuery: String) {
-        restService.movieApi.getMoviesWithSearch(DiscoverService.API_KEY, argQuery).enqueue( object: Callback<MovieResponse> {
+        restApi.movie.getMoviesWithSearch(DiscoverService.API_KEY, argQuery).enqueue( object: Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
                 handler.post {
                     vu?.hideLoading()
@@ -51,7 +51,7 @@ class SearchPresenter: BasePresenter<SearchVu>() {
     }
 
     fun searchPeople(argQuery: String) {
-        restService.peopleApi.getPeopleWithSearch(DiscoverService.API_KEY, argQuery).enqueue(object : Callback<PeopleResponse> {
+        restApi.people.getPeopleWithSearch(DiscoverService.API_KEY, argQuery).enqueue(object : Callback<PeopleResponse> {
             override fun onResponse(call: Call<PeopleResponse>?, response: Response<PeopleResponse>?) {
                 handler.post {
                     vu?.hideLoading()

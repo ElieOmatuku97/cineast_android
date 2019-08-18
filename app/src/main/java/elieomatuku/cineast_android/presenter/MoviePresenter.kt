@@ -5,7 +5,7 @@ import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.service.RestService
+import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.ImageResponse
@@ -36,7 +36,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         val TAG = MoviePresenter::class.java.simpleName
     }
 
-    private val restService: RestService by App.kodein.instance()
+    private val restApi: RestApi by App.kodein.instance()
     private val userService: UserService by App.kodein.instance()
     var  movieDetails: MovieDetails? = null
     var trailers: List<Trailer>? = listOf()
@@ -71,7 +71,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         rxSubs.add(vu.onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe ({movieId ->
-                    restService.movieApi.getMovieImages(movieId, DiscoverService.API_KEY).enqueue( object : Callback<ImageResponse>{
+                    restApi.movie.getMovieImages(movieId, DiscoverService.API_KEY).enqueue( object : Callback<ImageResponse>{
                         override fun onResponse(call: Call<ImageResponse>?, response: Response<ImageResponse>?) {
                             val poster = response?.body()?.posters
                             handler.post {
@@ -89,7 +89,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
 
     private fun getMovieVideos( movie: Movie, screenName: String?, genres: List<Genre>?) {
         vu?.showLoading()
-        restService.movieApi.getMovieVideos(movie.id,  DiscoverService.API_KEY).enqueue( object : Callback<TrailerResponse> {
+        restApi.movie.getMovieVideos(movie.id,  DiscoverService.API_KEY).enqueue( object : Callback<TrailerResponse> {
             override fun onResponse(call: Call<TrailerResponse>?, response: Response<TrailerResponse>?) {
                 trailers = response?.body()?.results
                 getMovieDetails(movie, screenName, genres, trailers)
@@ -102,7 +102,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
     }
 
     private fun getMovieDetails(movie: Movie, screenName: String?, genres: List<Genre>?, trailers: List<Trailer>?) {
-        restService.movieApi.getMovieDetails(movie.id, DiscoverService.API_KEY).enqueue(object : Callback<MovieDetails> {
+        restApi.movie.getMovieDetails(movie.id, DiscoverService.API_KEY).enqueue(object : Callback<MovieDetails> {
             override fun onResponse(call: Call<MovieDetails>?, response: Response<MovieDetails>?) {
                 movieDetails = response?.body()
                 getMovieCredits(movie, screenName,  movieDetails, genres, trailers)
@@ -115,7 +115,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
     }
 
     private fun getMovieCredits (movie: Movie, screenName: String?, movieDetails: MovieDetails?, genres: List<Genre>? ,trailers: List<Trailer>?) {
-        restService.movieApi.getCredits( movie.id, DiscoverService.API_KEY).enqueue(object : Callback<MovieCreditsResponse> {
+        restApi.movie.getCredits( movie.id, DiscoverService.API_KEY).enqueue(object : Callback<MovieCreditsResponse> {
             override fun onResponse(call: Call<MovieCreditsResponse>?, response: Response<MovieCreditsResponse>?) {
                 cast = response?.body()?.cast
                 crew = response?.body()?.crew
@@ -128,7 +128,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
     }
 
     private fun getSimilarMovies(movie: Movie, screenName: String?, genres: List<Genre>?, movieDetails: MovieDetails?, trailers: List<Trailer>?, cast: List<Cast>?, crew: List<Crew>?) {
-        restService.movieApi.getSimilarMovie( movie.id, DiscoverService.API_KEY).enqueue(object: Callback<MovieResponse> {
+        restApi.movie.getSimilarMovie( movie.id, DiscoverService.API_KEY).enqueue(object: Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
                 similarMovies = response?.body()?.results
                 val movieInfo = MovieInfo(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)

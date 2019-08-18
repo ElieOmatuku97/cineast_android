@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.service.RestService
+import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.Genre
@@ -28,7 +28,7 @@ class PeopleCastPresenter: BasePresenter <PeopleCastVu>() {
         const val SCREEN_NAME_KEY = "screen_name"
 
     }
-    private val restService: RestService by App.kodein.instance()
+    private val restApi: RestApi by App.kodein.instance()
     private val discoverClient: DiscoverService by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
@@ -55,7 +55,7 @@ class PeopleCastPresenter: BasePresenter <PeopleCastVu>() {
 
 
     private fun getMovie(movieId: Int, peopleName: String? = null) {
-        restService.movieApi.getMovie(movieId, DiscoverService.API_KEY).enqueue(object : Callback<Movie> {
+        restApi.movie.getMovie(movieId, DiscoverService.API_KEY).enqueue(object : Callback<Movie> {
             override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
                 val movie : Movie = response?.body() as Movie
                 Log.d(LOG_TAG, "response: ${response?.body()}")
