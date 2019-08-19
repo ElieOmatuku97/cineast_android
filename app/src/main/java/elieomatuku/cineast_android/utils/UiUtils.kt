@@ -84,7 +84,7 @@ object  UiUtils {
         }
     }
 
-    fun filterWidgets(widgetMap: Map<String, List<Widget>>): MutableMap< Int ,List<Widget>?> {
+    fun filterWidgets(widgetMap: Map<String, List<Widget>?>): MutableMap< Int ,List<Widget>?> {
         return getFilteredWidgets(UnfilteredWidgets(widgetMap[DiscoverPresenter.POPULAR_MOVIE_KEY], widgetMap[DiscoverPresenter.POPULAR_PEOPLE_KEY],
                 widgetMap[DiscoverPresenter.NOW_PLAYING_KEY], widgetMap[DiscoverPresenter.UPCOMING_MOVIE_KEY], widgetMap[DiscoverPresenter.TOP_RATED_MOVIE_KEY]))
     }

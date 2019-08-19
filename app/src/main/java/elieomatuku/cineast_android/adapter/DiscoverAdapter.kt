@@ -23,10 +23,10 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
     }
 
     var widget : List<Widget> = listOf()
-    var widgetMap: Map<String, List<Widget>> = mapOf()
+    var widgetMap: Map<String, List<Widget>?> = mapOf()
     var isLoggedIn: Boolean = false
 
-    private var filteredWidget : MutableMap<Int, List<Widget>?> = mutableMapOf()
+    private var filteredWidget : MutableMap<Int, List<Widget>?>  = mutableMapOf()
 
     private fun getDiscoverPosition(position: Int): Int {
         return position - 1
