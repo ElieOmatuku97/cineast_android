@@ -19,11 +19,9 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     companion object {
         const val SCREEN_NAME = "Discover"
 
-        const val POPULAR_MOVIE_KEY = "popular_movie"
+
         const val POPULAR_PEOPLE_KEY = "popular_people"
-        const val NOW_PLAYING_KEY = "nowplaying_movie"
-        const val UPCOMING_MOVIE_KEY = "upcoming_movie"
-        const val TOP_RATED_MOVIE_KEY = "toprated_movie"
+        const val CONTAINER_KEY = "container_key"
 
         const val SCREEN_NAME_KEY = "screen_name"
 
@@ -35,30 +33,24 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     private val discoverClient: DiscoverService by App.kodein.instance()
     private val userService: UserService by App.kodein.instance()
-    private var popularMovie: List<Movie>? = listOf()
-    private var upcomingMovie: List<Movie>? = listOf()
-    private var popularPeople: List<People>? = listOf()
-    private var nowPlayingMovie: List<Movie>? = listOf()
-    private var topRatedMovie: List<Movie>? = listOf()
-    private var genres: List<Genre>? = listOf()
 
+    private var discoverContainer: DiscoverContainer? = null
+    private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: DiscoverVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        savedData(inState)
+        fetchSavedState(inState)
 
-        if (!isAllDataSaved()) {
+        if (!hasSavedState()) {
             vu.showLoading()
+            discoverContainer = DiscoverContainer()
             discoverClient.getPopularMovies(asyncResponse)
             discoverClient.getGenres(genreAsyncResponse)
 
         } else {
-            val movieContainer: MovieContainer? = MovieContainer(popularMovie, nowPlayingMovie, upcomingMovie, topRatedMovie)
-            movieContainer?.let {
-                if (popularPeople != null) {
-                    vu.setWigdet(popularPeople as List<People>, it, userService.isLoggedIn())
-                }
+            discoverContainer?.let {
+                vu.setWigdet(it, userService.isLoggedIn())
             }
         }
 
@@ -120,7 +112,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     private val asyncResponse: AsyncResponse<MovieResponse> by lazy {
         object : AsyncResponse<MovieResponse> {
             override fun onSuccess(result: MovieResponse?) {
-                popularMovie = result?.results as List<Movie>
+                discoverContainer?.popularMovies = result?.results as List<Movie>
                 handler.post {
                     vu?.showLoading()
                 }
@@ -136,7 +128,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     val nowPlayingMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
         object : AsyncResponse<MovieResponse> {
             override fun onSuccess(result: MovieResponse?) {
-                nowPlayingMovie = result?.results
+                discoverContainer?.nowPlayingMovies = result?.results
                 discoverClient.getUpcomingMovies(upComingMovieAsyncResponse)
             }
 
@@ -150,7 +142,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     val upComingMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
         object : AsyncResponse<MovieResponse> {
             override fun onSuccess(result: MovieResponse?) {
-                upcomingMovie = result?.results
+                discoverContainer?.upcomingMovies = result?.results
                 discoverClient.getTopRatedMovies(topRatedMovieAsyncResponse)
             }
 
@@ -163,7 +155,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     val topRatedMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
         object : AsyncResponse<MovieResponse> {
             override fun onSuccess(result: MovieResponse?) {
-                topRatedMovie = result?.results
+                discoverContainer?.topRatedMovies = result?.results
                 discoverClient.getPopularPeople(popularPeopleAsyncResponse)
             }
 
@@ -176,15 +168,12 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     val popularPeopleAsyncResponse: AsyncResponse<PeopleResponse> by lazy {
         object : AsyncResponse<PeopleResponse> {
             override fun onSuccess(result: PeopleResponse?) {
-                popularPeople = result?.results
+                discoverContainer?.popularPeople = result?.results
                 handler.post {
                     vu?.hideLoading()
-                    val movieContainer: MovieContainer? = MovieContainer(popularMovie, nowPlayingMovie, upcomingMovie, topRatedMovie)
-                    movieContainer?.let {
-                        if (popularPeople != null) {
-                            vu?.setWigdet(popularPeople as List<People>, it, userService.isLoggedIn())
-                        }
 
+                    discoverContainer?.let {
+                        vu?.setWigdet(it, userService.isLoggedIn())
                     }
                 }
             }
@@ -211,37 +200,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
-
-        popularMovie?.let {
-            if (it.isNotEmpty()) {
-                outState.putParcelableArrayList(POPULAR_MOVIE_KEY, it as ArrayList<out Parcelable>)
-            }
-        }
-
-        upcomingMovie?.let {
-
-            if (it.isNotEmpty()) {
-                outState.putParcelableArrayList(UPCOMING_MOVIE_KEY, it as ArrayList<out Parcelable>)
-            }
-        }
-
-        popularPeople?.let {
-            if (it.isNotEmpty()) {
-                outState.putParcelableArrayList(POPULAR_PEOPLE_KEY, it as ArrayList<out Parcelable>)
-            }
-        }
-
-        nowPlayingMovie?.let {
-
-            if (it.isNotEmpty()) {
-                outState.putParcelableArrayList(NOW_PLAYING_KEY, it as ArrayList<out Parcelable>)
-            }
-        }
-
-        topRatedMovie?.let {
-            if (it.isNotEmpty()) {
-                outState.putParcelableArrayList(TOP_RATED_MOVIE_KEY, it as ArrayList<out Parcelable>)
-            }
+        discoverContainer?.let {
+            outState.putParcelable(CONTAINER_KEY, it)
         }
 
         genres?.let {
@@ -251,16 +211,12 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         }
     }
 
-    private fun isAllDataSaved(): Boolean {
-        return !(popularMovie == null || upcomingMovie == null || popularPeople == null || nowPlayingMovie == null || topRatedMovie == null || genres == null)
+    private fun hasSavedState(): Boolean {
+        return !(discoverContainer == null || genres == null)
     }
 
-    private fun savedData(inState: Bundle?) {
-        popularMovie = inState?.getParcelableArrayList(POPULAR_MOVIE_KEY)
-        upcomingMovie = inState?.getParcelableArrayList(UPCOMING_MOVIE_KEY)
-        popularPeople = inState?.getParcelableArrayList(POPULAR_PEOPLE_KEY)
-        nowPlayingMovie = inState?.getParcelableArrayList(NOW_PLAYING_KEY)
-        topRatedMovie = inState?.getParcelableArrayList(TOP_RATED_MOVIE_KEY)
+    private fun fetchSavedState(inState: Bundle?) {
+        discoverContainer = inState?.getParcelable(CONTAINER_KEY)
         genres = inState?.getParcelableArrayList(MOVIE_GENRES_KEY)
     }
 }

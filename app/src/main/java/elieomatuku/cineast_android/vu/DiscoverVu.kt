@@ -14,7 +14,6 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.presenter.DiscoverPresenter
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -83,17 +82,11 @@ class DiscoverVu (inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    fun setWigdet(popularPeople: List<People>, movieContainer: MovieContainer, isLoggedIn: Boolean){
-        adapter.widgetMap = getWidgetMap(popularPeople, movieContainer)
+    fun setWigdet(discoverContainer: DiscoverContainer, isLoggedIn: Boolean){
+        adapter.filteredWidgets = discoverContainer.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
-    }
-
-    private fun getWidgetMap(popularPeople: List<People>, movieContainer: MovieContainer): MutableMap <String, List<Widget>?> {
-        return mutableMapOf<String, List<Widget>?>(Pair(DiscoverPresenter.POPULAR_MOVIE_KEY, movieContainer.popularMovie), Pair(DiscoverPresenter.POPULAR_PEOPLE_KEY, popularPeople),
-                 Pair(DiscoverPresenter.NOW_PLAYING_KEY, movieContainer.nowPlayingMovie), Pair(DiscoverPresenter.UPCOMING_MOVIE_KEY,movieContainer.upcomingMovie),
-                 Pair(DiscoverPresenter.TOP_RATED_MOVIE_KEY,movieContainer.topRated))
     }
 
 

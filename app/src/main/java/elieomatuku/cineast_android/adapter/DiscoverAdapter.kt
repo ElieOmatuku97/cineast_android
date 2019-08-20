@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.viewholder.*
 import elieomatuku.cineast_android.viewholder.itemHolder.LoginViewHolder
 import io.reactivex.subjects.PublishSubject
@@ -23,10 +22,9 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
     }
 
     var widget : List<Widget> = listOf()
-    var widgetMap: Map<String, List<Widget>?> = mapOf()
     var isLoggedIn: Boolean = false
 
-    private var filteredWidget : MutableMap<Int, List<Widget>?>  = mutableMapOf()
+    var filteredWidgets : MutableMap<Int, List<Widget>?>  = mutableMapOf()
 
     private fun getDiscoverPosition(position: Int): Int {
         return position - 1
@@ -35,10 +33,8 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
     var currentMovieId: Int =  -1
 
     override fun getItemCount(): Int {
-        filteredWidget = UiUtils.filterWidgets(widgetMap)
-
-        return if (filteredWidget != null) {
-            filteredWidget.size + 2
+        return if (filteredWidgets != null) {
+            filteredWidgets.size + 2
         } else {
             0
         }
@@ -88,28 +84,28 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
         val viewType = getItemViewType(position)
         when (viewType){
             TYPE_HEADER -> {
-                 val movies =  filteredWidget[TYPE_HEADER] as List<Movie>
+                 val movies =  filteredWidgets[TYPE_HEADER] as List<Movie>
                  val headerHolder = holder as HeaderHolder
                  headerHolder.update(movies, onMovieClickPublisher, currentMovieId)
             }
             TYPE_POPULAR_MOVIE -> {
-                val movies =  filteredWidget[getDiscoverPosition(TYPE_POPULAR_MOVIE)] as List<Movie>
+                val movies =  filteredWidgets[getDiscoverPosition(TYPE_POPULAR_MOVIE)] as List<Movie>
                 (holder as MovieHolder).update(movies , R.string.popular_movies, onMovieClickPublisher)
             }
             TYPE_POPULAR_PEOPLE ->{
-                val popularPeople = filteredWidget[getDiscoverPosition(TYPE_POPULAR_PEOPLE)] as List<People>
+                val popularPeople = filteredWidgets[getDiscoverPosition(TYPE_POPULAR_PEOPLE)] as List<People>
                 (holder as PopularPeopleHolder).update(popularPeople, onPersonClickPublisher)
             }
             TYPE_NOW_PLAYING_MOVIE -> {
-                val nowPlayingMovies = filteredWidget[getDiscoverPosition(TYPE_NOW_PLAYING_MOVIE)] as List<Movie>
+                val nowPlayingMovies = filteredWidgets[getDiscoverPosition(TYPE_NOW_PLAYING_MOVIE)] as List<Movie>
                 (holder as  MovieHolder).update(nowPlayingMovies, R.string.now_playing, onMovieClickPublisher)
             }
             TYPE_UPCOMING_MOVIE -> {
-                val upcomingMovies = filteredWidget[getDiscoverPosition(TYPE_UPCOMING_MOVIE)] as List<Movie>
+                val upcomingMovies = filteredWidgets[getDiscoverPosition(TYPE_UPCOMING_MOVIE)] as List<Movie>
                 (holder as  MovieHolder).update(upcomingMovies, R.string.upcoming, onMovieClickPublisher)
             }
             TYPE_TOP_RATED_MOVIE -> {
-                val topRatedMovies =  filteredWidget[getDiscoverPosition(TYPE_TOP_RATED_MOVIE)] as List<Movie>
+                val topRatedMovies =  filteredWidgets[getDiscoverPosition(TYPE_TOP_RATED_MOVIE)] as List<Movie>
                 (holder as  MovieHolder).update(topRatedMovies, R.string.top_rated, onMovieClickPublisher)
             }
 

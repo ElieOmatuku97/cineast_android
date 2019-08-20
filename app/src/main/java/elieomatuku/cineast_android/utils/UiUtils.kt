@@ -84,22 +84,6 @@ object  UiUtils {
         }
     }
 
-    fun filterWidgets(widgetMap: Map<String, List<Widget>?>): MutableMap< Int ,List<Widget>?> {
-        return getFilteredWidgets(UnfilteredWidgets(widgetMap[DiscoverPresenter.POPULAR_MOVIE_KEY], widgetMap[DiscoverPresenter.POPULAR_PEOPLE_KEY],
-                widgetMap[DiscoverPresenter.NOW_PLAYING_KEY], widgetMap[DiscoverPresenter.UPCOMING_MOVIE_KEY], widgetMap[DiscoverPresenter.TOP_RATED_MOVIE_KEY]))
-    }
-
-    private fun getFilteredWidgets(unfilteredWidgets: UnfilteredWidgets?): MutableMap <Int, List<Widget>?> {
-        val filteredWidgets: MutableMap< Int ,List<Widget>?> = mutableMapOf()
-        filteredWidgets[getSummaryPosition(DiscoverAdapter.TYPE_POPULAR_MOVIE)] = unfilteredWidgets?.popularMovies
-        filteredWidgets[getSummaryPosition(DiscoverAdapter.TYPE_POPULAR_PEOPLE)] = unfilteredWidgets?.popularPeople
-        filteredWidgets[getSummaryPosition(DiscoverAdapter.TYPE_NOW_PLAYING_MOVIE)] = unfilteredWidgets?.nowPlayingMovies
-        filteredWidgets[getSummaryPosition(DiscoverAdapter.TYPE_UPCOMING_MOVIE)] = unfilteredWidgets?.upComingMovies
-        filteredWidgets[getSummaryPosition(DiscoverAdapter.TYPE_TOP_RATED_MOVIE)] = unfilteredWidgets?.topRatedMovies
-
-        return filteredWidgets
-    }
-
     fun initToolbar(activity: AppCompatActivity, toolbar: Toolbar?, showBack: Boolean = true) {
         activity.setSupportActionBar(toolbar)
         if (showBack) {
@@ -178,9 +162,6 @@ object  UiUtils {
         return genresNames
     }
 
-    private fun getSummaryPosition (widgetPosition: Int): Int {
-         return (widgetPosition - 1)
-    }
 
     fun configureWebView(webView: WebView, progressBar: android.support.v4.widget.ContentLoadingProgressBar? = null) : WebView {
         val webv = webView
