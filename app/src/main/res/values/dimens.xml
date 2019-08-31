@@ -36,4 +36,8 @@
     <dimen name="holder_movie_facts_text_size">10sp</dimen>
     <dimen name="holder_profile_movie_text_size">11sp</dimen>
 
+
+    <dimen name="rate_dialog_height">120dp</dimen>
+    <dimen name="rate_dialog_width">230dp</dimen>
+
 </resources>

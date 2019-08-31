@@ -11,7 +11,6 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.service.UserService
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
 
 class RateDialogFragment : DialogFragment() {
@@ -34,12 +33,19 @@ class RateDialogFragment : DialogFragment() {
     private var movie: Movie? = null
     private var submitBtn: TextView? = null
     private var ratingBar: AppCompatRatingBar? = null
+    private var dialogTitle: TextView? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = activity?.layoutInflater
         val dialogView = inflater?.inflate(R.layout.fragment_rate_dialog, null)
 
+        dialogTitle = dialogView?.findViewById<TextView>(R.id.dialog_title)
+
         ratingBar = dialogView?.findViewById<AppCompatRatingBar>(R.id.rating_bar)
+        ratingBar?.rating?.let {
+            displayRating(it)
+        }
+
         submitBtn = dialogView?.findViewById<TextView>(R.id.dialog_submit)
         movie = arguments?.getParcelable(MOVIE_KEY)
 
@@ -55,6 +61,7 @@ class RateDialogFragment : DialogFragment() {
         }
 
 
+        onRatingInput()
         onSubmitClick()
         dialog.show()
 
@@ -74,5 +81,15 @@ class RateDialogFragment : DialogFragment() {
 
             dialog.cancel()
         }
+    }
+
+    private fun onRatingInput() {
+        ratingBar?.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            displayRating(rating)
+        }
+    }
+
+    private fun displayRating(rating: Float) {
+        dialogTitle?.text = String.format("%s %.1f", activity?.getString(R.string.rate_this_movie), rating)
     }
 }
