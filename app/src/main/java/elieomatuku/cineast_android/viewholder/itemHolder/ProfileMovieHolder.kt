@@ -22,14 +22,13 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.URLSpan
-import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.service.UserService
-import org.kodein.di.generic.instance
+import elieomatuku.cineast_android.fragment.RateDialogFragment
 
 
-class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int> ): RecyclerView.ViewHolder(itemView){
+
+class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>) : RecyclerView.ViewHolder(itemView) {
     companion object {
-        fun createView(parent: ViewGroup): View{
+        fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_profile_movie, parent, false)
         }
 
@@ -38,7 +37,6 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
         }
     }
 
-    private val userService : UserService by App.kodein.instance()
 
     private val genresView: TextView by lazy {
         itemView.item_genre_view
@@ -57,8 +55,8 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
     }
 
     fun update(movie: Movie?, genres: List<Genre>?, homepage: String?) {
-        val imageUrl: String? =  if (movie?.poster_path != null) {
-            UiUtils.getImageUrl(movie.poster_path,  itemView.context.getString(R.string.image_small))
+        val imageUrl: String? = if (movie?.poster_path != null) {
+            UiUtils.getImageUrl(movie.poster_path, itemView.context.getString(R.string.image_small))
         } else null
 
         if (!imageUrl.isNullOrEmpty()) {
@@ -69,7 +67,7 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
 
         movieProfileImageView.setOnClickListener {
             if (movie?.id != null)
-                 onProfileClickedPicturePublisher.onNext(movie.id)
+                onProfileClickedPicturePublisher.onNext(movie.id)
         }
 
         itemView.item_title_view.text = movie?.title
@@ -78,9 +76,9 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
         if (movie?.vote_average != null)
             itemView.star_view.rating = movie.vote_average
 
-        val names = if (movie?.genre_ids != null && genres != null ){
+        val names = if (movie?.genre_ids != null && genres != null) {
             UiUtils.mapMovieGenreIdsWithGenreNames(movie.genre_ids, genres)
-        } else  {
+        } else {
             null
         }
 
@@ -88,10 +86,10 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
             genresView.visibility = View.VISIBLE
             genresView.text = names
         } else {
-            val genres = movie?.genres
-            if (genres != null) {
+            val _genres = movie?.genres
+            if (_genres != null) {
                 genresView.visibility = View.VISIBLE
-                genresView.text = UiUtils.retrieveNameFromGenre(genres)
+                genresView.text = UiUtils.retrieveNameFromGenre(_genres)
             } else {
                 genresView.visibility = View.GONE
             }
@@ -109,8 +107,10 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
         }
 
         rateBtn.setOnClickListener {
-            movie?.let {
-                userService.postMovieRate(it, 5.5)
+            val rateDialogFragment = RateDialogFragment.newInstance(movie)
+
+            if (itemView.context is AppCompatActivity) {
+                rateDialogFragment.show((itemView.context as AppCompatActivity).supportFragmentManager, RateDialogFragment.TAG)
             }
         }
     }
@@ -119,17 +119,16 @@ class ProfileMovieHolder (itemView: View, private val onProfileClickedPicturePub
         val spans = spannable.getSpans(0, spannable.length, URLSpan::class.java)
         for (urlSpan in spans) {
             configSpannableLinkify(urlSpan, spannable, object : URLSpan(urlSpan.url) {
-                    override fun onClick(view: View) {
-                        UiUtils.gotoWebview(url, itemView.context as AppCompatActivity)
-                    }
-            } )
+                override fun onClick(view: View) {
+                    UiUtils.gotoWebview(url, itemView.context as AppCompatActivity)
+                }
+            })
 
         }
         return spannable
     }
 
-    //Todo: Rename this method
-    private fun configSpannableLinkify (urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {
+    private fun configSpannableLinkify(urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {
         val spanStart = spannable.getSpanStart(urlSpan)
         val spanEnd = spannable.getSpanEnd(urlSpan)
         spannable.setSpan(linkSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

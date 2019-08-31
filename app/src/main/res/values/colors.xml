@@ -14,6 +14,7 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_grey">#707070</color>
     <color name="color_grey_light">#8A8A8A</color>
+    <color name="grey_light">#EEEEEE</color>
 
     <color name="transparentblack">#66000000</color>
     <color name="transparent">#00FFFFFF</color>

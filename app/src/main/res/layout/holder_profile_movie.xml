@@ -9,7 +9,6 @@
         android:id="@+id/profile_image"
         android:layout_width="@dimen/movie_summary_image_width"
         android:layout_height="@dimen/movie_summary_image_size"
-        android:layout_marginLeft="@dimen/holder_item_movie_textview_margin"
         android:layout_marginStart="@dimen/holder_item_movie_textview_margin"
         android:layout_marginTop="@dimen/holder_item_movie_textview_margin"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,10 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
-        android:layout_marginRight="@dimen/holder_item_movie_textview_margin"
         android:textColor="@color/color_white"
         android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
-        android:layout_marginLeft="@dimen/holder_movie_facts_textview_padding_right"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toTopOf="@+id/profile_image" />
 
@@ -33,7 +30,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/item_release_view"
         android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
-        android:layout_marginLeft="@dimen/holder_movie_facts_textview_padding_right"
         android:layout_marginTop="@dimen/activity_margin_top"
         android:textSize="@dimen/holder_profile_movie_text_size"
         android:textColor="@color/color_grey"
@@ -59,7 +55,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
-        android:layout_marginLeft="@dimen/holder_movie_facts_textview_padding_right"
         android:layout_marginTop="@dimen/activity_margin_top"
         android:textSize="@dimen/holder_profile_movie_text_size"
         android:textColor="@color/color_grey"
@@ -87,12 +82,14 @@
         android:id="@+id/rate_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/holder_profile_movie_rate_margin_right"
+        android:text="@string/rate"
+        android:textSize="12sp"
+        android:textColor="@color/color_orange_app"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintTop_toBottomOf="@id/item_genre_view"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginRight="@dimen/holder_profile_movie_rate_margin_right"
-        android:text="@string/rate"
-        android:textSize="@dimen/holder_movie_facts_text_size"
-        android:textColor="@color/color_orange_app"
         />
 
 </android.support.constraint.ConstraintLayout>
