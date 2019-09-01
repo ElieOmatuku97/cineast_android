@@ -21,7 +21,7 @@ class MovieListAdapter(private val movies: List<Movie>, private val onItemClickP
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemMovieHolder = holder as MovieItemHolder
         val movie = movies[position]
-        itemMovieHolder.update(movie.poster_path, movie.release_date, movie.title, movie.vote_average)
+        itemMovieHolder.update(movie /*movie.poster_path, movie.release_date, movie.title, movie.vote_average*/)
 
         itemMovieHolder.itemView.setOnClickListener {
             Log.d(MovieListAdapter::class.java.simpleName, "CLICKED && movie:  ${movies[position]}")

@@ -7,17 +7,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.PeopleCastAdapter
-import elieomatuku.cineast_android.business.model.data.PeopleCast
+import elieomatuku.cineast_android.adapter.KnownForAdapter
+import elieomatuku.cineast_android.business.model.data.KnownFor
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
 
-class PeopleCastVu (inflater: LayoutInflater,
-                    activity: Activity,
-                    fragmentWrapper: FragmentWrapper?,
-                    parentView: ViewGroup?) : BaseVu(inflater,
+class KnownForVu (inflater: LayoutInflater,
+                  activity: Activity,
+                  fragmentWrapper: FragmentWrapper?,
+                  parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
@@ -48,8 +48,8 @@ class PeopleCastVu (inflater: LayoutInflater,
     }
 
 
-    fun updateVu( peopleCast: List<PeopleCast>){
-        val adapter = PeopleCastAdapter(peopleCast , itemSelectPublisher)
+    fun updateVu(knownFor: List<KnownFor>){
+        val adapter = KnownForAdapter(knownFor , itemSelectPublisher)
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         adapter.notifyDataSetChanged()

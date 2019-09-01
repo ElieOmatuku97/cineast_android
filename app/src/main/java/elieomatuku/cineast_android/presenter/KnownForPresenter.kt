@@ -9,9 +9,9 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.Genre
 import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.business.model.data.PeopleCast
+import elieomatuku.cineast_android.business.model.data.KnownFor
 import elieomatuku.cineast_android.business.model.response.GenreResponse
-import elieomatuku.cineast_android.vu.PeopleCastVu
+import elieomatuku.cineast_android.vu.KnownForVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import retrofit2.Call
@@ -19,9 +19,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.ArrayList
 
-class PeopleCastPresenter: BasePresenter <PeopleCastVu>() {
+class KnownForPresenter: BasePresenter <KnownForVu>() {
     companion object {
-        val LOG_TAG = PeopleCastPresenter::class.java.simpleName
+        val LOG_TAG = KnownForPresenter::class.java.simpleName
         const val PEOPLE_CAST_KEY = "people_cast"
         const val MOVIE_KEY = "movie"
         const val PEOPLE_NAME_KEY = "people_name"
@@ -32,12 +32,12 @@ class PeopleCastPresenter: BasePresenter <PeopleCastVu>() {
     private val discoverClient: DiscoverService by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
-    override fun onLink(vu: PeopleCastVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: KnownForVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        val peopleCast: List<PeopleCast> = args.getParcelableArrayList(PEOPLE_CAST_KEY)
+        val knownFor: List<KnownFor> = args.getParcelableArrayList(PEOPLE_CAST_KEY)
         val peopleName: String = args.getString(PEOPLE_NAME_KEY)
-        vu.updateVu(peopleCast)
+        vu.updateVu(knownFor)
         discoverClient.getGenres(genreAsyncResponse)
 
         rxSubs.add(vu.itemSelectObservable

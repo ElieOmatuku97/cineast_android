@@ -28,7 +28,7 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
     private val restApi: RestApi by App.kodein.instance()
 
     var peopleDetails : PeopleDetails? = null
-    var peopleMovies: List<PeopleCast>? =  listOf()
+    var peopleMovies: List<KnownFor>? =  listOf()
 
     override fun onLink(vu: PeopleVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -83,7 +83,7 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
     private fun getPeopleMovies(actorID: Int ,peopleDetails: PeopleDetails?, screenName: String ) {
         restApi.people.getPeopleCredits(actorID, DiscoverService.API_KEY).enqueue(object: Callback<PeopleCreditsResponse> {
             override fun onResponse(call: Call<PeopleCreditsResponse>?, response: Response<PeopleCreditsResponse>?) {
-                peopleMovies = response?.body()?.cast as List<PeopleCast>
+                peopleMovies = response?.body()?.cast as List<KnownFor>
                 handler.post {
                     vu?.hideLoading()
                     vu?.updateVu(peopleDetails, screenName, peopleMovies)

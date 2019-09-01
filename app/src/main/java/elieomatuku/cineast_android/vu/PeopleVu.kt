@@ -77,7 +77,7 @@ class PeopleVu(inflater: LayoutInflater,
         listView.layoutManager = null
     }
 
-    fun updateVu(peopleDetails: PeopleDetails?, screenName: String?, peopleMovies: List<PeopleCast>?) {
+    fun updateVu(peopleDetails: PeopleDetails?, screenName: String?, peopleMovies: List<KnownFor>?) {
         if (peopleDetails != null && screenName != null && peopleMovies != null) {
             toolbar?.title = screenName
             Log.d(PeopleVu::class.java.simpleName, "results: $peopleDetails & screenName: $screenName")

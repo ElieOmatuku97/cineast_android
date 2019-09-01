@@ -4,15 +4,15 @@ import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.PeopleCast
+import elieomatuku.cineast_android.business.model.data.KnownFor
 import elieomatuku.cineast_android.business.model.data.PeopleDetails
-import elieomatuku.cineast_android.fragment.PeopleCastFragment
+import elieomatuku.cineast_android.fragment.KnownForFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.viewholder.MenuPeopleHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.ProfilePeopleHolder
 import io.reactivex.subjects.PublishSubject
 
-class PeopleItemAdapter(private val peopleDetails: PeopleDetails, private val peopleMovies: List<PeopleCast>,
+class PeopleItemAdapter(private val peopleDetails: PeopleDetails, private val peopleMovies: List<KnownFor>,
                         private val onProfileClickedPicturePublisher: PublishSubject<Int>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_PEOPLE_PROFILE = 0
@@ -60,7 +60,7 @@ class PeopleItemAdapter(private val peopleDetails: PeopleDetails, private val pe
 
                 menuPeopleHolder.knownForSegmentBtn.setOnClickListener {
                     val activity =  it.context as FragmentActivity
-                    val peopleFragment = PeopleCastFragment.newInstance(peopleMovies, peopleDetails.name)
+                    val peopleFragment = KnownForFragment.newInstance(peopleMovies, peopleDetails.name)
                     (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, peopleFragment).commit()
                 }
             }

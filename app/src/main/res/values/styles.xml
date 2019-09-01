@@ -60,6 +60,11 @@
         <item name="colorControlActivated">@color/color_orange_app</item>
     </style>
 
+    <style name="UserRatingBarTheme" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/color_grey_light</item>
+        <item name="colorControlActivated">@android:color/holo_green_light</item>
+    </style>
+
 
 
 

@@ -1,16 +1,20 @@
 package elieomatuku.cineast_android.viewholder.itemHolder
 
+import android.support.v7.widget.AppCompatRatingBar
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_item_movie.view.*
-import me.zhanghai.android.materialratingbar.MaterialRatingBar
+
+
 
 class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
@@ -33,14 +37,20 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.movie_name_view
     }
 
-    private val starView: MaterialRatingBar? by lazy {
-        itemView.findViewById<MaterialRatingBar?>(R.id.star_view)?.also {
+    private val starView: RatingBar? by lazy {
+        itemView.findViewById<AppCompatRatingBar?>(R.id.star_view)?.also {
             it
         }
     }
 
-    fun update(posterPath: String?, movieReleaseDate: String?, title: String?, voteAverage: Float? = null){
-        val posterPath = posterPath
+    private val userRatingBar: RatingBar? by lazy {
+        itemView.findViewById<AppCompatRatingBar>(R.id.user_rating)?.also {
+            it
+        }
+    }
+
+    fun update(movie: Movie){
+        val posterPath = movie.poster_path
 
         if ((posterPath != null) && !(posterPath.isNullOrEmpty())) {
             val imageUrl = UiUtils.getImageUrl(posterPath, itemView.context.getString(R.string.image_small))
@@ -49,14 +59,21 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     .load(imageUrl)
                     .into(movieImage)
 
-            releaseDate?.text =  movieReleaseDate
-            movieTitle?.text =   title
+            releaseDate?.text =  movie.release_date
+            movieTitle?.text =   movie.title
         } else {
             itemView.visibility = View.GONE
         }
 
-        if (voteAverage != null) {
-            starView?.rating = voteAverage
+
+        movie.vote_average?.let {
+            starView?.rating = it
         }
+
+        movie.rating?.let {
+            userRatingBar?.visibility = View.VISIBLE
+            userRatingBar?.rating  = it
+        }
+
     }
 }
