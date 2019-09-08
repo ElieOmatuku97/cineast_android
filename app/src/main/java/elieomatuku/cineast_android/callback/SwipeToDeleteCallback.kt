@@ -6,18 +6,18 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import elieomatuku.cineast_android.adapter.MovieListAdapter
 import android.graphics.drawable.ColorDrawable
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.adapter.UserMovieListAdapter
 import timber.log.Timber
 
 
-class SwipeToDeleteCallback(val listAdapter: MovieListAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+class SwipeToDeleteCallback(val adapter: UserMovieListAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
     private val background: ColorDrawable? = ColorDrawable(Color.RED)
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.adapterPosition
-        listAdapter.deleteItem(position)
+        adapter.deleteItem(position)
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {

@@ -25,10 +25,7 @@ import elieomatuku.cineast_android.business.model.data.*
 import android.view.MenuItem
 import android.webkit.*
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.adapter.DiscoverAdapter
-import elieomatuku.cineast_android.fragment.LoginWebviewFragment
 import elieomatuku.cineast_android.fragment.WebviewFragment
-import elieomatuku.cineast_android.presenter.DiscoverPresenter
 import java.util.*
 
 
@@ -238,25 +235,5 @@ object  UiUtils {
         params.putBoolean(USER_LIST_KEY, isUserList)
         intent.putExtras(params)
         context.startActivity(intent)
-    }
-
-    fun gotoWebview (url : String, activity: AppCompatActivity) {
-        val webviewFragment =  WebviewFragment.newInstance(url)
-
-        val fm = activity.supportFragmentManager
-
-        if (webviewFragment != null && fm != null) {
-            fm.beginTransaction().add(android.R.id.content, webviewFragment, null).addToBackStack(null).commit()
-        }
-    }
-
-    fun gotoLoginWebview (url : String, activity: AppCompatActivity) {
-        val webviewFragment =  LoginWebviewFragment.newInstance(url)
-
-        val fm = activity.supportFragmentManager
-
-        if (webviewFragment != null && fm != null) {
-            fm.beginTransaction().add(android.R.id.content, webviewFragment, null).addToBackStack(null).commit()
-        }
     }
 }

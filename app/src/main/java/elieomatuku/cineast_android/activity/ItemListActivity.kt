@@ -36,6 +36,7 @@ class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
             if (resources != null) {
                 params.putInt(UiUtils.SCREEN_NAME_KEY, resources)
             }
+
             params.putBoolean(UiUtils.USER_LIST_KEY, isUserList)
             intent.putExtras(params)
 

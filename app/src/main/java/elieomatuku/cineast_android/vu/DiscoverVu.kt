@@ -14,7 +14,10 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.fragment.LoginWebviewFragment
+import elieomatuku.cineast_android.fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.utils.WebLink
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -26,7 +29,9 @@ class DiscoverVu (inflater: LayoutInflater,
                   parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
-        parentView = parentView){
+        parentView = parentView), WebLink <AccessToken?>{
+
+
     private val movieSelectPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()
     }
@@ -90,15 +95,20 @@ class DiscoverVu (inflater: LayoutInflater,
     }
 
 
-    fun gotoWebview(result: AccessToken?) {
-        if (result != null) {
+    override fun gotoWebview(value: AccessToken?) {
+        value?.let {
             val authenticateUrl = Uri.parse(activity.getString(R.string.authenticate_url))
                     .buildUpon()
-                    .appendPath(result.request_token)
+                    .appendPath(it.request_token)
                     .build()
                     .toString()
 
-            UiUtils.gotoLoginWebview(authenticateUrl, activity as AppCompatActivity)
+            val webviewFragment: WebviewFragment? =  LoginWebviewFragment.newInstance(authenticateUrl)
+            val fm = (activity as AppCompatActivity).supportFragmentManager
+
+            if (webviewFragment != null && fm != null) {
+                fm.beginTransaction().add(android.R.id.content, webviewFragment, null).addToBackStack(null).commit()
+            }
         }
     }
 
@@ -106,4 +116,5 @@ class DiscoverVu (inflater: LayoutInflater,
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
     }
+
 }
