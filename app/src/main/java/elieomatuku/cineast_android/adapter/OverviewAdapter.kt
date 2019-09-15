@@ -52,7 +52,7 @@ class OverviewAdapter(private val movie: Movie, private val trailers: List<Trail
         when (viewType) {
             TYPE_PLOT_SUMMARY -> {
                 val plotSummaryHolder = holder as SummaryHolder
-                plotSummaryHolder.update(movie.overview, holder.itemView.resources.getString(R.string.plot_summary))
+                plotSummaryHolder.update(movie.overview, R.string.plot_summary)
             }
 
             TYPE_TRAILERS -> {

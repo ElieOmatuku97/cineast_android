@@ -30,7 +30,7 @@ class OverviewPeopleFragment: Fragment() {
 
         val holder = SummaryHolder.newInstance(rootView, R.layout.holder_bio)
         rootView.addView(holder.itemView)
-        holder.update(peopleBio, holder.itemView.resources.getString(R.string.biography))
+        holder.update(peopleBio, R.string.biography)
         return rootView
     }
 }

@@ -5,7 +5,6 @@ package elieomatuku.cineast_android.fragment
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
@@ -16,13 +15,13 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.AccessToken
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.service.UserService
-import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.utils.WebLink
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
 
-class MyTMBDFragment: PreferenceFragmentCompat() {
+class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
     companion object {
         fun newInstance(): MyTMBDFragment {
             return MyTMBDFragment()
@@ -67,15 +66,7 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
                 userService.getAccessToken(object : AsyncResponse<AccessToken> {
                     override fun onSuccess(result: AccessToken?) {
                         Timber.d("token result:  $result")
-                        if (result != null) {
-                            val authenticateUrl = Uri.parse(it.context.getString(R.string.authenticate_url))
-                                    .buildUpon()
-                                    .appendPath(result.request_token)
-                                    .build()
-                                    .toString()
-
-                            UiUtils.gotoLoginWebview(authenticateUrl, this@MyTMBDFragment.activity as AppCompatActivity)
-                        }
+                        gotoWebview(result)
                     }
 
                     override fun onFail(error: String) {
@@ -137,6 +128,30 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
             true
         }
 
+
+        ratedBtn.setOnPreferenceClickListener {
+            userService.getUserRatedMovies( object: AsyncResponse<List<Movie>> {
+                override fun onSuccess(result: List<Movie>?) {
+
+                    handler.post {
+                        result?.let {
+                            val movies = it
+
+                            this@MyTMBDFragment.context?.let {
+                                ItemListActivity.gotoRatedMovies(it, movies)
+                            }
+                        }
+                    }
+                }
+
+                override fun onFail(error: String) {
+                    Timber.d("error : $error")
+                }
+            })
+
+            true
+        }
+
         (activity as MainActivity).rxSubs.add( (activity as MainActivity).sessionPublisher.hide()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({sessionId: String? ->
@@ -158,6 +173,23 @@ class MyTMBDFragment: PreferenceFragmentCompat() {
             favoritesBtn.isVisible = false
             watchListBtn.isVisible = false
             ratedBtn.isVisible = false
+        }
+    }
+
+    override fun gotoWebview(value: AccessToken?) {
+        value?.let {
+            val authenticateUrl = Uri.parse(context?.getString(R.string.authenticate_url))
+                    .buildUpon()
+                    .appendPath(it.request_token)
+                    .build()
+                    .toString()
+
+            val webviewFragment: WebviewFragment? =  LoginWebviewFragment.newInstance(authenticateUrl)
+            val fm = activity?.supportFragmentManager
+
+            if (webviewFragment != null && fm != null) {
+                fm.beginTransaction().add(android.R.id.content, webviewFragment, null).addToBackStack(null).commit()
+            }
         }
     }
 }

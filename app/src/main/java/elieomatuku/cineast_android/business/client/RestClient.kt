@@ -22,12 +22,6 @@ class RestClient (resources: Resources) {
 
     private val httpClient: OkHttpClient by lazy {
         val logging = HttpLoggingInterceptor()
-//        val logLevel = when (config.logLevel) {
-//            CosmosCoreConfig.LogLevel.Debug -> HttpLoggingInterceptor.Level.BODY
-//            CosmosCoreConfig.LogLevel.Info -> HttpLoggingInterceptor.Level.BASIC
-//            else -> HttpLoggingInterceptor.Level.NONE
-//        }
-
         val logLevel = HttpLoggingInterceptor.Level.BODY
         logging.level = logLevel
 

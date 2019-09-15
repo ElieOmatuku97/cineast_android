@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.service.RestService
+import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.ImageResponse
@@ -25,10 +25,10 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
         const val MOVIE_TEAM_KEY = "movie_team"
     }
 
-    private val restService: RestService by App.kodein.instance()
+    private val restApi: RestApi by App.kodein.instance()
 
     var peopleDetails : PeopleDetails? = null
-    var peopleMovies: List<PeopleCast>? =  listOf()
+    var peopleMovies: List<KnownFor>? =  listOf()
 
     override fun onLink(vu: PeopleVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -48,7 +48,7 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
             val id: Int?= people.id
 
             if (id != null) {
-                restService.peopleApi.getPeopleDetails(id, DiscoverService.API_KEY).enqueue(object : Callback<PeopleDetails> {
+                restApi.people.getPeopleDetails(id, DiscoverService.API_KEY).enqueue(object : Callback<PeopleDetails> {
                     override fun onResponse(call: Call<PeopleDetails>?, response: Response<PeopleDetails>?) {
                         peopleDetails = response?.body()
                         getPeopleMovies(id, peopleDetails, screenName)
@@ -64,7 +64,7 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
         rxSubs.add(vu.onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe ({peopleId ->
-                    restService.peopleApi.getPeopleImages(peopleId, DiscoverService.API_KEY).enqueue( object : Callback<ImageResponse>{
+                    restApi.people.getPeopleImages(peopleId, DiscoverService.API_KEY).enqueue( object : Callback<ImageResponse>{
                         override fun onResponse(call: Call<ImageResponse>?, response: Response<ImageResponse>?) {
                             val poster = response?.body()?.peoplePosters
                             handler.post {
@@ -81,9 +81,9 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
     }
 
     private fun getPeopleMovies(actorID: Int ,peopleDetails: PeopleDetails?, screenName: String ) {
-        restService.peopleApi.getPeopleCredits(actorID, DiscoverService.API_KEY).enqueue(object: Callback<PeopleCreditsResponse> {
+        restApi.people.getPeopleCredits(actorID, DiscoverService.API_KEY).enqueue(object: Callback<PeopleCreditsResponse> {
             override fun onResponse(call: Call<PeopleCreditsResponse>?, response: Response<PeopleCreditsResponse>?) {
-                peopleMovies = response?.body()?.cast as List<PeopleCast>
+                peopleMovies = response?.body()?.cast as List<KnownFor>
                 handler.post {
                     vu?.hideLoading()
                     vu?.updateVu(peopleDetails, screenName, peopleMovies)

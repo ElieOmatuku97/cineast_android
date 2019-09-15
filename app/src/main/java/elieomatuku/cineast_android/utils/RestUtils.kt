@@ -1,5 +1,7 @@
 package elieomatuku.cineast_android.utils
 
+import elieomatuku.cineast_android.BuildConfig
+
 
 object RestUtils {
 
@@ -9,8 +11,8 @@ object RestUtils {
     const val ACCOUNT_ID_KEY = "account_id_key"
 
 
-     val API_KEY: String by lazy {
-        elieomatuku.cineast_android.BuildConfig.api_key
+    val API_KEY: String by lazy {
+        BuildConfig.api_key
     }
 
 }

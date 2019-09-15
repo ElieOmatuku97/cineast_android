@@ -19,7 +19,7 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_item_list.view.*
 import elieomatuku.cineast_android.callback.SwipeToDeleteCallback
 import android.support.v7.widget.helper.ItemTouchHelper
-
+import elieomatuku.cineast_android.adapter.UserMovieListAdapter
 
 
 class ItemListVu (inflater: LayoutInflater,
@@ -93,7 +93,7 @@ class ItemListVu (inflater: LayoutInflater,
     private fun setUpListView(widgets: List<Widget>, isUserList: Boolean) {
         if (areWidgetsMovies(widgets)) {
             val movieListAdapter =  getMovieAdapter(widgets, isUserList)
-            setSwipeToDelete(isUserList, movieListAdapter)
+            setSwipeToDelete(movieListAdapter)
             listView.adapter = movieListAdapter
 
         } else {
@@ -110,14 +110,14 @@ class ItemListVu (inflater: LayoutInflater,
 
     private fun getMovieAdapter(widgets: List<Widget>, isUserList: Boolean) : MovieListAdapter {
         return if (isUserList){
-            MovieListAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
+            UserMovieListAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
         } else {
             MovieListAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list)
         }
     }
 
-    private fun setSwipeToDelete(isUserList: Boolean, movieListAdapter: MovieListAdapter) {
-        if (isUserList) {
+    private fun setSwipeToDelete(movieListAdapter: MovieListAdapter) {
+        if (movieListAdapter is UserMovieListAdapter) {
             val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(movieListAdapter))
             itemTouchHelper.attachToRecyclerView(listView)
         }

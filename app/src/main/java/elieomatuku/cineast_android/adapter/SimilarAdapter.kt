@@ -19,7 +19,7 @@ class SimilarAdapter(private val similarMovies: List<Movie>, private val onItemC
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemMovieHolder = holder as MovieItemHolder
         val movie = similarMovies[position]
-        itemMovieHolder.update(movie.poster_path, movie.release_date, movie.original_title)
+        itemMovieHolder.update(movie)
 
         itemMovieHolder.itemView.setOnClickListener {
             onItemClickPublisher.onNext(movie)

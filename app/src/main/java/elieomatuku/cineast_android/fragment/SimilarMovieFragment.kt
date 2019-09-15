@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.business.model.data.MovieSummary
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.presenter.SimilarMoviePresenter
 import elieomatuku.cineast_android.vu.SimilarMovieVu
@@ -19,10 +19,14 @@ class SimilarMovieFragment: MVPFragment<SimilarMoviePresenter, SimilarMovieVu>()
             SimilarMovieFragment.hashCode()
         }
 
-        fun newInstance(similarMovies: List<Movie>?, movieTitle: String?): SimilarMovieFragment{
+        fun newInstance(movieSummary: MovieSummary): SimilarMovieFragment{
             val args = Bundle()
+
+            val similarMovies = movieSummary.similarMovies
             args.putParcelableArrayList(MOVIE_SIMILAR_MOVIES, similarMovies as ArrayList<out Parcelable>)
-            args.putString(MOVIE_TITLE, movieTitle)
+
+            val title = movieSummary.movie?.title
+            args.putString(MOVIE_TITLE, title)
             val fragment = SimilarMovieFragment()
             fragment.arguments = args
             return fragment

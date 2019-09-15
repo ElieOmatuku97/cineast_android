@@ -2,8 +2,7 @@ package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.business.model.data.Cast
-import elieomatuku.cineast_android.business.model.data.Crew
+import elieomatuku.cineast_android.business.model.data.MovieSummary
 import elieomatuku.cineast_android.presenter.MovieTeamPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.vu.MovieTeamVu
@@ -22,11 +21,17 @@ class MovieTeamFragment:  MVPFragment <MovieTeamPresenter, MovieTeamVu>()  {
             MovieTeamFragment.hashCode()
         }
 
-        fun newInstance(cast: List<Cast>?, crew: List<Crew>?, movieTitle: String?): MovieTeamFragment {
+        fun newInstance(movieSummary: MovieSummary): MovieTeamFragment {
             val args = Bundle()
+
+            val cast = movieSummary.cast
             args.putParcelableArrayList(MOVIE_CAST, cast as ArrayList<out Parcelable>)
+
+            val crew = movieSummary.crew
             args.putParcelableArrayList(MOVIE_CREW, crew as ArrayList<out Parcelable>)
-            args.putString(MOVIE_TITLE, movieTitle)
+
+            val title = movieSummary.movie?.title
+            args.putString(MOVIE_TITLE, title)
 
             val fragment = MovieTeamFragment()
             fragment.arguments = args

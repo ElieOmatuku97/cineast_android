@@ -22,7 +22,7 @@ import java.util.*
 class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
     companion object {
         private val MVP_UID by lazy {
-            ItemListActivity.hashCode()
+           hashCode()
         }
 
         const val DISPLAY_FAVORITE_LIST = "favorite_list_key"
@@ -36,6 +36,7 @@ class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
             if (resources != null) {
                 params.putInt(UiUtils.SCREEN_NAME_KEY, resources)
             }
+
             params.putBoolean(UiUtils.USER_LIST_KEY, isUserList)
             intent.putExtras(params)
 
@@ -57,6 +58,11 @@ class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
             params.putBoolean(DISPLAY_WATCH_LIST, true)
             intent.putExtras(params)
 
+            context.startActivity(intent)
+        }
+
+        fun gotoRatedMovies(context: Context, widgets: List<Widget>) {
+            val intent = gotoListActivity(context, widgets, R.string.settings_rated,  false)
             context.startActivity(intent)
         }
     }

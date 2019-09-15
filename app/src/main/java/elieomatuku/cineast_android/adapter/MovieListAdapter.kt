@@ -8,31 +8,26 @@ import elieomatuku.cineast_android.viewholder.itemHolder.MovieItemHolder
 import io.reactivex.subjects.PublishSubject
 
 
-class MovieListAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>,
-                       private val itemListLayoutRes: Int? = null, private val onMovieRemovedPublisher: PublishSubject<Movie>? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+open class MovieListAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>,
+                       private val itemListLayoutRes: Int? = null): RecyclerView.Adapter<MovieItemHolder>(){
+
     override fun getItemCount(): Int {
         return movies.size
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemHolder {
         return  MovieItemHolder.newInstance(parent, itemListLayoutRes)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val itemMovieHolder = holder as MovieItemHolder
-        val movie = movies[position]
-        itemMovieHolder.update(movie.poster_path, movie.release_date, movie.title, movie.vote_average)
 
-        itemMovieHolder.itemView.setOnClickListener {
+    override fun onBindViewHolder(holder: MovieItemHolder, position: Int) {
+        val movie = movies[position]
+        holder.update(movie)
+
+        holder.itemView.setOnClickListener {
             Log.d(MovieListAdapter::class.java.simpleName, "CLICKED && movie:  ${movies[position]}")
             onItemClickPublisher.onNext(movies[position])
         }
     }
 
-    fun deleteItem(position: Int) {
-        val movie = movies[position]
-        onMovieRemovedPublisher?.onNext(movie)
-        (movies as MutableList).removeAt(position)
-        notifyItemRemoved(position)
-    }
 }

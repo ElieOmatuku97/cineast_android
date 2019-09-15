@@ -60,6 +60,8 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         mvpDispatcher.vu?.toolbar?.let {
             UiUtils.initToolbar(this, it, true)
         }
+
+
     }
 
     override fun onResume() {

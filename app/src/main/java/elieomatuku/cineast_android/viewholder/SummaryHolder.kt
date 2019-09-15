@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import kotlinx.android.synthetic.main.holder_plot.view.*
+import kotlinx.android.synthetic.main.holder_summary.view.*
 
 class SummaryHolder(itemView: View): RecyclerView.ViewHolder (itemView) {
     companion object {
         fun createView(parent: ViewGroup, layoutRes: Int? = null): View {
-            return LayoutInflater.from(parent.context).inflate(layoutRes?: R.layout.holder_plot, parent, false)
+            return LayoutInflater.from(parent.context).inflate(layoutRes?: R.layout.holder_summary, parent, false)
         }
 
         fun newInstance(parent: ViewGroup, layoutRes: Int? = null): SummaryHolder {
@@ -26,13 +26,18 @@ class SummaryHolder(itemView: View): RecyclerView.ViewHolder (itemView) {
         itemView.summary_view
     }
 
-    fun update(moviePlot: String? = null, summaryTitle: String? = null) {
-        if (summaryTitle != null) {
-            summaryTitleView.text = summaryTitle
+    fun update(summary: String? = null, summaryTitleRes: Int? = null) {
+
+        summaryTitleRes?.let {
+            val summaryTitle: String? = itemView.resources.getString(it)
+            if (summaryTitle != null) {
+                summaryTitleView.text = summaryTitle
+            }
         }
 
-        if (moviePlot != null) {
-            summaryView.text = moviePlot
+
+        if (summary != null) {
+            summaryView.text = summary
         }
     }
 }

@@ -2,14 +2,15 @@ package elieomatuku.cineast_android.business.service
 
 import android.app.Application
 import com.google.gson.Gson
-import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.MoshiSerializer
 import elieomatuku.cineast_android.business.client.Serializer
 import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.business.model.response.UpdateListResponse
+import elieomatuku.cineast_android.business.model.response.PostResponse
 import elieomatuku.cineast_android.business.model.response.MovieResponse
+import elieomatuku.cineast_android.business.rest.AuthenticationApi
 import elieomatuku.cineast_android.business.rest.MovieApi
+import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.utils.ValueStore
 import okhttp3.MediaType
@@ -22,7 +23,7 @@ import okhttp3.RequestBody
 
 
 
-class UserService (private val restService: RestService, private val movieApi: MovieApi, private val application: Application) {
+class UserService (private val restApi: RestApi,  private val application: Application) {
     private val MOVIE = "movie"
 
     private val persistClient: ValueStore by lazy {
@@ -34,8 +35,16 @@ class UserService (private val restService: RestService, private val movieApi: M
         MoshiSerializer<Account>(Account::class.java)
     }
 
+    private val movieApi: MovieApi by lazy {
+        restApi.movie
+    }
+
+    private val authenticationApi: AuthenticationApi by lazy {
+        restApi.authentication
+    }
+
     fun getAccessToken(asyncResponse: AsyncResponse<AccessToken>) {
-        restService.authenticationApi.getAccessToken(RestUtils.API_KEY).enqueue(object : Callback<AccessToken> {
+        authenticationApi.getAccessToken(RestUtils.API_KEY).enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>?) {
                 Timber.d("AccessToken: $response")
 
@@ -56,7 +65,7 @@ class UserService (private val restService: RestService, private val movieApi: M
     }
 
     fun getSession(requestToken: String?, asyncResponse: AsyncResponse<String>) {
-        restService.authenticationApi.getSession(RestUtils.API_KEY, requestToken).enqueue(object : Callback<Session> {
+        authenticationApi.getSession(RestUtils.API_KEY, requestToken).enqueue(object : Callback<Session> {
             override fun onResponse(call: Call<Session>, response: Response<Session>) {
                 response.body()?.session_id?.let {
                     persistClient.set(RestUtils.SESSION_ID_KEY, it)
@@ -73,7 +82,7 @@ class UserService (private val restService: RestService, private val movieApi: M
 
     fun setAccount(sessionId: String?) {
         sessionId?.let {
-            restService.authenticationApi.getAccount(RestUtils.API_KEY, it).enqueue(object : Callback<Account> {
+            authenticationApi.getAccount(RestUtils.API_KEY, it).enqueue(object : Callback<Account> {
                 override fun onResponse(call: Call<Account>, response: Response<Account>) {
                     Timber.d("account: ${response.body()}")
 
@@ -141,12 +150,12 @@ class UserService (private val restService: RestService, private val movieApi: M
             val media = WatchListMedia(MOVIE, movie.id, watchList)
 
             movieApi.updateWatchList(RestUtils.API_KEY, it , getRequestBody(media)).enqueue(
-                    object : Callback<UpdateListResponse> {
-                        override fun onResponse(call: Call<UpdateListResponse>, response: Response<UpdateListResponse>) {
+                    object : Callback<PostResponse> {
+                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
                             Timber.d("response: ${response.body()}")
                         }
 
-                        override fun onFailure(call: Call<UpdateListResponse>, t: Throwable) {
+                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                             Timber.e("error add movie to watch list: $t")
                         }
                     }
@@ -184,12 +193,12 @@ class UserService (private val restService: RestService, private val movieApi: M
             val media = FavoriteListMedia(MOVIE, movie.id, favorite)
 
             movieApi.updateFavoritesList(RestUtils.API_KEY, it , getRequestBody(media)).enqueue(
-                    object : Callback<UpdateListResponse> {
-                        override fun onResponse(call: Call<UpdateListResponse>, response: Response<UpdateListResponse>) {
+                    object : Callback<PostResponse> {
+                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
                             Timber.d("response: ${response.body()}")
                         }
 
-                        override fun onFailure(call: Call<UpdateListResponse>, t: Throwable) {
+                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
                             Timber.e("error add movie to watch list: $t")
                         }
                     }
@@ -197,14 +206,48 @@ class UserService (private val restService: RestService, private val movieApi: M
         }
     }
 
-    private fun getRequestBody(media: Media) : RequestBody{
-        val mediaType = MediaType.parse("application/json")
-        return RequestBody.create(mediaType, toJson(media))
+    fun getUserRatedMovies(asyncResponse: AsyncResponse<List<Movie>>) {
+        persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
+            movieApi.getUserRatedMovies(RestUtils.API_KEY, it).enqueue(object : Callback<MovieResponse> {
+                override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                    response.body()?.results?.let {
+                        asyncResponse.onSuccess(it)
+                    }
+                }
+
+                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                    asyncResponse.onFail(t.toString())
+                }
+            })
+        }
     }
 
-    private fun toJson(media: Media): String {
+    fun postMovieRate(movie: Movie, value: Double) {
+        persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
+            val rate = Rate(value)
+
+            movieApi.postMovieRate(movie.id, RestUtils.API_KEY, it , getRequestBody(rate)).enqueue(
+                    object : Callback<PostResponse> {
+                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                            Timber.d("response: ${response.body()}")
+                        }
+
+                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
+                            Timber.e("error post rate : $t")
+                        }
+                    }
+            )
+        }
+    }
+
+    private fun <T> getRequestBody(item: T): RequestBody {
+        val mediaType = MediaType.parse("application/json")
+        return RequestBody.create(mediaType, toJson(item))
+    }
+
+    private fun <T> toJson(item: T): String {
         val gson = Gson()
-        val jsonString: String = gson.toJson(media)
+        val jsonString: String = gson.toJson(item)
 
         return jsonString
     }

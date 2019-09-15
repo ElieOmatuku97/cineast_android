@@ -74,19 +74,19 @@ class MovieVu(inflater: LayoutInflater,
             null
         } }
 
-    fun updateVu(movieInfo: MovieInfo) {
-        toolbar?.title = movieInfo.screenName
-        updateListView(movieInfo)
-        initializeFragmentOnMovieClicked(movieInfo)
+    fun updateVu(movieSummary: MovieSummary) {
+        toolbar?.title = movieSummary.screenName
+        updateListView(movieSummary)
+        initializeFragmentOnMovieClicked(movieSummary)
     }
 
-    private fun updateListView(movieInfo: MovieInfo) {
-        val movieItemAdapter = MovieItemAdapter(movieInfo, onProfileClickedPicturePublisher)
+    private fun updateListView(movieSummary: MovieSummary) {
+        val movieItemAdapter = MovieItemAdapter(movieSummary, onProfileClickedPicturePublisher)
         configureListView(movieItemAdapter, listView, getItemDecoration(R.drawable.item_decoration, activity))
     }
 
-    private fun initializeFragmentOnMovieClicked(movieInfo: MovieInfo) {
-        val initialFragmentOnMovieClicked = OverviewFragment.newInstance(movieInfo.movie, movieInfo.trailers, movieInfo.movieDetails)
+    private fun initializeFragmentOnMovieClicked(movieSummary: MovieSummary) {
+        val initialFragmentOnMovieClicked = OverviewFragment.newInstance(movieSummary)
         replaceFragment(initialFragmentOnMovieClicked)
     }
 

@@ -1,14 +1,10 @@
 package elieomatuku.cineast_android.viewholder.itemHolder
 
-import android.support.v7.app.AppCompatActivity
+
 import android.support.v7.widget.AppCompatImageView
-import android.support.v7.widget.RecyclerView
 import android.text.Html
-import android.text.Spannable
 import android.text.SpannableString
-import android.text.Spanned
 import android.text.method.LinkMovementMethod
-import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
@@ -21,8 +17,7 @@ import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_people.view.*
 
-class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>): RecyclerView.ViewHolder(itemView) {
-
+class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>): ProfileHolder(itemView){
     companion object {
         fun createView(parent: ViewGroup): View{
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_profile_people, parent, false)
@@ -32,7 +27,6 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
             return ProfilePeopleHolder(createView(parent), onProfileClickedPicturePublisher)
         }
     }
-
 
     private val peopleNameView: TextView by lazy {
         itemView.people_name_view
@@ -101,25 +95,5 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
             homepageView.visibility = View.GONE
         }
 
-    }
-
-    private fun linkify(spannable: Spannable): Spannable {
-        val spans = spannable.getSpans(0, spannable.length, URLSpan::class.java)
-        for (urlSpan in spans) {
-            configSpannableLinkify(urlSpan, spannable, object : URLSpan(urlSpan.url) {
-                override fun onClick(view: View) {
-                    UiUtils.gotoWebview(url, itemView.context as AppCompatActivity )
-                }
-            } )
-        }
-        return spannable
-    }
-
-    //Todo: Rename this method
-    private fun configSpannableLinkify (urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {
-        val spanStart = spannable.getSpanStart(urlSpan)
-        val spanEnd = spannable.getSpanEnd(urlSpan)
-        spannable.setSpan(linkSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.removeSpan(urlSpan)
     }
 }

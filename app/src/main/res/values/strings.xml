@@ -56,4 +56,7 @@
     <string name="settings_logout">Logout</string>
     <string name="settings_login">Login</string>
     <string name="settings_tmdb">TmdbAccount</string>
+
+    <string name="rate_this_movie">Rate this movie a</string>
+    <string name="submit">Submit</string>
 </resources>
