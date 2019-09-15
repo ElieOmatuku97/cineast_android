@@ -63,7 +63,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         if (movieDetails == null || trailers == null || cast == null || crew == null || similarMovies == null) {
             getMovieVideos(movie, screenName, genres)
         } else {
-            val movieInfo = MovieInfo (movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+            val movieInfo = MovieSummary (movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
             vu.updateVu(movieInfo)
         }
 
@@ -131,7 +131,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         restApi.movie.getSimilarMovie( movie.id, DiscoverService.API_KEY).enqueue(object: Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
                 similarMovies = response?.body()?.results
-                val movieInfo = MovieInfo(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+                val movieInfo = MovieSummary(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
 
                 if (!userService.isLoggedIn()) {
                     handler.post {
@@ -152,16 +152,16 @@ class MoviePresenter: BasePresenter<MovieVu>() {
     }
 
 
-    private fun checkIfMovieInWatchList(movieInfo: MovieInfo)  {
+    private fun checkIfMovieInWatchList(movieSummary: MovieSummary)  {
         userService.getWatchList(object: AsyncResponse<List<Movie>> {
             override fun onSuccess(result: List<Movie>?) {
-                Timber.d("watch list result: ${result} \n movie selected: ${movieInfo.movie}")
+                Timber.d("watch list result: ${result} \n movie selected: ${movieSummary.movie}")
                 val isInWatchList = result?.let {
-                    it.contains(movieInfo.movie)
+                    it.contains(movieSummary.movie)
                 } ?: false
 
                 vu?.watchListCheckPublisher?.onNext(isInWatchList)
-                checkIfMovieInFavoriteList(movieInfo)
+                checkIfMovieInFavoriteList(movieSummary)
             }
 
             override fun onFail(error: String) {
@@ -171,18 +171,18 @@ class MoviePresenter: BasePresenter<MovieVu>() {
     }
 
 
-    private fun checkIfMovieInFavoriteList(movieInfo: MovieInfo) {
+    private fun checkIfMovieInFavoriteList(movieSummary: MovieSummary) {
         userService.getFavoriteList(object: AsyncResponse<List<Movie>> {
             override fun onSuccess(result: List<Movie>?) {
-                Timber.d("favorite list result: ${result} \n movie selected: ${movieInfo.movie}")
+                Timber.d("favorite list result: ${result} \n movie selected: ${movieSummary.movie}")
                 val isInFavoriteList = result?.let {
-                    it.contains(movieInfo.movie)
+                    it.contains(movieSummary.movie)
                 } ?: false
 
                 handler.post {
                     vu?.hideLoading()
                     vu?.favoriteListCheckPublisher?.onNext(isInFavoriteList)
-                    vu?.updateVu(movieInfo)
+                    vu?.updateVu(movieSummary)
                     Timber.d("isInFavoriteList: $isInFavoriteList")
                 }
             }

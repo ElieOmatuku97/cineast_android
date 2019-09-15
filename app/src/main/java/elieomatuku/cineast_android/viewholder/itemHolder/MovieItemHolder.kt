@@ -18,6 +18,9 @@ import kotlinx.android.synthetic.main.holder_item_movie.view.*
 
 class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
+        const val USER_RATING_STRING_FORMAT = "(%.1f, me)"
+        const val MOVIE_RATING_STRING_FORMAT = "(%.1f, %d)"
+
         fun createView(parent: ViewGroup, layoutRes: Int? = null): View{
             return LayoutInflater.from(parent.context).inflate(layoutRes ?: R.layout.holder_item_movie, parent, false)
         }
@@ -38,13 +41,25 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private val starView: RatingBar? by lazy {
-        itemView.findViewById<AppCompatRatingBar?>(R.id.star_view)?.also {
+        itemView.findViewById<AppCompatRatingBar?>(R.id.movie_rating_bar)?.also {
+            it
+        }
+    }
+
+    private val voteAverageView: TextView? by lazy {
+        itemView.findViewById<TextView>(R.id.vote_average)?.also {
             it
         }
     }
 
     private val userRatingBar: RatingBar? by lazy {
-        itemView.findViewById<AppCompatRatingBar>(R.id.user_rating)?.also {
+        itemView.findViewById<AppCompatRatingBar>(R.id.user_rating_bar)?.also {
+            it
+        }
+    }
+
+    private val userRatingTextview: TextView? by lazy {
+        itemView.findViewById<TextView>(R.id.user_rating)?.also {
             it
         }
     }
@@ -67,13 +82,26 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
         movie.vote_average?.let {
+            starView?.visibility = View.VISIBLE
             starView?.rating = it
+
+            val voteCount = movie.vote_count
+
+            if (voteCount != null) {
+                voteAverageView?.visibility = View.VISIBLE
+                voteAverageView?.text = String.format(MOVIE_RATING_STRING_FORMAT, it, voteCount)
+            } else {
+                voteAverageView?.visibility = View.GONE
+            }
+
         }
 
         movie.rating?.let {
             userRatingBar?.visibility = View.VISIBLE
             userRatingBar?.rating  = it
-        }
 
+            userRatingTextview?.visibility = View.VISIBLE
+            userRatingTextview?.text  = String.format(USER_RATING_STRING_FORMAT, it)
+        }
     }
 }

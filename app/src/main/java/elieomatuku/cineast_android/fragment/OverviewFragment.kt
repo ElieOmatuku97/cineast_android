@@ -11,6 +11,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.OverviewAdapter
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.model.data.MovieDetails
+import elieomatuku.cineast_android.business.model.data.MovieSummary
 import elieomatuku.cineast_android.business.model.data.Trailer
 import kotlinx.android.synthetic.main.fragment_overview.view.*
 import java.util.ArrayList
@@ -21,11 +22,16 @@ class OverviewFragment: Fragment(){
         const val OVERVIEW_TRAILERS = "overview_trailers"
         const val OVERVIEW_MOVIE_DETAILS  = "overview_movieDetails"
 
-        fun newInstance(movie: Movie?, trailers: List<Trailer>?, movieDetails: MovieDetails?): OverviewFragment {
+        fun newInstance(movieSummary: MovieSummary): OverviewFragment {
             val args = Bundle()
+            val movie = movieSummary.movie
             args.putParcelable(OVERVIEW_MOVIE, movie)
+
+            val trailers = movieSummary.trailers
             args.putParcelableArrayList(OVERVIEW_TRAILERS, trailers as ArrayList<out Parcelable>)
-            args.putParcelable(OVERVIEW_MOVIE_DETAILS, movieDetails)
+
+            val details = movieSummary.details
+            args.putParcelable(OVERVIEW_MOVIE_DETAILS, details)
 
             val fragment = OverviewFragment()
             fragment.arguments = args

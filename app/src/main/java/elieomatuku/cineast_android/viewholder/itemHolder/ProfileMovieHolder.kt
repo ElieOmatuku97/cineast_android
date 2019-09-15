@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Genre
-import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_movie.view.*
@@ -18,6 +16,7 @@ import android.text.Html
 import android.text.util.Linkify
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
+import elieomatuku.cineast_android.business.model.data.MovieSummary
 import elieomatuku.cineast_android.fragment.RateDialogFragment
 
 
@@ -50,7 +49,8 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
         itemView.rate_btn
     }
 
-    fun update(movie: Movie?, genres: List<Genre>?, homepage: String?) {
+    fun update(movieSummary: MovieSummary) {
+        val movie = movieSummary.movie
         val imageUrl: String? = if (movie?.poster_path != null) {
             UiUtils.getImageUrl(movie.poster_path, itemView.context.getString(R.string.image_small))
         } else null
@@ -70,8 +70,9 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
         itemView.item_release_view.text = movie?.release_date
 
         if (movie?.vote_average != null)
-            itemView.star_view.rating = movie.vote_average
+            itemView.movie_rating_bar.rating = movie.vote_average
 
+        val genres = movieSummary.genres
         val names = if (movie?.genre_ids != null && genres != null) {
             UiUtils.mapMovieGenreIdsWithGenreNames(movie.genre_ids, genres)
         } else {
@@ -91,6 +92,7 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
             }
         }
 
+        val homepage = movieSummary.details?.homepage
         if (!homepage.isNullOrEmpty()) {
             linkTextView.visibility = View.VISIBLE
             val spannable = SpannableString(Html.fromHtml(homepage))

@@ -63,7 +63,7 @@
         app:layout_constraintStart_toEndOf="@id/profile_image"/>
 
     <me.zhanghai.android.materialratingbar.MaterialRatingBar
-        android:id="@+id/star_view"
+        android:id="@+id/movie_rating_bar"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/holder_movie_imageview_padding_bottom"
         style="@style/Widget.MaterialRatingBar.RatingBar"

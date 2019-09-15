@@ -22,7 +22,7 @@ import java.util.*
 class ItemListActivity: ToolbarMVPActivity <ItemListPresenter, ItemListVu>() {
     companion object {
         private val MVP_UID by lazy {
-            ItemListActivity.hashCode()
+           hashCode()
         }
 
         const val DISPLAY_FAVORITE_LIST = "favorite_list_key"

@@ -40,4 +40,7 @@
     <dimen name="rate_dialog_height">120dp</dimen>
     <dimen name="rate_dialog_width">230dp</dimen>
 
+
+    <dimen name="rating_small_label_size">10sp</dimen>
+
 </resources>
