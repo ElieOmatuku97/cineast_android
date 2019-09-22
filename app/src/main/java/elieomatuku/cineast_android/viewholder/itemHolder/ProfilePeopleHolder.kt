@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.viewholder.itemHolder
 
 
-import android.support.v7.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatImageView
 import android.text.Html
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod

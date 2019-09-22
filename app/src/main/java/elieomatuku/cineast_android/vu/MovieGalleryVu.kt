@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.vu
 
 import android.app.Activity
-import android.support.v4.view.ViewPager
-import android.support.v7.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
@@ -47,7 +47,7 @@ class MovieGalleryVu(inflater: LayoutInflater,
         viewPager.adapter = movieGalleryPagerAdapter
         movieGalleryPagerAdapter.notifyDataSetChanged()
 
-        viewPager.addOnPageChangeListener(object:ViewPager.OnPageChangeListener {
+        viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 

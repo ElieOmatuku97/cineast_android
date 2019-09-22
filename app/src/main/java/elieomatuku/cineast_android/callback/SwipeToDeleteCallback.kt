@@ -4,8 +4,8 @@ package elieomatuku.cineast_android.callback
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ItemTouchHelper
 import android.graphics.drawable.ColorDrawable
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.UserMovieListAdapter

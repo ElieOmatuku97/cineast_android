@@ -64,7 +64,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
             getMovieVideos(movie, screenName, genres)
         } else {
             val movieInfo = MovieSummary (movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
-            vu.updateVu(movieInfo)
+            vu.showMovie(movieInfo)
         }
 
 
@@ -136,7 +136,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
                 if (!userService.isLoggedIn()) {
                     handler.post {
                         vu?.hideLoading()
-                        vu?.updateVu(movieInfo)
+                        vu?.showMovie(movieInfo)
                     }
                 } else {
                     movieInfo.movie?.let {
@@ -182,7 +182,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
                 handler.post {
                     vu?.hideLoading()
                     vu?.favoriteListCheckPublisher?.onNext(isInFavoriteList)
-                    vu?.updateVu(movieSummary)
+                    vu?.showMovie(movieSummary)
                     Timber.d("isInFavoriteList: $isInFavoriteList")
                 }
             }

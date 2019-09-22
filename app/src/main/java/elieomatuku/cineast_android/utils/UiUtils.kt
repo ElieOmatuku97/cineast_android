@@ -11,11 +11,11 @@ import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.fragment.app.FragmentActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
@@ -160,7 +160,7 @@ object  UiUtils {
     }
 
 
-    fun configureWebView(webView: WebView, progressBar: android.support.v4.widget.ContentLoadingProgressBar? = null) : WebView {
+    fun configureWebView(webView: WebView, progressBar: androidx.core.widget.ContentLoadingProgressBar? = null) : WebView {
         val webv = webView
 
         webv.webChromeClient = object : WebChromeClient() {

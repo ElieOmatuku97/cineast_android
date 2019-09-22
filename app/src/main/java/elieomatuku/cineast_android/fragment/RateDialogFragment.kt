@@ -2,9 +2,9 @@ package elieomatuku.cineast_android.fragment
 
 import android.app.Dialog
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatRatingBar
+import androidx.fragment.app.DialogFragment
+import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.AppCompatRatingBar
 import android.widget.TextView
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
@@ -79,7 +79,7 @@ class RateDialogFragment : DialogFragment() {
                 }
             }
 
-            dialog.cancel()
+            dialog?.cancel()
         }
     }
 

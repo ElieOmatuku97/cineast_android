@@ -16,7 +16,7 @@ import timber.log.Timber
 class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){
     companion object {
         private val MVP_UID by lazy {
-            MainActivity.hashCode()
+           hashCode()
         }
     }
 
@@ -37,8 +37,6 @@ class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
-
-        Timber.d("MainActivity onCreate called.")
 
         mvpDispatcher.vu?.toolbar?.let {
             UiUtils.initToolbar(this, it, false)

@@ -1,9 +1,9 @@
 package elieomatuku.cineast_android.vu
 
 import android.app.Activity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
@@ -18,7 +18,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_item_list.view.*
 import elieomatuku.cineast_android.callback.SwipeToDeleteCallback
-import android.support.v7.widget.helper.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper
 import elieomatuku.cineast_android.adapter.UserMovieListAdapter
 
 

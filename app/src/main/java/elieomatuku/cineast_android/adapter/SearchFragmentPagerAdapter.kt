@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.model.data.Widget
 import elieomatuku.cineast_android.fragment.PopularMoviesFragment
@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.fragment.PopularPeopleFragment
 import timber.log.Timber
 
 
-class SearchFragmentPagerAdapter(fm: FragmentManager?): FragmentPagerAdapter(fm) {
+class SearchFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
     companion object {
         val titleResList: List<Int> by lazy {
             listOf(R.string.movies,

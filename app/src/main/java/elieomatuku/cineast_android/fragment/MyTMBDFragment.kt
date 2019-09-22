@@ -5,8 +5,8 @@ package elieomatuku.cineast_android.fragment
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.preference.Preference
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
