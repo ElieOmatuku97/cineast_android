@@ -1,17 +1,15 @@
 package elieomatuku.cineast_android.vu
 
 import android.app.Activity
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -22,6 +20,7 @@ import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -84,23 +83,17 @@ class PeopleVu(inflater: LayoutInflater,
             val peopleItemAdapter = PeopleItemAdapter(peopleDetails, peopleMovies, onProfileClickedPicturePublisher)
 
             listView.adapter = peopleItemAdapter
-            listView.layoutManager = LinearLayoutManager (activity)
-            val dividerItemDecoration = getItemDecoration(R.drawable.item_decoration, activity)
-            if ( dividerItemDecoration != null)
-                listView.addItemDecoration(dividerItemDecoration)
+            listView.layoutManager = LinearLayoutManager(activity)
+
+            val dividerItemDecoration =   DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
+            listView.addItemDecoration(dividerItemDecoration)
+
+
             peopleItemAdapter.notifyDataSetChanged()
             initializeFragmentOnPeopleClicked(peopleDetails.biography)
         }
     }
 
-    private fun getItemDecoration(itemDecorationRes: Int, activity: Activity): RecyclerView.ItemDecoration? {
-        val itemDecorationDrawable = ResourcesCompat.getDrawable(activity.resources, itemDecorationRes, activity.theme)
-        return if (itemDecorationDrawable != null) {
-            DividerItemDecorator(itemDecorationDrawable)
-        } else {
-            null
-        }
-    }
 
     private fun initializeFragmentOnPeopleClicked(peopleBio: String?) {
         if (peopleBio != null) {
@@ -124,27 +117,6 @@ class PeopleVu(inflater: LayoutInflater,
         val fm = (activity as AppCompatActivity).supportFragmentManager
         if (fragment != null && fm != null) {
             fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
-        }
-
-    }
-
-    inner class DividerItemDecorator(private val mDivider: Drawable) : RecyclerView.ItemDecoration() {
-        override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
-            val dividerLeft = parent.paddingLeft
-            val dividerRight = parent.width - parent.paddingRight
-
-            val childCount = parent.childCount
-            for (i in 1 until childCount) {
-                val child = parent.getChildAt(i)
-
-                val params = child.layoutParams as RecyclerView.LayoutParams
-
-                val dividerTop = child.bottom + params.bottomMargin
-                val dividerBottom = dividerTop + mDivider.intrinsicHeight
-
-                mDivider.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom)
-                mDivider.draw(canvas)
-            }
         }
     }
 }

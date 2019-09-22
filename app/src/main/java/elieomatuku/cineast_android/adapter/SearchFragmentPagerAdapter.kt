@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.model.data.Widget
 import elieomatuku.cineast_android.fragment.PopularMoviesFragment

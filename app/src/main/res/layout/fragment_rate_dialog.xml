@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/rate_dialog_width"
         android:layout_height="@dimen/rate_dialog_height">
 
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@id/dialog_title" />
 
 
-        <android.support.constraint.Guideline
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/top_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             app:layout_constraintGuide_percent="0.20" />
 
 
-        <android.support.constraint.Guideline
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottom_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             app:layout_constraintGuide_percent="0.90" />
 
 
-        <android.support.constraint.Guideline
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,14 +74,14 @@
             app:layout_constraintGuide_percent="0.02" />
 
 
-        <android.support.constraint.Guideline
+        <androidx.constraintlayout.widget.Guideline
             android:id="@+id/right_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.98" />
 
-        <android.support.v7.widget.AppCompatRatingBar
+        <androidx.appcompat.widget.AppCompatRatingBar
             android:id="@+id/rating_bar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
@@ -94,5 +94,5 @@
             app:layout_constraintRight_toRightOf="@id/right_guideline"
             app:layout_constraintTop_toBottomOf="@id/separator"
             app:layout_constraintVertical_bias="0.32999998" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

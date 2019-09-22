@@ -1,26 +1,26 @@
 package elieomatuku.cineast_android.vu
 
 import android.app.Activity
-import android.graphics.Canvas
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.*
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieItemAdapter
 import kotlinx.android.synthetic.main.vu_movie.view.*
-import android.support.v7.widget.RecyclerView
-import android.graphics.drawable.Drawable
+import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
 import android.os.Parcelable
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -82,7 +82,10 @@ class MovieVu(inflater: LayoutInflater,
 
     private fun updateListView(movieSummary: MovieSummary) {
         val movieItemAdapter = MovieItemAdapter(movieSummary, onProfileClickedPicturePublisher)
-        configureListView(movieItemAdapter, listView, getItemDecoration(R.drawable.item_decoration, activity))
+        val itemDecorationDrawable = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
+        val dividerItemDecorator =  DividerItemDecorator(itemDecorationDrawable)
+
+        configureListView(movieItemAdapter, listView, dividerItemDecorator)
     }
 
     private fun initializeFragmentOnMovieClicked(movieSummary: MovieSummary) {
@@ -90,18 +93,9 @@ class MovieVu(inflater: LayoutInflater,
         replaceFragment(initialFragmentOnMovieClicked)
     }
 
-    private fun getItemDecoration(itemDecorationRes: Int, activity: Activity): RecyclerView.ItemDecoration? {
-        val itemDecorationDrawable = ResourcesCompat.getDrawable(activity.resources, itemDecorationRes, activity.theme)
-        return if (itemDecorationDrawable != null) {
-            DividerItemDecorator(itemDecorationDrawable)
-        } else {
-            null
-        }
-    }
-
     private fun configureListView(movieItemAdapter: MovieItemAdapter, listView: RecyclerView, dividerItemDecoration: RecyclerView.ItemDecoration?){
         listView.adapter = movieItemAdapter
-        listView.layoutManager = LinearLayoutManager (activity)
+        listView.layoutManager = LinearLayoutManager(activity)
         if (dividerItemDecoration != null)
             listView.addItemDecoration(dividerItemDecoration)
         movieItemAdapter.notifyDataSetChanged()
@@ -127,26 +121,6 @@ class MovieVu(inflater: LayoutInflater,
         val fm = (activity as AppCompatActivity).supportFragmentManager
         if (fragment != null && fm != null) {
             fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
-        }
-    }
-
-    inner class DividerItemDecorator(private val mDivider: Drawable) : RecyclerView.ItemDecoration() {
-        override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
-            val dividerLeft = parent.paddingLeft
-            val dividerRight = parent.width - parent.paddingRight
-
-            val childCount = parent.childCount
-            for (i in 1 until childCount) {
-                val child = parent.getChildAt(i)
-
-                val params = child.layoutParams as RecyclerView.LayoutParams
-
-                val dividerTop = child.bottom + params.bottomMargin
-                val dividerBottom = dividerTop + mDivider.intrinsicHeight
-
-                mDivider.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom)
-                mDivider.draw(canvas)
-            }
         }
     }
 }

@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.vu.SearchVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 import android.os.Bundle
-import android.support.v7.widget.SearchView
+import androidx.appcompat.widget.SearchView
 import android.view.*
 import elieomatuku.cineast_android.R
 

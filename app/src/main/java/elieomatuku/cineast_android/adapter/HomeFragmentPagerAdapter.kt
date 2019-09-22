@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.adapter
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.fragment.DiscoverFragment
 import elieomatuku.cineast_android.fragment.MyTMBDFragment
 import elieomatuku.cineast_android.fragment.SearchFragment

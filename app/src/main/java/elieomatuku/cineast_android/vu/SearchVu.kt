@@ -1,15 +1,15 @@
 package elieomatuku.cineast_android.vu
 
 import android.app.Activity
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.adapter.SearchFragmentPagerAdapter
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.vu_main.view.*
 import kotlinx.android.synthetic.main.vu_search.view.*
-import android.support.design.widget.TabLayout
+import com.google.android.material.tabs.TabLayout
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.model.data.Widget
 import io.chthonic.mythos.mvp.FragmentWrapper

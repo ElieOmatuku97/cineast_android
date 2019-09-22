@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.ViewGroup
 import elieomatuku.cineast_android.business.model.data.Movie
