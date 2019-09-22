@@ -58,7 +58,6 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
                     val activity = it.context as FragmentActivity
                     val overviewFragment = OverviewFragment.newInstance(movieSummary)
                     (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, overviewFragment).commit()
-
                 }
 
                 menuMovieHolder.peopleSegmentBtn.setOnClickListener {

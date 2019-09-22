@@ -79,7 +79,7 @@ class RateDialogFragment : DialogFragment() {
                 }
             }
 
-            dialog.cancel()
+            dialog?.cancel()
         }
     }
 

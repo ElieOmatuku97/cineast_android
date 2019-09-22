@@ -8,7 +8,7 @@ import elieomatuku.cineast_android.fragment.MyTMBDFragment
 import elieomatuku.cineast_android.fragment.SearchFragment
 import elieomatuku.cineast_android.R
 
-class HomeFragmentPagerAdapter(fm: FragmentManager?): FragmentPagerAdapter(fm) {
+class HomeFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
 
     companion object {
         val titleResList: List<Int> by lazy {

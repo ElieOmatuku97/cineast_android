@@ -14,11 +14,13 @@ import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.utils.ValueStore
 import okhttp3.MediaType
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import okhttp3.RequestBody
+import okhttp3.MediaType.Companion.toMediaType
+
 
 
 
@@ -241,7 +243,7 @@ class UserService (private val restApi: RestApi,  private val application: Appli
     }
 
     private fun <T> getRequestBody(item: T): RequestBody {
-        val mediaType = MediaType.parse("application/json")
+        val mediaType = "application/json".toMediaType()
         return RequestBody.create(mediaType, toJson(item))
     }
 

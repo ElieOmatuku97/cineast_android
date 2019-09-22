@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.fragment.PopularPeopleFragment
 import timber.log.Timber
 
 
-class SearchFragmentPagerAdapter(fm: FragmentManager?): FragmentPagerAdapter(fm) {
+class SearchFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
     companion object {
         val titleResList: List<Int> by lazy {
             listOf(R.string.movies,

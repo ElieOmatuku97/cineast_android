@@ -38,12 +38,12 @@ class SearchFragment: MVPFragment<SearchPresenter, SearchVu>() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        menu?.clear()
-        inflater?.inflate(R.menu.search_menu, menu)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.search_menu, menu)
 
         val searchManager = (activity)?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu?.findItem(R.id.menu_action_search)?.actionView as SearchView).apply {
+        (menu.findItem(R.id.menu_action_search)?.actionView as SearchView).apply {
             setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
 
             setOnQueryTextListener(object: SearchView.OnQueryTextListener {
@@ -60,4 +60,6 @@ class SearchFragment: MVPFragment<SearchPresenter, SearchVu>() {
 
         super.onCreateOptionsMenu(menu, inflater)
     }
+
+
 }
