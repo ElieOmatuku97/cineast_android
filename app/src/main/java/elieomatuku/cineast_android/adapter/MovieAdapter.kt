@@ -1,5 +1,6 @@
 package elieomatuku.cineast_android.adapter
 
+import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
@@ -11,12 +12,13 @@ import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.viewholder.itemHolder.*
 import io.reactivex.subjects.PublishSubject
 
-class MovieItemAdapter(private val movieSummary: MovieSummary,
-                       private val onProfileClickedPicturePublisher: PublishSubject<Int>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_MOVIE_PROFILE = 0
         const val TYPE_MENU_MOVIE = 1
     }
+
+    var movieSummary: MovieSummary = MovieSummary()
 
     override fun getItemCount(): Int {
         return 2
@@ -29,6 +31,7 @@ class MovieItemAdapter(private val movieSummary: MovieSummary,
             else -> -1
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -48,6 +51,9 @@ class MovieItemAdapter(private val movieSummary: MovieSummary,
 
             TYPE_MENU_MOVIE -> {
                 val menuMovieHolder = holder as MenuMovieHolder
+
+                menuMovieHolder.itemView.visibility = if (movieSummary.movie != null) View.VISIBLE else View.GONE
+
                 menuMovieHolder.overviewSegmentBtn.setOnClickListener {
                     val activity = it.context as FragmentActivity
                     val overviewFragment = OverviewFragment.newInstance(movieSummary)

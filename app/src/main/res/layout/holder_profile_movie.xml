@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingBottom="@dimen/holder_profile_movie_layout_padding_bottom"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -11,9 +12,10 @@
         android:layout_height="@dimen/movie_summary_image_size"
         android:layout_marginStart="@dimen/holder_item_movie_textview_margin"
         android:layout_marginTop="@dimen/holder_item_movie_textview_margin"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        tools:visibility="visible"/>
 
     <TextView
         android:id="@+id/item_title_view"
@@ -22,8 +24,10 @@
         android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
         android:textColor="@color/color_white"
         android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
-        app:layout_constraintTop_toTopOf="@+id/profile_image" />
+        app:layout_constraintTop_toTopOf="@+id/profile_image"
+        tools:visibility="visible"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,8 +37,10 @@
         android:layout_marginTop="@dimen/activity_margin_top"
         android:textSize="@dimen/holder_profile_movie_text_size"
         android:textColor="@color/color_grey"
+        android:visibility="gone"
         app:layout_constraintStart_toEndOf="@id/profile_image"
         app:layout_constraintTop_toBottomOf="@id/item_title_view"
+        tools:visibility="visible"
         />
 
     <TextView
@@ -45,10 +51,13 @@
         android:layout_marginTop="@dimen/activity_margin_top"
         android:textColor="@color/color_orange_app"
         android:textSize="@dimen/holder_profile_movie_text_size"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.01"
         app:layout_constraintStart_toEndOf="@id/profile_image"
-        app:layout_constraintTop_toBottomOf="@id/item_release_view" />
+        app:layout_constraintTop_toBottomOf="@id/item_release_view"
+        tools:visibility="visible"
+        />
 
     <TextView
         android:id="@+id/item_genre_view"
@@ -60,7 +69,9 @@
         android:textColor="@color/color_grey"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/item_link_view"
-        app:layout_constraintStart_toEndOf="@id/profile_image"/>
+        app:layout_constraintStart_toEndOf="@id/profile_image"
+        tools:visibility="visible"
+        />
 
     <me.zhanghai.android.materialratingbar.MaterialRatingBar
         android:id="@+id/movie_rating_bar"
@@ -69,6 +80,7 @@
         style="@style/Widget.MaterialRatingBar.RatingBar"
         android:numStars="10"
         android:stepSize="0.1"
+        android:visibility="gone"
         app:mrb_progressBackgroundTint="@color/color_grey_app"
         app:layout_constraintStart_toEndOf="@id/profile_image"
         app:layout_constraintTop_toBottomOf="@id/item_genre_view"
@@ -76,6 +88,7 @@
         android:layout_marginLeft="@dimen/holder_movie_facts_textview_padding_right"
         android:layout_marginRight="@dimen/holder_movie_facts_textview_padding_right"
         android:layout_marginTop="@dimen/holder_movie_layout_padding"
+        tools:visibility="visible"
        />
 
     <TextView
@@ -88,8 +101,10 @@
         android:textColor="@color/color_orange_app"
         android:clickable="true"
         android:focusable="true"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/item_genre_view"
         app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

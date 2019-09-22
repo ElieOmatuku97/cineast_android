@@ -33,4 +33,5 @@ class MenuMovieHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.people
     }
 
+
 }

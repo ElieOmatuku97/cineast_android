@@ -6,7 +6,7 @@ import androidx.appcompat.widget.*
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.MovieItemAdapter
+import elieomatuku.cineast_android.adapter.MovieAdapter
 import kotlinx.android.synthetic.main.vu_movie.view.*
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
@@ -41,6 +41,8 @@ class MovieVu(inflater: LayoutInflater,
     override fun getRootViewLayoutId(): Int {
         return R.layout.vu_movie
     }
+
+
     private val listView: RecyclerView by lazy {
         rootView.list_view_container
     }
@@ -48,6 +50,7 @@ class MovieVu(inflater: LayoutInflater,
     private val onProfileClickedPicturePublisher: PublishSubject<Int> by lazy {
         PublishSubject.create<Int>()
     }
+
     val onProfileClickedPictureObservable: Observable<Int>
         get() = onProfileClickedPicturePublisher.hide()
 
@@ -72,33 +75,36 @@ class MovieVu(inflater: LayoutInflater,
             activity.favoriteListCheckPublisher
         } else {
             null
-        } }
-
-    fun updateVu(movieSummary: MovieSummary) {
-        toolbar?.title = movieSummary.screenName
-        updateListView(movieSummary)
-        initializeFragmentOnMovieClicked(movieSummary)
+        }
     }
 
-    private fun updateListView(movieSummary: MovieSummary) {
-        val movieItemAdapter = MovieItemAdapter(movieSummary, onProfileClickedPicturePublisher)
-        val itemDecorationDrawable = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
-        val dividerItemDecorator =  DividerItemDecorator(itemDecorationDrawable)
-
-        configureListView(movieItemAdapter, listView, dividerItemDecorator)
+    private val adapter: MovieAdapter by lazy {
+        MovieAdapter(onProfileClickedPicturePublisher)
     }
 
-    private fun initializeFragmentOnMovieClicked(movieSummary: MovieSummary) {
-        val initialFragmentOnMovieClicked = OverviewFragment.newInstance(movieSummary)
-        replaceFragment(initialFragmentOnMovieClicked)
+    override fun onCreate() {
+        super.onCreate()
+        setUpListView()
     }
 
-    private fun configureListView(movieItemAdapter: MovieItemAdapter, listView: RecyclerView, dividerItemDecoration: RecyclerView.ItemDecoration?){
-        listView.adapter = movieItemAdapter
+    private fun setUpListView(){
+        listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity)
-        if (dividerItemDecoration != null)
-            listView.addItemDecoration(dividerItemDecoration)
-        movieItemAdapter.notifyDataSetChanged()
+
+        val itemDecorationDrawable = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
+        val dividerItemDecoration =  DividerItemDecorator(itemDecorationDrawable)
+
+        listView.addItemDecoration(dividerItemDecoration)
+    }
+
+    fun showMovie(movieSummary: MovieSummary) {
+        toolbar?.title = movieSummary.screenName
+
+        adapter.movieSummary = movieSummary
+        adapter.notifyDataSetChanged()
+
+        val overViewFragment = OverviewFragment.newInstance(movieSummary)
+        replaceFragment(overViewFragment)
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -107,14 +113,10 @@ class MovieVu(inflater: LayoutInflater,
 
     fun goToGallery(posters: List<Poster>?) {
         val galleryFragment = MovieGalleryFragment.newInstance()
-        galleryFragment.arguments = getArgs(posters)
-        addFragment(galleryFragment, activity)
-    }
-
-    private fun getArgs(posters: List<Poster>?): Bundle {
         val args = Bundle()
         args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
-        return args
+        galleryFragment.arguments =  args
+        addFragment(galleryFragment, activity)
     }
 
     private fun addFragment(fragment: Fragment?, activity: Activity) {

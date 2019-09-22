@@ -16,6 +16,7 @@ import android.text.Html
 import android.text.util.Linkify
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
+import android.widget.RatingBar
 import elieomatuku.cineast_android.business.model.data.MovieSummary
 import elieomatuku.cineast_android.fragment.RateDialogFragment
 
@@ -49,6 +50,18 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
         itemView.rate_btn
     }
 
+    private val titleView: TextView by lazy {
+        itemView.item_title_view
+    }
+
+    private val releaseDateView: TextView by lazy {
+        itemView.item_release_view
+    }
+
+    private val ratingBarView: RatingBar by lazy {
+        itemView.movie_rating_bar
+    }
+
     fun update(movieSummary: MovieSummary) {
         val movie = movieSummary.movie
         val imageUrl: String? = if (movie?.poster_path != null) {
@@ -56,9 +69,12 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
         } else null
 
         if (!imageUrl.isNullOrEmpty()) {
+            movieProfileImageView.visibility = View.VISIBLE
             Picasso.get()
                     .load(imageUrl)
                     .into(movieProfileImageView)
+        } else {
+            movieProfileImageView.visibility = View.GONE
         }
 
         movieProfileImageView.setOnClickListener {
@@ -66,11 +82,29 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
                 onProfileClickedPicturePublisher.onNext(movie.id)
         }
 
-        itemView.item_title_view.text = movie?.title
-        itemView.item_release_view.text = movie?.release_date
+        val title = movie?.title
+        if (title != null) {
+            titleView.visibility = View.VISIBLE
+            titleView.text = title
+        } else {
+            titleView.visibility = View.GONE
+        }
 
-        if (movie?.vote_average != null)
-            itemView.movie_rating_bar.rating = movie.vote_average
+        val releaseDate = movie?.release_date
+        if (releaseDate != null) {
+            releaseDateView.visibility = View.VISIBLE
+            releaseDateView.text = releaseDate
+        } else {
+            releaseDateView.visibility = View.GONE
+        }
+
+        val voteAverage = movie?.vote_average
+        if (voteAverage != null) {
+            ratingBarView.visibility = View.VISIBLE
+            ratingBarView.rating = voteAverage
+        } else {
+            ratingBarView.visibility = View.GONE
+        }
 
         val genres = movieSummary.genres
         val names = if (movie?.genre_ids != null && genres != null) {
