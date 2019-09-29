@@ -3,9 +3,11 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
+import elieomatuku.cineast_android.App.Companion.kodein
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.*
+import elieomatuku.cineast_android.business.service.ConnectionService
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.vu.DiscoverVu
@@ -36,6 +38,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     private var discoverContainer: DiscoverContainer? = null
     private var genres: List<Genre>? = listOf()
+
+    private val connectionService: ConnectionService by kodein.instance()
 
     override fun onLink(vu: DiscoverVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -107,6 +111,21 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .subscribe { sessionId ->
                     vu.updateLoginState(!sessionId.isNullOrEmpty())
                 })
+
+
+
+        rxSubs.add(connectionService.connectionChangedObserver
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({ hasConnection ->
+
+                    Timber.d("connectionChangedObserver: hasConnection = $hasConnection, hasEmptyState = ")
+
+                }, { t: Throwable ->
+
+                    Timber.e(t, "Connection Chenge Observer failed")
+
+                }
+                ))
     }
 
     private val asyncResponse: AsyncResponse<MovieResponse> by lazy {
