@@ -76,8 +76,9 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
                             Timber.d("error: $t")
                         }
                     })
-                })
-        )
+                }))
+
+
     }
 
     private fun getPeopleMovies(actorID: Int ,peopleDetails: PeopleDetails?, screenName: String ) {

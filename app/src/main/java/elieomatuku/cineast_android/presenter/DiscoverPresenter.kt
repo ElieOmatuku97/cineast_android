@@ -33,13 +33,12 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         const val PEOPLE_KEY = "people"
     }
 
-    private val discoverClient: DiscoverService by App.kodein.instance()
-    private val userService: UserService by App.kodein.instance()
+    private val discoverClient: DiscoverService by kodein.instance()
+    private val userService: UserService by kodein.instance()
 
     private var discoverContainer: DiscoverContainer? = null
     private var genres: List<Genre>? = listOf()
 
-    private val connectionService: ConnectionService by kodein.instance()
 
     override fun onLink(vu: DiscoverVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -48,10 +47,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
         if (!hasSavedState()) {
             vu.showLoading()
-            discoverContainer = DiscoverContainer()
-            discoverClient.getPopularMovies(asyncResponse)
-            discoverClient.getGenres(genreAsyncResponse)
-
+            fetchDiscover()
         } else {
             discoverContainer?.let {
                 vu.setWigdet(it, userService.isLoggedIn())
@@ -118,14 +114,20 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ hasConnection ->
 
+                    if (hasConnection) {
+                        vu.showLoading()
+                        fetchDiscover()
+                    } else {
+                        vu.hideLoading()
+                    }
+
                     Timber.d("connectionChangedObserver: hasConnection = $hasConnection, hasEmptyState = ")
 
                 }, { t: Throwable ->
 
-                    Timber.e(t, "Connection Chenge Observer failed")
+                    Timber.e(t, "Connection Change Observer failed")
 
-                }
-                ))
+                }))
     }
 
     private val asyncResponse: AsyncResponse<MovieResponse> by lazy {
@@ -140,6 +142,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
             override fun onFail(error: String) {
                 Timber.d("Network Error:$error")
+                vu?.hideLoading()
             }
         }
     }
@@ -153,7 +156,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
             override fun onFail(error: String) {
                 Timber.d("Network Error:$error")
-
             }
         }
     }
@@ -237,5 +239,12 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     private fun fetchSavedState(inState: Bundle?) {
         discoverContainer = inState?.getParcelable(CONTAINER_KEY)
         genres = inState?.getParcelableArrayList(MOVIE_GENRES_KEY)
+    }
+
+
+    private fun fetchDiscover() {
+        discoverContainer = DiscoverContainer()
+        discoverClient.getPopularMovies(asyncResponse)
+        discoverClient.getGenres(genreAsyncResponse)
     }
 }

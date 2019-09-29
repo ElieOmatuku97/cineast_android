@@ -27,13 +27,13 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
     private val discoverClient: DiscoverService by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
+
+
     override fun onLink(vu: PopularMoviesVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         vu.showLoading()
-        discoverClient.getPopularMovies(asyncResponse)
-        discoverClient.getGenres(genreAsyncResponse)
-
+        fetchMovies()
 
         rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -46,6 +46,23 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
 
                 }, {t: Throwable ->
                     Timber.d( "movieSelectObservable failed:$t")
+                }))
+
+
+        rxSubs.add(connectionService.connectionChangedObserver
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({ hasConnection ->
+
+                    if (hasConnection) {
+                        vu.showLoading()
+                        fetchMovies()
+                    }
+                    Timber.d("connectionChangedObserver: hasConnection = $hasConnection, hasEmptyState = ")
+
+                }, { t: Throwable ->
+
+                    Timber.e(t, "Connection Change Observer failed")
+
                 }))
     }
 
@@ -67,6 +84,7 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
 
             override fun onFail(error: String) {
                 Timber.d( "Network Error:$error")
+                vu?.hideLoading()
             }
         }
     }
@@ -80,5 +98,12 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
                 Timber.d("Network Error:$error")
             }
         }
+    }
+
+
+    private fun fetchMovies() {
+        discoverClient.getPopularMovies(asyncResponse)
+        discoverClient.getGenres(genreAsyncResponse)
+
     }
 }

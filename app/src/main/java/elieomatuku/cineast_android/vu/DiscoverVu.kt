@@ -117,4 +117,10 @@ class DiscoverVu (inflater: LayoutInflater,
         adapter.notifyDataSetChanged()
     }
 
+    fun updateErrorView(errorMsg: String) {
+
+
+
+    }
+
 }
