@@ -10,7 +10,7 @@ class DiscoverContainer(var popularMovies: List<Movie>? = listOf(),
                         var nowPlayingMovies: List<Movie>? = listOf(),
                         var upcomingMovies: List<Movie>? = listOf(),
                         var topRatedMovies: List<Movie>? = listOf(),
-                        var popularPeople: List<People>? = listOf()) : Parcelable {
+                        var popularPeople: List<Personality>? = listOf()) : Parcelable {
 
 
     fun getFilteredWidgets(): MutableMap<Int, List<Widget>?> {

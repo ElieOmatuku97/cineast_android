@@ -23,7 +23,7 @@ import io.reactivex.subjects.PublishSubject
 class PeopleActivity: ToolbarMVPActivity <PeoplePresenter, PeopleVu>() {
     companion object {
         private val MVP_UID by lazy {
-            PeopleActivity.hashCode()
+           hashCode()
         }
         private val LOG_TAG by lazy {
             PeopleActivity::class.java.simpleName
@@ -35,10 +35,6 @@ class PeopleActivity: ToolbarMVPActivity <PeoplePresenter, PeopleVu>() {
 
     val personPresentedPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()
-    }
-
-    private val rxSubs : io.reactivex.disposables.CompositeDisposable by lazy {
-        io.reactivex.disposables.CompositeDisposable()
     }
 
 

@@ -16,7 +16,6 @@ import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.fragment.LoginWebviewFragment
 import elieomatuku.cineast_android.fragment.WebviewFragment
-import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.utils.WebLink
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -118,9 +117,8 @@ class DiscoverVu (inflater: LayoutInflater,
     }
 
     fun updateErrorView(errorMsg: String) {
-
-
-
+        adapter.notifyDataSetChanged()
+        listView.visibility = View.VISIBLE
     }
 
 }

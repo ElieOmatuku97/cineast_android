@@ -12,7 +12,7 @@ import elieomatuku.cineast_android.adapter.UserMovieListAdapter
 import timber.log.Timber
 
 
-class SwipeToDeleteCallback(val adapter: UserMovieListAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+class SwipeToDeleteCallback(val adapter:  UserMovieListAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
     private val background: ColorDrawable? = ColorDrawable(Color.RED)
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

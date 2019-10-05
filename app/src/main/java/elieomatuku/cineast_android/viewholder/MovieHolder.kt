@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
@@ -41,7 +42,7 @@ class MovieHolder(itemView: View): RecyclerView.ViewHolder (itemView) {
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            UiUtils.startItemListActivity(itemView.context, movies, resources)
+            ItemListActivity.startItemListActivity(itemView.context, movies, resources)
         }
     }
 }

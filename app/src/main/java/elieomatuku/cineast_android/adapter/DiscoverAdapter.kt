@@ -7,6 +7,8 @@ import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.viewholder.*
 import elieomatuku.cineast_android.viewholder.itemHolder.LoginViewHolder
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
+import kotlin.properties.Delegates
 
 class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, private val onPersonClickPublisher: PublishSubject<Person>,
                       private val loginClickPublisher: PublishSubject<Boolean>): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -24,7 +26,26 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
     var widget : List<Widget> = listOf()
     var isLoggedIn: Boolean = false
 
-    var filteredWidgets : MutableMap<Int, List<Widget>?>  = mutableMapOf()
+
+    var hasValidData = false
+        private set
+
+    var filteredWidgets : MutableMap<Int, List<Widget>?>  by Delegates.observable(mutableMapOf()) {prop, oldEdition, nuEdition ->
+        hasValidData = true
+        errorMessage = null
+    }
+
+    private var _errorMessage: String? = null
+    var errorMessage: String?
+        get() = _errorMessage
+        set(nuErrorMessage) {
+            _errorMessage = nuErrorMessage
+            hasValidData = true
+        }
+
+    val hasEmptyState: Boolean
+        // only display empty state after valid data is set
+        get() = hasValidData  && (filteredWidgets.isEmpty())
 
     private fun getDiscoverPosition(position: Int): Int {
         return position - 1
@@ -33,6 +54,10 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
     var currentMovieId: Int =  -1
 
     override fun getItemCount(): Int {
+
+        Timber.d("hasEmptyState: ${hasEmptyState}")
+
+
         return if (filteredWidgets != null) {
             filteredWidgets.size + 2
         } else {
@@ -93,7 +118,7 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
                 (holder as MovieHolder).update(movies , R.string.popular_movies, onMovieClickPublisher)
             }
             TYPE_POPULAR_PEOPLE ->{
-                val popularPeople = filteredWidgets[getDiscoverPosition(TYPE_POPULAR_PEOPLE)] as List<People>
+                val popularPeople = filteredWidgets[getDiscoverPosition(TYPE_POPULAR_PEOPLE)] as List<Personality>
                 (holder as PopularPeopleHolder).update(popularPeople, onPersonClickPublisher)
             }
             TYPE_NOW_PLAYING_MOVIE -> {

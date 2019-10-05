@@ -5,7 +5,7 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.service.DiscoverService
-import elieomatuku.cineast_android.business.model.data.People
+import elieomatuku.cineast_android.business.model.data.Personality
 import elieomatuku.cineast_android.business.model.data.Person
 import elieomatuku.cineast_android.business.model.response.PeopleResponse
 import elieomatuku.cineast_android.vu.PopularPeopleVu
@@ -25,7 +25,7 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
 
 
     private val discoverClient: DiscoverService by App.kodein.instance()
-    private var popularPeople: List <People>? = listOf()
+    private var popularPeople: List <Personality>? = listOf()
 
 
     override fun onLink(vu: PopularPeopleVu, inState: Bundle?, args: Bundle) {

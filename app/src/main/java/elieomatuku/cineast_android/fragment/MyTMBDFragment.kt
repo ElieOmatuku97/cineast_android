@@ -9,8 +9,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.activity.MainActivity
+import elieomatuku.cineast_android.activity.UserListActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.AccessToken
 import elieomatuku.cineast_android.business.model.data.Movie
@@ -90,7 +90,7 @@ class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
                             val movies = it
 
                             this@MyTMBDFragment.context?.let {
-                                ItemListActivity.gotoWatchList(it, movies)
+                                UserListActivity.gotoWatchList(it, movies)
                             }
 
                         }
@@ -114,7 +114,7 @@ class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
                             val movies = it
 
                             this@MyTMBDFragment.context?.let {
-                                ItemListActivity.gotoFavoriteList(it, movies)
+                                UserListActivity.gotoFavoriteList(it, movies)
                             }
                         }
                     }
@@ -138,7 +138,7 @@ class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
                             val movies = it
 
                             this@MyTMBDFragment.context?.let {
-                                ItemListActivity.gotoRatedMovies(it, movies)
+                                UserListActivity.gotoRatedMovies(it, movies)
                             }
                         }
                     }

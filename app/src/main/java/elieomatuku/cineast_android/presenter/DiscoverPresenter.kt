@@ -2,12 +2,10 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.App.Companion.kodein
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.*
-import elieomatuku.cineast_android.business.service.ConnectionService
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.vu.DiscoverVu
@@ -143,6 +141,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
             override fun onFail(error: String) {
                 Timber.d("Network Error:$error")
                 vu?.hideLoading()
+                vu?.updateErrorView(error)
             }
         }
     }

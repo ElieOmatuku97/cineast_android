@@ -11,6 +11,7 @@ import io.reactivex.subjects.PublishSubject
 class PopularPeopleItemAdapter(private val popularPeople: List<Person>,
                                private val onItemClickPublisher: PublishSubject<Person>,
                                private val itemListLayoutRes: Int? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     override fun getItemCount(): Int {
        return popularPeople.size
     }

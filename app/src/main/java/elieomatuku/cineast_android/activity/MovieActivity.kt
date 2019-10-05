@@ -44,10 +44,6 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
         PublishSubject.create<Boolean>()
     }
 
-    private val rxSubs : io.reactivex.disposables.CompositeDisposable by lazy {
-        io.reactivex.disposables.CompositeDisposable()
-    }
-
     override fun createMVPDispatcher(): MVPDispatcher<MoviePresenter, MovieVu> {
         return MVPDispatcher(MVP_UID,
                 PresenterCacheLoaderCallback(this, { MoviePresenter() }),
