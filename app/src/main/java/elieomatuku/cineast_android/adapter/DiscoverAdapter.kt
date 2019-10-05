@@ -92,27 +92,25 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
                 HeaderHolder.newInstance(parent)
             }
             TYPE_POPULAR_MOVIE -> {
-                MovieHolder.newInstance(parent)
+                MovieHolder.newInstance(parent, onMovieClickPublisher)
             }
             TYPE_POPULAR_PEOPLE -> {
-                PopularPeopleHolder.newInstance(parent)
+                PopularPeopleHolder.newInstance(parent, onPersonalityClickPublisher)
             }
             TYPE_NOW_PLAYING_MOVIE -> {
-                MovieHolder.newInstance(parent)
+                MovieHolder.newInstance(parent, onMovieClickPublisher)
             }
             TYPE_UPCOMING_MOVIE -> {
-                MovieHolder.newInstance(parent)
+                MovieHolder.newInstance(parent, onMovieClickPublisher)
             }
             TYPE_TOP_RATED_MOVIE -> {
-                MovieHolder.newInstance(parent)
+                MovieHolder.newInstance(parent, onMovieClickPublisher)
             }
             TYPE_LOGIN -> {
                 LoginViewHolder.newInstance(parent)
             }
 
             TYPE_EMPTY_STATE -> {
-                Timber.d("empty state update function called")
-
                 EmptyStateHolder.newInstance(parent)
             }
             else -> throw RuntimeException("View Type does not exist.")
@@ -131,13 +129,13 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
                 val widget = filteredWidgets[getDiscoverPosition(position)]
                 val movies = widget?.second as List<Movie>
                 val widgetTitle = widget.first
-                holder.update(movies, widgetTitle, onMovieClickPublisher)
+                holder.update(movies, widgetTitle)
             }
 
             is PopularPeopleHolder -> {
                 val widget = filteredWidgets[getDiscoverPosition(position)]
                 val personalities = widget?.second as List<Personality>
-                holder.update(personalities, onPersonalityClickPublisher)
+                holder.update(personalities)
             }
 
             is LoginViewHolder -> {
@@ -148,8 +146,6 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
             }
 
             is EmptyStateHolder -> {
-                Timber.d("empty state update function called")
-
                 holder.update()
             }
         }

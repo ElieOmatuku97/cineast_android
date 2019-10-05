@@ -46,7 +46,6 @@ abstract class ListVu(inflater: LayoutInflater,
 
 
 
-    protected lateinit var adapter: MovieListAdapter
 
 
     override fun onCreate() {
@@ -77,45 +76,5 @@ abstract class ListVu(inflater: LayoutInflater,
 
     }
 
-    abstract fun setUpListView(widgets: List<Widget>) // {
-//        Timber.d("widgets list: $widgets")
-//
-//        if (areWidgetsMovies(widgets)) {
-//            adapter = UserMovieListAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
-//            setSwipeToDelete(adapter)
-//
-//            Timber.d("adapter: $adapter")
-////            adapter = UserMovieListAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
-//            listView.adapter = adapter
-//
-////            Timber.d("widgets list:bis ${(widgets as List<Movie>).toMutableList()}")
-////            adapter.movies = (widgets as List<Movie>).toMutableList()
-//
-//
-//
-////            listView.adapter = adapter
-//            adapter.notifyDataSetChanged()
-//
-////            Timber.d("adapter values: ${adapter.movies}")
-//
-//        } else {
-//            listView.adapter = PopularPeopleItemAdapter(widgets as List<Person>, personSelectPublisher, R.layout.holder_people_list)
-//        }
-//
-////        listView.layoutManager = LinearLayoutManager(activity)
-//    }
-
-
-//    private fun areWidgetsMovies(widgets: List<Widget?>): Boolean {
-//        return (widgets[FIRST_WIDGET_TYPE_OCCURENCE] != null) && (widgets[FIRST_WIDGET_TYPE_OCCURENCE] is Movie)
-//    }
-
-//    private fun getMovieAdapter(widgets: List<Widget> , isUserList: Boolean): MovieListAdapter {
-//        return if (isUserList) {
-//            UserMovieListAdapter(/*widgets as List<Movie>,*/ movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
-//        } else {
-//            MovieListAdapter(/*widgets as List<Movie>,*/ movieSelectPublisher, R.layout.holder_movie_list)
-//        }
-//    }
-
+    abstract fun setUpListView(widgets: List<Widget>)
 }

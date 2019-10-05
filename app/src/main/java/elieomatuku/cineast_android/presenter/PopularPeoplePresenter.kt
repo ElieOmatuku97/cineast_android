@@ -82,6 +82,7 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
 
             override fun onFail(error: String) {
                 vu?.hideLoading()
+                vu?.updateErrorView(error)
                 Timber.d( "Network Error:$error")
             }
         }

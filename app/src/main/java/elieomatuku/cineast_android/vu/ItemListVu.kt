@@ -24,14 +24,25 @@ class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
     val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
 
+    val movieListAdapter: MovieListAdapter by lazy {
+        MovieListAdapter(movieSelectPublisher, R.layout.holder_movie_list)
+    }
+
+    val popularPeopleItemAdapter: PopularPeopleItemAdapter by lazy {
+        PopularPeopleItemAdapter(personSelectPublisher, R.layout.holder_people_list)
+    }
+
+
     override fun setUpListView(widgets: List<Widget>) {
         if (areWidgetsMovies(widgets)) {
-            adapter = MovieListAdapter(widgets as List<Movie>, movieSelectPublisher, R.layout.holder_movie_list)
-            listView.adapter = adapter
-            adapter.notifyDataSetChanged()
+            movieListAdapter.movies = widgets as MutableList<Movie>
+            listView.adapter = movieListAdapter
+            movieListAdapter.notifyDataSetChanged()
 
         } else {
-            listView.adapter = PopularPeopleItemAdapter(widgets as List<Person>, personSelectPublisher, R.layout.holder_people_list)
+            popularPeopleItemAdapter.popularPersonalities = widgets as MutableList<Person>
+            listView.adapter = popularPeopleItemAdapter
+            popularPeopleItemAdapter.notifyDataSetChanged()
         }
     }
 

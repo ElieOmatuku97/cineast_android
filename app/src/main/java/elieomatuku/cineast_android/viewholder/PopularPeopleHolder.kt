@@ -14,15 +14,15 @@ import elieomatuku.cineast_android.business.model.data.Person
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 
-class PopularPeopleHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
+class PopularPeopleHolder(itemView: View, private val onPersonalityClickPublisher: PublishSubject<Person>) : RecyclerView.ViewHolder (itemView){
 
     companion object {
         fun createView(parent: ViewGroup): View{
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_people, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup): PopularPeopleHolder {
-            return PopularPeopleHolder(createView(parent))
+        fun newInstance(parent: ViewGroup, onPersonalityClickPublisher: PublishSubject<Person>): PopularPeopleHolder {
+            return PopularPeopleHolder(createView(parent),onPersonalityClickPublisher)
         }
     }
 
@@ -30,9 +30,19 @@ class PopularPeopleHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
         itemView.see_all
     }
 
-    fun update(personalities: List<Personality>, onPersonalityClickPublisher: PublishSubject<Person>) {
-        itemView.recyclerview_people.adapter = PopularPeopleItemAdapter (personalities, onPersonalityClickPublisher)
-        itemView.recyclerview_people.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+    private val adapter: PopularPeopleItemAdapter by lazy {
+        PopularPeopleItemAdapter (onPersonalityClickPublisher)
+    }
+
+    private val listView: RecyclerView by lazy {
+        itemView.recyclerview_people
+    }
+
+    fun update(personalities: List<Personality>) {
+        adapter.popularPersonalities = personalities.toMutableList()
+        listView.adapter = adapter
+        adapter.notifyDataSetChanged()
+        listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
             ItemListActivity.startItemListActivity(itemView.context, personalities,  R.string.popular_people)
