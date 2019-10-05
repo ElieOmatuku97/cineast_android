@@ -48,7 +48,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
             fetchDiscover()
         } else {
             discoverContainer?.let {
-                vu.setWigdet(it, userService.isLoggedIn())
+                vu.updateView(it, userService.isLoggedIn())
             }
         }
 
@@ -193,13 +193,17 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                     vu?.hideLoading()
 
                     discoverContainer?.let {
-                        vu?.setWigdet(it, userService.isLoggedIn())
+                        vu?.updateView(it, userService.isLoggedIn())
                     }
                 }
             }
 
             override fun onFail(error: String) {
-                Timber.d("Network Error:$error")
+                Timber.e("Network Error:$error")
+
+                handler.post {
+                    vu?.updateErrorView(error)
+                }
             }
         }
     }

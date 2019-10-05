@@ -86,12 +86,21 @@ class DiscoverVu (inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    fun setWigdet(discoverContainer: DiscoverContainer, isLoggedIn: Boolean){
+    fun updateView(discoverContainer: DiscoverContainer, isLoggedIn: Boolean){
         adapter.filteredWidgets = discoverContainer.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
     }
+
+
+
+    fun updateErrorView(errorMsg: String?) {
+        adapter.errorMessage = errorMsg
+        adapter.notifyDataSetChanged()
+        listView.visibility = View.VISIBLE
+    }
+
 
 
     override fun gotoWebview(value: AccessToken?) {
@@ -114,11 +123,6 @@ class DiscoverVu (inflater: LayoutInflater,
     fun updateLoginState(isLoggedIn: Boolean) {
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
-    }
-
-    fun updateErrorView(errorMsg: String) {
-        adapter.notifyDataSetChanged()
-        listView.visibility = View.VISIBLE
     }
 
 }
