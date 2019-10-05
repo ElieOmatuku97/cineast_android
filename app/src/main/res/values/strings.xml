@@ -59,4 +59,7 @@
 
     <string name="rate_this_movie">Rate this movie a</string>
     <string name="submit">Submit</string>
+
+
+    <string name="empty_state_no_internet_msg" >Cineast cannot connect to a network. Please check your internet connection and try again.</string>
 </resources>

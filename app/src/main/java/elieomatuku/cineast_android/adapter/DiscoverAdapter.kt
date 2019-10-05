@@ -20,6 +20,8 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
         const val TYPE_UPCOMING_MOVIE = 4
         const val TYPE_TOP_RATED_MOVIE = 5
         const val TYPE_LOGIN = 6
+
+        const val TYPE_EMPTY_STATE = -2
     }
 
     var widget: List<Widget> = listOf()
@@ -61,20 +63,26 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
         return if (!hasEmptyState) {
             filteredWidgets.size + 2
         } else {
-            0
+            1
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            POSITION_HEADER -> TYPE_HEADER
-            TYPE_POPULAR_MOVIE -> TYPE_POPULAR_MOVIE
-            TYPE_POPULAR_PEOPLE -> TYPE_POPULAR_PEOPLE
-            TYPE_NOW_PLAYING_MOVIE -> TYPE_NOW_PLAYING_MOVIE
-            TYPE_UPCOMING_MOVIE -> TYPE_UPCOMING_MOVIE
-            TYPE_TOP_RATED_MOVIE -> TYPE_TOP_RATED_MOVIE
-            TYPE_LOGIN -> TYPE_LOGIN
-            else -> -1
+        return if (hasEmptyState) {
+            Timber.d("empty state update function called")
+
+            TYPE_EMPTY_STATE
+        } else {
+            when (position) {
+                POSITION_HEADER -> TYPE_HEADER
+                TYPE_POPULAR_MOVIE -> TYPE_POPULAR_MOVIE
+                TYPE_POPULAR_PEOPLE -> TYPE_POPULAR_PEOPLE
+                TYPE_NOW_PLAYING_MOVIE -> TYPE_NOW_PLAYING_MOVIE
+                TYPE_UPCOMING_MOVIE -> TYPE_UPCOMING_MOVIE
+                TYPE_TOP_RATED_MOVIE -> TYPE_TOP_RATED_MOVIE
+                TYPE_LOGIN -> TYPE_LOGIN
+                else -> -1
+            }
         }
     }
 
@@ -100,6 +108,12 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
             }
             TYPE_LOGIN -> {
                 LoginViewHolder.newInstance(parent)
+            }
+
+            TYPE_EMPTY_STATE -> {
+                Timber.d("empty state update function called")
+
+                EmptyStateHolder.newInstance(parent)
             }
             else -> throw RuntimeException("View Type does not exist.")
         }
@@ -131,6 +145,12 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
                     loginClickPublisher.onNext(true)
                 }
                 holder.update(isLoggedIn)
+            }
+
+            is EmptyStateHolder -> {
+                Timber.d("empty state update function called")
+
+                holder.update()
             }
         }
     }
