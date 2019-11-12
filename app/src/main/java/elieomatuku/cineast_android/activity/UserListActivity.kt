@@ -3,18 +3,16 @@ package elieomatuku.cineast_android.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Widget
 import elieomatuku.cineast_android.presenter.UserListPresenter
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.vu.UserListVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import timber.log.Timber
-import java.util.ArrayList
+
 
 
 class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
@@ -26,10 +24,9 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
         const val DISPLAY_FAVORITE_LIST = "favorite_list_key"
         const val DISPLAY_WATCH_LIST = "watch_list_key"
 
-        fun gotoUserListActivity  (context: Context, widgets: List<Widget>, resources: Int? = null): Intent {
+        fun gotoUserListActivity  (context: Context, resources: Int? = null): Intent {
             val intent = Intent (context, UserListActivity::class.java)
             val params = Bundle()
-            params.putParcelableArrayList(UiUtils.WIDGET_KEY, widgets as ArrayList<out Parcelable>)
 
             if (resources != null) {
                 params.putInt(UiUtils.SCREEN_NAME_KEY, resources)
@@ -41,8 +38,8 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
         }
 
 
-        fun gotoFavoriteList(context: Context, widgets: List<Widget>) {
-            val intent = gotoUserListActivity(context, widgets, R.string.settings_favorites)
+        fun gotoFavoriteList(context: Context) {
+            val intent = gotoUserListActivity(context,  R.string.settings_favorites)
             val params = Bundle()
             params.putBoolean(DISPLAY_FAVORITE_LIST, true)
             intent.putExtras(params)
@@ -50,8 +47,8 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
             context.startActivity(intent)
         }
 
-        fun gotoWatchList(context: Context, widgets: List<Widget>) {
-            val intent = gotoUserListActivity(context, widgets, R.string.settings_watchlist)
+        fun gotoWatchList(context: Context) {
+            val intent = gotoUserListActivity(context, R.string.settings_watchlist)
             val params = Bundle()
             params.putBoolean(DISPLAY_WATCH_LIST, true)
             intent.putExtras(params)
@@ -60,8 +57,8 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
             context.startActivity(intent)
         }
 
-        fun gotoRatedMovies(context: Context, widgets: List<Widget>) {
-            val intent = gotoUserListActivity(context, widgets, R.string.settings_rated)
+        fun gotoRatedMovies(context: Context) {
+            val intent = gotoUserListActivity(context, R.string.settings_rated)
             context.startActivity(intent)
         }
     }

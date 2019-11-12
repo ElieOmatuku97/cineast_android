@@ -1,7 +1,6 @@
 package elieomatuku.cineast_android.fragment
 
 
-
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -13,7 +12,6 @@ import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.activity.UserListActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.AccessToken
-import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.utils.WebLink
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,14 +19,14 @@ import org.kodein.di.generic.instance
 import timber.log.Timber
 
 
-class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
+class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
     companion object {
         fun newInstance(): MyTMBDFragment {
             return MyTMBDFragment()
         }
     }
 
-    private val userService : UserService by App.kodein.instance()
+    private val userService: UserService by App.kodein.instance()
 
     private val logInBtn: Preference by lazy {
         findPreference(getString(R.string.pref_logout))
@@ -61,7 +59,6 @@ class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
         updateState(userService.isLoggedIn())
 
         logInBtn.setOnPreferenceClickListener {
-
             if (!userService.isLoggedIn()) {
                 userService.getAccessToken(object : AsyncResponse<AccessToken> {
                     override fun onSuccess(result: AccessToken?) {
@@ -80,83 +77,34 @@ class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
             true
         }
 
-
         watchListBtn.setOnPreferenceClickListener {
-            userService.getWatchList( object: AsyncResponse<List<Movie>> {
-                override fun onSuccess(result: List<Movie>?) {
-
-                    handler.post {
-                        result?.let {
-                            val movies = it
-
-                            this@MyTMBDFragment.context?.let {
-                                UserListActivity.gotoWatchList(it, movies)
-                            }
-
-                        }
-                    }
-                }
-
-                override fun onFail(error: String) {
-                    Timber.d("error : $error")
-                }
-            })
-
+            this@MyTMBDFragment.context?.let {
+                UserListActivity.gotoWatchList(it)
+            }
             true
         }
 
         favoritesBtn.setOnPreferenceClickListener {
-            userService.getFavoriteList( object: AsyncResponse<List<Movie>> {
-                override fun onSuccess(result: List<Movie>?) {
-
-                    handler.post {
-                        result?.let {
-                            val movies = it
-
-                            this@MyTMBDFragment.context?.let {
-                                UserListActivity.gotoFavoriteList(it, movies)
-                            }
-                        }
-                    }
-                }
-
-                override fun onFail(error: String) {
-                    Timber.d("error : $error")
-                }
-            })
+            this@MyTMBDFragment.context?.let {
+                UserListActivity.gotoFavoriteList(it)
+            }
 
             true
         }
-
 
         ratedBtn.setOnPreferenceClickListener {
-            userService.getUserRatedMovies( object: AsyncResponse<List<Movie>> {
-                override fun onSuccess(result: List<Movie>?) {
-
-                    handler.post {
-                        result?.let {
-                            val movies = it
-
-                            this@MyTMBDFragment.context?.let {
-                                UserListActivity.gotoRatedMovies(it, movies)
-                            }
-                        }
-                    }
-                }
-
-                override fun onFail(error: String) {
-                    Timber.d("error : $error")
-                }
-            })
+            this@MyTMBDFragment.context?.let {
+                UserListActivity.gotoRatedMovies(it)
+            }
 
             true
         }
 
-        (activity as MainActivity).rxSubs.add( (activity as MainActivity).sessionPublisher.hide()
+        (activity as MainActivity).rxSubs.add((activity as MainActivity).sessionPublisher.hide()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({sessionId: String? ->
+                .subscribe({ sessionId: String? ->
                     updateState(!sessionId.isNullOrEmpty())
-                }, {t: Throwable ->
+                }, { t: Throwable ->
                     Timber.e("sessionPublisher failed", t)
                 })
         )
@@ -165,7 +113,7 @@ class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
     private fun updateState(isLoggedIn: Boolean) {
         if (isLoggedIn) {
             logInBtn.title = activity?.getString(R.string.settings_logout)
-            favoritesBtn.isVisible =  true
+            favoritesBtn.isVisible = true
             watchListBtn.isVisible = true
             ratedBtn.isVisible = true
         } else {
@@ -184,7 +132,7 @@ class MyTMBDFragment: PreferenceFragmentCompat(), WebLink<AccessToken?> {
                     .build()
                     .toString()
 
-            val webviewFragment: WebviewFragment? =  LoginWebviewFragment.newInstance(authenticateUrl)
+            val webviewFragment: WebviewFragment? = LoginWebviewFragment.newInstance(authenticateUrl)
             val fm = activity?.supportFragmentManager
 
             if (webviewFragment != null && fm != null) {

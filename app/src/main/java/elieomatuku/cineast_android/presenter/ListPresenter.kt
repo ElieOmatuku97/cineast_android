@@ -30,11 +30,6 @@ abstract class ListPresenter<V>: BasePresenter <V>() where V: ListVu   {
 
     override fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
-        val listOfWidgets: List<Widget>  = args.getParcelableArrayList(WIDGET_KEY)
-        val screenNameRes = args.getInt(SCREEN_NAME_KEY)
-
-
-        vu.updateVu(listOfWidgets, screenNameRes)
 
         discoverService.getGenres(genreAsyncResponse)
         rxSubs.add(vu.movieSelectObservable
@@ -49,16 +44,6 @@ abstract class ListPresenter<V>: BasePresenter <V>() where V: ListVu   {
                 }, {t: Throwable ->
                     Timber.d( "movieSelectObservable failed:$t")
                 }))
-
-//        rxSubs.add(vu.personSelectObservable
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .subscribe({person: Person ->
-//                    val params = Bundle()
-//                    params.putString(SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
-//                    params.putParcelable(PEOPLE_KEY, person)
-//                    vu.gotoPeople(params)
-//                })
-//        )
     }
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
