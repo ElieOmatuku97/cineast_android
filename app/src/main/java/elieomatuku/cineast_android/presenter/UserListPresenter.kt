@@ -43,7 +43,9 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                 }
 
                 override fun onFail(error: String) {
-                    Timber.d("error : $error")
+                    Timber.e("error : $error")
+
+                    vu.updateErrorView(error)
                 }
             })
         } else if (isWatchList) {
@@ -57,7 +59,9 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                 }
 
                 override fun onFail(error: String) {
-                    Timber.d("error : $error")
+                    Timber.e("error : $error")
+
+                    vu.updateErrorView(error)
                 }
             })
         } else {
@@ -71,7 +75,9 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                 }
 
                 override fun onFail(error: String) {
-                    Timber.d("error : $error")
+                    Timber.e("error : $error")
+
+                    vu.updateErrorView(error)
                 }
             })
 

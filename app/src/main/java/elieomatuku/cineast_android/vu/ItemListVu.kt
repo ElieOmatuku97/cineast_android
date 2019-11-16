@@ -3,6 +3,7 @@ package elieomatuku.cineast_android.vu
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
@@ -16,6 +17,9 @@ import io.reactivex.subjects.PublishSubject
 
 class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) : ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
+
+    override val adapter: RecyclerView.Adapter<*>
+        get() =  movieListAdapter
 
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()

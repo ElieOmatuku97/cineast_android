@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.adapter.UserMovieListAdapter
@@ -18,7 +19,7 @@ class UserListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
                  parentView: ViewGroup?) : ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
 
-    val adapter: MovieListAdapter by lazy {
+    override val adapter: MovieListAdapter by lazy {
         UserMovieListAdapter(movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
     }
 
@@ -29,6 +30,12 @@ class UserListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
         val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter as UserMovieListAdapter))
         itemTouchHelper.attachToRecyclerView(listView)
         listView.adapter = adapter
+        adapter.notifyDataSetChanged()
+    }
+
+    fun updateErrorView(errorMsg: String?) {
+        adapter.errorMessage = errorMsg
+        listView.layoutManager = LinearLayoutManager(activity)
         adapter.notifyDataSetChanged()
     }
 

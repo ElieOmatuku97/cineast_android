@@ -26,6 +26,8 @@ abstract class ListVu(inflater: LayoutInflater,
         const val FIRST_WIDGET_TYPE_OCCURENCE = 0
     }
 
+    abstract val adapter: RecyclerView.Adapter<*>
+
     override val toolbar: Toolbar?
         get() = rootView.toolbar
 
@@ -45,11 +47,9 @@ abstract class ListVu(inflater: LayoutInflater,
         get() = movieSelectPublisher.hide()
 
 
-
-
-
     override fun onCreate() {
         super.onCreate()
+        listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
