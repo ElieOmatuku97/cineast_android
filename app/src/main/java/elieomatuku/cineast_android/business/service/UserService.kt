@@ -11,9 +11,9 @@ import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.rest.AuthenticationApi
 import elieomatuku.cineast_android.business.rest.MovieApi
 import elieomatuku.cineast_android.business.rest.RestApi
+import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.utils.ValueStore
-import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -61,7 +61,7 @@ class UserService (private val restApi: RestApi,  private val application: Appli
             }
 
             override fun onFailure(call: Call<AccessToken>, throwable: Throwable) {
-                asyncResponse.onFail(throwable.toString())
+                asyncResponse.onFail(ApiUtils.throwableToCineastError(throwable))
             }
         })
     }
@@ -126,13 +126,18 @@ class UserService (private val restApi: RestApi,  private val application: Appli
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             movieApi.getWatchList(RestUtils.API_KEY, it).enqueue(object : Callback<MovieResponse> {
                 override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                    response.body()?.results?.let {
-                        asyncResponse.onSuccess(it)
+                    val success = response?.isSuccessful ?: false
+                    if (success) {
+                        response.body()?.results?.let {
+                            asyncResponse.onSuccess(it)
+                        }
+                    } else {
+                        asyncResponse.onFail(ApiUtils.throwableToCineastError(response.errorBody()))
                     }
                 }
 
                 override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                    asyncResponse.onFail(t.toString())
+                    asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
                 }
             })
         }
@@ -169,13 +174,18 @@ class UserService (private val restApi: RestApi,  private val application: Appli
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             movieApi.getFavoritesList(RestUtils.API_KEY, it).enqueue(object : Callback<MovieResponse> {
                 override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                    response.body()?.results?.let {
-                        asyncResponse.onSuccess(it)
+                    val success = response?.isSuccessful ?: false
+                    if (success) {
+                        response.body()?.results?.let {
+                            asyncResponse.onSuccess(it)
+                        }
+                    } else {
+                        asyncResponse.onFail(ApiUtils.throwableToCineastError(response.errorBody()))
                     }
                 }
 
                 override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                    asyncResponse.onFail(t.toString())
+                    asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
                 }
             })
         }
@@ -212,13 +222,18 @@ class UserService (private val restApi: RestApi,  private val application: Appli
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             movieApi.getUserRatedMovies(RestUtils.API_KEY, it).enqueue(object : Callback<MovieResponse> {
                 override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                    response.body()?.results?.let {
-                        asyncResponse.onSuccess(it)
+                    val success = response?.isSuccessful ?: false
+                    if (success) {
+                        response.body()?.results?.let {
+                            asyncResponse.onSuccess(it)
+                        }
+                    } else {
+                        asyncResponse.onFail(ApiUtils.throwableToCineastError(response.errorBody()))
                     }
                 }
 
                 override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                    asyncResponse.onFail(t.toString())
+                    asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
                 }
             })
         }

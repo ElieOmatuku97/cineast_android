@@ -12,6 +12,7 @@ import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.activity.UserListActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.AccessToken
+import elieomatuku.cineast_android.business.model.data.CineastError
 import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.utils.WebLink
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -66,7 +67,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
                         gotoWebview(result)
                     }
 
-                    override fun onFail(error: String) {
+                    override fun onFail(error: CineastError) {
                         Timber.d("error : $error")
                     }
                 })

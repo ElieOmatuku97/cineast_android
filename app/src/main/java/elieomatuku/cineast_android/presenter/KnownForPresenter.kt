@@ -6,6 +6,7 @@ import android.util.Log
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.CineastError
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.Genre
 import elieomatuku.cineast_android.business.model.data.Movie
@@ -83,7 +84,7 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
                 genres = result?.genres
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Log.d(LOG_TAG, "Network Error:$error")
             }
         }

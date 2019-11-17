@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.CineastError
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.Personality
 import elieomatuku.cineast_android.business.model.data.Person
@@ -80,9 +81,9 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
                 }
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 vu?.hideLoading()
-                vu?.updateErrorView(error)
+                vu?.updateErrorView(error?.status_message)
                 Timber.d( "Network Error:$error")
             }
         }

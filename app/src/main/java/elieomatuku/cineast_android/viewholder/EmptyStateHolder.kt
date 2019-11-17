@@ -3,9 +3,15 @@ package elieomatuku.cineast_android.viewholder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
+import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import timber.log.Timber
+import elieomatuku.cineast_android.business.service.ConnectionService
+import kotlinx.android.synthetic.main.holder_empty_state.view.*
+import org.kodein.di.generic.instance
 
 
 class EmptyStateHolder (itemView: View) : RecyclerView.ViewHolder (itemView) {
@@ -19,14 +25,28 @@ class EmptyStateHolder (itemView: View) : RecyclerView.ViewHolder (itemView) {
         }
     }
 
+    private val connectionService: ConnectionService by App.kodein.instance()
 
 
-    fun update() {
+    private val msgView: TextView by lazy {
+        itemView.empty_msg
+    }
 
-        Timber.d("empty state update function called")
+    private val msgTitle: TextView by lazy {
+        itemView.empty_title
+    }
 
+    private val msgIcon: ImageView by lazy {
+        itemView.empty_icon
+    }
 
+    fun update(errorMsg: String? = null) {
 
+        if (connectionService.hasNetworkConnection) {
+            msgTitle.text = itemView.resources.getText(R.string.no_content_title)
+            msgView.text = errorMsg?.toUpperCase()
+            msgIcon.setImageDrawable(ResourcesCompat.getDrawable(itemView.resources, R.drawable.ic_movie_black_24dp, itemView.context.theme))
+        }
     }
 
 }

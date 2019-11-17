@@ -88,7 +88,7 @@ class PopularPeopleItemAdapter(
             }
 
             is EmptyStateHolder -> {
-                holder.update()
+                holder.update(errorMessage)
             }
         }
 

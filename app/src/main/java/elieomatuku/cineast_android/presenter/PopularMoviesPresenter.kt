@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.CineastError
 import elieomatuku.cineast_android.business.service.DiscoverService
 import elieomatuku.cineast_android.business.model.data.Genre
 import elieomatuku.cineast_android.business.model.data.Movie
@@ -82,10 +83,10 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
                 }
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d( "Network Error:$error")
                 vu?.hideLoading()
-                vu?.updateErrorView(error)
+                vu?.updateErrorView(error?.status_message)
             }
         }
     }
@@ -95,7 +96,7 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
             override fun onSuccess(result: GenreResponse?) {
                 genres = result?.genres
             }
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("Network Error:$error")
             }
         }

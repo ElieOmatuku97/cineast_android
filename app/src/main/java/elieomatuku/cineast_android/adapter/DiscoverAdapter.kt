@@ -146,7 +146,7 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
             }
 
             is EmptyStateHolder -> {
-                holder.update()
+                holder.update(errorMessage)
             }
         }
     }

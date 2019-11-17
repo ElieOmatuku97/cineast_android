@@ -54,7 +54,7 @@ class SimilarMoviePresenter: BasePresenter<SimilarMovieVu> (){
                 genres = result?.genres
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Log.d(LOG_TAG, "Network Error:$error")
             }
         }

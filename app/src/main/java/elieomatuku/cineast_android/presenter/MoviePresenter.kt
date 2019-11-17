@@ -164,7 +164,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
                 checkIfMovieInFavoriteList(movieSummary)
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.e("error from fetching watch list: $error")
             }
         })
@@ -187,7 +187,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
                 }
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.e("error from fetching favorite list: $error")
             }
         })

@@ -51,7 +51,7 @@ abstract class ListPresenter<V>: BasePresenter <V>() where V: ListVu   {
             override fun onSuccess(result: GenreResponse?) {
                 genres = result?.genres
             }
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("Network Error:$error")
             }
         }

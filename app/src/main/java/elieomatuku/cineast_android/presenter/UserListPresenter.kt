@@ -2,6 +2,7 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.CineastError
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.vu.UserListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -42,10 +43,10 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                     }
                 }
 
-                override fun onFail(error: String) {
+                override fun onFail(error: CineastError) {
                     Timber.e("error : $error")
 
-                    vu.updateErrorView(error)
+                    vu.updateErrorView(error?.status_message)
                 }
             })
         } else if (isWatchList) {
@@ -58,10 +59,10 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                     }
                 }
 
-                override fun onFail(error: String) {
+                override fun onFail(error: CineastError) {
                     Timber.e("error : $error")
 
-                    vu.updateErrorView(error)
+                    vu.updateErrorView(error?.status_message)
                 }
             })
         } else {
@@ -74,10 +75,10 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                     }
                 }
 
-                override fun onFail(error: String) {
+                override fun onFail(error: CineastError) {
                     Timber.e("error : $error")
 
-                    vu.updateErrorView(error)
+                    vu.updateErrorView(error?.status_message)
                 }
             })
 

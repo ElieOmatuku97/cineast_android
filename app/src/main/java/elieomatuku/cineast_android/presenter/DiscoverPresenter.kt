@@ -88,7 +88,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                                     vu.gotoWebview(result)
                                 }
 
-                                override fun onFail(error: String) {
+                                override fun onFail(error: CineastError) {
                                     Timber.d("error : $error")
                                 }
                             })
@@ -138,10 +138,10 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 discoverClient.getNowPlayingMovies(nowPlayingMovieAsyncResponse)
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("Network Error:$error")
                 vu?.hideLoading()
-                vu?.updateErrorView(error)
+                vu?.updateErrorView(error.status_message)
             }
         }
     }
@@ -153,7 +153,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 discoverClient.getUpcomingMovies(upComingMovieAsyncResponse)
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("Network Error:$error")
             }
         }
@@ -166,7 +166,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 discoverClient.getTopRatedMovies(topRatedMovieAsyncResponse)
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("Network Error:$error")
             }
         }
@@ -179,7 +179,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 discoverClient.getPopularPeople(popularPeopleAsyncResponse)
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("Network Error:$error")
             }
         }
@@ -198,11 +198,11 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 }
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.e("Network Error:$error")
 
                 handler.post {
-                    vu?.updateErrorView(error)
+                    vu?.updateErrorView(error.status_message)
                 }
             }
         }
@@ -214,7 +214,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 genres = result?.genres
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("Network Error:$error")
             }
         }

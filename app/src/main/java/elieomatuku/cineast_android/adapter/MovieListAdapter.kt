@@ -92,7 +92,7 @@ open class MovieListAdapter(private val onItemClickPublisher: PublishSubject<Mov
             }
 
             is EmptyStateHolder -> {
-                holder.update()
+                holder.update(errorMessage)
             }
         }
 

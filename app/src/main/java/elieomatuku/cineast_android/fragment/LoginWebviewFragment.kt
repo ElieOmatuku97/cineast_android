@@ -5,6 +5,7 @@ import android.os.Handler
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.CineastError
 import elieomatuku.cineast_android.business.service.UserService
 import org.kodein.di.generic.instance
 import timber.log.Timber
@@ -43,7 +44,7 @@ class LoginWebviewFragment : WebviewFragment() {
                 }
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("error : $error")
             }
         })
