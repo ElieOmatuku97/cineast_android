@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.PeopleActivity
@@ -26,6 +27,7 @@ import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_movie.view.*
+import timber.log.Timber
 import java.util.ArrayList
 
 class PeopleVu(inflater: LayoutInflater,
@@ -62,12 +64,19 @@ class PeopleVu(inflater: LayoutInflater,
         }
     }
 
+    val adapter: PeopleItemAdapter by lazy {
+        PeopleItemAdapter(onProfileClickedPicturePublisher)
+    }
+
     override fun onCreate() {
         super.onCreate()
 
         if (toolbar != null) {
             UiUtils.initToolbar(activity as AppCompatActivity, toolbar)
         }
+
+        listView.adapter =  adapter
+        listView.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onDestroy() {
@@ -79,17 +88,20 @@ class PeopleVu(inflater: LayoutInflater,
     fun updateVu(peopleDetails: PeopleDetails?, screenName: String?, peopleMovies: List<KnownFor>?) {
         if (peopleDetails != null && screenName != null && peopleMovies != null) {
             toolbar?.title = screenName
-            Log.d(PeopleVu::class.java.simpleName, "results: $peopleDetails & screenName: $screenName")
-            val peopleItemAdapter = PeopleItemAdapter(peopleDetails, peopleMovies, onProfileClickedPicturePublisher)
+            Timber.d("results: $peopleDetails & screenName: $screenName")
+//            val peopleItemAdapter = PeopleItemAdapter(peopleDetails, peopleMovies, onProfileClickedPicturePublisher)
 
-            listView.adapter = peopleItemAdapter
-            listView.layoutManager = LinearLayoutManager(activity)
+            adapter.peopleDetails = peopleDetails
+            adapter.peopleMovies = peopleMovies.toMutableList()
+
+//            listView.adapter =  adapter
+//            listView.layoutManager = LinearLayoutManager(activity)
 
             val dividerItemDecoration =   DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
             listView.addItemDecoration(dividerItemDecoration)
 
 
-            peopleItemAdapter.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
             initializeFragmentOnPeopleClicked(peopleDetails.biography)
         }
     }
@@ -118,5 +130,10 @@ class PeopleVu(inflater: LayoutInflater,
         if (fragment != null && fm != null) {
             fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
         }
+    }
+
+    fun updateErrorView(errorMsg: String?) {
+        adapter.errorMessage = errorMsg
+        adapter.notifyDataSetChanged()
     }
 }

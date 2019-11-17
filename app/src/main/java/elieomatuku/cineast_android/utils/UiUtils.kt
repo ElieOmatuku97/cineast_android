@@ -9,8 +9,6 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
-import android.os.Bundle
-import android.os.Parcelable
 import androidx.fragment.app.FragmentActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -24,9 +22,6 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.model.data.*
 import android.view.MenuItem
 import android.webkit.*
-import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.fragment.WebviewFragment
-import java.util.*
 
 
 object  UiUtils {
@@ -40,7 +35,7 @@ object  UiUtils {
 
     val WIDGET_KEY = "widget"
     val SCREEN_NAME_KEY = "screen_name"
-    val USER_LIST_KEY = "user_list"
+
 
 
     fun createLoadingIndicator(activity: Activity): PopupWindow {
@@ -223,17 +218,5 @@ object  UiUtils {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             context.startActivity(browserIntent)
         }
-    }
-
-    fun startItemListActivity (context: Context, widgets: List<Widget>, resources: Int? = null, isUserList: Boolean = false) {
-        val intent = Intent (context, ItemListActivity::class.java)
-        val params = Bundle()
-        params.putParcelableArrayList(WIDGET_KEY, widgets as ArrayList<out Parcelable>)
-        if (resources != null) {
-            params.putInt(SCREEN_NAME_KEY, resources)
-        }
-        params.putBoolean(USER_LIST_KEY, isUserList)
-        intent.putExtras(params)
-        context.startActivity(intent)
     }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.SimilarAdapter
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
@@ -16,10 +17,10 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
 
 
-class SimilarMovieVu (inflater: LayoutInflater,
-                      activity: Activity,
-                      fragmentWrapper: FragmentWrapper?,
-                      parentView: ViewGroup?) : BaseVu(inflater,
+class SimilarMovieVu(inflater: LayoutInflater,
+                     activity: Activity,
+                     fragmentWrapper: FragmentWrapper?,
+                     parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
@@ -36,7 +37,7 @@ class SimilarMovieVu (inflater: LayoutInflater,
         get() = itemSelectPublisher.hide()
 
 
-    private val listView : RecyclerView by lazy {
+    private val listView: RecyclerView by lazy {
         rootView.recyclerview_popular_movie
     }
 
@@ -44,7 +45,7 @@ class SimilarMovieVu (inflater: LayoutInflater,
         rootView.section_title
     }
 
-    private val seeAllView : TextView by lazy {
+    private val seeAllView: TextView by lazy {
         rootView.see_all_title
     }
 
@@ -60,14 +61,14 @@ class SimilarMovieVu (inflater: LayoutInflater,
     }
 
 
-    fun updateVu( similarMovies: List<Movie>){
+    fun updateVu(similarMovies: List<Movie>) {
         val adapter = SimilarAdapter(similarMovies, itemSelectPublisher)
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         adapter.notifyDataSetChanged()
 
         seeAllView.setOnClickListener {
-            UiUtils.startItemListActivity(activity, similarMovies, R.string.movies)
+            ItemListActivity.startItemListActivity(activity, similarMovies, R.string.movies)
         }
     }
 }

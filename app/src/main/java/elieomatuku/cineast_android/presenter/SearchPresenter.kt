@@ -3,21 +3,19 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.rest.RestApi
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.CineastError
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.model.response.PeopleResponse
 import elieomatuku.cineast_android.vu.SearchVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
 
 class SearchPresenter: BasePresenter<SearchVu>() {
 
-    private val restApi: RestApi by App.kodein.instance()
+    private val contentManager: ContentManager by App.kodein.instance()
 
     override fun onLink(vu: SearchVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -37,29 +35,37 @@ class SearchPresenter: BasePresenter<SearchVu>() {
 
 
     fun searchMovies(argQuery: String) {
-        restApi.movie.getMoviesWithSearch(DiscoverService.API_KEY, argQuery).enqueue( object: Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
+        contentManager.searchMovies(argQuery, object: AsyncResponse<MovieResponse>{
+            override fun onSuccess(response: MovieResponse?) {
                 handler.post {
                     vu?.hideLoading()
-                    vu?.openItemListActivity(response?.body()?.results)
+                    vu?.openItemListActivity(response?.results)
                 }
             }
-            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                Timber.d( "response: ${t}")
+
+            override fun onFail(error: CineastError) {
+                Timber.d( "response: ${error}")
+                handler.post {
+                    vu?.hideLoading()
+                }
             }
         })
     }
 
     fun searchPeople(argQuery: String) {
-        restApi.people.getPeopleWithSearch(DiscoverService.API_KEY, argQuery).enqueue(object : Callback<PeopleResponse> {
-            override fun onResponse(call: Call<PeopleResponse>?, response: Response<PeopleResponse>?) {
+        contentManager.searchPeople(argQuery, object: AsyncResponse<PeopleResponse> {
+            override fun onSuccess(response: PeopleResponse?) {
                 handler.post {
                     vu?.hideLoading()
-                    vu?.openItemListActivity(response?.body()?.results)
+                    vu?.openItemListActivity(response?.results)
                 }
             }
-            override fun onFailure(call: Call<PeopleResponse>?, t: Throwable?) {
-                Timber.d("response: ${t}")
+
+            override fun onFail(error: CineastError) {
+                Timber.d("response: ${error}")
+                handler.post {
+                    vu?.hideLoading()
+                }
             }
         })
     }

@@ -6,20 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
 
-class MovieHolder(itemView: View): RecyclerView.ViewHolder (itemView) {
+class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubject<Movie>): RecyclerView.ViewHolder (itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_movie, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup): MovieHolder{
-            return MovieHolder(createView(parent))
+        fun newInstance(parent: ViewGroup, onItemClickPublisher: PublishSubject<Movie>): MovieHolder{
+            return MovieHolder(createView(parent), onItemClickPublisher)
         }
     }
 
@@ -35,13 +35,18 @@ class MovieHolder(itemView: View): RecyclerView.ViewHolder (itemView) {
         itemView.recyclerview_popular_movie
     }
 
-    fun update(movies: List<Movie>, resources: Int, onItemClickPublisher: PublishSubject<Movie>){
+    private val adapter :  MovieListAdapter by lazy {
+        MovieListAdapter(onItemClickPublisher)
+    }
+
+    fun update(movies: List<Movie>, resources: Int){
         sectionTitle.text = itemView.context.getString(resources)
-        listView.adapter = MovieListAdapter(movies, onItemClickPublisher)
+        adapter.movies= movies.toMutableList()
+        listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            UiUtils.startItemListActivity(itemView.context, movies, resources)
+            ItemListActivity.startItemListActivity(itemView.context, movies, resources)
         }
     }
 }

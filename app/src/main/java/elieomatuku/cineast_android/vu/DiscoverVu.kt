@@ -16,7 +16,6 @@ import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.fragment.LoginWebviewFragment
 import elieomatuku.cineast_android.fragment.WebviewFragment
-import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.utils.WebLink
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -87,12 +86,21 @@ class DiscoverVu (inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    fun setWigdet(discoverContainer: DiscoverContainer, isLoggedIn: Boolean){
+    fun updateView(discoverContainer: DiscoverContainer, isLoggedIn: Boolean){
         adapter.filteredWidgets = discoverContainer.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
     }
+
+
+
+    fun updateErrorView(errorMsg: String?) {
+        adapter.errorMessage = errorMsg
+        adapter.notifyDataSetChanged()
+        listView.visibility = View.VISIBLE
+    }
+
 
 
     override fun gotoWebview(value: AccessToken?) {

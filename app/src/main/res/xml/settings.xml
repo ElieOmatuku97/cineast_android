@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:key="@string/pref_settings_tmdb"
-        android:title="@string/settings_tmdb"
-        >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <Preference
             persistent="false"
             android:key="@string/pref_favorites"
             android:title="@string/settings_favorites"
+            app:iconSpaceReserved="false"
             />
 
         <Preference
             persistent="false"
             android:title="@string/settings_watchlist"
             android:key="@string/pref_watchlist"
+            app:iconSpaceReserved="false"
             />
 
         <Preference
             persistent="false"
             android:key="@string/pref_rated"
-            android:title="@string/settings_rated" />
+            android:title="@string/settings_rated"
+            app:iconSpaceReserved="false"
+            />
 
 
         <Preference
             persistent="false"
             android:title="@string/settings_login"
-            android:key="@string/pref_logout" />
-
-    </PreferenceCategory>
+            android:key="@string/pref_logout"
+            app:iconSpaceReserved="false"
+            />
 
 
 </PreferenceScreen>

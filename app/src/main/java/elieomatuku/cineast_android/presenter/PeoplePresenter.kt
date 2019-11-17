@@ -3,20 +3,17 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.rest.RestApi
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.ImageResponse
 import elieomatuku.cineast_android.business.model.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.vu.PeopleVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
 
-class PeoplePresenter: BasePresenter<PeopleVu>() {
+class PeoplePresenter : BasePresenter<PeopleVu>() {
     companion object {
         const val PEOPLE_KEY = "people"
         const val SCREEN_NAME_KEY = "screen_name"
@@ -25,10 +22,10 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
         const val MOVIE_TEAM_KEY = "movie_team"
     }
 
-    private val restApi: RestApi by App.kodein.instance()
+    private val contentManager: ContentManager by App.kodein.instance()
 
-    var peopleDetails : PeopleDetails? = null
-    var peopleMovies: List<KnownFor>? =  listOf()
+    var peopleDetails: PeopleDetails? = null
+    var peopleMovies: List<KnownFor>? = listOf()
 
     override fun onLink(vu: PeopleVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -41,56 +38,62 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
         peopleDetails = inState?.getParcelable(PEOPLE_DETAILS_KEY)
         peopleMovies = inState?.getParcelableArrayList(PEOPLE_MOVIES_KEY)
 
-        if (peopleDetails != null  && peopleMovies != null) {
+        if (peopleDetails != null && peopleMovies != null) {
             vu.updateVu(peopleDetails, screenName, peopleMovies)
         } else {
             vu.showLoading()
-            val id: Int?= people.id
+            contentManager.getPeopleDetails(people, object : AsyncResponse<PeopleDetails> {
+                override fun onSuccess(response: PeopleDetails?) {
+                    peopleDetails = response
+                    getPeopleMovies(people, peopleDetails, screenName)
+                }
 
-            if (id != null) {
-                restApi.people.getPeopleDetails(id, DiscoverService.API_KEY).enqueue(object : Callback<PeopleDetails> {
-                    override fun onResponse(call: Call<PeopleDetails>?, response: Response<PeopleDetails>?) {
-                        peopleDetails = response?.body()
-                        getPeopleMovies(id, peopleDetails, screenName)
+                override fun onFail(error: CineastError) {
+                    Timber.e("error: $error")
+                    handler.post {
+                        vu.hideLoading()
+                        vu.updateErrorView(error.status_message)
                     }
-
-                    override fun onFailure(call: Call<PeopleDetails>?, t: Throwable?) {
-                        Timber.e("error: $t")
-                    }
-                })
-            }
+                }
+            })
         }
 
         rxSubs.add(vu.onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe ({peopleId ->
-                    restApi.people.getPeopleImages(peopleId, DiscoverService.API_KEY).enqueue( object : Callback<ImageResponse>{
-                        override fun onResponse(call: Call<ImageResponse>?, response: Response<ImageResponse>?) {
-                            val poster = response?.body()?.peoplePosters
+                .subscribe({ peopleId ->
+
+                    contentManager.getPeopleImages(peopleId, object : AsyncResponse<ImageResponse> {
+                        override fun onSuccess(response: ImageResponse?) {
+                            val poster = response?.peoplePosters
                             handler.post {
                                 vu.goToGallery(poster)
                             }
                         }
 
-                        override fun onFailure(call: Call<ImageResponse>?, t: Throwable?) {
-                            Timber.d("error: $t")
+                        override fun onFail(error: CineastError) {
+                            Timber.d("error: $error")
                         }
                     })
-                })
-        )
+                }))
+
+
     }
 
-    private fun getPeopleMovies(actorID: Int ,peopleDetails: PeopleDetails?, screenName: String ) {
-        restApi.people.getPeopleCredits(actorID, DiscoverService.API_KEY).enqueue(object: Callback<PeopleCreditsResponse> {
-            override fun onResponse(call: Call<PeopleCreditsResponse>?, response: Response<PeopleCreditsResponse>?) {
-                peopleMovies = response?.body()?.cast as List<KnownFor>
+    private fun getPeopleMovies(actor: Person, peopleDetails: PeopleDetails?, screenName: String) {
+        contentManager.getPeopleMovies(actor, object : AsyncResponse<PeopleCreditsResponse> {
+            override fun onSuccess(response: PeopleCreditsResponse?) {
+                peopleMovies = response?.cast as List<KnownFor>
                 handler.post {
                     vu?.hideLoading()
                     vu?.updateVu(peopleDetails, screenName, peopleMovies)
                 }
             }
-            override fun onFailure(call: Call<PeopleCreditsResponse>?, t: Throwable?) {
-                Timber.d( "error: $t")
+
+            override fun onFail(error: CineastError) {
+                handler.post {
+                    vu?.hideLoading()
+                    vu?.updateErrorView(error.status_message)
+                }
             }
         })
     }
@@ -102,7 +105,7 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
             outState.putParcelable(PEOPLE_DETAILS_KEY, it)
         }
 
-        peopleMovies?.let{
+        peopleMovies?.let {
             outState.putParcelableArrayList(PEOPLE_MOVIES_KEY, it as ArrayList<out Parcelable>)
         }
     }

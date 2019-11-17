@@ -5,6 +5,7 @@ import android.os.Handler
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.model.data.CineastError
 import elieomatuku.cineast_android.business.service.UserService
 import org.kodein.di.generic.instance
 import timber.log.Timber
@@ -34,16 +35,16 @@ class LoginWebviewFragment : WebviewFragment() {
         val activity: MainActivity = this.activity as MainActivity
 
         userService.getSession(userService.getRequestToken(), object: AsyncResponse<String> {
-            override fun onSuccess(result: String?) {
+            override fun onSuccess(response: String?) {
 
                 handler.post {
-                    result?.let {
+                    response?.let {
                         (activity).sessionPublisher.onNext(it)
                     }
                 }
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Timber.d("error : $error")
             }
         })

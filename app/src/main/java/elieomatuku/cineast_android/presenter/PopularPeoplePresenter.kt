@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.service.DiscoverService
-import elieomatuku.cineast_android.business.model.data.People
+import elieomatuku.cineast_android.business.model.data.CineastError
+import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.model.data.Personality
 import elieomatuku.cineast_android.business.model.data.Person
 import elieomatuku.cineast_android.business.model.response.PeopleResponse
 import elieomatuku.cineast_android.vu.PopularPeopleVu
@@ -24,8 +25,8 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
     }
 
 
-    private val discoverClient: DiscoverService by App.kodein.instance()
-    private var popularPeople: List <People>? = listOf()
+    private val contentManager: ContentManager by App.kodein.instance()
+    private var popularPeople: List <Personality>? = listOf()
 
 
     override fun onLink(vu: PopularPeopleVu, inState: Bundle?, args: Bundle) {
@@ -37,7 +38,7 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
             vu.updateList(popularPeople)
         } else {
             vu.showLoading()
-            discoverClient.getPopularPeople(popularPeopleAsyncResponse)
+            fetchPopularPeople()
         }
 
         rxSubs.add(vu.peopleSelectObservable
@@ -47,15 +48,30 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
                     params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
                     params.putParcelable(PEOPLE_KEY, actor)
                     vu.gotoPeople(params)
-                })
-        )
+                }))
+
+        rxSubs.add(connectionService.connectionChangedObserver
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({ hasConnection ->
+                    Timber.d("connectionChangedObserver: hasConnection = $hasConnection, hasEmptyState = ")
+
+                    if (hasConnection) {
+                        vu.showLoading()
+                        fetchPopularPeople()
+                    }
+
+                }, { t: Throwable ->
+
+                    Timber.e(t, "Connection Change Observer failed")
+
+                }))
 
     }
 
     val popularPeopleAsyncResponse: AsyncResponse<PeopleResponse> by lazy {
         object : AsyncResponse<PeopleResponse> {
-            override fun onSuccess(result: PeopleResponse?) {
-                popularPeople = result?.results
+            override fun onSuccess(response: PeopleResponse?) {
+                popularPeople = response?.results
                 handler.post {
                     vu?.hideLoading()
 
@@ -65,7 +81,9 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
                 }
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
+                vu?.hideLoading()
+                vu?.updateErrorView(error?.status_message)
                 Timber.d( "Network Error:$error")
             }
         }
@@ -76,5 +94,9 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
         popularPeople?.let{
             outState.putParcelableArrayList(DiscoverPresenter.POPULAR_PEOPLE_KEY, it as ArrayList<out Parcelable>)
         }
+    }
+
+    private fun fetchPopularPeople() {
+        contentManager.getPopularPeople(popularPeopleAsyncResponse)
     }
 }

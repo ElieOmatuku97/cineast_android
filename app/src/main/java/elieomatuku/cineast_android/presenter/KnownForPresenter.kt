@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.model.data.CineastError
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.data.Genre
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.model.data.KnownFor
@@ -14,9 +14,7 @@ import elieomatuku.cineast_android.business.model.response.GenreResponse
 import elieomatuku.cineast_android.vu.KnownForVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import timber.log.Timber
 import java.util.ArrayList
 
 class KnownForPresenter: BasePresenter <KnownForVu>() {
@@ -28,8 +26,9 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
         const val SCREEN_NAME_KEY = "screen_name"
 
     }
-    private val restApi: RestApi by App.kodein.instance()
-    private val discoverClient: DiscoverService by App.kodein.instance()
+
+
+    private val contentManager: ContentManager by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: KnownForVu, inState: Bundle?, args: Bundle) {
@@ -38,7 +37,7 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
         val knownFor: List<KnownFor> = args.getParcelableArrayList(PEOPLE_CAST_KEY)
         val peopleName: String = args.getString(PEOPLE_NAME_KEY)
         vu.updateVu(knownFor)
-        discoverClient.getGenres(genreAsyncResponse)
+        contentManager.getGenres(genreAsyncResponse)
 
         rxSubs.add(vu.itemSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -55,11 +54,9 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
 
 
     private fun getMovie(movieId: Int, peopleName: String? = null) {
-        restApi.movie.getMovie(movieId, DiscoverService.API_KEY).enqueue(object : Callback<Movie> {
-            override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
-                val movie : Movie = response?.body() as Movie
-                Log.d(LOG_TAG, "response: ${response?.body()}")
-
+        contentManager.getMovie(movieId, object: AsyncResponse<Movie> {
+            override fun onSuccess(response: Movie?) {
+                val movie : Movie = response as Movie
                 handler.post {
                     val params = Bundle()
                     if (peopleName != null ) {
@@ -71,22 +68,21 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
                 }
             }
 
-            override fun onFailure(call: Call<Movie>?, t: Throwable?) {
-                Log.d(LOG_TAG, "error: $t")
+            override fun onFail(error: CineastError) {
+                Timber.e("error: $error")
             }
         })
     }
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
         object : AsyncResponse<GenreResponse> {
-            override fun onSuccess(result: GenreResponse?) {
-                genres = result?.genres
+            override fun onSuccess(response: GenreResponse?) {
+                genres = response?.genres
             }
 
-            override fun onFail(error: String) {
+            override fun onFail(error: CineastError) {
                 Log.d(LOG_TAG, "Network Error:$error")
             }
         }
     }
-
 }

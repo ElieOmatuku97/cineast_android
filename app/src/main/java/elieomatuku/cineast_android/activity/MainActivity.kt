@@ -20,9 +20,6 @@ class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){
         }
     }
 
-    val rxSubs : io.reactivex.disposables.CompositeDisposable by lazy {
-        io.reactivex.disposables.CompositeDisposable()
-    }
 
     val sessionPublisher: PublishSubject<String> by lazy {
         PublishSubject.create<String>()
