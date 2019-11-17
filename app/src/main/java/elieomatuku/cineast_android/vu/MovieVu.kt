@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.vu_movie.view.*
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.core.content.res.ResourcesCompat
@@ -41,7 +42,6 @@ class MovieVu(inflater: LayoutInflater,
     override fun getRootViewLayoutId(): Int {
         return R.layout.vu_movie
     }
-
 
     private val listView: RecyclerView by lazy {
         rootView.list_view_container
@@ -84,6 +84,7 @@ class MovieVu(inflater: LayoutInflater,
 
     override fun onCreate() {
         super.onCreate()
+
         setUpListView()
     }
 
@@ -124,5 +125,11 @@ class MovieVu(inflater: LayoutInflater,
         if (fragment != null && fm != null) {
             fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
         }
+    }
+
+    fun updateErrorView(errorMsg: String?) {
+        adapter.errorMessage = errorMsg
+        adapter.notifyDataSetChanged()
+        listView.visibility = View.VISIBLE
     }
 }

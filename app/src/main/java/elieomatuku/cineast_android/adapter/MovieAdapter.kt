@@ -9,26 +9,63 @@ import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.*
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
+import kotlin.properties.Delegates
 
 class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_MOVIE_PROFILE = 0
         const val TYPE_MENU_MOVIE = 1
+        const val TYPE_EMPTY_STATE = -2
     }
 
-    var movieSummary: MovieSummary = MovieSummary()
+
+    var movieSummary: MovieSummary by Delegates.observable(MovieSummary()) { prop, oldMovieSummary, nuMovieSummary ->
+        Timber.d("summary = $nuMovieSummary")
+        hasValidData = true
+        errorMessage = null
+    }
+
+
+    var hasValidData = false
+        private set
+
+
+    private var _errorMessage: String? = null
+    var errorMessage: String?
+        get() = _errorMessage
+        set(nuErrorMessage) {
+            Timber.d("from MovieListAdapter: $nuErrorMessage")
+            _errorMessage = nuErrorMessage
+            hasValidData = true
+        }
+
+    val hasEmptyState: Boolean
+        // only display empty state after valid data is set
+        get() = hasValidData && (movieSummary.isEmpty())
 
     override fun getItemCount(): Int {
-        return 2
+        Timber.d("hasEmptyState: $hasEmptyState")
+        return if (hasEmptyState) {
+            1
+        } else {
+            2
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            TYPE_MOVIE_PROFILE -> TYPE_MOVIE_PROFILE
-            TYPE_MENU_MOVIE -> TYPE_MENU_MOVIE
-            else -> -1
+        return if (hasEmptyState) {
+            TYPE_EMPTY_STATE
+
+        } else {
+            when (position) {
+                TYPE_MOVIE_PROFILE -> TYPE_MOVIE_PROFILE
+                TYPE_MENU_MOVIE -> TYPE_MENU_MOVIE
+                else -> -1
+            }
         }
     }
 
@@ -37,6 +74,9 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
         return when (viewType) {
             TYPE_MOVIE_PROFILE -> ProfileMovieHolder.newInstance(parent, onProfileClickedPicturePublisher)
             TYPE_MENU_MOVIE -> MenuMovieHolder.newInstance(parent)
+            TYPE_EMPTY_STATE -> {
+                EmptyStateHolder.newInstance(parent)
+            }
             else -> throw RuntimeException("View Type does not exist.")
         }
     }
@@ -71,6 +111,10 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
                     val similarFragment = SimilarMovieFragment.newInstance(movieSummary)
                     (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, similarFragment).commit()
                 }
+            }
+
+            TYPE_EMPTY_STATE -> {
+                (holder as EmptyStateHolder).update(errorMessage)
             }
 
         }

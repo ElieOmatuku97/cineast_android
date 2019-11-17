@@ -13,6 +13,7 @@ import elieomatuku.cineast_android.business.model.response.MovieCreditsResponse
 import elieomatuku.cineast_android.business.model.response.MovieResponse
 import elieomatuku.cineast_android.business.model.response.TrailerResponse
 import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -52,6 +53,8 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         val genres: List <Genre> = args.getParcelableArrayList(MOVIE_GENRES_KEY)
 
 
+        Timber.d("movie presenter")
+
         movieDetails = inState?.getParcelable(MOVIE_DETAILS_KEY)
         trailers = inState?.getParcelableArrayList(MOVIE_TRAILERS_KEY)
         cast = inState?.getParcelableArrayList(MOVIE_CAST_KEY)
@@ -63,8 +66,8 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         if (movieDetails == null || trailers == null || cast == null || crew == null || similarMovies == null) {
             getMovieVideos(movie, screenName, genres)
         } else {
-            val movieInfo = MovieSummary (movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
-            vu.showMovie(movieInfo)
+            val movieSummary = MovieSummary (movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+            vu.showMovie(movieSummary)
         }
 
 
@@ -80,7 +83,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
                         }
 
                         override fun onFailure(call: Call<ImageResponse>?, t: Throwable?) {
-                           Log.d(TAG, "error: $t")
+                           Timber.e( "error: $t")
                         }
                     })
                 })
@@ -96,7 +99,15 @@ class MoviePresenter: BasePresenter<MovieVu>() {
 
             }
             override fun onFailure(call: Call<TrailerResponse>?, t: Throwable?) {
-                Log.d(TAG, "error: $t")
+                Timber.e("error: $t")
+
+                handler.post {
+                    vu?.hideLoading()
+                    vu?.updateErrorView("")
+                }
+
+
+
             }
         })
     }
@@ -109,7 +120,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
             }
 
             override fun onFailure(call: Call<MovieDetails>?, t: Throwable?) {
-                Log.d(TAG, "error: $t")
+                Timber.e("error: $t")
             }
         })
     }
@@ -122,7 +133,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
                 getSimilarMovies(movie, screenName, genres, movieDetails, trailers, cast, crew)
             }
             override fun onFailure(call: Call<MovieCreditsResponse>?, t: Throwable?) {
-                Log.d(TAG, "error: $t")
+                Timber.e("error: $t")
             }
         })
     }
@@ -131,22 +142,23 @@ class MoviePresenter: BasePresenter<MovieVu>() {
         restApi.movie.getSimilarMovie( movie.id, DiscoverService.API_KEY).enqueue(object: Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
                 similarMovies = response?.body()?.results
-                val movieInfo = MovieSummary(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+                val movieSummary = MovieSummary(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
 
                 if (!userService.isLoggedIn()) {
                     handler.post {
                         vu?.hideLoading()
-                        vu?.showMovie(movieInfo)
+                        vu?.showMovie(movieSummary)
                     }
                 } else {
-                    movieInfo.movie?.let {
-                        checkIfMovieInWatchList(movieInfo)
+                    movieSummary.movie?.let {
+                        checkIfMovieInWatchList(movieSummary)
                     }
 
                 }
             }
             override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                Log.d(TAG, "error: $t")
+                Timber.e("error: $t")
+                vu?.updateErrorView(ApiUtils.throwableToCineastError(t).status_message)
             }
         })
     }
@@ -189,6 +201,7 @@ class MoviePresenter: BasePresenter<MovieVu>() {
 
             override fun onFail(error: CineastError) {
                 Timber.e("error from fetching favorite list: $error")
+                vu?.updateErrorView(error.status_message)
             }
         })
     }
