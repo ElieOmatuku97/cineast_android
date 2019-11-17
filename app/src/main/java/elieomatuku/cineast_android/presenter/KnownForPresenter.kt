@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.CineastError
 import elieomatuku.cineast_android.business.service.ContentManager
@@ -15,9 +14,7 @@ import elieomatuku.cineast_android.business.model.response.GenreResponse
 import elieomatuku.cineast_android.vu.KnownForVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import timber.log.Timber
 import java.util.ArrayList
 
 class KnownForPresenter: BasePresenter <KnownForVu>() {
@@ -29,7 +26,8 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
         const val SCREEN_NAME_KEY = "screen_name"
 
     }
-    private val restApi: RestApi by App.kodein.instance()
+
+
     private val contentManager: ContentManager by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
@@ -56,11 +54,9 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
 
 
     private fun getMovie(movieId: Int, peopleName: String? = null) {
-        restApi.movie.getMovie(movieId, ContentManager.API_KEY).enqueue(object : Callback<Movie> {
-            override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
-                val movie : Movie = response?.body() as Movie
-                Log.d(LOG_TAG, "response: ${response?.body()}")
-
+        contentManager.getMovie(movieId, object: AsyncResponse<Movie> {
+            override fun onSuccess(response: Movie?) {
+                val movie : Movie = response as Movie
                 handler.post {
                     val params = Bundle()
                     if (peopleName != null ) {
@@ -72,8 +68,8 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
                 }
             }
 
-            override fun onFailure(call: Call<Movie>?, t: Throwable?) {
-                Log.d(LOG_TAG, "error: $t")
+            override fun onFail(error: CineastError) {
+                Timber.e("error: $error")
             }
         })
     }
@@ -89,5 +85,4 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
             }
         }
     }
-
 }
