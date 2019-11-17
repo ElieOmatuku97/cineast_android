@@ -6,7 +6,7 @@ import android.content.res.Resources
 import elieomatuku.cineast_android.business.client.RestClient
 import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.service.ConnectionService
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.service.UserService
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -22,7 +22,7 @@ fun depInjecT(app: Application): Kodein {
         bind<Resources>() with instance(app.applicationContext.resources)
         bind<RestClient>() with singleton { RestClient(instance()) }
         bind<RestApi>() with singleton { RestApi(instance()) }
-        bind<DiscoverService>() with singleton { DiscoverService(instance()) }
+        bind<ContentManager>() with singleton { ContentManager(instance()) }
         bind<UserService>() with singleton {
             UserService(instance(), instance())
         }

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.rest.RestApi
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.ImageResponse
 import elieomatuku.cineast_android.business.model.response.PeopleCreditsResponse
@@ -48,7 +48,7 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
             val id: Int?= people.id
 
             if (id != null) {
-                restApi.people.getPeopleDetails(id, DiscoverService.API_KEY).enqueue(object : Callback<PeopleDetails> {
+                restApi.people.getPeopleDetails(id, ContentManager.API_KEY).enqueue(object : Callback<PeopleDetails> {
                     override fun onResponse(call: Call<PeopleDetails>?, response: Response<PeopleDetails>?) {
                         peopleDetails = response?.body()
                         getPeopleMovies(id, peopleDetails, screenName)
@@ -64,7 +64,7 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
         rxSubs.add(vu.onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe ({peopleId ->
-                    restApi.people.getPeopleImages(peopleId, DiscoverService.API_KEY).enqueue( object : Callback<ImageResponse>{
+                    restApi.people.getPeopleImages(peopleId, ContentManager.API_KEY).enqueue( object : Callback<ImageResponse>{
                         override fun onResponse(call: Call<ImageResponse>?, response: Response<ImageResponse>?) {
                             val poster = response?.body()?.peoplePosters
                             handler.post {
@@ -82,7 +82,7 @@ class PeoplePresenter: BasePresenter<PeopleVu>() {
     }
 
     private fun getPeopleMovies(actorID: Int ,peopleDetails: PeopleDetails?, screenName: String ) {
-        restApi.people.getPeopleCredits(actorID, DiscoverService.API_KEY).enqueue(object: Callback<PeopleCreditsResponse> {
+        restApi.people.getPeopleCredits(actorID, ContentManager.API_KEY).enqueue(object: Callback<PeopleCreditsResponse> {
             override fun onResponse(call: Call<PeopleCreditsResponse>?, response: Response<PeopleCreditsResponse>?) {
                 peopleMovies = response?.body()?.cast as List<KnownFor>
                 handler.post {

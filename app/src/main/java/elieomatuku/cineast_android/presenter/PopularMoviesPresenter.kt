@@ -5,7 +5,7 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.CineastError
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.data.Genre
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.model.response.GenreResponse
@@ -25,7 +25,7 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
         const val MOVIE_GENRES_KEY = "genres"
     }
 
-    private val discoverClient: DiscoverService by App.kodein.instance()
+    private val contentManager: ContentManager by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
 
@@ -104,8 +104,8 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
 
 
     private fun fetchMovies() {
-        discoverClient.getPopularMovies(asyncResponse)
-        discoverClient.getGenres(genreAsyncResponse)
+        contentManager.getPopularMovies(asyncResponse)
+        contentManager.getGenres(genreAsyncResponse)
 
     }
 }

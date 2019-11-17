@@ -5,7 +5,7 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.CineastError
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.data.Personality
 import elieomatuku.cineast_android.business.model.data.Person
 import elieomatuku.cineast_android.business.model.response.PeopleResponse
@@ -25,7 +25,7 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
     }
 
 
-    private val discoverClient: DiscoverService by App.kodein.instance()
+    private val contentManager: ContentManager by App.kodein.instance()
     private var popularPeople: List <Personality>? = listOf()
 
 
@@ -97,6 +97,6 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
     }
 
     private fun fetchPopularPeople() {
-        discoverClient.getPopularPeople(popularPeopleAsyncResponse)
+        contentManager.getPopularPeople(popularPeopleAsyncResponse)
     }
 }

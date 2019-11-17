@@ -7,7 +7,7 @@ import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.response.GenreResponse
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,7 +23,7 @@ class SimilarMoviePresenter: BasePresenter<SimilarMovieVu> (){
         const val MOVIE_KEY = "movie"
         const val MOVIE_GENRES_KEY = "genres"
     }
-    private val discoverClient: DiscoverService by App.kodein.instance()
+    private val contentManager: ContentManager by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: SimilarMovieVu, inState: Bundle?, args: Bundle) {
@@ -32,7 +32,7 @@ class SimilarMoviePresenter: BasePresenter<SimilarMovieVu> (){
         val movieTitle = args.getString(SimilarMovieFragment.MOVIE_TITLE)
         vu.updateVu(similarMovies)
 
-        discoverClient.getGenres(genreAsyncResponse)
+        contentManager.getGenres(genreAsyncResponse)
 
         rxSubs.add(vu.itemSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())

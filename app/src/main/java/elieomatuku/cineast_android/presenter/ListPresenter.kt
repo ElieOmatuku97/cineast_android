@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.GenreResponse
 import elieomatuku.cineast_android.business.service.UserService
@@ -24,14 +24,14 @@ abstract class ListPresenter<V>: BasePresenter <V>() where V: ListVu   {
         const val PEOPLE_KEY = "people"
     }
 
-    private val discoverService: DiscoverService by App.kodein.instance()
+    private val contentManager: ContentManager by App.kodein.instance()
     protected val userService: UserService by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        discoverService.getGenres(genreAsyncResponse)
+        contentManager.getGenres(genreAsyncResponse)
         rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ movie: Movie ->

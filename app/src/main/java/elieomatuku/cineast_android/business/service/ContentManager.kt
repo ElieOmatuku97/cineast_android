@@ -12,7 +12,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DiscoverService(private val restApi: RestApi) {
+class ContentManager(private val restApi: RestApi) {
     companion object {
          val API_KEY = RestUtils.API_KEY
     }

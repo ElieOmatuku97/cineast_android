@@ -7,7 +7,7 @@ import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.rest.RestApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.CineastError
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.model.data.Genre
 import elieomatuku.cineast_android.business.model.data.Movie
 import elieomatuku.cineast_android.business.model.data.KnownFor
@@ -30,7 +30,7 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
 
     }
     private val restApi: RestApi by App.kodein.instance()
-    private val discoverClient: DiscoverService by App.kodein.instance()
+    private val contentManager: ContentManager by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: KnownForVu, inState: Bundle?, args: Bundle) {
@@ -39,7 +39,7 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
         val knownFor: List<KnownFor> = args.getParcelableArrayList(PEOPLE_CAST_KEY)
         val peopleName: String = args.getString(PEOPLE_NAME_KEY)
         vu.updateVu(knownFor)
-        discoverClient.getGenres(genreAsyncResponse)
+        contentManager.getGenres(genreAsyncResponse)
 
         rxSubs.add(vu.itemSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -56,7 +56,7 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
 
 
     private fun getMovie(movieId: Int, peopleName: String? = null) {
-        restApi.movie.getMovie(movieId, DiscoverService.API_KEY).enqueue(object : Callback<Movie> {
+        restApi.movie.getMovie(movieId, ContentManager.API_KEY).enqueue(object : Callback<Movie> {
             override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
                 val movie : Movie = response?.body() as Movie
                 Log.d(LOG_TAG, "response: ${response?.body()}")

@@ -6,7 +6,7 @@ import elieomatuku.cineast_android.App.Companion.kodein
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.model.data.*
 import elieomatuku.cineast_android.business.model.response.*
-import elieomatuku.cineast_android.business.service.DiscoverService
+import elieomatuku.cineast_android.business.service.ContentManager
 import elieomatuku.cineast_android.business.service.UserService
 import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +31,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         const val PEOPLE_KEY = "people"
     }
 
-    private val discoverClient: DiscoverService by kodein.instance()
+    private val contentManager: ContentManager by kodein.instance()
     private val userService: UserService by kodein.instance()
 
     private var discoverContainer: DiscoverContainer? = null
@@ -135,7 +135,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 handler.post {
                     vu?.showLoading()
                 }
-                discoverClient.getNowPlayingMovies(nowPlayingMovieAsyncResponse)
+                contentManager.getNowPlayingMovies(nowPlayingMovieAsyncResponse)
             }
 
             override fun onFail(error: CineastError) {
@@ -150,7 +150,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         object : AsyncResponse<MovieResponse> {
             override fun onSuccess(result: MovieResponse?) {
                 discoverContainer?.nowPlayingMovies = result?.results
-                discoverClient.getUpcomingMovies(upComingMovieAsyncResponse)
+                contentManager.getUpcomingMovies(upComingMovieAsyncResponse)
             }
 
             override fun onFail(error: CineastError) {
@@ -163,7 +163,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         object : AsyncResponse<MovieResponse> {
             override fun onSuccess(result: MovieResponse?) {
                 discoverContainer?.upcomingMovies = result?.results
-                discoverClient.getTopRatedMovies(topRatedMovieAsyncResponse)
+                contentManager.getTopRatedMovies(topRatedMovieAsyncResponse)
             }
 
             override fun onFail(error: CineastError) {
@@ -176,7 +176,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         object : AsyncResponse<MovieResponse> {
             override fun onSuccess(result: MovieResponse?) {
                 discoverContainer?.topRatedMovies = result?.results
-                discoverClient.getPopularPeople(popularPeopleAsyncResponse)
+                contentManager.getPopularPeople(popularPeopleAsyncResponse)
             }
 
             override fun onFail(error: CineastError) {
@@ -247,7 +247,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     private fun fetchDiscover() {
         discoverContainer = DiscoverContainer()
-        discoverClient.getPopularMovies(asyncResponse)
-        discoverClient.getGenres(genreAsyncResponse)
+        contentManager.getPopularMovies(asyncResponse)
+        contentManager.getGenres(genreAsyncResponse)
     }
 }
