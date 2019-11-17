@@ -35,10 +35,10 @@ class LoginWebviewFragment : WebviewFragment() {
         val activity: MainActivity = this.activity as MainActivity
 
         userService.getSession(userService.getRequestToken(), object: AsyncResponse<String> {
-            override fun onSuccess(result: String?) {
+            override fun onSuccess(response: String?) {
 
                 handler.post {
-                    result?.let {
+                    response?.let {
                         (activity).sessionPublisher.onNext(it)
                     }
                 }

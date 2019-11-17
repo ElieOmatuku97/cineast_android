@@ -62,9 +62,9 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         logInBtn.setOnPreferenceClickListener {
             if (!userService.isLoggedIn()) {
                 userService.getAccessToken(object : AsyncResponse<AccessToken> {
-                    override fun onSuccess(result: AccessToken?) {
-                        Timber.d("token result:  $result")
-                        gotoWebview(result)
+                    override fun onSuccess(response: AccessToken?) {
+                        Timber.d("token result:  $response")
+                        gotoWebview(response)
                     }
 
                     override fun onFail(error: CineastError) {

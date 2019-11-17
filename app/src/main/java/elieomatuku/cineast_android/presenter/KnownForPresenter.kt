@@ -80,8 +80,8 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
         object : AsyncResponse<GenreResponse> {
-            override fun onSuccess(result: GenreResponse?) {
-                genres = result?.genres
+            override fun onSuccess(response: GenreResponse?) {
+                genres = response?.genres
             }
 
             override fun onFail(error: CineastError) {

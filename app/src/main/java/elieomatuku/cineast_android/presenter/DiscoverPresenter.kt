@@ -84,8 +84,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
                         if (!userService.isLoggedIn()) {
                             userService.getAccessToken(object : AsyncResponse<AccessToken> {
-                                override fun onSuccess(result: AccessToken?) {
-                                    vu.gotoWebview(result)
+                                override fun onSuccess(response: AccessToken?) {
+                                    vu.gotoWebview(response)
                                 }
 
                                 override fun onFail(error: CineastError) {
@@ -130,8 +130,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     private val asyncResponse: AsyncResponse<MovieResponse> by lazy {
         object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(result: MovieResponse?) {
-                discoverContainer?.popularMovies = result?.results as List<Movie>
+            override fun onSuccess(response: MovieResponse?) {
+                discoverContainer?.popularMovies = response?.results as List<Movie>
                 handler.post {
                     vu?.showLoading()
                 }
@@ -148,8 +148,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     val nowPlayingMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
         object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(result: MovieResponse?) {
-                discoverContainer?.nowPlayingMovies = result?.results
+            override fun onSuccess(response: MovieResponse?) {
+                discoverContainer?.nowPlayingMovies = response?.results
                 contentManager.getUpcomingMovies(upComingMovieAsyncResponse)
             }
 
@@ -161,8 +161,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     val upComingMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
         object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(result: MovieResponse?) {
-                discoverContainer?.upcomingMovies = result?.results
+            override fun onSuccess(response: MovieResponse?) {
+                discoverContainer?.upcomingMovies = response?.results
                 contentManager.getTopRatedMovies(topRatedMovieAsyncResponse)
             }
 
@@ -174,8 +174,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     val topRatedMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
         object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(result: MovieResponse?) {
-                discoverContainer?.topRatedMovies = result?.results
+            override fun onSuccess(response: MovieResponse?) {
+                discoverContainer?.topRatedMovies = response?.results
                 contentManager.getPopularPeople(popularPeopleAsyncResponse)
             }
 
@@ -187,8 +187,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     val popularPeopleAsyncResponse: AsyncResponse<PeopleResponse> by lazy {
         object : AsyncResponse<PeopleResponse> {
-            override fun onSuccess(result: PeopleResponse?) {
-                discoverContainer?.popularPeople = result?.results
+            override fun onSuccess(response: PeopleResponse?) {
+                discoverContainer?.popularPeople = response?.results
                 handler.post {
                     vu?.hideLoading()
 
@@ -210,8 +210,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
         object : AsyncResponse<GenreResponse> {
-            override fun onSuccess(result: GenreResponse?) {
-                genres = result?.genres
+            override fun onSuccess(response: GenreResponse?) {
+                genres = response?.genres
             }
 
             override fun onFail(error: CineastError) {

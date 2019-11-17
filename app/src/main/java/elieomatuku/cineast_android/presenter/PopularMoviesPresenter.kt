@@ -69,8 +69,8 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
 
     private val asyncResponse: AsyncResponse<MovieResponse> by lazy{
         object: AsyncResponse<MovieResponse> {
-            override fun onSuccess(result: MovieResponse?) {
-                val popularMovie = result?.results
+            override fun onSuccess(response: MovieResponse?) {
+                val popularMovie = response?.results
 
                 handler.post {
                     vu?.hideLoading()
@@ -93,8 +93,8 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
         object: AsyncResponse<GenreResponse> {
-            override fun onSuccess(result: GenreResponse?) {
-                genres = result?.genres
+            override fun onSuccess(response: GenreResponse?) {
+                genres = response?.genres
             }
             override fun onFail(error: CineastError) {
                 Timber.d("Network Error:$error")

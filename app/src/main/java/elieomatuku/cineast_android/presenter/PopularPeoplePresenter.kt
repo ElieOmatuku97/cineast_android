@@ -70,8 +70,8 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
 
     val popularPeopleAsyncResponse: AsyncResponse<PeopleResponse> by lazy {
         object : AsyncResponse<PeopleResponse> {
-            override fun onSuccess(result: PeopleResponse?) {
-                popularPeople = result?.results
+            override fun onSuccess(response: PeopleResponse?) {
+                popularPeople = response?.results
                 handler.post {
                     vu?.hideLoading()
 
