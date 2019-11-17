@@ -65,6 +65,7 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
         }
 
         if (!peopleDetails?.name.isNullOrEmpty()) {
+            peopleNameView.visibility = View.VISIBLE
             peopleNameView.text = peopleDetails?.name
         } else {
             peopleNameView.visibility = View.GONE
@@ -72,12 +73,14 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
 
         val birthDay = peopleDetails?.birthday
         if (birthDay != null) {
+            peopleDateOfBirthView.visibility = View.VISIBLE
             peopleDateOfBirthView.text = birthDay
         } else {
             peopleDateOfBirthView.visibility = View.GONE
         }
 
         if (!peopleDetails?.place_of_birth.isNullOrEmpty()) {
+            peoplePlaceofbirthView.visibility = View.VISIBLE
             peoplePlaceofbirthView.text = peopleDetails?.place_of_birth
         } else {
             peoplePlaceofbirthView.visibility = View.GONE

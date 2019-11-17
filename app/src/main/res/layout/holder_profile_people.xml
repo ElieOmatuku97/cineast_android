@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/holder_item_movie_textview_margin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        />
 
     <TextView
         android:id="@+id/people_name_view"
