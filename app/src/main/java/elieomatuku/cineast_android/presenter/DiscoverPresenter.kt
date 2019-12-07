@@ -3,11 +3,12 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App.Companion.kodein
+import elieomatuku.cineast_android.DiscoverContainer
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.business.model.response.*
+import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.business.api.response.*
 import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -26,13 +27,13 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         const val SCREEN_NAME_KEY = "screen_name"
 
         const val MOVIE_GENRES_KEY = "genres"
-        const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movieApi"
 
-        const val PEOPLE_KEY = "people"
+        const val PEOPLE_KEY = "peopleApi"
     }
 
     private val contentManager: ContentManager by kodein.instance()
-    private val userService: UserService by kodein.instance()
+    private val tmdbUserClient: TmdbUserClient by kodein.instance()
 
     private var discoverContainer: DiscoverContainer? = null
     private var genres: List<Genre>? = listOf()
@@ -48,7 +49,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
             fetchDiscover()
         } else {
             discoverContainer?.let {
-                vu.updateView(it, userService.isLoggedIn())
+                vu.updateView(it, tmdbUserClient.isLoggedIn())
             }
         }
 
@@ -82,8 +83,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .subscribe { clicked ->
                     if (clicked) {
 
-                        if (!userService.isLoggedIn()) {
-                            userService.getAccessToken(object : AsyncResponse<AccessToken> {
+                        if (!tmdbUserClient.isLoggedIn()) {
+                            tmdbUserClient.getAccessToken(object : AsyncResponse<AccessToken> {
                                 override fun onSuccess(response: AccessToken?) {
                                     vu.gotoWebview(response)
                                 }
@@ -94,7 +95,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                             })
 
                         } else {
-                            userService.logout()
+                            tmdbUserClient.logout()
                             vu.updateLoginState(false)
                         }
                     }
@@ -193,7 +194,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                     vu?.hideLoading()
 
                     discoverContainer?.let {
-                        vu?.updateView(it, userService.isLoggedIn())
+                        vu?.updateView(it, tmdbUserClient.isLoggedIn())
                     }
                 }
             }
@@ -215,7 +216,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
             }
 
             override fun onFail(error: CineastError) {
-                Timber.d("Network Error:$error")
+                Timber.i("Network Error:$error")
             }
         }
     }

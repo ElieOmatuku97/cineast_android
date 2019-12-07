@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.HeaderAdapter
-import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.model.data.Movie
 import kotlinx.android.synthetic.main.holder_header.view.*
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
@@ -47,7 +47,7 @@ class HeaderHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             listView.visibility = View.VISIBLE
 
             if (currentMovieId != null) {
-                Log.d (HeaderHolder::class.java.simpleName, "current movie: $currentMovieId")
+                Log.d (HeaderHolder::class.java.simpleName, "current movieApi: $currentMovieId")
                 val lm = listView.layoutManager
                 val position = adapter.getArticlePosition(currentMovieId)
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.MovieListAdapter
-import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.model.data.Movie
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
 

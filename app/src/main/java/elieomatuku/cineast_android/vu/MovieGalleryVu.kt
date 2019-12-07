@@ -9,7 +9,7 @@ import android.widget.ImageButton
 import com.eftimoff.viewpagertransformers.TabletTransformer
 import elieomatuku.cineast_android.adapter.MovieGalleryPagerAdapter
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Poster
+import elieomatuku.cineast_android.model.data.Poster
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.fragment_image_gallery.view.*
 

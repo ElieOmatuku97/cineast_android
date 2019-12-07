@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
-import elieomatuku.cineast_android.business.model.data.Personality
-import elieomatuku.cineast_android.business.model.data.Person
+import elieomatuku.cineast_android.model.data.Personality
+import elieomatuku.cineast_android.model.data.Person
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 

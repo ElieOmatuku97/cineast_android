@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import elieomatuku.cineast_android.DiscoverContainer
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
-import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.fragment.LoginWebviewFragment
 import elieomatuku.cineast_android.fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink

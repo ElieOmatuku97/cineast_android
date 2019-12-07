@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.CineastError
+import elieomatuku.cineast_android.model.data.CineastError
 import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.model.data.Personality
-import elieomatuku.cineast_android.business.model.data.Person
-import elieomatuku.cineast_android.business.model.response.PeopleResponse
+import elieomatuku.cineast_android.model.data.Personality
+import elieomatuku.cineast_android.model.data.Person
+import elieomatuku.cineast_android.business.api.response.PeopleResponse
 import elieomatuku.cineast_android.vu.PopularPeopleVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -21,7 +21,7 @@ class PopularPeoplePresenter : BasePresenter <PopularPeopleVu>() {
         const val POPULAR_PEOPLE_KEY = "popular_people"
         const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
-        const val PEOPLE_KEY = "people"
+        const val PEOPLE_KEY = "peopleApi"
     }
 
 

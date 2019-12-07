@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.business.model.response.GenreResponse
-import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.business.api.response.GenreResponse
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.ListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -19,13 +20,14 @@ abstract class ListPresenter<V>: BasePresenter <V>() where V: ListVu   {
         const val WIDGET_KEY = "widget"
         const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
-        const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
-        const val PEOPLE_KEY = "people"
+        const val PEOPLE_KEY = "peopleApi"
     }
 
     private val contentManager: ContentManager by App.kodein.instance()
-    protected val userService: UserService by App.kodein.instance()
+    protected val tmdbUserClient: TmdbUserClient by App.kodein.instance()
+    protected val tmdbContentClient: TmdbContentClient by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: V, inState: Bundle?, args: Bundle) {

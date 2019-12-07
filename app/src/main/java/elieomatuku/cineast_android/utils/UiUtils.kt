@@ -19,7 +19,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.widget.PopupWindow
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.model.data.*
 import android.view.MenuItem
 import android.webkit.*
 

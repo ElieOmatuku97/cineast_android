@@ -11,9 +11,9 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.activity.UserListActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.AccessToken
-import elieomatuku.cineast_android.business.model.data.CineastError
-import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.model.data.AccessToken
+import elieomatuku.cineast_android.model.data.CineastError
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.utils.WebLink
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -27,7 +27,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         }
     }
 
-    private val userService: UserService by App.kodein.instance()
+    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
 
     private val logInBtn: Preference by lazy {
         findPreference(getString(R.string.pref_logout))
@@ -51,17 +51,17 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         preferenceManager.sharedPreferencesName = getString(R.string.pref_app_settings)
         setPreferencesFromResource(R.xml.settings, null)
 
-        updateState(userService.isLoggedIn())
+        updateState(tmdbUserClient.isLoggedIn())
     }
 
     override fun onResume() {
         super.onResume()
 
-        updateState(userService.isLoggedIn())
+        updateState(tmdbUserClient.isLoggedIn())
 
         logInBtn.setOnPreferenceClickListener {
-            if (!userService.isLoggedIn()) {
-                userService.getAccessToken(object : AsyncResponse<AccessToken> {
+            if (!tmdbUserClient.isLoggedIn()) {
+                tmdbUserClient.getAccessToken(object : AsyncResponse<AccessToken> {
                     override fun onSuccess(response: AccessToken?) {
                         Timber.d("token result:  $response")
                         gotoWebview(response)
@@ -73,7 +73,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
                 })
             } else {
                 updateState(false)
-                userService.logout()
+                tmdbUserClient.logout()
             }
             true
         }

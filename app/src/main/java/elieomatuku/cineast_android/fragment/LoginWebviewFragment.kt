@@ -5,8 +5,8 @@ import android.os.Handler
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.CineastError
-import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.model.data.CineastError
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
@@ -28,13 +28,13 @@ class LoginWebviewFragment : WebviewFragment() {
         }
     }
 
-    private val userService : UserService by App.kodein.instance()
+    private val tmdbUserClient : TmdbUserClient by App.kodein.instance()
     val handler: Handler = Handler()
 
     override fun closeIconListener() {
         val activity: MainActivity = this.activity as MainActivity
 
-        userService.getSession(userService.getRequestToken(), object: AsyncResponse<String> {
+        tmdbUserClient.getSession(tmdbUserClient.getRequestToken(), object: AsyncResponse<String> {
             override fun onSuccess(response: String?) {
 
                 handler.post {

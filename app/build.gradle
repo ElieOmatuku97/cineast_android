@@ -12,7 +12,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "elieomatuku.cineast_android"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -70,6 +70,10 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
 
+
+    // Local modules
+    implementation project(':database')
+    implementation project(':core')
 
     implementation 'androidx.multidex:multidex:2.0.1'
 

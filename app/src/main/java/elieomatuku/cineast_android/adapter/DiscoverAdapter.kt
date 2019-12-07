@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.viewholder.*
 import elieomatuku.cineast_android.viewholder.itemHolder.LoginViewHolder
 import io.reactivex.subjects.PublishSubject

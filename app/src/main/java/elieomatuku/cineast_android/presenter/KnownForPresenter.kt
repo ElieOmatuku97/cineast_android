@@ -5,12 +5,12 @@ import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.CineastError
+import elieomatuku.cineast_android.model.data.CineastError
 import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.model.data.Genre
-import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.business.model.data.KnownFor
-import elieomatuku.cineast_android.business.model.response.GenreResponse
+import elieomatuku.cineast_android.model.data.Genre
+import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.model.data.KnownFor
+import elieomatuku.cineast_android.business.api.response.GenreResponse
 import elieomatuku.cineast_android.vu.KnownForVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -21,7 +21,7 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
     companion object {
         val LOG_TAG = KnownForPresenter::class.java.simpleName
         const val PEOPLE_CAST_KEY = "people_cast"
-        const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movieApi"
         const val PEOPLE_NAME_KEY = "people_name"
         const val SCREEN_NAME_KEY = "screen_name"
 
@@ -43,7 +43,7 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ movieId: Int ->
 
-                    Log.d(LOG_TAG, "movie cast_id: $movieId")
+                    Log.d(LOG_TAG, "movieApi cast_id: $movieId")
                     getMovie(movieId, peopleName)
 
                 }, {t: Throwable ->

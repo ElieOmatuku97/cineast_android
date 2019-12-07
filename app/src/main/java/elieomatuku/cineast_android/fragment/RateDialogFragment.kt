@@ -8,8 +8,9 @@ import androidx.appcompat.widget.AppCompatRatingBar
 import android.widget.TextView
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.business.client.TmdbContentClient
+import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import org.kodein.di.generic.instance
 
 
@@ -29,7 +30,8 @@ class RateDialogFragment : DialogFragment() {
         }
     }
 
-    private val userService : UserService by App.kodein.instance()
+    private val tmdbUserClient : TmdbUserClient by App.kodein.instance()
+    private val tmdbContentClient : TmdbContentClient by App.kodein.instance()
     private var movie: Movie? = null
     private var submitBtn: TextView? = null
     private var ratingBar: AppCompatRatingBar? = null
@@ -75,7 +77,7 @@ class RateDialogFragment : DialogFragment() {
 
             rating?.let {_rating ->
                 movie?.let {
-                    userService.postMovieRate(it, _rating)
+                    tmdbContentClient.postMovieRate(it, _rating)
                 }
             }
 

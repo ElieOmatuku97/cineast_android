@@ -4,7 +4,7 @@ package elieomatuku.cineast_android.business.service
 import android.app.Application
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import elieomatuku.cineast_android.business.model.data.broadReceiver.ConnectivitySink
+import elieomatuku.cineast_android.business.broadReceiver.ConnectivitySink
 import elieomatuku.cineast_android.utils.NetUtils
 
 class ConnectionService(private val appContext: Application): ConnectivitySink {

@@ -9,8 +9,7 @@ import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.CastAdapter
-import elieomatuku.cineast_android.business.model.data.Cast
-import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.model.data.Cast
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 

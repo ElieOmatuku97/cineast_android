@@ -1,9 +1,9 @@
 package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
-import elieomatuku.cineast_android.business.model.data.Cast
-import elieomatuku.cineast_android.business.model.data.Crew
-import elieomatuku.cineast_android.business.model.data.Person
+import elieomatuku.cineast_android.model.data.Cast
+import elieomatuku.cineast_android.model.data.Crew
+import elieomatuku.cineast_android.model.data.Person
 import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.vu.MovieTeamVu
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,7 +15,7 @@ class MovieTeamPresenter : BasePresenter <MovieTeamVu>() {
         const val MOVIE_CAST = "movie_cast"
         const val MOVIE_CREW = "movie_crew"
         const val SCREEN_NAME_KEY = "screen_name"
-        const val PEOPLE_KEY = "people"
+        const val PEOPLE_KEY = "peopleApi"
     }
 
 

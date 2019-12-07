@@ -17,7 +17,7 @@ import android.text.util.Linkify
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.widget.RatingBar
-import elieomatuku.cineast_android.business.model.data.MovieSummary
+import elieomatuku.cineast_android.model.data.MovieSummary
 import elieomatuku.cineast_android.fragment.RateDialogFragment
 
 
@@ -107,8 +107,9 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
         }
 
         val genres = movieSummary.genres
-        val names = if (movie?.genre_ids != null && genres != null) {
-            UiUtils.mapMovieGenreIdsWithGenreNames(movie.genre_ids, genres)
+        val genresIds = movie?.genre_ids
+        val names = if (genresIds != null && genres != null) {
+            UiUtils.mapMovieGenreIdsWithGenreNames(genresIds, genres)
         } else {
             null
         }

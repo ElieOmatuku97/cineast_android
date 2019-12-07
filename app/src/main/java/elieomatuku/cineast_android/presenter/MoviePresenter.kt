@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.business.model.response.ImageResponse
-import elieomatuku.cineast_android.business.model.response.MovieCreditsResponse
-import elieomatuku.cineast_android.business.model.response.MovieResponse
-import elieomatuku.cineast_android.business.model.response.TrailerResponse
+import elieomatuku.cineast_android.business.client.TmdbContentClient
+import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.business.api.response.ImageResponse
+import elieomatuku.cineast_android.business.api.response.MovieCreditsResponse
+import elieomatuku.cineast_android.business.api.response.MovieResponse
+import elieomatuku.cineast_android.business.api.response.TrailerResponse
 import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -20,7 +21,7 @@ import java.util.*
 
 class MoviePresenter : BasePresenter<MovieVu>() {
     companion object {
-        const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
         const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_DETAILS_KEY = "movie_details"
@@ -31,7 +32,9 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     }
 
     private val contentManager: ContentManager by App.kodein.instance()
-    private val userService: UserService by App.kodein.instance()
+    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
+    private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
+
 
     var movieDetails: MovieDetails? = null
     var trailers: List<Trailer>? = listOf()
@@ -48,7 +51,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         val genres: List<Genre> = args.getParcelableArrayList(MOVIE_GENRES_KEY)
 
 
-        Timber.d("movie presenter")
+        Timber.d("movieApi presenter")
 
         movieDetails = inState?.getParcelable(MOVIE_DETAILS_KEY)
         trailers = inState?.getParcelableArrayList(MOVIE_TRAILERS_KEY)
@@ -144,7 +147,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
                 similarMovies = response?.results
                 val movieSummary = MovieSummary(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
 
-                if (!userService.isLoggedIn()) {
+                if (!tmdbUserClient.isLoggedIn()) {
                     handler.post {
                         vu?.hideLoading()
                         vu?.showMovie(movieSummary)
@@ -166,9 +169,9 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
 
     private fun checkIfMovieInWatchList(movieSummary: MovieSummary) {
-        userService.getWatchList(object : AsyncResponse<List<Movie>> {
+        tmdbContentClient.getWatchList(object : AsyncResponse<List<Movie>> {
             override fun onSuccess(result: List<Movie>?) {
-                Timber.d("watch list result: ${result} \n movie selected: ${movieSummary.movie}")
+                Timber.d("watch list result: ${result} \n movieApi selected: ${movieSummary.movie}")
                 val isInWatchList = result?.let {
                     it.contains(movieSummary.movie)
                 } ?: false
@@ -185,9 +188,9 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
 
     private fun checkIfMovieInFavoriteList(movieSummary: MovieSummary) {
-        userService.getFavoriteList(object : AsyncResponse<List<Movie>> {
+        tmdbContentClient.getFavoriteList(object : AsyncResponse<List<Movie>> {
             override fun onSuccess(result: List<Movie>?) {
-                Timber.d("favorite list result: ${result} \n movie selected: ${movieSummary.movie}")
+                Timber.d("favorite list result: ${result} \n movieApi selected: ${movieSummary.movie}")
                 val isInFavoriteList = result?.let {
                     it.contains(movieSummary.movie)
                 } ?: false

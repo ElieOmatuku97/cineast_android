@@ -2,8 +2,8 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.CineastError
-import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.model.data.CineastError
+import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.vu.UserListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
@@ -33,7 +33,7 @@ class UserListPresenter : ListPresenter<UserListVu>() {
 
 
         if (isFavoriteList) {
-            userService.getFavoriteList(object : AsyncResponse<List<Movie>> {
+            tmdbContentClient.getFavoriteList(object : AsyncResponse<List<Movie>> {
                 override fun onSuccess(result: List<Movie>?) {
 
                     handler.post {
@@ -50,7 +50,7 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                 }
             })
         } else if (isWatchList) {
-            userService.getWatchList(object : AsyncResponse<List<Movie>> {
+            tmdbContentClient.getWatchList(object : AsyncResponse<List<Movie>> {
                 override fun onSuccess(result: List<Movie>?) {
                     handler.post {
                         result?.let {
@@ -66,7 +66,7 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                 }
             })
         } else {
-            userService.getUserRatedMovies(object : AsyncResponse<List<Movie>> {
+            tmdbContentClient.getUserRatedMovies(object : AsyncResponse<List<Movie>> {
                 override fun onSuccess(result: List<Movie>?) {
                     handler.post {
                         result?.let {
@@ -89,9 +89,10 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (isWatchList) {
-                        userService.removeMovieFromWatchList(it)
+
+                        tmdbContentClient.removeMovieFromWatchList(it)
                     } else if (isFavoriteList) {
-                        userService.removeMovieFromFavoriteList(it)
+                        tmdbContentClient.removeMovieFromFavoriteList(it)
                     }
                 }, { t: Throwable ->
                     Timber.e("onMovieRemovedObservable failed $t")
