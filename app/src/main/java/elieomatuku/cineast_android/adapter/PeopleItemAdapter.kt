@@ -4,8 +4,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.KnownFor
-import elieomatuku.cineast_android.business.model.data.PeopleDetails
+import elieomatuku.cineast_android.model.data.KnownFor
+import elieomatuku.cineast_android.model.data.PeopleDetails
 import elieomatuku.cineast_android.fragment.KnownForFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
@@ -24,7 +24,7 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
 
 
     var peopleDetails: PeopleDetails by Delegates.observable(PeopleDetails()) { prop, oldPeopleDetails, nuPeopleDetails ->
-        Timber.d("people details = $nuPeopleDetails")
+        Timber.d("peopleApi details = $nuPeopleDetails")
         hasValidData = true
         errorMessage = null
     }

@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.PeopleDetails
+import elieomatuku.cineast_android.model.data.PeopleDetails
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_people.view.*
@@ -60,8 +60,9 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
         }
 
         profileImageView.setOnClickListener {
-            if (peopleDetails?.id != null)
-                onProfileClickedPicturePublisher.onNext(peopleDetails.id)
+            peopleDetails?.id?.let {
+                onProfileClickedPicturePublisher.onNext(it)
+            }
         }
 
         if (!peopleDetails?.name.isNullOrEmpty()) {

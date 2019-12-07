@@ -10,7 +10,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_item_movie.view.*
 

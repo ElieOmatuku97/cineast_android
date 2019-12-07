@@ -5,9 +5,9 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.business.model.response.ImageResponse
-import elieomatuku.cineast_android.business.model.response.PeopleCreditsResponse
+import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.business.api.response.ImageResponse
+import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.vu.PeopleVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -15,7 +15,7 @@ import timber.log.Timber
 
 class PeoplePresenter : BasePresenter<PeopleVu>() {
     companion object {
-        const val PEOPLE_KEY = "people"
+        const val PEOPLE_KEY = "peopleApi"
         const val SCREEN_NAME_KEY = "screen_name"
         const val PEOPLE_DETAILS_KEY = "people_details"
         const val PEOPLE_MOVIES_KEY = "people_movies"

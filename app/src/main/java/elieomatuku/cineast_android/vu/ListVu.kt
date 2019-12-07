@@ -7,9 +7,8 @@ import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.MovieListAdapter
-import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.business.model.data.Widget
+import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.model.data.Widget
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

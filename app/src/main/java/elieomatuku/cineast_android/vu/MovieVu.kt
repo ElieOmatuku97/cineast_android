@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
-import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper

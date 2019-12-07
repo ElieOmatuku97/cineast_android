@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.business.model.data.Widget
+import elieomatuku.cineast_android.model.data.Widget
 import elieomatuku.cineast_android.presenter.ItemListPresenter
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.vu.ItemListVu

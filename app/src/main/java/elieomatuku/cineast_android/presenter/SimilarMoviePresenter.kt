@@ -6,9 +6,9 @@ import android.util.Log
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.response.GenreResponse
+import elieomatuku.cineast_android.business.api.response.GenreResponse
 import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -20,7 +20,7 @@ class SimilarMoviePresenter: BasePresenter<SimilarMovieVu> (){
         val LOG_TAG = SimilarMoviePresenter::class.java.simpleName
         const val MOVIE_SIMILAR_MOVIES_KEY = "movie_similar_movies"
         const val SCREEN_NAME_KEY = "screen_name"
-        const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
     }
     private val contentManager: ContentManager by App.kodein.instance()

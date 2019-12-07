@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
-import elieomatuku.cineast_android.business.model.data.Person
-import elieomatuku.cineast_android.business.model.data.Widget
+import elieomatuku.cineast_android.model.data.Person
+import elieomatuku.cineast_android.model.data.Widget
 import elieomatuku.cineast_android.vu.ItemListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 

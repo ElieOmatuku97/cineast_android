@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.CineastError
+import elieomatuku.cineast_android.model.data.CineastError
 import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.model.data.Genre
-import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.business.model.response.GenreResponse
-import elieomatuku.cineast_android.business.model.response.MovieResponse
+import elieomatuku.cineast_android.model.data.Genre
+import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.business.api.response.GenreResponse
+import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.vu.PopularMoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -21,7 +21,7 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
         const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
 
-        const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
     }
 

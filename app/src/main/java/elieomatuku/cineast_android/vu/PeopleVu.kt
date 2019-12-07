@@ -10,14 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.widget.Toolbar
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.PeopleActivity
 import elieomatuku.cineast_android.adapter.PeopleItemAdapter
-import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter

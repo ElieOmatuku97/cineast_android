@@ -13,7 +13,7 @@ object MovieUtils {
     fun getMovieUrl(movieId: Int?, tmdbPath: String? = null): String {
         val url = Uri.parse(TMDbUrl)
                 .buildUpon()
-                .appendPath(tmdbPath?: "movie")
+                .appendPath(tmdbPath?: "movieApi")
                 .appendPath(movieId.toString())
                 .build()
                 .toString()
