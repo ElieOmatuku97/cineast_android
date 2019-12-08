@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.database
+package elieomatuku.cineast_android.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
