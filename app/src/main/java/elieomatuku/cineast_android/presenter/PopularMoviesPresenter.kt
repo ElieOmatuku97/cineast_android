@@ -5,15 +5,16 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.CineastError
-import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.Genre
 import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.business.api.response.GenreResponse
-import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.vu.PopularMoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.kodein.di.generic.instance
 import timber.log.Timber
+
 
 
 class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
@@ -30,11 +31,24 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
 
 
 
+
     override fun onLink(vu: PopularMoviesVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         vu.showLoading()
         fetchMovies()
+
+        rxSubs.add(contentManager.popularMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    vu.hideLoading()
+                    vu.populateGridView(it)
+                }, { error ->
+                    Timber.e("Unable to get discover container $error")
+                    vu.updateErrorView(error.message)
+                })
+        )
 
         rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -67,29 +81,6 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
                 }))
     }
 
-    private val asyncResponse: AsyncResponse<MovieResponse> by lazy{
-        object: AsyncResponse<MovieResponse> {
-            override fun onSuccess(response: MovieResponse?) {
-                val popularMovie = response?.results
-
-                handler.post {
-                    vu?.hideLoading()
-
-                    if (popularMovie != null) {
-                        vu?.populateGridView(popularMovie)
-                    } else {
-                        Timber.d("Error Network Result : $popularMovie")
-                    }
-                }
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.d( "Network Error:$error")
-                vu?.hideLoading()
-                vu?.updateErrorView(error?.status_message)
-            }
-        }
-    }
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
         object: AsyncResponse<GenreResponse> {
@@ -104,8 +95,6 @@ class PopularMoviesPresenter : BasePresenter <PopularMoviesVu>() {
 
 
     private fun fetchMovies() {
-        contentManager.getPopularMovies(asyncResponse)
         contentManager.getGenres(genreAsyncResponse)
-
     }
 }

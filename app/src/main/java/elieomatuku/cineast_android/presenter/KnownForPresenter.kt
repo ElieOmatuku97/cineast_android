@@ -6,7 +6,7 @@ import android.util.Log
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.CineastError
-import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.Genre
 import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.model.data.KnownFor

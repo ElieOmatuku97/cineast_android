@@ -38,10 +38,10 @@ class MovieTypeJoinDaoTest  {
         contentDatabase = Room.inMemoryDatabaseBuilder(
                 context, ContentDatabase::class.java).build()
 
-        movieTypeJoinDao = contentDatabase.MovieTypeJoinDao()
-        movieDao = contentDatabase.MovieDao()
-        movieTypeDao = contentDatabase.MovieTypeDao()
-        movieTypeDao.insertMovieTypes(MovieTypeEntity.getPredefinedTypes())
+        movieTypeJoinDao = contentDatabase.movieTypeJoinDao()
+        movieDao = contentDatabase.movieDao()
+        movieTypeDao = contentDatabase.movieTypeDao()
+        movieTypeDao.insert(MovieTypeEntity.getPredefinedTypes())
     }
 
     @After
@@ -61,5 +61,34 @@ class MovieTypeJoinDaoTest  {
         movieTypeJoinDao.insert(MovieTypeJoin(movie2.id, MovieType.POPULAR.id))
 
         Assert.assertEquals(movieTypeJoinDao.getMoviesForType(MovieType.POPULAR.id), listOf(MovieEntity.fromMovie(movie), MovieEntity.fromMovie(movie2)))
+    }
+
+
+    @Test
+    fun testDeleteMovie() = runBlocking {
+
+        var movies = listOf(
+                Movie(id = 11345, original_title = "Hangover", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
+                Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true))
+
+        //insert movie
+        movieDao.insertMovies(MovieEntity.fromMovies(movies))
+        movieTypeJoinDao.insert(MovieTypeJoin(movies[0].id, MovieType.POPULAR.id))
+        movieTypeJoinDao.insert(MovieTypeJoin(movies[1].id, MovieType.POPULAR.id))
+        Assert.assertEquals(movieTypeJoinDao.getMoviesForType(MovieType.POPULAR.id), MovieEntity.fromMovies(movies))
+        Assert.assertEquals(movieTypeJoinDao.getMovieTypeJoins(),
+                listOf(MovieTypeJoin(movieId=11345, movieTypeId="cineast_popular"), MovieTypeJoin(movieId=12345, movieTypeId="cineast_popular")))
+
+        //delete movie
+        movieDao.delete(12345)
+        Assert.assertEquals(movieTypeJoinDao.getMovieTypeJoins(),
+                listOf(MovieTypeJoin(movieId=11345, movieTypeId="cineast_popular")))
+        Assert.assertEquals(movieTypeJoinDao.getMoviesForType(MovieType.POPULAR.id), listOf(MovieEntity.fromMovie(movies[0])))
+
+
+        //delete type
+        movieTypeDao.delete(MovieType.POPULAR.id)
+        Assert.assertEquals(movieTypeJoinDao.getMovieTypeJoins(), listOf<MovieTypeJoin>())
+        Assert.assertEquals(movieDao.getAllMovies(), listOf(MovieEntity.fromMovie(movies[0])))
     }
 }

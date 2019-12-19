@@ -4,25 +4,26 @@ import elieomatuku.cineast_android.business.api.response.PostResponse
 import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.model.data.MovieDetails
 import elieomatuku.cineast_android.business.api.response.*
+import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface MovieApi {
     @GET("movie/top_rated")
-    fun getTopRatedMovies(@Query("api_key") apyKey: String): Call<MovieResponse>
+    fun getTopRatedMovies(@Query("api_key") apyKey: String): Deferred<MovieResponse>  //Call<MovieResponse>
 
     @GET("movie/upcoming")
-    fun getUpcomingMovies(@Query("api_key") apiKey: String): Call<MovieResponse>
+    fun getUpcomingMovies(@Query("api_key") apiKey: String):  Deferred<MovieResponse> // Call<MovieResponse>
 
     @GET("movie/popular")
-    fun getPopularMovie(@Query("api_key") apiKey: String): Call<MovieResponse>
+    fun getPopularMovie(@Query("api_key") apiKey: String): Deferred<MovieResponse>//Call<MovieResponse>
 
     @GET("movie/now_playing")
-    fun getNowPlayingMovie(@Query("api_key") apiKey: String): Call<MovieResponse>
+    fun getNowPlayingMovie(@Query("api_key") apiKey: String):  Deferred<MovieResponse> //Call<MovieResponse>
 
     @GET("movie/top_rated")
-    fun getTopRatedMovie(@Query("api_key") apiKey: String): Call<MovieResponse>
+    fun getTopRatedMovie(@Query("api_key") apiKey: String): Deferred<MovieResponse> //Call<MovieResponse>
 
     @GET("movie/{movie_id}/videos")
     fun getMovieVideos(@Path("movie_id") movie_id: Int, @Query("api_key") apiKey: String): Call<TrailerResponse>

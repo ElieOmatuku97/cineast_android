@@ -30,8 +30,8 @@ class MovieTypeDaoTest  {
         contentDatabase = Room.inMemoryDatabaseBuilder(
                 context, ContentDatabase::class.java).build()
 
-        movieTypeDao = contentDatabase.MovieTypeDao()
-        movieTypeDao.insertMovieTypes(MovieTypeEntity.getPredefinedTypes())
+        movieTypeDao = contentDatabase.movieTypeDao()
+        movieTypeDao.insert(MovieTypeEntity.getPredefinedTypes())
     }
 
     @After

@@ -3,14 +3,16 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App.Companion.kodein
-import elieomatuku.cineast_android.DiscoverContainer
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.response.*
-import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.model.DiscoverContent
 import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
 import org.kodein.di.generic.instance
 import timber.log.Timber
 import java.util.ArrayList
@@ -22,8 +24,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
 
         const val POPULAR_PEOPLE_KEY = "popular_people"
-        const val CONTAINER_KEY = "container_key"
-
         const val SCREEN_NAME_KEY = "screen_name"
 
         const val MOVIE_GENRES_KEY = "genres"
@@ -35,23 +35,44 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     private val contentManager: ContentManager by kodein.instance()
     private val tmdbUserClient: TmdbUserClient by kodein.instance()
 
-    private var discoverContainer: DiscoverContainer? = null
     private var genres: List<Genre>? = listOf()
 
 
     override fun onLink(vu: DiscoverVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        fetchSavedState(inState)
 
-        if (!hasSavedState()) {
-            vu.showLoading()
-            fetchDiscover()
-        } else {
-            discoverContainer?.let {
-                vu.updateView(it, tmdbUserClient.isLoggedIn())
-            }
-        }
+        vu.showLoading()
+//        fetchDiscover()
+
+        rxSubs.add(contentManager.discoverContent()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    vu.hideLoading()
+                    Timber.d("discoverContent: ${it.popularMovies}")
+                    vu.updateView(it, tmdbUserClient.isLoggedIn())
+
+                }, { error ->
+                    Timber.e("Unable to get discover container $error")
+                    vu.updateErrorView(error.message)
+                })
+        )
+//
+//        rxSubs.add(contentManager.getAllMovies()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    vu.hideLoading()
+//                    Timber.d("discoverContent: ${it}")
+//
+//                    vu.updateView(DiscoverContent(it), tmdbUserClient.isLoggedIn())
+//
+//                }, { error ->
+//                    Timber.e("Unable to get discover container $error")
+//                    vu.updateErrorView(error.message)
+//                })
+//        )
 
         rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -115,7 +136,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
                     if (hasConnection) {
                         vu.showLoading()
-                        fetchDiscover()
+//                        fetchDiscover()
                     } else {
                         vu.hideLoading()
                     }
@@ -129,85 +150,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 }))
     }
 
-    private val asyncResponse: AsyncResponse<MovieResponse> by lazy {
-        object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(response: MovieResponse?) {
-                discoverContainer?.popularMovies = response?.results as List<Movie>
-                handler.post {
-                    vu?.showLoading()
-                }
-                contentManager.getNowPlayingMovies(nowPlayingMovieAsyncResponse)
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.d("Network Error:$error")
-                vu?.hideLoading()
-                vu?.updateErrorView(error.status_message)
-            }
-        }
-    }
-
-    val nowPlayingMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
-        object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(response: MovieResponse?) {
-                discoverContainer?.nowPlayingMovies = response?.results
-                contentManager.getUpcomingMovies(upComingMovieAsyncResponse)
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.d("Network Error:$error")
-            }
-        }
-    }
-
-    val upComingMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
-        object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(response: MovieResponse?) {
-                discoverContainer?.upcomingMovies = response?.results
-                contentManager.getTopRatedMovies(topRatedMovieAsyncResponse)
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.d("Network Error:$error")
-            }
-        }
-    }
-
-    val topRatedMovieAsyncResponse: AsyncResponse<MovieResponse> by lazy {
-        object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(response: MovieResponse?) {
-                discoverContainer?.topRatedMovies = response?.results
-                contentManager.getPopularPeople(popularPeopleAsyncResponse)
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.d("Network Error:$error")
-            }
-        }
-    }
-
-    val popularPeopleAsyncResponse: AsyncResponse<PeopleResponse> by lazy {
-        object : AsyncResponse<PeopleResponse> {
-            override fun onSuccess(response: PeopleResponse?) {
-                discoverContainer?.popularPeople = response?.results
-                handler.post {
-                    vu?.hideLoading()
-
-                    discoverContainer?.let {
-                        vu?.updateView(it, tmdbUserClient.isLoggedIn())
-                    }
-                }
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.e("Network Error:$error")
-
-                handler.post {
-                    vu?.updateErrorView(error.status_message)
-                }
-            }
-        }
-    }
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
         object : AsyncResponse<GenreResponse> {
@@ -225,10 +167,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
-        discoverContainer?.let {
-            outState.putParcelable(CONTAINER_KEY, it)
-        }
-
         genres?.let {
             if (it.isNotEmpty()) {
                 outState.putParcelableArrayList(MOVIE_GENRES_KEY, it as ArrayList<out Parcelable>)
@@ -236,19 +174,12 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         }
     }
 
-    private fun hasSavedState(): Boolean {
-        return !(discoverContainer == null || genres == null)
-    }
-
-    private fun fetchSavedState(inState: Bundle?) {
-        discoverContainer = inState?.getParcelable(CONTAINER_KEY)
-        genres = inState?.getParcelableArrayList(MOVIE_GENRES_KEY)
-    }
-
 
     private fun fetchDiscover() {
-        discoverContainer = DiscoverContainer()
-        contentManager.getPopularMovies(asyncResponse)
+//        launch {
+//            contentManager.fetchDiscoverContent()
+//        }
         contentManager.getGenres(genreAsyncResponse)
     }
+
 }

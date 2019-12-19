@@ -11,6 +11,7 @@ import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.model.data.Movie
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
+import timber.log.Timber
 
 class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubject<Movie>): RecyclerView.ViewHolder (itemView) {
     companion object {
@@ -40,10 +41,16 @@ class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubje
     }
 
     fun update(movies: List<Movie>, resources: Int){
-        sectionTitle.text = itemView.context.getString(resources)
-        adapter.movies= movies.toMutableList()
-        listView.adapter = adapter
-        listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+
+        Timber.d("movies from discover: $movies")
+
+        if (movies.isNotEmpty()) {
+            sectionTitle.text = itemView.context.getString(resources)
+            adapter.movies = movies.toMutableList()
+            listView.adapter = adapter
+            listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+            listView.visibility = View.VISIBLE
+        }
 
         seeAllView.setOnClickListener {
             ItemListActivity.startItemListActivity(itemView.context, movies, resources)

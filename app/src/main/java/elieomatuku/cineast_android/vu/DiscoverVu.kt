@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import elieomatuku.cineast_android.DiscoverContainer
+import elieomatuku.cineast_android.model.DiscoverContent
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.model.data.*
@@ -87,8 +87,8 @@ class DiscoverVu (inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    fun updateView(discoverContainer: DiscoverContainer, isLoggedIn: Boolean){
-        adapter.filteredWidgets = discoverContainer.getFilteredWidgets()
+    fun updateView(discoverContent: DiscoverContent, isLoggedIn: Boolean){
+        adapter.filteredWidgets = discoverContent.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
