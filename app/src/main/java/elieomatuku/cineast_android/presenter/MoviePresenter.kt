@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.MovieCreditsResponse
 import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.business.api.response.TrailerResponse
-import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers

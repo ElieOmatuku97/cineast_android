@@ -91,21 +91,15 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
             TYPE_HEADER -> {
                 HeaderHolder.newInstance(parent)
             }
-            TYPE_POPULAR_MOVIE -> {
-                MovieHolder.newInstance(parent, onMovieClickPublisher)
-            }
+
             TYPE_POPULAR_PEOPLE -> {
                 PopularPeopleHolder.newInstance(parent, onPersonalityClickPublisher)
             }
-            TYPE_NOW_PLAYING_MOVIE -> {
+
+            TYPE_POPULAR_MOVIE, TYPE_NOW_PLAYING_MOVIE, TYPE_UPCOMING_MOVIE, TYPE_TOP_RATED_MOVIE -> {
                 MovieHolder.newInstance(parent, onMovieClickPublisher)
             }
-            TYPE_UPCOMING_MOVIE -> {
-                MovieHolder.newInstance(parent, onMovieClickPublisher)
-            }
-            TYPE_TOP_RATED_MOVIE -> {
-                MovieHolder.newInstance(parent, onMovieClickPublisher)
-            }
+
             TYPE_LOGIN -> {
                 LoginViewHolder.newInstance(parent)
             }

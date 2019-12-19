@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.business.client
 
 import android.content.res.Resources
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import elieomatuku.cineast_android.R
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,6 +30,7 @@ interface BaseClient {
         return Retrofit.Builder()
                 .baseUrl(resources.getString(R.string.rest_base_url))
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(okHttpClient)
                 .build()
     }

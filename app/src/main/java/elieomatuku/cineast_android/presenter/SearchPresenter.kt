@@ -5,7 +5,7 @@ import android.os.Bundle
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.CineastError
-import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.business.api.response.PeopleResponse
 import elieomatuku.cineast_android.vu.SearchVu

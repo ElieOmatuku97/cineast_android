@@ -8,7 +8,6 @@ import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest= Config.NONE)
 class MovieTest {

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse

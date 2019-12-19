@@ -10,8 +10,8 @@ import androidx.room.ForeignKey
 
 @Entity(tableName = MovieTypeJoin.MOVIE_TYPE_JOIN_TABLE,
         primaryKeys = [MovieTypeJoin.MOVIE_ID, MovieTypeJoin.MOVIE_TYPE_ID],
-        foreignKeys = [ForeignKey(entity = MovieEntity::class, parentColumns = [MovieTypeJoin.ID], childColumns = [MovieTypeJoin.MOVIE_ID]),
-            ForeignKey(entity = MovieTypeEntity::class, parentColumns = [MovieTypeJoin.ID], childColumns = [MovieTypeJoin.MOVIE_TYPE_ID])]
+        foreignKeys = [ForeignKey(entity = MovieEntity::class, parentColumns = [MovieTypeJoin.ID], childColumns = [MovieTypeJoin.MOVIE_ID] , onDelete = ForeignKey.CASCADE ),
+            ForeignKey(entity = MovieTypeEntity::class, parentColumns = [MovieTypeJoin.ID], childColumns = [MovieTypeJoin.MOVIE_TYPE_ID], onDelete = ForeignKey.CASCADE)]
         )
 data class MovieTypeJoin(val movieId: Int, val movieTypeId: String) {
     companion object {

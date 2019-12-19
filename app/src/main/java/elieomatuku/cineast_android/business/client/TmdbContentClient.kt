@@ -8,11 +8,12 @@ import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.response.*
 import elieomatuku.cineast_android.business.api.MovieApi
 import elieomatuku.cineast_android.business.api.PeopleApi
-import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.service.PrefsStore
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.utils.ValueStore
+import kotlinx.coroutines.awaitAll
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -21,8 +22,7 @@ import retrofit2.Response
 import timber.log.Timber
 
 
-
-class TmdbContentClient (val context: Application, override val resources: Resources): BaseClient {
+class TmdbContentClient(val context: Application, override val resources: Resources) : BaseClient {
     companion object {
         const val MOVIE = "movieApi"
     }
@@ -41,80 +41,120 @@ class TmdbContentClient (val context: Application, override val resources: Resou
     }
 
 
-    fun getPopularMovies(asyncResponse: AsyncResponse<MovieResponse>) {
-        movieApi.getPopularMovie(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-                val success = response?.isSuccessful ?: false
+    suspend fun getPopularMovies(/*asyncResponse: AsyncResponse<MovieResponse>*/): MovieResponse? {
+        return try {
+            val results = movieApi.getPopularMovie(ContentManager.API_KEY).await()
+            Timber.i("get Popular Movies was succesful: $results")
+            results
+        } catch (e: Exception) {
+            Timber.w("get Popular Movies failed with $e")
+            null
+        }
 
-                if (success) {
-                    asyncResponse.onSuccess(response?.body())
-                } else {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-                }
-            }
-
-            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-            }
-        })
+//        movieApi.getPopularMovie(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
+//            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
+//                val success = response?.isSuccessful ?: false
+//
+//                if (success) {
+//                    asyncResponse.onSuccess(response?.body())
+//                } else {
+//                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
+//                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
+//            }
+//        })
     }
 
 
-    fun getUpcomingMovies(asyncResponse: AsyncResponse<MovieResponse>) {
-        movieApi.getUpcomingMovies(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-                val success = response?.isSuccessful ?: false
+    suspend fun getUpcomingMovies(/*asyncResponse: AsyncResponse<MovieResponse>*/): MovieResponse?  {
+        return try {
+            val results = movieApi.getUpcomingMovies(ContentManager.API_KEY).await()
+            Timber.i("get Upcoming Movies was succesful: $results")
+            results
+        } catch(e : Exception) {
+            Timber.w("get Upcoming Movies failed with $e")
+            null
 
-                if (success) {
-                    asyncResponse.onSuccess(response?.body())
-                } else {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-                }
-
-
-            }
-
-            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-            }
-        })
+        }
+//        movieApi.getUpcomingMovies(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
+//            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
+//                val success = response?.isSuccessful ?: false
+//
+//                if (success) {
+//                    asyncResponse.onSuccess(response?.body())
+//                } else {
+//                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
+//                }
+//
+//
+//            }
+//
+//            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
+//                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
+//            }
+//        })
     }
 
 
-    fun getNowPlayingMovies(asyncResponse: AsyncResponse<MovieResponse>) {
-        movieApi.getNowPlayingMovie(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-                val success = response?.isSuccessful ?: false
+    suspend fun getNowPlayingMovies(/*asyncResponse: AsyncResponse<MovieResponse>*/): MovieResponse? {
 
-                if (success) {
-                    asyncResponse.onSuccess(response?.body())
-                } else {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-                }
-            }
+        return try {
+            val results = movieApi.getNowPlayingMovie(ContentManager.API_KEY).await()
+            Timber.i("get Upcoming Movies was succesful: $results")
+            results
+        } catch(e : Exception) {
+            Timber.w("get Upcoming Movies failed with $e")
+            null
 
-            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-            }
-        })
+        }
+
+
+//        movieApi.getNowPlayingMovie(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
+//            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
+//                val success = response?.isSuccessful ?: false
+//
+//                if (success) {
+//                    asyncResponse.onSuccess(response?.body())
+//                } else {
+//                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
+//                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
+//            }
+//        })
     }
 
-    fun getTopRatedMovies(asyncResponse: AsyncResponse<MovieResponse>) {
-        movieApi.getTopRatedMovies(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-                val success = response?.isSuccessful ?: false
+    suspend fun getTopRatedMovies(/*asyncResponse: AsyncResponse<MovieResponse>*/): MovieResponse? {
+        return try {
+            val results = movieApi.getTopRatedMovies(ContentManager.API_KEY).await()
+            Timber.i("get Upcoming Movies was succesful: $results")
+            results
+        } catch(e : Exception) {
+            Timber.w("get Upcoming Movies failed with $e")
+            null
 
-                if (success) {
-                    asyncResponse.onSuccess(response?.body())
-                } else {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-                }
-            }
+        }
 
-            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-            }
-        })
+//        movieApi.getTopRatedMovies(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
+//            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
+//                val success = response?.isSuccessful ?: false
+//
+//                if (success) {
+//                    asyncResponse.onSuccess(response?.body())
+//                } else {
+//                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
+//                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
+//            }
+//        })
     }
 
 
@@ -330,7 +370,7 @@ class TmdbContentClient (val context: Application, override val resources: Resou
     }
 
     fun searchMovies(argQuery: String, asyncResponse: AsyncResponse<MovieResponse>) {
-        movieApi.getMoviesWithSearch(ContentManager.API_KEY, argQuery).enqueue( object: Callback<MovieResponse> {
+        movieApi.getMoviesWithSearch(ContentManager.API_KEY, argQuery).enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
                 val success = response?.isSuccessful ?: false
                 if (success) {
@@ -342,7 +382,7 @@ class TmdbContentClient (val context: Application, override val resources: Resou
 
 
             override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                Timber.d( "response: ${t}")
+                Timber.d("response: ${t}")
                 asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
             }
         })
@@ -366,7 +406,6 @@ class TmdbContentClient (val context: Application, override val resources: Resou
             }
         })
     }
-
 
 
     fun getWatchList(asyncResponse: AsyncResponse<List<Movie>>) {
@@ -403,7 +442,7 @@ class TmdbContentClient (val context: Application, override val resources: Resou
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             val media = WatchListMedia(MOVIE, movie.id, watchList)
 
-            movieApi.updateWatchList(RestUtils.API_KEY, it , getRequestBody(media)).enqueue(
+            movieApi.updateWatchList(RestUtils.API_KEY, it, getRequestBody(media)).enqueue(
                     object : Callback<PostResponse> {
                         override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
                             Timber.d("response: ${response.body()}")
@@ -453,7 +492,7 @@ class TmdbContentClient (val context: Application, override val resources: Resou
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             val media = FavoriteListMedia(MOVIE, movie.id, favorite)
 
-            movieApi.updateFavoritesList(RestUtils.API_KEY, it , getRequestBody(media)).enqueue(
+            movieApi.updateFavoritesList(RestUtils.API_KEY, it, getRequestBody(media)).enqueue(
                     object : Callback<PostResponse> {
                         override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
                             Timber.d("response: ${response.body()}")
@@ -471,7 +510,7 @@ class TmdbContentClient (val context: Application, override val resources: Resou
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             val rate = Rate(value)
 
-            movieApi.postMovieRate(movie.id, RestUtils.API_KEY, it , getRequestBody(rate)).enqueue(
+            movieApi.postMovieRate(movie.id, RestUtils.API_KEY, it, getRequestBody(rate)).enqueue(
                     object : Callback<PostResponse> {
                         override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
                             Timber.d("response: ${response.body()}")

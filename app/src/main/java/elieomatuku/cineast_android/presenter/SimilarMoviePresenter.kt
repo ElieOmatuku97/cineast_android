@@ -7,7 +7,7 @@ import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.api.response.GenreResponse
-import elieomatuku.cineast_android.business.service.ContentManager
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers

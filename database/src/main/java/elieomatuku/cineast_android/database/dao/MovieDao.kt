@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import elieomatuku.cineast_android.database.entity.MovieEntity
+import io.reactivex.Flowable
 
 
 /**
@@ -15,11 +16,25 @@ import elieomatuku.cineast_android.database.entity.MovieEntity
 @Dao
 interface MovieDao  {
     @Query("SELECT * from ${MovieEntity.MOVIE_TABLE}")
-    suspend fun getAllMovies(): List<MovieEntity>
+    fun getAllMovies(): Flowable<List<MovieEntity>>
 
 
     @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movie: MovieEntity)
+
+
+    @WorkerThread
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovies(movie: List<MovieEntity>)
+
+
+    @WorkerThread
+    @Query("DELETE FROM ${MovieEntity.MOVIE_TABLE} WHERE id = :id")
+    suspend fun delete(id: Int)
+
+    @WorkerThread
+    @Query("DELETE FROM ${MovieEntity.MOVIE_TABLE}")
+    suspend fun deleteAll()
 }
 

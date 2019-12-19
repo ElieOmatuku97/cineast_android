@@ -74,6 +74,7 @@
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/holder_movie_listview_padding_start"
         android:layout_marginTop="@dimen/holder_movie_layout_padding"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_layout" />

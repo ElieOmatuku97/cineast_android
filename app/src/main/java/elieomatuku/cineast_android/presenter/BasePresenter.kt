@@ -6,10 +6,18 @@ import io.chthonic.mythos.mvp.Vu
 import android.os.Handler
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.service.ConnectionService
+import kotlinx.coroutines.*
 import org.kodein.di.generic.instance
+import kotlin.coroutines.CoroutineContext
 
 
-abstract class BasePresenter<V>: Presenter<V>() where V: Vu{
+abstract class BasePresenter<V>: Presenter<V>(), CoroutineScope where V: Vu{
+
+
+    val job: Job by lazy { SupervisorJob() }
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
 
     protected lateinit var handler: Handler
 
@@ -25,6 +33,7 @@ abstract class BasePresenter<V>: Presenter<V>() where V: Vu{
     }
 
     override fun onUnlink() {
+        coroutineContext.cancelChildren()
         rxSubs.clear()
         super.onUnlink()
     }
