@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
 import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.model.data.Person
-import elieomatuku.cineast_android.model.data.Widget
+import elieomatuku.cineast_android.model.data.Content
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -37,21 +37,21 @@ class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
     }
 
 
-    override fun setUpListView(widgets: List<Widget>) {
-        if (areWidgetsMovies(widgets)) {
-            movieListAdapter.movies = widgets as MutableList<Movie>
+    override fun setUpListView(contents: List<Content>) {
+        if (areWidgetsMovies(contents)) {
+            movieListAdapter.movies = contents as MutableList<Movie>
             listView.adapter = movieListAdapter
             movieListAdapter.notifyDataSetChanged()
 
         } else {
-            popularPeopleItemAdapter.popularPersonalities = widgets as MutableList<Person>
+            popularPeopleItemAdapter.popularPersonalities = contents as MutableList<Person>
             listView.adapter = popularPeopleItemAdapter
             popularPeopleItemAdapter.notifyDataSetChanged()
         }
     }
 
 
-    private fun areWidgetsMovies(widgets: List<Widget?>): Boolean {
-        return (widgets[FIRST_WIDGET_TYPE_OCCURENCE] != null) && (widgets[FIRST_WIDGET_TYPE_OCCURENCE] is Movie)
+    private fun areWidgetsMovies(contents: List<Content?>): Boolean {
+        return (contents[FIRST_WIDGET_TYPE_OCCURENCE] != null) && (contents[FIRST_WIDGET_TYPE_OCCURENCE] is Movie)
     }
 }

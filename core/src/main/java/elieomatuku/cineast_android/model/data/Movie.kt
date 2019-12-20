@@ -19,7 +19,7 @@ data class Movie(
         val vote_count: Int? = null,
         val video: Boolean? = true,
         val vote_average: Float? = null,
-        val rating: Float? = null) : Widget() {
+        val rating: Float? = null) : Content() {
 
 
     override fun equals(other: Any?): Boolean {

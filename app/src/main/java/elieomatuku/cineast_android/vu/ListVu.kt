@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.model.data.Movie
-import elieomatuku.cineast_android.model.data.Widget
+import elieomatuku.cineast_android.model.data.Content
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -59,9 +59,9 @@ abstract class ListVu(inflater: LayoutInflater,
     val onMovieRemovedObservable: Observable<Movie>
         get() = onMovieRemovedPublisher.hide()
 
-    fun updateVu(widgets: List<Widget>?, screenNameRes: Int? = null) {
+    fun updateVu(contents: List<Content>?, screenNameRes: Int? = null) {
         setToolbarTitle(screenNameRes)
-        widgets?.let {
+        contents?.let {
             if (!it.isEmpty()) {
                 setUpListView(it)
             }
@@ -75,5 +75,5 @@ abstract class ListVu(inflater: LayoutInflater,
 
     }
 
-    abstract fun setUpListView(widgets: List<Widget>)
+    abstract fun setUpListView(contents: List<Content>)
 }

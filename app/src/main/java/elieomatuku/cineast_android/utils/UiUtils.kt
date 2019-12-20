@@ -33,7 +33,7 @@ object  UiUtils {
     val YOUTUBE_URL = "https://img.youtube.com"
     val PARAM_VIDEO = "vi"
 
-    val WIDGET_KEY = "widget"
+    val WIDGET_KEY = "content"
     val SCREEN_NAME_KEY = "screen_name"
 
 

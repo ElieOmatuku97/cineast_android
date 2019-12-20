@@ -13,7 +13,6 @@ import elieomatuku.cineast_android.business.service.PrefsStore
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.utils.ValueStore
-import kotlinx.coroutines.awaitAll
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -41,7 +40,7 @@ class TmdbContentClient(val context: Application, override val resources: Resour
     }
 
 
-    suspend fun getPopularMovies(/*asyncResponse: AsyncResponse<MovieResponse>*/): MovieResponse? {
+    suspend fun getPopularMovies(): MovieResponse? {
         return try {
             val results = movieApi.getPopularMovie(ContentManager.API_KEY).await()
             Timber.i("get Popular Movies was succesful: $results")
@@ -50,26 +49,10 @@ class TmdbContentClient(val context: Application, override val resources: Resour
             Timber.w("get Popular Movies failed with $e")
             null
         }
-
-//        movieApi.getPopularMovie(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
-//            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-//                val success = response?.isSuccessful ?: false
-//
-//                if (success) {
-//                    asyncResponse.onSuccess(response?.body())
-//                } else {
-//                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-//                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-//            }
-//        })
     }
 
 
-    suspend fun getUpcomingMovies(/*asyncResponse: AsyncResponse<MovieResponse>*/): MovieResponse?  {
+    suspend fun getUpcomingMovies(): MovieResponse?  {
         return try {
             val results = movieApi.getUpcomingMovies(ContentManager.API_KEY).await()
             Timber.i("get Upcoming Movies was succesful: $results")
@@ -77,30 +60,10 @@ class TmdbContentClient(val context: Application, override val resources: Resour
         } catch(e : Exception) {
             Timber.w("get Upcoming Movies failed with $e")
             null
-
         }
-//        movieApi.getUpcomingMovies(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
-//            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-//                val success = response?.isSuccessful ?: false
-//
-//                if (success) {
-//                    asyncResponse.onSuccess(response?.body())
-//                } else {
-//                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-//                }
-//
-//
-//            }
-//
-//            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-//                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-//            }
-//        })
     }
 
-
-    suspend fun getNowPlayingMovies(/*asyncResponse: AsyncResponse<MovieResponse>*/): MovieResponse? {
-
+    suspend fun getNowPlayingMovies(): MovieResponse? {
         return try {
             val results = movieApi.getNowPlayingMovie(ContentManager.API_KEY).await()
             Timber.i("get Upcoming Movies was succesful: $results")
@@ -108,28 +71,10 @@ class TmdbContentClient(val context: Application, override val resources: Resour
         } catch(e : Exception) {
             Timber.w("get Upcoming Movies failed with $e")
             null
-
         }
-
-
-//        movieApi.getNowPlayingMovie(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
-//            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-//                val success = response?.isSuccessful ?: false
-//
-//                if (success) {
-//                    asyncResponse.onSuccess(response?.body())
-//                } else {
-//                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-//                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-//            }
-//        })
     }
 
-    suspend fun getTopRatedMovies(/*asyncResponse: AsyncResponse<MovieResponse>*/): MovieResponse? {
+    suspend fun getTopRatedMovies(): MovieResponse? {
         return try {
             val results = movieApi.getTopRatedMovies(ContentManager.API_KEY).await()
             Timber.i("get Upcoming Movies was succesful: $results")
@@ -139,41 +84,17 @@ class TmdbContentClient(val context: Application, override val resources: Resour
             null
 
         }
-
-//        movieApi.getTopRatedMovies(ContentManager.API_KEY).enqueue(object : Callback<MovieResponse> {
-//            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
-//                val success = response?.isSuccessful ?: false
-//
-//                if (success) {
-//                    asyncResponse.onSuccess(response?.body())
-//                } else {
-//                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-//                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-//            }
-//        })
     }
 
-
-    fun getPopularPeople(asyncResponse: AsyncResponse<PeopleResponse>) {
-        peopleApi.getPopularPeople(ContentManager.API_KEY).enqueue(object : Callback<PeopleResponse> {
-            override fun onResponse(call: Call<PeopleResponse>?, response: Response<PeopleResponse>?) {
-                val success = response?.isSuccessful ?: false
-
-                if (success) {
-                    asyncResponse.onSuccess(response?.body())
-                } else {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-                }
-            }
-
-            override fun onFailure(call: Call<PeopleResponse>?, t: Throwable?) {
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-            }
-        })
+    suspend fun getPopularPeople(): PeopleResponse? {
+        return try {
+            val results = peopleApi.getPopularPeople(ContentManager.API_KEY).await()
+            Timber.i("get Popular People was succesful: $results")
+            results
+        } catch (e : Exception) {
+            Timber.w("get Popular People failed with $e")
+            null
+        }
     }
 
     fun getGenres(asyncResponse: AsyncResponse<GenreResponse>) {

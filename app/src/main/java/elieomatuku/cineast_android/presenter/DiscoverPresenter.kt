@@ -8,7 +8,6 @@ import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.response.*
 import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.client.TmdbUserClient
-import elieomatuku.cineast_android.model.DiscoverContent
 import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -21,14 +20,9 @@ import java.util.ArrayList
 class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     companion object {
         const val SCREEN_NAME = "Discover"
-
-
-        const val POPULAR_PEOPLE_KEY = "popular_people"
         const val SCREEN_NAME_KEY = "screen_name"
-
         const val MOVIE_GENRES_KEY = "genres"
         const val MOVIE_KEY = "movieApi"
-
         const val PEOPLE_KEY = "peopleApi"
     }
 
@@ -41,9 +35,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     override fun onLink(vu: DiscoverVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-
         vu.showLoading()
-//        fetchDiscover()
+        fetchDiscover()
 
         rxSubs.add(contentManager.discoverContent()
                 .subscribeOn(Schedulers.io())
@@ -58,21 +51,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                     vu.updateErrorView(error.message)
                 })
         )
-//
-//        rxSubs.add(contentManager.getAllMovies()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    vu.hideLoading()
-//                    Timber.d("discoverContent: ${it}")
-//
-//                    vu.updateView(DiscoverContent(it), tmdbUserClient.isLoggedIn())
-//
-//                }, { error ->
-//                    Timber.e("Unable to get discover container $error")
-//                    vu.updateErrorView(error.message)
-//                })
-//        )
 
         rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -136,7 +114,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
                     if (hasConnection) {
                         vu.showLoading()
-//                        fetchDiscover()
+                        fetchDiscover()
                     } else {
                         vu.hideLoading()
                     }
@@ -176,9 +154,9 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
 
     private fun fetchDiscover() {
-//        launch {
-//            contentManager.fetchDiscoverContent()
-//        }
+        launch {
+            contentManager.fetchDiscoverContent()
+        }
         contentManager.getGenres(genreAsyncResponse)
     }
 
