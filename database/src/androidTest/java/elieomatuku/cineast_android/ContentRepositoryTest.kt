@@ -5,13 +5,9 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import elieomatuku.cineast_android.database.ContentDatabase
-import elieomatuku.cineast_android.database.ContentRepository
+import elieomatuku.cineast_android.database.repository.ContentRepository
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import elieomatuku.cineast_android.database.entity.MovieEntity
-import elieomatuku.cineast_android.database.entity.MovieType
 import elieomatuku.cineast_android.database.entity.MovieTypeEntity
-import elieomatuku.cineast_android.database.entity.MovieTypeJoin
-import elieomatuku.cineast_android.model.data.Movie
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

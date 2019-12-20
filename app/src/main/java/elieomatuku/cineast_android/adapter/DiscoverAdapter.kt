@@ -24,14 +24,14 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
         const val TYPE_EMPTY_STATE = -2
     }
 
-    var widget: List<Widget> = listOf()
+    var content: List<Content> = listOf()
     var isLoggedIn: Boolean = false
 
 
     var hasValidData = false
         private set
 
-    var filteredWidgets: MutableMap<Int, Pair<Int, List<Widget>?>>  by Delegates.observable(mutableMapOf()) { prop, oldEdition, nuEdition ->
+    var filteredWidgets: MutableMap<Int, Pair<Int, List<Content>?>>  by Delegates.observable(mutableMapOf()) { prop, oldEdition, nuEdition ->
 
         Timber.d("widgets = $nuEdition")
         hasValidData = true

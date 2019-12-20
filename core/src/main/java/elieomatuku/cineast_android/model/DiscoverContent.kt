@@ -5,7 +5,7 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.model.data.Personality
-import elieomatuku.cineast_android.model.data.Widget
+import elieomatuku.cineast_android.model.data.Content
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -26,8 +26,8 @@ class DiscoverContent(
     }
 
 
-    fun getFilteredWidgets(): MutableMap<Int, Pair<Int, List<Widget>?>> {
-        val filteredWidgets: MutableMap<Int, Pair<Int, List<Widget>?>> = mutableMapOf()
+    fun getFilteredWidgets(): MutableMap<Int, Pair<Int, List<Content>?>> {
+        val filteredWidgets: MutableMap<Int, Pair<Int, List<Content>?>> = mutableMapOf()
 
         filteredWidgets[getSummaryPosition(TYPE_POPULAR_MOVIE)] = Pair(R.string.popular_movies, popularMovies)
         filteredWidgets[getSummaryPosition(TYPE_POPULAR_PEOPLE)] = Pair(R.string.popular_people, popularPeople)

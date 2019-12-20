@@ -17,7 +17,7 @@ import java.util.*
 
 abstract class ListPresenter<V>: BasePresenter <V>() where V: ListVu   {
     companion object {
-        const val WIDGET_KEY = "widget"
+        const val WIDGET_KEY = "content"
         const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
         const val MOVIE_KEY = "movieApi"

@@ -1,13 +1,16 @@
-package elieomatuku.cineast_android.database
+package elieomatuku.cineast_android.database.repository
 
 
+import elieomatuku.cineast_android.database.ContentDatabase
 import elieomatuku.cineast_android.database.entity.MovieEntity
 import elieomatuku.cineast_android.database.entity.MovieType
 import elieomatuku.cineast_android.database.entity.MovieTypeJoin
+import elieomatuku.cineast_android.database.entity.PersonalityEntity
 import elieomatuku.cineast_android.model.DiscoverContent
 import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.model.data.Personality
 import io.reactivex.Flowable
-import io.reactivex.functions.Function4
+import io.reactivex.functions.Function5
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -30,23 +33,26 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
 
 
     fun discoverContent(): Flowable<DiscoverContent> {
-        return Flowable.zip(popularMovies(), nowPlayingMovies, upcomingMovies, topRatedMovies,
-                Function4<List<Movie>, List<Movie>, List<Movie>, List<Movie>, DiscoverContent> { popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies ->
+        return Flowable.zip(popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies, popularPeople,
+                Function5<List<Movie>, List<Movie>, List<Movie>, List<Movie>, List<Personality>, DiscoverContent>
+                { popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies, popularPeople ->
                     DiscoverContent(
                             popularMovies = popularMovies,
-                            popularPeople = listOf(),
+                            popularPeople = popularPeople,
                             upcomingMovies = upcomingMovies,
                             nowPlayingMovies = nowPlayingMovies,
                             topRatedMovies = topRatedMovies)
                 })
     }
 
-    fun popularMovies(): Flowable<List<Movie>> {
+    val popularMovies: Flowable<List<Movie>>
+    get() {
         return contentDatabase.movieTypeJoinDao().getMoviesForType(MovieType.POPULAR.id)
                 .map {
                     MovieEntity.toMovies(it)
                 }
     }
+
 
 
     val upcomingMovies: Flowable<List<Movie>>
@@ -73,10 +79,12 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
                     }
         }
 
-    fun getAllMovies(): Flowable<List<Movie>> {
-        return contentDatabase.movieDao().getAllMovies()
+
+    val popularPeople: Flowable<List<Personality>>
+      get() {
+        return contentDatabase.personalityDao().getAllPersonalities()
                 .map {
-                    MovieEntity.toMovies(it)
+                    PersonalityEntity.toPersonalities(it)
                 }
     }
 
@@ -110,6 +118,12 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         GlobalScope.launch(Dispatchers.IO) {
             contentDatabase.movieDao().insertMovie(MovieEntity.fromMovie(movie))
             contentDatabase.movieTypeJoinDao().insert(MovieTypeJoin(movie.id, type.id))
+        }
+    }
+
+    suspend fun insertPersonality(personality: Personality) {
+        GlobalScope.launch(Dispatchers.IO) {
+            contentDatabase.personalityDao().insertPersonality(PersonalityEntity.fromPersonality(personality))
         }
     }
 }

@@ -4,6 +4,7 @@ import elieomatuku.cineast_android.model.data.PeopleDetails
 import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.business.api.response.PeopleResponse
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -11,7 +12,7 @@ import retrofit2.http.Query
 
 interface PeopleApi {
     @GET ("person/popular")
-    fun getPopularPeople (@Query("api_key") apiKey: String): Call<PeopleResponse>
+    fun getPopularPeople (@Query("api_key") apiKey: String): Deferred<PeopleResponse>
 
     @GET ("person/{person_id}")
     fun getPeopleDetails (@Path("person_id") personId: Int, @Query("api_key") apiKey: String): Call <PeopleDetails>
