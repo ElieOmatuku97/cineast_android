@@ -22,6 +22,7 @@ import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_discover.view.*
+import timber.log.Timber
 
 class DiscoverVu (inflater: LayoutInflater,
                   activity: Activity,
@@ -88,6 +89,8 @@ class DiscoverVu (inflater: LayoutInflater,
     }
 
     fun updateView(discoverContent: DiscoverContent, isLoggedIn: Boolean){
+        Timber.d("discoverContent size: vu ${discoverContent.popularMovies.size}")
+
         adapter.filteredWidgets = discoverContent.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()

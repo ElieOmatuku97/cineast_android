@@ -19,13 +19,13 @@ interface MovieTypeDao  {
     fun insert(types: List<MovieTypeEntity>)
 
     @Query("SELECT * from ${MovieTypeEntity.MOVIE_TYPE_TABLE}")
-    suspend fun getAllTypes(): List<MovieTypeEntity>
+    fun getAllTypes(): List<MovieTypeEntity>
 
     @WorkerThread
     @Query("DELETE FROM ${MovieTypeEntity.MOVIE_TYPE_TABLE} WHERE id = :id")
-    suspend fun delete(id: String)
+    fun delete(id: String)
 
     @WorkerThread
     @Query("DELETE FROM ${MovieTypeEntity.MOVIE_TYPE_TABLE}")
-    suspend fun deleteAll()
+    fun deleteAll()
 }

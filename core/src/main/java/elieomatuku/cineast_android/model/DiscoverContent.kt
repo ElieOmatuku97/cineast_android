@@ -10,11 +10,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class DiscoverContent(
-        var popularMovies: List<Movie>? = listOf(),
-        var nowPlayingMovies: List<Movie>? = listOf(),
-        var upcomingMovies: List<Movie>? = listOf(),
-        var topRatedMovies: List<Movie>? = listOf(),
-        var popularPeople: List<Personality>? = listOf()) : Parcelable {
+        var popularMovies: List<Movie> = listOf(),
+        var nowPlayingMovies: List<Movie> = listOf(),
+        var upcomingMovies: List<Movie> = listOf(),
+        var topRatedMovies: List<Movie> = listOf(),
+        var popularPeople: List<Personality> = listOf()) : Parcelable {
 
 
     companion object {
@@ -40,5 +40,9 @@ class DiscoverContent(
 
     private fun getSummaryPosition(widgetPosition: Int): Int {
         return (widgetPosition - 1)
+    }
+
+    fun hasMissingContent(): Boolean {
+        return popularMovies.isEmpty()|| nowPlayingMovies.isEmpty() || upcomingMovies.isEmpty() || topRatedMovies.isEmpty() || popularPeople.isEmpty()
     }
 }

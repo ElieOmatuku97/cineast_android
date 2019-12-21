@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import elieomatuku.cineast_android.database.entity.PersonalityEntity
-import io.reactivex.Completable
 import io.reactivex.Flowable
 
 
@@ -24,10 +23,10 @@ interface PersonalityDao  {
 
     @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPersonality(personalityEntity: PersonalityEntity)
+    fun insertPersonality(personalityEntity: PersonalityEntity)
 
 
     @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPersonalities(personalityEntities: List<PersonalityEntity>)
+    fun insertPersonalities(personalityEntities: List<PersonalityEntity>)
 }
