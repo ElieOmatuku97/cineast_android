@@ -8,11 +8,13 @@ import elieomatuku.cineast_android.database.repository.ContentRepository
 import elieomatuku.cineast_android.model.DiscoverContent
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.utils.RestUtils
-import io.reactivex.Flowable
+import io.reactivex.*
 import kotlinx.coroutines.*
+import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KSuspendFunction0
-import kotlin.reflect.KSuspendFunction1
+import kotlin.reflect.KFunction1
+import io.reactivex.schedulers.Schedulers
 
 
 class ContentManager(private val tmdbContentClient: TmdbContentClient, private val contentRepository: ContentRepository) : CoroutineScope {
@@ -42,22 +44,39 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         return contentRepository.popularPeople
     }
 
-    suspend fun fetchDiscoverContent() {
-        val popularMovies =  getMovies(tmdbContentClient::getPopularMovies, contentRepository::insertPopularMovie)
-        val upcomingMovies = getMovies(tmdbContentClient::getUpcomingMovies, contentRepository::insertUpcomingMovie)
-        val nowPlayingMovies =  getMovies(tmdbContentClient::getNowPlayingMovies, contentRepository::insertNowPlayingMovie)
-        val topRatedMovies = getMovies(tmdbContentClient::getTopRatedMovies, contentRepository::insertTopRatedMovie)
-        val popularPeople = getPopularPeople()
-
-        //calls have been made in parallel and we now wait for both to finish
-        popularMovies.await()
-        upcomingMovies.await()
-        nowPlayingMovies.await()
-        topRatedMovies.await()
-        popularPeople.await()
+    fun fetchDiscoverContent() {
+        val disposable = discoverContent()
+                .observeOn(Schedulers.io())
+                .subscribe({
+                    if (it.hasMissingContent()) {
+                        insertContent()
+                    }
+                }, {
+                    Timber.e("getAllMovies: $it")
+                })
     }
 
-    suspend fun getMovies(clientCall: KSuspendFunction0<MovieResponse?>, repositoryInsert: KSuspendFunction1<Movie, Unit>) = async {
+    fun insertContent() {
+        launch(Dispatchers.IO) {
+            val popularMovies = getMovies(tmdbContentClient::getPopularMovies, contentRepository::insertPopularMovie)
+            val upcomingMovies = getMovies(tmdbContentClient::getUpcomingMovies, contentRepository::insertUpcomingMovie)
+            val nowPlayingMovies = getMovies(tmdbContentClient::getNowPlayingMovies, contentRepository::insertNowPlayingMovie)
+            val topRatedMovies = getMovies(tmdbContentClient::getTopRatedMovies, contentRepository::insertTopRatedMovie)
+            val popularPeople = getPopularPeople()
+
+            //calls have been made in parallel and we now wait for all to finish
+            popularMovies.await()
+            upcomingMovies.await()
+            nowPlayingMovies.await()
+            topRatedMovies.await()
+            popularPeople.await()
+
+        }
+    }
+
+    suspend fun getMovies(clientCall: KSuspendFunction0<MovieResponse?>, repositoryInsert: KFunction1<Movie, Unit>) = async {
+        Timber.d("Current thread get movies: ${Thread.currentThread()}")
+
         val response = clientCall()
         response?.results?.forEach {
             repositoryInsert(it)
@@ -65,6 +84,9 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     suspend fun getPopularPeople() = async {
+
+        Timber.d("Current thread get popular people: ${Thread.currentThread()}")
+
         val response = tmdbContentClient.getPopularPeople()
         response?.results?.forEach {
             contentRepository.insertPersonality(it)

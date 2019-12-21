@@ -11,20 +11,33 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PeopleApi {
-    @GET ("person/popular")
-    fun getPopularPeople (@Query("api_key") apiKey: String): Deferred<PeopleResponse>
+    companion object {
 
-    @GET ("person/{person_id}")
-    fun getPeopleDetails (@Path("person_id") personId: Int, @Query("api_key") apiKey: String): Call <PeopleDetails>
+        const val API_KEY = "api_key"
+        const val POPULAR_PERSON = "person/popular"
+        const val QUERY = "query"
+        const val PERSON_ID = "person_id"
 
-    @GET ("person/{person_id}/movie_credits")
-    fun getPeopleCredits (@Path("person_id") personId: Int, @Query ("api_key") apiKey: String): Call <PeopleCreditsResponse>
+        const val GET_PERSON_ID = "person/{person_id}"
+        const val GET_PERSON_IMAGES = "person/{person_id}/images"
+        const val SEARCH_PERSON = "search/person"
+        const val PERSON_MOVIE_CREDITS = "person/{person_id}/movie_credits"
+    }
+
+    @GET (POPULAR_PERSON )
+    fun getPopularPeople (@Query( API_KEY) apiKey: String): Deferred<PeopleResponse>
+
+    @GET (GET_PERSON_ID )
+    fun getPeopleDetails (@Path(PERSON_ID) personId: Int, @Query( API_KEY) apiKey: String): Call <PeopleDetails>
+
+    @GET (PERSON_MOVIE_CREDITS)
+    fun getPeopleCredits (@Path(PERSON_ID) personId: Int, @Query ( API_KEY) apiKey: String): Call <PeopleCreditsResponse>
 
 
-    @GET("person/{person_id}/images")
-    fun getPeopleImages(@Path("person_id") movie_id: Int, @Query("api_key") apiKey: String): Call <ImageResponse>
+    @GET(GET_PERSON_IMAGES)
+    fun getPeopleImages(@Path(PERSON_ID) movie_id: Int, @Query( API_KEY) apiKey: String): Call <ImageResponse>
 
 
-    @GET ("search/person")
-    fun getPeopleWithSearch(@Query("api_key") apiKey: String, @Query("query") query: String): Call <PeopleResponse>
+    @GET (SEARCH_PERSON)
+    fun getPeopleWithSearch(@Query( API_KEY) apiKey: String, @Query(QUERY) query: String): Call <PeopleResponse>
 }

@@ -44,13 +44,13 @@ class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubje
 
         Timber.d("movies from discover: $movies")
 
-        if (movies.isNotEmpty()) {
+//        if (movies.isNotEmpty()) {
             sectionTitle.text = itemView.context.getString(resources)
             adapter.movies = movies.toMutableList()
             listView.adapter = adapter
             listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            listView.visibility = View.VISIBLE
-        }
+
+//        }
 
         seeAllView.setOnClickListener {
             ItemListActivity.startItemListActivity(itemView.context, movies, resources)

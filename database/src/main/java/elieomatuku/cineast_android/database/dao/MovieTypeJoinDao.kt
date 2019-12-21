@@ -21,16 +21,16 @@ interface MovieTypeJoinDao {
 
     @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(movieTypeJoin: MovieTypeJoin)
+    fun insert(movieTypeJoin: MovieTypeJoin)
 
     @Query("SELECT * FROM ${MovieEntity.MOVIE_TABLE} INNER JOIN ${MovieTypeJoin.MOVIE_TYPE_JOIN_TABLE} ON ${MovieEntity.MOVIE_TABLE}.id=${MovieTypeJoin.MOVIE_TYPE_JOIN_TABLE}.${MovieTypeJoin.MOVIE_ID} WHERE ${MovieTypeJoin.MOVIE_TYPE_JOIN_TABLE}.${MovieTypeJoin.MOVIE_TYPE_ID}=:typeId")
     fun getMoviesForType(typeId: String): Flowable<List<MovieEntity>>
 
 
     @Query("SELECT * FROM ${MovieTypeEntity.MOVIE_TYPE_TABLE} INNER JOIN ${MovieTypeJoin.MOVIE_TYPE_JOIN_TABLE} ON ${MovieTypeEntity.MOVIE_TYPE_TABLE}.id=${MovieTypeJoin.MOVIE_TYPE_JOIN_TABLE}.${MovieTypeJoin.MOVIE_TYPE_ID} WHERE  ${MovieTypeJoin.MOVIE_TYPE_JOIN_TABLE}.${MovieTypeJoin.MOVIE_ID}=:movieId")
-    suspend fun getTypesForMovie(movieId: Int): List<MovieTypeEntity>
+    fun getTypesForMovie(movieId: Int): List<MovieTypeEntity>
 
 
     @Query("SELECT * FROM ${MovieTypeJoin.MOVIE_TYPE_JOIN_TABLE}")
-    suspend fun getMovieTypeJoins(): List<MovieTypeJoin>
+    fun getMovieTypeJoins(): List<MovieTypeJoin>
 }

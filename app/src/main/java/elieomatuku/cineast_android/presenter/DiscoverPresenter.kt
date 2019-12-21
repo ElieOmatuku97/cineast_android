@@ -11,7 +11,6 @@ import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.*
 import org.kodein.di.generic.instance
 import timber.log.Timber
 import java.util.ArrayList
@@ -43,13 +42,14 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     vu.hideLoading()
-                    Timber.d("discoverContent: ${it.popularMovies}")
+                    Timber.d("Current thread discover: ${Thread.currentThread()}")
+                    Timber.d("discoverContent size: ${it.popularMovies.size}")
                     vu.updateView(it, tmdbUserClient.isLoggedIn())
-
                 }, { error ->
                     Timber.e("Unable to get discover container $error")
                     vu.updateErrorView(error.message)
                 })
+
         )
 
         rxSubs.add(vu.movieSelectObservable
@@ -154,9 +154,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
 
     private fun fetchDiscover() {
-        launch {
-            contentManager.fetchDiscoverContent()
-        }
+        contentManager.fetchDiscoverContent()
         contentManager.getGenres(genreAsyncResponse)
     }
 
