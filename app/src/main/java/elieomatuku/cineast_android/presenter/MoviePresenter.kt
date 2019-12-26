@@ -10,7 +10,6 @@ import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.MovieCreditsResponse
 import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.business.api.response.TrailerResponse
-import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +30,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         const val MOVIE_SIMILAR_KEY = "movie_similar_key"
     }
 
-    private val contentManager: ContentManager by App.kodein.instance()
     private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
     private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
 

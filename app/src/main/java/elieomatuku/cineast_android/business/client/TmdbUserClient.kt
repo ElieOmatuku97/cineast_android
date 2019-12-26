@@ -1,25 +1,20 @@
 package elieomatuku.cineast_android.business.client
 
-import android.app.Application
+
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.AuthenticationApi
-import elieomatuku.cineast_android.business.service.PrefsStore
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
-import elieomatuku.cineast_android.utils.ValueStore
+import elieomatuku.cineast_android.ValueStore
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
 
-class TmdbUserClient (private val context: Application, override val resources: Resources): BaseClient {
-    private val persistClient: ValueStore by lazy {
-        val storeKey = "cineast_prefs"
-        PrefsStore(storeKey, context)
-    }
+class TmdbUserClient (override val resources: Resources, override val persistClient: ValueStore): BaseClient {
 
     val authenticationApi: AuthenticationApi by lazy {
         retrofit.create(AuthenticationApi::class.java)
@@ -28,7 +23,6 @@ class TmdbUserClient (private val context: Application, override val resources: 
     private val accountSerializer: Serializer<Account> by lazy {
         MoshiSerializer<Account>(Account::class.java)
     }
-
 
     fun getAccessToken(asyncResponse: AsyncResponse<AccessToken>) {
         authenticationApi.getAccessToken(RestUtils.API_KEY).enqueue(object : Callback<AccessToken> {

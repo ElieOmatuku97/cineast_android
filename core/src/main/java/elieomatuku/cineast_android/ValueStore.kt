@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.utils
+package elieomatuku.cineast_android
 
 interface ValueStore {
     fun set(key: String, value: String)

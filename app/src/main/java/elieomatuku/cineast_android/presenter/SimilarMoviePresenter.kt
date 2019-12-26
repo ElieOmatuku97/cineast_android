@@ -3,19 +3,16 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.api.response.GenreResponse
-import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.kodein.di.generic.instance
 import java.util.ArrayList
 
 
-class SimilarMoviePresenter: BasePresenter<SimilarMovieVu> (){
+class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
     companion object {
         val LOG_TAG = SimilarMoviePresenter::class.java.simpleName
         const val MOVIE_SIMILAR_MOVIES_KEY = "movie_similar_movies"
@@ -23,7 +20,7 @@ class SimilarMoviePresenter: BasePresenter<SimilarMovieVu> (){
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
     }
-    private val contentManager: ContentManager by App.kodein.instance()
+
     private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: SimilarMovieVu, inState: Bundle?, args: Bundle) {
@@ -42,14 +39,14 @@ class SimilarMoviePresenter: BasePresenter<SimilarMovieVu> (){
                     params.putParcelable(MOVIE_KEY, movie)
                     params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                     vu.gotoMovie(params)
-                }, {t: Throwable ->
+                }, { t: Throwable ->
                     Log.d(LOG_TAG, "movieSelectObservable failed:$t")
                 }
                 ))
     }
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
-        object: AsyncResponse<GenreResponse> {
+        object : AsyncResponse<GenreResponse> {
             override fun onSuccess(response: GenreResponse?) {
                 genres = response?.genres
             }

@@ -1,13 +1,14 @@
-package elieomatuku.cineast_android.business.service
+package elieomatuku.cineast_android
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import elieomatuku.cineast_android.utils.ValueStore
 
-class PrefsStore(storeKey: String, appContext: Context) : ValueStore {
 
-    private val prefs: SharedPreferences by kotlin.lazy {
-        appContext.getSharedPreferences(storeKey, android.content.Context.MODE_PRIVATE)
+class PrefsStore(storeKey: String, appContext: Application) : ValueStore {
+
+    private val prefs: SharedPreferences by lazy {
+        appContext.getSharedPreferences(storeKey, Context.MODE_PRIVATE)
     }
 
     override fun set(key: String, value: String) {

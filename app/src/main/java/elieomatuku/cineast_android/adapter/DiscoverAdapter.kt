@@ -32,7 +32,6 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
         private set
 
     var filteredWidgets: MutableMap<Int, Pair<Int, List<Content>?>>  by Delegates.observable(mutableMapOf()) { prop, oldEdition, nuEdition ->
-
         Timber.d("widgets = $nuEdition")
         hasValidData = true
         errorMessage = null

@@ -3,17 +3,14 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.CineastError
-import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.Genre
 import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.model.data.KnownFor
 import elieomatuku.cineast_android.business.api.response.GenreResponse
 import elieomatuku.cineast_android.vu.KnownForVu
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.kodein.di.generic.instance
 import timber.log.Timber
 import java.util.ArrayList
 
@@ -28,7 +25,6 @@ class KnownForPresenter: BasePresenter <KnownForVu>() {
     }
 
 
-    private val contentManager: ContentManager by App.kodein.instance()
     private var genres: List<Genre>? = listOf()
 
     override fun onLink(vu: KnownForVu, inState: Bundle?, args: Bundle) {

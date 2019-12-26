@@ -55,6 +55,11 @@ android {
         targetCompatibility 1.8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+
 }
 
 androidExtensions {
@@ -109,7 +114,8 @@ dependencies {
     implementation 'com.github.jhavatar:mythos:1.0.5'
 
     //dependency
-    implementation 'org.kodein.di:kodein-di-generic-jvm:6.1.0'
+//    implementation 'org.kodein.di:kodein-di-generic-jvm:6.1.0'
+    implementation 'org.kodein.di:kodein-di-generic-jvm:6.4.0'
 
     // support
     implementation 'androidx.appcompat:appcompat:1.1.0'

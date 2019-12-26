@@ -19,13 +19,16 @@ fun depInjecT(app: Application): Kodein {
         bind<Application>() with instance(app)
         bind<Context>() with instance(app.applicationContext)
         bind<Resources>() with instance(app.applicationContext.resources)
-        bind<TmdbContentClient>() with singleton { TmdbContentClient(instance(), instance())}
         bind<ContentManager>() with singleton { ContentManager(instance(), instance()) }
+        bind<ConnectionService>() with singleton { ConnectionService(instance()) }
+
+        importOnce(CoreKodeinModule.getModule())
+
         bind<TmdbUserClient>() with singleton {
             TmdbUserClient(instance(), instance())
         }
-        bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
+        bind<TmdbContentClient>() with singleton { TmdbContentClient(instance()) }
 
         importOnce(DatabaseKodeinModule.getModule(app))
     }

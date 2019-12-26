@@ -22,16 +22,14 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class PersonalityDaoTest {
-
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var contentDatabase: ContentDatabase
     private lateinit var personalityDao: PersonalityDao
 
-
     @Before
-    fun initDb()  = runBlocking  {
+    fun initDb() = runBlocking {
         val context = ApplicationProvider.getApplicationContext<Context>()
         contentDatabase = Room.inMemoryDatabaseBuilder(
                 context, ContentDatabase::class.java).build()
@@ -45,16 +43,13 @@ class PersonalityDaoTest {
     }
 
     @Test
-    fun insertAndGetPersonalities() = runBlocking {
+    fun insertAndGetPersonalities() {
+        val personality = Personality(id = 1234, adult = true, name = "Eddie Murphy", profile_path = "personality_profile_path")
 
-//        val personality = Personality (id = 1234, adult = true, name = "Eddie Murphy", profile_path = "personality_profile_path")
-//
-//        personalityDao.insertPersonality(PersonalityEntity.fromPersonality(personality))
-//
-//        personalityDao.getAllPersonalityById(personality.id)
-//                .test()
-//                .assertValue { it.id == personality.id && it.name == personality.name }
+        personalityDao.insertPersonality(PersonalityEntity.fromPersonality(personality))
+
+        personalityDao.getAllPersonalityById(personality.id)
+                .test()
+                .assertValue { it.id == personality.id && it.name == personality.name }
     }
-
-
 }

@@ -1,10 +1,7 @@
 package elieomatuku.cineast_android.database.dao
 
 import androidx.annotation.WorkerThread
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import elieomatuku.cineast_android.database.entity.MovieEntity
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -21,13 +18,18 @@ interface MovieDao  {
 
 
     @WorkerThread
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMovie(movie: MovieEntity)
 
 
     @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(movie: List<MovieEntity>)
+
+
+    @WorkerThread
+    @Update
+    fun updateMovie(movie: MovieEntity)
 
 
     @WorkerThread
