@@ -5,7 +5,6 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.response.GenreResponse
 import elieomatuku.cineast_android.business.client.TmdbUserClient
@@ -25,7 +24,6 @@ abstract class ListPresenter<V>: BasePresenter <V>() where V: ListVu   {
         const val PEOPLE_KEY = "peopleApi"
     }
 
-    private val contentManager: ContentManager by App.kodein.instance()
     protected val tmdbUserClient: TmdbUserClient by App.kodein.instance()
     protected val tmdbContentClient: TmdbContentClient by App.kodein.instance()
     private var genres: List<Genre>? = listOf()

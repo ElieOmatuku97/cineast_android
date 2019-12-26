@@ -6,7 +6,6 @@ import elieomatuku.cineast_android.App.Companion.kodein
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.response.*
-import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,9 +24,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         const val PEOPLE_KEY = "peopleApi"
     }
 
-    private val contentManager: ContentManager by kodein.instance()
     private val tmdbUserClient: TmdbUserClient by kodein.instance()
-
     private var genres: List<Genre>? = listOf()
 
 
@@ -42,14 +39,15 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     vu.hideLoading()
-                    Timber.d("Current thread discover: ${Thread.currentThread()}")
-                    Timber.d("discoverContent size: ${it.popularMovies.size}")
+
+                    Timber.d("content size: popular size: ${it.popularMovies.size}, " +
+                            " nowplaying size: ${it.nowPlayingMovies.size}, upcoming size: ${it.upcomingMovies.size} " +
+                            " topRated size: ${it.topRatedMovies.size}" )
                     vu.updateView(it, tmdbUserClient.isLoggedIn())
                 }, { error ->
                     Timber.e("Unable to get discover container $error")
                     vu.updateErrorView(error.message)
                 })
-
         )
 
         rxSubs.add(vu.movieSelectObservable

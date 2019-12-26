@@ -5,6 +5,7 @@ import io.chthonic.mythos.mvp.Presenter
 import io.chthonic.mythos.mvp.Vu
 import android.os.Handler
 import elieomatuku.cineast_android.App
+import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.service.ConnectionService
 import kotlinx.coroutines.*
 import org.kodein.di.generic.instance
@@ -26,6 +27,8 @@ abstract class BasePresenter<V>: Presenter<V>(), CoroutineScope where V: Vu{
     }
 
     protected val connectionService: ConnectionService by App.kodein.instance()
+
+    protected val contentManager: ContentManager by App.kodein.instance()
 
     override fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)

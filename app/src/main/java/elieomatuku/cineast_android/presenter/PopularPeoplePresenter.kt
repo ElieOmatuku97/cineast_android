@@ -1,13 +1,10 @@
 package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
-import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.Person
 import elieomatuku.cineast_android.vu.PopularPeopleVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.kodein.di.generic.instance
 
 
 class PopularPeoplePresenter : BasePresenter<PopularPeopleVu>() {
@@ -17,8 +14,6 @@ class PopularPeoplePresenter : BasePresenter<PopularPeopleVu>() {
         const val PEOPLE_KEY = "peopleApi"
     }
 
-
-    private val contentManager: ContentManager by App.kodein.instance()
 
     override fun onLink(vu: PopularPeopleVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)

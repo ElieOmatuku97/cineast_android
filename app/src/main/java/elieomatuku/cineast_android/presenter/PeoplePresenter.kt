@@ -2,15 +2,12 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.vu.PeopleVu
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.kodein.di.generic.instance
 import timber.log.Timber
 
 class PeoplePresenter : BasePresenter<PeopleVu>() {
@@ -22,7 +19,6 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
         const val MOVIE_TEAM_KEY = "movie_team"
     }
 
-    private val contentManager: ContentManager by App.kodein.instance()
 
     var peopleDetails: PeopleDetails? = null
     var peopleMovies: List<KnownFor>? = listOf()

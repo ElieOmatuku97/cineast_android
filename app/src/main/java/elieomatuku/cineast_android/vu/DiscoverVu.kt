@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import elieomatuku.cineast_android.model.DiscoverContent
+import elieomatuku.cineast_android.DiscoverContent
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.model.data.*
@@ -24,13 +24,13 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_discover.view.*
 import timber.log.Timber
 
-class DiscoverVu (inflater: LayoutInflater,
-                  activity: Activity,
-                  fragmentWrapper: FragmentWrapper?,
-                  parentView: ViewGroup?) : BaseVu(inflater,
+class DiscoverVu(inflater: LayoutInflater,
+                 activity: Activity,
+                 fragmentWrapper: FragmentWrapper?,
+                 parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
-        parentView = parentView), WebLink <AccessToken?>{
+        parentView = parentView), WebLink<AccessToken?> {
 
 
     private val movieSelectPublisher: PublishSubject<Movie> by lazy {
@@ -40,12 +40,11 @@ class DiscoverVu (inflater: LayoutInflater,
         get() = movieSelectPublisher.hide()
 
 
-
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()
     }
 
-    val personSelectObservable: Observable <Person>
+    val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
 
 
@@ -53,14 +52,14 @@ class DiscoverVu (inflater: LayoutInflater,
         PublishSubject.create<Boolean>()
     }
 
-    val loginClickObservable : Observable <Boolean>
+    val loginClickObservable: Observable<Boolean>
         get() = loginClickPublisher.hide()
 
-    private val listView : RecyclerView by lazy {
+    private val listView: RecyclerView by lazy {
         rootView.recyclerview
     }
 
-    private val sessionPublisher : PublishSubject<String> by lazy {
+    private val sessionPublisher: PublishSubject<String> by lazy {
         (activity as elieomatuku.cineast_android.activity.MainActivity).sessionPublisher
     }
 
@@ -69,7 +68,7 @@ class DiscoverVu (inflater: LayoutInflater,
     }
 
     val adapter: DiscoverAdapter by lazy {
-         DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
+        DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
     }
 
     override fun getRootViewLayoutId(): Int {
@@ -78,6 +77,7 @@ class DiscoverVu (inflater: LayoutInflater,
 
     override fun onCreate() {
         super.onCreate()
+
         listView.adapter = adapter
         val itemDecoration = DividerItemDecoration(listView.context, DividerItemDecoration.VERTICAL)
         val drawable: Drawable? = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
@@ -88,9 +88,7 @@ class DiscoverVu (inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    fun updateView(discoverContent: DiscoverContent, isLoggedIn: Boolean){
-        Timber.d("discoverContent size: vu ${discoverContent.popularMovies.size}")
-
+    fun updateView(discoverContent: DiscoverContent, isLoggedIn: Boolean) {
         adapter.filteredWidgets = discoverContent.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
@@ -98,14 +96,11 @@ class DiscoverVu (inflater: LayoutInflater,
     }
 
 
-
     fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
     }
-
-
 
     override fun gotoWebview(value: AccessToken?) {
         value?.let {
@@ -115,7 +110,7 @@ class DiscoverVu (inflater: LayoutInflater,
                     .build()
                     .toString()
 
-            val webviewFragment: WebviewFragment? =  LoginWebviewFragment.newInstance(authenticateUrl)
+            val webviewFragment: WebviewFragment? = LoginWebviewFragment.newInstance(authenticateUrl)
             val fm = (activity as AppCompatActivity).supportFragmentManager
 
             if (webviewFragment != null && fm != null) {

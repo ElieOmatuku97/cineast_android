@@ -3,6 +3,7 @@ package elieomatuku.cineast_android.business.client
 import android.content.res.Resources
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.ValueStore
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,6 +26,10 @@ interface BaseClient {
 
     val okHttpClient:  OkHttpClient
      get() = buildHttpClient()
+
+
+    val persistClient: ValueStore
+
 
     fun getRetrofitAdapter(): Retrofit {
         return Retrofit.Builder()
