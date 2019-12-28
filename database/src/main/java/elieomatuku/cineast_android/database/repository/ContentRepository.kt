@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.database.repository
 
 
-import android.util.Log
+
 import elieomatuku.cineast_android.DiscoverContent
 import elieomatuku.cineast_android.database.ContentDatabase
 import elieomatuku.cineast_android.database.entity.MovieEntity
@@ -98,16 +98,13 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
     }
 
     fun insertUpcomingMovie(movies: List<Movie>) {
-        Log.d(ContentRepository::class.java.simpleName, "content size: Insert Movies: (insertUpcomingMovie) ${movies.size}")
         movies.forEach { movie ->
             insertMovie(movie, MovieType.UPCOMING)
         }
     }
 
     fun insertNowPlayingMovie(movies: List<Movie>) {
-        Log.d(ContentRepository::class.java.simpleName, "content size: Insert Movies: (insertNowPlayingMovie) ${movies.size}")
         movies.forEach { movie ->
-            Log.d(ContentRepository::class.java.simpleName, "content size: ")
             insertMovie(movie, MovieType.NOW_PLAYING)
         }
     }
@@ -118,12 +115,6 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         }
     }
 
-
-    fun updatePersonalities(personalities: List<Personality>) {
-        GlobalScope.launch(Dispatchers.IO) {
-            contentDatabase.personalityDao().updatePersonalities(PersonalityEntity.fromPersonalities(personalities))
-        }
-    }
 
     fun updatePersonality(personality: Personality) {
         GlobalScope.launch(Dispatchers.IO) {

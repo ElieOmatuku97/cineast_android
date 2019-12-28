@@ -52,10 +52,10 @@ interface MovieApi {
     fun getNowPlayingMovie(@Query(API_KEY) apiKey: String): Deferred<MovieResponse>
 
     @GET(MOVIE_VIDEOS)
-    fun getMovieVideos(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Call<TrailerResponse>
+    fun getMovieVideos(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<TrailerResponse>
 
     @GET(MOVIE_DETAILS)
-    fun getMovieDetails(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Call<MovieDetails>
+    fun getMovieDetails(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<MovieDetails>
 
     @GET(MOVIE)
     fun getMovie(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Call<Movie>
@@ -64,10 +64,10 @@ interface MovieApi {
     fun getGenre(@Query(API_KEY) apiKey: String): Call<GenreResponse>
 
     @GET(CREDITS)
-    fun getCredits(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Call<MovieCreditsResponse>
+    fun getCredits(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<MovieCreditsResponse>
 
     @GET(SIMILAR_MOVIE)
-    fun getSimilarMovie(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Call<MovieResponse>
+    fun getSimilarMovie(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<MovieResponse>
 
     @GET(MOVIE_IMAGE)
     fun getMovieImages(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Call<ImageResponse>

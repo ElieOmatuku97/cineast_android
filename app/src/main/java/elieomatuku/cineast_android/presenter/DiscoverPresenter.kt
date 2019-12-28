@@ -39,10 +39,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     vu.hideLoading()
-
-                    Timber.d("content size: popular size: ${it.popularMovies.size}, " +
-                            " nowplaying size: ${it.nowPlayingMovies.size}, upcoming size: ${it.upcomingMovies.size} " +
-                            " topRated size: ${it.topRatedMovies.size}" )
                     vu.updateView(it, tmdbUserClient.isLoggedIn())
                 }, { error ->
                     Timber.e("Unable to get discover container $error")
@@ -109,7 +105,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         rxSubs.add(connectionService.connectionChangedObserver
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ hasConnection ->
-
                     if (hasConnection) {
                         vu.showLoading()
                         fetchDiscover()
@@ -126,7 +121,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 }))
     }
 
-
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
         object : AsyncResponse<GenreResponse> {
             override fun onSuccess(response: GenreResponse?) {
@@ -139,7 +133,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         }
     }
 
-
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
@@ -150,10 +143,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         }
     }
 
-
     private fun fetchDiscover() {
         contentManager.fetchDiscoverContent()
         contentManager.getGenres(genreAsyncResponse)
     }
-
 }

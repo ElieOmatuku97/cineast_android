@@ -52,11 +52,10 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         discoverContent()
                 .observeOn(Schedulers.io())
                 .subscribe({
-
                     Timber.i("has missing content: ${it.isEmpty()} and is up to date: ${it.isUpToDate(timeStamp)}")
                     if (it.isEmpty()) {
                         Timber.i("Empty Content fetch from Client")
-                        fetchContent()
+                        downloadContent()
                     } else if (!it.isUpToDate(timeStamp)) {
                         Timber.i("Needs to be refreshed, fetch from Client: ${!it.isUpToDate(timeStamp)}")
                         updateContent(it)
@@ -66,8 +65,8 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
                 })
     }
 
-    private fun fetchContent() {
-        Timber.i("fetchContent called")
+    private fun downloadContent() {
+        Timber.i("downloadContent called")
         setContentInsertionTimeStamp()
         launch(Dispatchers.IO) {
 
@@ -112,7 +111,6 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         response?.results?.let {
             repositoryInsert(it)
         }
-
     }
 
     suspend fun updateMovies(clientCall: KSuspendFunction0<MovieResponse?>, oldMovies: List<Movie>, type: MovieType) = async {
@@ -185,20 +183,20 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         tmdbContentClient.getGenres(asyncResponse)
     }
 
-    fun getMovieVideos(movie: Movie, asyncResponse: AsyncResponse<TrailerResponse>) {
-        tmdbContentClient.getMovieVideos(movie, asyncResponse)
+    suspend fun getMovieVideos(movie: Movie): TrailerResponse? {
+        return tmdbContentClient.getMovieVideos(movie)
     }
 
-    fun getMovieDetails(movie: Movie, asyncResponse: AsyncResponse<MovieDetails>) {
-        tmdbContentClient.getMovieDetails(movie, asyncResponse)
+    suspend fun getMovieDetails(movie: Movie): MovieDetails? {
+        return  tmdbContentClient.getMovieDetails(movie)
     }
 
-    fun getMovieCredits(movie: Movie, asyncResponse: AsyncResponse<MovieCreditsResponse>) {
-        tmdbContentClient.getMovieCredits(movie, asyncResponse)
+    suspend fun getMovieCredits(movie: Movie ): MovieCreditsResponse? {
+        return tmdbContentClient.getMovieCredits(movie)
     }
 
-    fun getSimilarMovie(movie: Movie, asyncResponse: AsyncResponse<MovieResponse>) {
-        tmdbContentClient.getSimilarMovie(movie, asyncResponse)
+    suspend fun getSimilarMovie(movie: Movie): MovieResponse? {
+        return tmdbContentClient.getSimilarMovie(movie)
     }
 
     fun getMovieImages(movieId: Int, asyncResponse: AsyncResponse<ImageResponse>) {
