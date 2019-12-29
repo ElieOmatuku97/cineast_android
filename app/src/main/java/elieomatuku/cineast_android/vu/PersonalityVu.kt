@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
+import elieomatuku.cineast_android.adapter.PersonalitySummaryAdapter
 import elieomatuku.cineast_android.model.data.Personality
 import elieomatuku.cineast_android.model.data.Person
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
 
-class PopularPeopleVu(inflater: LayoutInflater,
-                      activity: Activity,
-                      fragmentWrapper: FragmentWrapper?,
-                      parentView: ViewGroup?) : BaseVu(inflater,
+class PersonalityVu(inflater: LayoutInflater,
+                    activity: Activity,
+                    fragmentWrapper: FragmentWrapper?,
+                    parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
@@ -34,8 +34,8 @@ class PopularPeopleVu(inflater: LayoutInflater,
     private val GRIDVIEW_NUMBER_OF_COLUMNS = 2
 
     var gridLayoutManager: GridLayoutManager? = null
-    private val adapter: PopularPeopleItemAdapter by lazy {
-        PopularPeopleItemAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
+    private val adapter: PersonalitySummaryAdapter by lazy {
+        PersonalitySummaryAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
     }
 
     private val peopleSelectPublisher: PublishSubject<Person> by lazy {

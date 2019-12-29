@@ -5,7 +5,7 @@ import android.os.Bundle
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.CineastError
 import elieomatuku.cineast_android.business.api.response.MovieResponse
-import elieomatuku.cineast_android.business.api.response.PeopleResponse
+import elieomatuku.cineast_android.business.api.response.PersonalityResponse
 import elieomatuku.cineast_android.vu.SearchVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
@@ -49,8 +49,8 @@ class SearchPresenter: BasePresenter<SearchVu>() {
     }
 
     fun searchPeople(argQuery: String) {
-        contentManager.searchPeople(argQuery, object: AsyncResponse<PeopleResponse> {
-            override fun onSuccess(response: PeopleResponse?) {
+        contentManager.searchPeople(argQuery, object: AsyncResponse<PersonalityResponse> {
+            override fun onSuccess(response: PersonalityResponse?) {
                 handler.post {
                     vu?.hideLoading()
                     vu?.openItemListActivity(response?.results)

@@ -1,9 +1,10 @@
 package elieomatuku.cineast_android.business.api
 
-import elieomatuku.cineast_android.model.data.PeopleDetails
+
 import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
-import elieomatuku.cineast_android.business.api.response.PeopleResponse
+import elieomatuku.cineast_android.business.api.response.PersonalityResponse
+import elieomatuku.cineast_android.model.data.PersonalityDetails
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET
@@ -25,10 +26,10 @@ interface PeopleApi {
     }
 
     @GET (POPULAR_PERSON )
-    fun getPopularPeople (@Query( API_KEY) apiKey: String): Deferred<PeopleResponse>
+    fun getPersonalities (@Query( API_KEY) apiKey: String): Deferred<PersonalityResponse>
 
     @GET (GET_PERSON_ID )
-    fun getPeopleDetails (@Path(PERSON_ID) personId: Int, @Query( API_KEY) apiKey: String): Call <PeopleDetails>
+    fun getPeopleDetails (@Path(PERSON_ID) personId: Int, @Query( API_KEY) apiKey: String): Call <PersonalityDetails>
 
     @GET (PERSON_MOVIE_CREDITS)
     fun getPeopleCredits (@Path(PERSON_ID) personId: Int, @Query ( API_KEY) apiKey: String): Call <PeopleCreditsResponse>
@@ -39,5 +40,5 @@ interface PeopleApi {
 
 
     @GET (SEARCH_PERSON)
-    fun getPeopleWithSearch(@Query( API_KEY) apiKey: String, @Query(QUERY) query: String): Call <PeopleResponse>
+    fun getPeopleWithSearch(@Query( API_KEY) apiKey: String, @Query(QUERY) query: String): Call <PersonalityResponse>
 }

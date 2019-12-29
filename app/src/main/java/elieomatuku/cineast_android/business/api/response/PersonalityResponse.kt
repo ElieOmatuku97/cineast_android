@@ -4,6 +4,6 @@ import androidx.annotation.Keep
 import elieomatuku.cineast_android.model.data.Personality
 
 @Keep
-class PeopleResponse {
+class PersonalityResponse {
     var results: List<Personality> = listOf()
 }

@@ -119,6 +119,18 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                     Timber.e(t, "Connection Change Observer failed")
 
                 }))
+
+
+        rxSubs.add(vu.refreshObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.i("Successful Refresh!")
+                    contentManager.downloadContent()
+
+                }, {
+                    Timber.e("Refreshed Failed with $it")
+                }))
+
     }
 
     private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {

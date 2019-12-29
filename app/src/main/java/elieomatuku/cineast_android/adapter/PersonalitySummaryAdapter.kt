@@ -11,7 +11,7 @@ import timber.log.Timber
 import kotlin.properties.Delegates
 
 
-class PopularPeopleItemAdapter(
+class PersonalitySummaryAdapter(
         private val onItemClickPublisher: PublishSubject<Person>,
         private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

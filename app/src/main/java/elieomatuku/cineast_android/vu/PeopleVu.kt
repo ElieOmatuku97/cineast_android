@@ -25,7 +25,6 @@ import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_movie.view.*
-import timber.log.Timber
 import java.util.ArrayList
 
 class PeopleVu(inflater: LayoutInflater,
@@ -73,7 +72,7 @@ class PeopleVu(inflater: LayoutInflater,
             UiUtils.initToolbar(activity as AppCompatActivity, toolbar)
         }
 
-        listView.adapter =  adapter
+        listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
@@ -83,24 +82,21 @@ class PeopleVu(inflater: LayoutInflater,
         listView.layoutManager = null
     }
 
-    fun updateVu(peopleDetails: PeopleDetails?, screenName: String?, peopleMovies: List<KnownFor>?) {
-        if (peopleDetails != null && screenName != null && peopleMovies != null) {
+    fun updateVu(personalityDetails: PersonalityDetails?, screenName: String?, peopleMovies: List<KnownFor>?) {
+        if (personalityDetails != null && screenName != null && peopleMovies != null) {
             toolbar?.title = screenName
-            Timber.d("results: $peopleDetails & screenName: $screenName")
-//            val peopleItemAdapter = PeopleItemAdapter(peopleDetails, peopleMovies, onProfileClickedPicturePublisher)
 
-            adapter.peopleDetails = peopleDetails
+
+            adapter.personalityDetails = personalityDetails
             adapter.peopleMovies = peopleMovies.toMutableList()
 
-//            listView.adapter =  adapter
-//            listView.layoutManager = LinearLayoutManager(activity)
 
-            val dividerItemDecoration =   DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
+            val dividerItemDecoration = DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
             listView.addItemDecoration(dividerItemDecoration)
 
 
             adapter.notifyDataSetChanged()
-            initializeFragmentOnPeopleClicked(peopleDetails.biography)
+            initializeFragmentOnPeopleClicked(personalityDetails.biography)
         }
     }
 
@@ -117,6 +113,7 @@ class PeopleVu(inflater: LayoutInflater,
         galleryFragment.arguments = getArgs(posters)
         addFragment(galleryFragment, activity)
     }
+
     private fun getArgs(posters: List<Poster>?): Bundle {
         val args = Bundle()
         args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)

@@ -44,20 +44,20 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         return contentRepository.popularMovies
     }
 
-    fun popularPeople(): Flowable<List<Personality>> {
+    fun personalities(): Flowable<List<Personality>> {
         return contentRepository.personalities
     }
 
     fun fetchDiscoverContent() {
-        discoverContent()
+       val disposable =  discoverContent()
                 .observeOn(Schedulers.io())
                 .subscribe({
-                    Timber.i("has missing content: ${it.isEmpty()} and is up to date: ${it.isUpToDate(timeStamp)}")
+                    Timber.i("has missing content: ${it.isEmpty()} and is up to date: ${isContentUpToDate()}")
                     if (it.isEmpty()) {
                         Timber.i("Empty Content fetch from Client")
                         downloadContent()
-                    } else if (!it.isUpToDate(timeStamp)) {
-                        Timber.i("Needs to be refreshed, fetch from Client: ${!it.isUpToDate(timeStamp)}")
+                    } else if (!isContentUpToDate()) {
+                        Timber.i("Needs to be refreshed, fetch from Client: ${!isContentUpToDate()}")
                         updateContent(it)
                     }
                 }, {
@@ -65,7 +65,11 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
                 })
     }
 
-    private fun downloadContent() {
+    private fun isContentUpToDate(): Boolean {
+        return DiscoverContent.isUpToDate(timeStamp)
+    }
+
+    fun downloadContent() {
         Timber.i("downloadContent called")
         setContentInsertionTimeStamp()
         launch(Dispatchers.IO) {
@@ -144,14 +148,14 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     suspend fun getPopularPeople() = async {
-        val response = tmdbContentClient.getPopularPeople()
+        val response = tmdbContentClient.getPersonalities()
         response?.results?.let {
             contentRepository.insertPersonalities(it)
         }
     }
 
     suspend fun updatePersonalities(oldPersonalities: List<Personality>) = async {
-        val response = tmdbContentClient.getPopularPeople()
+        val response = tmdbContentClient.getPersonalities()
         response?.results?.let { nuPersonalities ->
             updatePersonalitiesDatabase(nuPersonalities, oldPersonalities)
         }
@@ -207,7 +211,7 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         tmdbContentClient.getPeopleMovies(person, asyncResponse)
     }
 
-    fun getPeopleDetails(person: Person, asyncResponse: AsyncResponse<PeopleDetails>) {
+    fun getPeopleDetails(person: Person, asyncResponse: AsyncResponse<PersonalityDetails>) {
         tmdbContentClient.getPeopleDetails(person, asyncResponse)
     }
 
@@ -224,7 +228,7 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         tmdbContentClient.searchMovies(argQuery, asyncResponse)
     }
 
-    fun searchPeople(argQuery: String, asyncResponse: AsyncResponse<PeopleResponse>) {
+    fun searchPeople(argQuery: String, asyncResponse: AsyncResponse<PersonalityResponse>) {
         tmdbContentClient.searchPeople(argQuery, asyncResponse)
     }
 
