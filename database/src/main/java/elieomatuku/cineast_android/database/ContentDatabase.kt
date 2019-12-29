@@ -6,14 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import elieomatuku.cineast_android.database.dao.MovieDao
-import elieomatuku.cineast_android.database.dao.MovieTypeDao
-import elieomatuku.cineast_android.database.dao.MovieTypeJoinDao
-import elieomatuku.cineast_android.database.dao.PersonalityDao
-import elieomatuku.cineast_android.database.entity.MovieEntity
-import elieomatuku.cineast_android.database.entity.MovieTypeEntity
-import elieomatuku.cineast_android.database.entity.MovieTypeJoin
-import elieomatuku.cineast_android.database.entity.PersonalityEntity
+import elieomatuku.cineast_android.database.dao.*
+import elieomatuku.cineast_android.database.entity.*
 import java.util.concurrent.Executors
 
 
@@ -21,7 +15,7 @@ import java.util.concurrent.Executors
  * Created by elieomatuku on 2019-12-07
  */
 
-@Database(entities = [MovieEntity::class, MovieTypeEntity::class, MovieTypeJoin::class, PersonalityEntity::class], exportSchema = false, version = 1)
+@Database(entities = [MovieEntity::class, MovieTypeEntity::class, MovieTypeJoin::class, PersonalityEntity::class, GenreEntity::class], exportSchema = false, version = 1)
 @TypeConverters(IntListConverter::class)
 abstract class ContentDatabase : RoomDatabase() {
 
@@ -29,6 +23,7 @@ abstract class ContentDatabase : RoomDatabase() {
     abstract fun movieTypeDao(): MovieTypeDao
     abstract fun movieTypeJoinDao(): MovieTypeJoinDao
     abstract fun personalityDao(): PersonalityDao
+    abstract fun genreDao(): GenreDao
 
     companion object {
         @Volatile private var INSTANCE: ContentDatabase? = null

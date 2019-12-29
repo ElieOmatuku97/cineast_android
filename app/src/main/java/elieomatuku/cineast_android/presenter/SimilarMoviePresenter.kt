@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
-import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.api.response.GenreResponse
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import java.util.ArrayList
 
 
@@ -21,7 +21,7 @@ class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
         const val MOVIE_GENRES_KEY = "genres"
     }
 
-    private var genres: List<Genre>? = listOf()
+    private var genres: List<Genre> = listOf()
 
     override fun onLink(vu: SimilarMovieVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -29,7 +29,19 @@ class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
         val movieTitle = args.getString(SimilarMovieFragment.MOVIE_TITLE)
         vu.updateVu(similarMovies)
 
-        contentManager.getGenres(genreAsyncResponse)
+
+        rxSubs.add(contentManager.genres()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("genres from database: ${it}")
+                    genres = it
+                }, { error ->
+                    Timber.e("Unable to get genres $error")
+
+                })
+        )
+
 
         rxSubs.add(vu.itemSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -45,15 +57,4 @@ class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
                 ))
     }
 
-    private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
-        object : AsyncResponse<GenreResponse> {
-            override fun onSuccess(response: GenreResponse?) {
-                genres = response?.genres
-            }
-
-            override fun onFail(error: CineastError) {
-                Log.d(LOG_TAG, "Network Error:$error")
-            }
-        }
-    }
 }

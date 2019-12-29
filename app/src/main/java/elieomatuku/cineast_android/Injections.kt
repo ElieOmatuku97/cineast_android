@@ -28,7 +28,7 @@ fun depInjecT(app: Application): Kodein {
             TmdbUserClient(instance(), instance())
         }
 
-        bind<TmdbContentClient>() with singleton { TmdbContentClient(instance()) }
+        bind<TmdbContentClient>() with singleton { TmdbContentClient(instance(), instance()) }
 
         importOnce(DatabaseKodeinModule.getModule(app))
     }

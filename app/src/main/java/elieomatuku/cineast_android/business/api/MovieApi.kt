@@ -61,7 +61,7 @@ interface MovieApi {
     fun getMovie(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Call<Movie>
 
     @GET(GENRE)
-    fun getGenre(@Query(API_KEY) apiKey: String): Call<GenreResponse>
+    fun getGenre(@Query(API_KEY) apiKey: String): Deferred<GenreResponse>
 
     @GET(CREDITS)
     fun getCredits(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<MovieCreditsResponse>

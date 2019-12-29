@@ -4,6 +4,7 @@ import android.content.res.Resources
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.ValueStore
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -30,6 +31,8 @@ interface BaseClient {
 
     val persistClient: ValueStore
 
+    val interceptor: Interceptor?
+
 
     fun getRetrofitAdapter(): Retrofit {
         return Retrofit.Builder()
@@ -45,12 +48,19 @@ interface BaseClient {
         val logLevel = HttpLoggingInterceptor.Level.BODY
         logging.level = logLevel
 
-        return OkHttpClient.Builder()
+
+
+        val builder =  OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .connectTimeout(30000, TimeUnit.MILLISECONDS)
                 .readTimeout(30000, TimeUnit.MILLISECONDS)
                 .writeTimeout(30000, TimeUnit.MILLISECONDS)
-                .build()
+
+
+        return interceptor?.let {
+            builder.addInterceptor(it).build()
+        } ?: builder.build()
+
     }
 
 }

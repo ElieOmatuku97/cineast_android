@@ -57,7 +57,7 @@ data class MovieEntity(
         }
 
         fun toMovies(movieEntities: List<MovieEntity>): List<Movie> {
-            return movieEntities.map{it.toMovie()}
+            return movieEntities.map { it.toMovie() }
         }
     }
 

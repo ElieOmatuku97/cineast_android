@@ -1,22 +1,19 @@
 package elieomatuku.cineast_android.database.repository
 
 
-
 import elieomatuku.cineast_android.DiscoverContent
 import elieomatuku.cineast_android.database.ContentDatabase
-import elieomatuku.cineast_android.database.entity.MovieEntity
-import elieomatuku.cineast_android.database.entity.MovieType
-import elieomatuku.cineast_android.database.entity.MovieTypeJoin
-import elieomatuku.cineast_android.database.entity.PersonalityEntity
+import elieomatuku.cineast_android.database.entity.*
+import elieomatuku.cineast_android.model.data.Genre
 import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.model.data.Personality
 import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function4
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-
 
 
 /**
@@ -61,19 +58,19 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         }
 
 
-    val upcomingMovies: Flowable<List<Movie>>
+    private val upcomingMovies: Flowable<List<Movie>>
         get() {
             return contentDatabase.movieTypeJoinDao().getMoviesForType(MovieType.UPCOMING.id)
                     .map { MovieEntity.toMovies(it) }
         }
 
-    val nowPlayingMovies: Flowable<List<Movie>>
+    private val nowPlayingMovies: Flowable<List<Movie>>
         get() {
             return contentDatabase.movieTypeJoinDao().getMoviesForType(MovieType.NOW_PLAYING.id)
                     .map { MovieEntity.toMovies(it) }
         }
 
-    val topRatedMovies: Flowable<List<Movie>>
+    private val topRatedMovies: Flowable<List<Movie>>
         get() {
             return contentDatabase.movieTypeJoinDao().getMoviesForType(MovieType.TOP_RATED.id)
                     .map { MovieEntity.toMovies(it) }
@@ -84,6 +81,12 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         get() {
             return contentDatabase.personalityDao().getAllPersonalities()
                     .map { PersonalityEntity.toPersonalities(it) }
+        }
+
+    val genres: Maybe<List<Genre>>
+        get() {
+            return contentDatabase.genreDao().getAllGenres()
+                    .map { GenreEntity.toGenres(it) }
         }
 
 
@@ -149,6 +152,10 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         contentDatabase.movieTypeJoinDao().insert(MovieTypeJoin(movie.id, type.id))
     }
 
+
+    fun insertGenres(genres: List<Genre>) {
+        contentDatabase.genreDao().insertGenres(GenreEntity.fromGenres(genres))
+    }
 
     /**
      * Below methods delete content in the database on the IO thread

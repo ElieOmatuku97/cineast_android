@@ -24,7 +24,7 @@ import timber.log.Timber
 class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
     companion object {
         private val MVP_UID by lazy {
-            MovieActivity.hashCode()
+            hashCode()
         }
     }
 

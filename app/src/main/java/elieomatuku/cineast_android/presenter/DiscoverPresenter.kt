@@ -5,7 +5,6 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App.Companion.kodein
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.*
-import elieomatuku.cineast_android.business.api.response.*
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,6 +42,18 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 }, { error ->
                     Timber.e("Unable to get discover container $error")
                     vu.updateErrorView(error.message)
+                })
+        )
+
+        rxSubs.add(contentManager.genres()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("genres from database: ${it}")
+                    genres = it
+                }, { error ->
+                    Timber.e("Unable to get genres $error")
+
                 })
         )
 
@@ -133,18 +144,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     }
 
-    private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
-        object : AsyncResponse<GenreResponse> {
-            override fun onSuccess(response: GenreResponse?) {
-                genres = response?.genres
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.i("Network Error:$error")
-            }
-        }
-    }
-
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
@@ -157,6 +156,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     private fun fetchDiscover() {
         contentManager.fetchDiscoverContent()
-        contentManager.getGenres(genreAsyncResponse)
+        contentManager.downloadGenres()
     }
 }
