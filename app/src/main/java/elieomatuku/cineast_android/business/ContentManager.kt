@@ -10,6 +10,9 @@ import elieomatuku.cineast_android.DiscoverContent
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.ValueStore
 import elieomatuku.cineast_android.database.entity.MovieType
+import io.flatcircle.coroutinehelper.ApiResult
+import io.flatcircle.coroutinehelper.onFail
+import io.flatcircle.coroutinehelper.onSuccess
 import io.reactivex.*
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
@@ -46,6 +49,10 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
 
     fun personalities(): Flowable<List<Personality>> {
         return contentRepository.personalities
+    }
+
+    fun genres(): Maybe<List<Genre>> {
+        return contentRepository.genres
     }
 
     fun fetchDiscoverContent() {
@@ -183,8 +190,15 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         }
     }
 
-    fun getGenres(asyncResponse: AsyncResponse<GenreResponse>) {
-        tmdbContentClient.getGenres(asyncResponse)
+    fun downloadGenres(){
+        launch {
+            tmdbContentClient.getGenres() onSuccess {
+                Timber.i("genres from client: ${it.genres}")
+                contentRepository.insertGenres(it.genres)
+            } onFail {
+                Timber.d("failed to fetch genres from client: ${it}")
+            }
+        }
     }
 
     suspend fun getMovieVideos(movie: Movie): TrailerResponse? {

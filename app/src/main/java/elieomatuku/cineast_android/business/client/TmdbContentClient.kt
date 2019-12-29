@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.business.client
 
 import android.content.res.Resources
 import com.google.gson.Gson
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.business.api.response.*
@@ -12,16 +11,20 @@ import elieomatuku.cineast_android.business.api.PeopleApi
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.ValueStore
+import io.flatcircle.coroutinehelper.ApiResult
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
-import org.kodein.di.generic.instance
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
 
-class TmdbContentClient(override val resources: Resources) : BaseClient {
+class TmdbContentClient(
+        override val resources: Resources,
+        override val persistClient: ValueStore,
+        override val interceptor: Interceptor? = null) : BaseClient {
     companion object {
         const val MOVIE = "movieApi"
         val API_KEY = RestUtils.API_KEY
@@ -35,7 +38,6 @@ class TmdbContentClient(override val resources: Resources) : BaseClient {
         retrofit.create(PeopleApi::class.java)
     }
 
-    override val persistClient: ValueStore by App.kodein.instance()
 
     suspend fun getPopularMovies(): MovieResponse? {
         return try {
@@ -94,23 +96,13 @@ class TmdbContentClient(override val resources: Resources) : BaseClient {
         }
     }
 
-    fun getGenres(asyncResponse: AsyncResponse<GenreResponse>) {
-        movieApi.getGenre(API_KEY).enqueue(object : Callback<GenreResponse> {
-            override fun onResponse(call: Call<GenreResponse>?, response: Response<GenreResponse>?) {
-                val success = response?.isSuccessful ?: false
-
-                if (success) {
-                    asyncResponse.onSuccess(response?.body())
-                } else {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-                }
-
-            }
-
-            override fun onFailure(call: Call<GenreResponse>?, t: Throwable?) {
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-            }
-        })
+    suspend fun getGenres(): ApiResult<GenreResponse> {
+        return try {
+            val value =  movieApi.getGenre(API_KEY).await()
+            ApiResult.success(value)
+        } catch (e: Exception) {
+            ApiResult.fail(e)
+        }
     }
 
     suspend fun getMovieVideos(movie: Movie): TrailerResponse? {

@@ -2,11 +2,8 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.model.data.CineastError
 import elieomatuku.cineast_android.model.data.Genre
 import elieomatuku.cineast_android.model.data.Movie
-import elieomatuku.cineast_android.business.api.response.GenreResponse
 import elieomatuku.cineast_android.vu.PopularMoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -29,7 +26,20 @@ class PopularMoviesPresenter : BasePresenter<PopularMoviesVu>() {
         super.onLink(vu, inState, args)
 
         vu.showLoading()
-        fetchMovies()
+
+
+        rxSubs.add(contentManager.genres()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d("genres from database: ${it}")
+                    genres = it
+                }, { error ->
+                    Timber.e("Unable to get genres $error")
+
+                })
+        )
+
 
         rxSubs.add(contentManager.popularMovies()
                 .subscribeOn(Schedulers.io())
@@ -63,7 +73,6 @@ class PopularMoviesPresenter : BasePresenter<PopularMoviesVu>() {
 
                     if (hasConnection) {
                         vu.showLoading()
-                        fetchMovies()
                     }
                     Timber.d("connectionChangedObserver: hasConnection = $hasConnection, hasEmptyState = ")
 
@@ -75,20 +84,4 @@ class PopularMoviesPresenter : BasePresenter<PopularMoviesVu>() {
     }
 
 
-    private val genreAsyncResponse: AsyncResponse<GenreResponse> by lazy {
-        object : AsyncResponse<GenreResponse> {
-            override fun onSuccess(response: GenreResponse?) {
-                genres = response?.genres
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.d("Network Error:$error")
-            }
-        }
-    }
-
-
-    private fun fetchMovies() {
-        contentManager.getGenres(genreAsyncResponse)
-    }
 }

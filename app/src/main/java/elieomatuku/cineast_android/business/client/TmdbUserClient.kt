@@ -8,13 +8,17 @@ import elieomatuku.cineast_android.business.api.AuthenticationApi
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
 import elieomatuku.cineast_android.ValueStore
+import okhttp3.Interceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
 
-class TmdbUserClient (override val resources: Resources, override val persistClient: ValueStore): BaseClient {
+class TmdbUserClient(
+        override val resources: Resources,
+        override val persistClient: ValueStore,
+        override val interceptor: Interceptor? = null) : BaseClient {
 
     val authenticationApi: AuthenticationApi by lazy {
         retrofit.create(AuthenticationApi::class.java)
