@@ -20,7 +20,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
     }
 
 
-    var peopleDetails: PeopleDetails? = null
+    var personalityDetails: PersonalityDetails? = null
     var peopleMovies: List<KnownFor>? = listOf()
 
     override fun onLink(vu: PeopleVu, inState: Bundle?, args: Bundle) {
@@ -31,17 +31,17 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
 
         vu.personPresentedPublisher?.onNext(people)
 
-        peopleDetails = inState?.getParcelable(PEOPLE_DETAILS_KEY)
+        personalityDetails = inState?.getParcelable(PEOPLE_DETAILS_KEY)
         peopleMovies = inState?.getParcelableArrayList(PEOPLE_MOVIES_KEY)
 
-        if (peopleDetails != null && peopleMovies != null) {
-            vu.updateVu(peopleDetails, screenName, peopleMovies)
+        if (personalityDetails != null && peopleMovies != null) {
+            vu.updateVu(personalityDetails, screenName, peopleMovies)
         } else {
             vu.showLoading()
-            contentManager.getPeopleDetails(people, object : AsyncResponse<PeopleDetails> {
-                override fun onSuccess(response: PeopleDetails?) {
-                    peopleDetails = response
-                    getPeopleMovies(people, peopleDetails, screenName)
+            contentManager.getPeopleDetails(people, object : AsyncResponse<PersonalityDetails> {
+                override fun onSuccess(response: PersonalityDetails?) {
+                    personalityDetails = response
+                    getPeopleMovies(people, personalityDetails, screenName)
                 }
 
                 override fun onFail(error: CineastError) {
@@ -75,13 +75,13 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
 
     }
 
-    private fun getPeopleMovies(actor: Person, peopleDetails: PeopleDetails?, screenName: String) {
+    private fun getPeopleMovies(actor: Person, personalityDetails: PersonalityDetails?, screenName: String) {
         contentManager.getPeopleMovies(actor, object : AsyncResponse<PeopleCreditsResponse> {
             override fun onSuccess(response: PeopleCreditsResponse?) {
                 peopleMovies = response?.cast as List<KnownFor>
                 handler.post {
                     vu?.hideLoading()
-                    vu?.updateVu(peopleDetails, screenName, peopleMovies)
+                    vu?.updateVu(personalityDetails, screenName, peopleMovies)
                 }
             }
 
@@ -97,7 +97,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
-        peopleDetails?.let {
+        personalityDetails?.let {
             outState.putParcelable(PEOPLE_DETAILS_KEY, it)
         }
 

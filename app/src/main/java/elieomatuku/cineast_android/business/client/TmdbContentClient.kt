@@ -83,9 +83,9 @@ class TmdbContentClient(override val resources: Resources) : BaseClient {
         }
     }
 
-    suspend fun getPopularPeople(): PeopleResponse? {
+    suspend fun getPersonalities(): PersonalityResponse? {
         return try {
-            val results = peopleApi.getPopularPeople(API_KEY).await()
+            val results = peopleApi.getPersonalities(API_KEY).await()
             Timber.i("get Popular People was succesful: $results")
             results
         } catch (e: Exception) {
@@ -203,11 +203,11 @@ class TmdbContentClient(override val resources: Resources) : BaseClient {
         }
     }
 
-    fun getPeopleDetails(person: Person, asyncResponse: AsyncResponse<PeopleDetails>) {
+    fun getPeopleDetails(person: Person, asyncResponse: AsyncResponse<PersonalityDetails>) {
         val id = person.id
         if (id != null) {
-            peopleApi.getPeopleDetails(id, API_KEY).enqueue(object : Callback<PeopleDetails> {
-                override fun onResponse(call: Call<PeopleDetails>?, response: Response<PeopleDetails>?) {
+            peopleApi.getPeopleDetails(id, API_KEY).enqueue(object : Callback<PersonalityDetails> {
+                override fun onResponse(call: Call<PersonalityDetails>?, response: Response<PersonalityDetails>?) {
                     val success = response?.isSuccessful ?: false
                     if (success) {
                         asyncResponse.onSuccess(response?.body())
@@ -216,7 +216,7 @@ class TmdbContentClient(override val resources: Resources) : BaseClient {
                     }
                 }
 
-                override fun onFailure(call: Call<PeopleDetails>?, t: Throwable?) {
+                override fun onFailure(call: Call<PersonalityDetails>?, t: Throwable?) {
                     Timber.e("error: $t")
                     asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
                 }
@@ -280,9 +280,9 @@ class TmdbContentClient(override val resources: Resources) : BaseClient {
         })
     }
 
-    fun searchPeople(argQuery: String, asyncResponse: AsyncResponse<PeopleResponse>) {
-        peopleApi.getPeopleWithSearch(API_KEY, argQuery).enqueue(object : Callback<PeopleResponse> {
-            override fun onResponse(call: Call<PeopleResponse>?, response: Response<PeopleResponse>?) {
+    fun searchPeople(argQuery: String, asyncResponse: AsyncResponse<PersonalityResponse>) {
+        peopleApi.getPeopleWithSearch(API_KEY, argQuery).enqueue(object : Callback<PersonalityResponse> {
+            override fun onResponse(call: Call<PersonalityResponse>?, response: Response<PersonalityResponse>?) {
                 val success = response?.isSuccessful ?: false
                 if (success) {
                     asyncResponse.onSuccess(response?.body())
@@ -292,7 +292,7 @@ class TmdbContentClient(override val resources: Resources) : BaseClient {
             }
 
 
-            override fun onFailure(call: Call<PeopleResponse>?, t: Throwable?) {
+            override fun onFailure(call: Call<PersonalityResponse>?, t: Throwable?) {
                 Timber.d("response: ${t}")
                 asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
             }

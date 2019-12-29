@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import elieomatuku.cineast_android.DiscoverContent
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
@@ -59,6 +60,17 @@ class DiscoverVu(inflater: LayoutInflater,
         rootView.recyclerview
     }
 
+    private val refreshLayout: SwipeRefreshLayout by lazy {
+        rootView.refresh_layout
+    }
+
+    private val refreshPublisher: PublishSubject<Boolean> by lazy {
+        PublishSubject.create<Boolean>()
+    }
+
+    val refreshObservable: Observable<Boolean>
+        get() = refreshPublisher.hide()
+
     private val sessionPublisher: PublishSubject<String> by lazy {
         (activity as elieomatuku.cineast_android.activity.MainActivity).sessionPublisher
     }
@@ -86,13 +98,20 @@ class DiscoverVu(inflater: LayoutInflater,
         }
         listView.addItemDecoration(itemDecoration)
         listView.layoutManager = LinearLayoutManager(activity)
+
+
+        refreshLayout.setOnRefreshListener {
+            refreshPublisher.onNext(true)
+        }
     }
 
     fun updateView(discoverContent: DiscoverContent, isLoggedIn: Boolean) {
-        adapter.filteredWidgets = discoverContent.getFilteredWidgets()
+        Timber.d("update View is called")
+        adapter.filteredContent = discoverContent.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
+        dismissRefreshLayout()
     }
 
 
@@ -100,6 +119,7 @@ class DiscoverVu(inflater: LayoutInflater,
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
+        dismissRefreshLayout()
     }
 
     override fun gotoWebview(value: AccessToken?) {
@@ -124,4 +144,7 @@ class DiscoverVu(inflater: LayoutInflater,
         adapter.notifyDataSetChanged()
     }
 
+    fun dismissRefreshLayout() {
+        refreshLayout.setRefreshing(false)
+    }
 }

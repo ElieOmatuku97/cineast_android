@@ -9,30 +9,33 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, private val onPersonalityClickPublisher: PublishSubject<Person>,
-                      private val loginClickPublisher: PublishSubject<Boolean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    companion object {
-        const val POSITION_HEADER = 0
-        const val TYPE_HEADER = 0
-        const val TYPE_POPULAR_MOVIE = 1
-        const val TYPE_POPULAR_PEOPLE = 2
-        const val TYPE_NOW_PLAYING_MOVIE = 3
-        const val TYPE_UPCOMING_MOVIE = 4
-        const val TYPE_TOP_RATED_MOVIE = 5
-        const val TYPE_LOGIN = 6
+class DiscoverAdapter(
+        private val onMovieClickPublisher: PublishSubject<Movie>,
+        private val onPersonalityClickPublisher: PublishSubject<Person>,
+        private val loginClickPublisher: PublishSubject<Boolean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    companion object {
+        const val TYPE_HEADER = 0
+        const val TYPE_MOVIES = 1
+        const val TYPE_POPULAR_PEOPLE = 2
+        const val TYPE_LOGIN = 6
         const val TYPE_EMPTY_STATE = -2
+
+        const val POSITION_HEADER = 0
+        const val POSITION_POPULAR_MOVIE = 1
+        const val POSITION_POPULAR_PEOPLE = 2
+        const val POSITION_NOW_PLAYING_MOVIE = 3
+        const val POSITION_UPCOMING_MOVIE = 4
+        const val POSITION_TOP_RATED_MOVIE = 5
     }
 
-    var content: List<Content> = listOf()
     var isLoggedIn: Boolean = false
-
 
     var hasValidData = false
         private set
 
-    var filteredWidgets: MutableMap<Int, Pair<Int, List<Content>?>>  by Delegates.observable(mutableMapOf()) { prop, oldEdition, nuEdition ->
-        Timber.d("widgets = $nuEdition")
+    var filteredContent: MutableMap<Int, Pair<Int, List<Content>>>  by Delegates.observable(mutableMapOf()) { prop, oldDiscoverContent, nuDiscoverContent ->
+        Timber.d("content = $nuDiscoverContent")
         hasValidData = true
         errorMessage = null
     }
@@ -47,20 +50,21 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
 
     val hasEmptyState: Boolean
         // only display empty state after valid data is set
-        get() = hasValidData && (filteredWidgets.isEmpty())
+        get() = hasValidData && (filteredContent.isEmpty())
 
     private fun getDiscoverPosition(position: Int): Int {
-        return position - 1
+        return if (position == POSITION_HEADER) {
+            POSITION_HEADER
+        } else {
+            position - 1
+        }
     }
 
-    var currentMovieId: Int = -1
 
     override fun getItemCount(): Int {
-
-        Timber.d("hasEmptyState: ${hasEmptyState},  ${filteredWidgets.size}")
-
+        Timber.d("hasEmptyState: ${hasEmptyState},  ${filteredContent.size}")
         return if (!hasEmptyState) {
-            filteredWidgets.size + 2
+            filteredContent.size + 2
         } else {
             1
         }
@@ -74,11 +78,11 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
         } else {
             when (position) {
                 POSITION_HEADER -> TYPE_HEADER
-                TYPE_POPULAR_MOVIE -> TYPE_POPULAR_MOVIE
-                TYPE_POPULAR_PEOPLE -> TYPE_POPULAR_PEOPLE
-                TYPE_NOW_PLAYING_MOVIE -> TYPE_NOW_PLAYING_MOVIE
-                TYPE_UPCOMING_MOVIE -> TYPE_UPCOMING_MOVIE
-                TYPE_TOP_RATED_MOVIE -> TYPE_TOP_RATED_MOVIE
+                POSITION_POPULAR_MOVIE -> TYPE_MOVIES
+                POSITION_POPULAR_PEOPLE -> TYPE_POPULAR_PEOPLE
+                POSITION_NOW_PLAYING_MOVIE -> TYPE_MOVIES
+                POSITION_UPCOMING_MOVIE -> TYPE_MOVIES
+                POSITION_TOP_RATED_MOVIE -> TYPE_MOVIES
                 TYPE_LOGIN -> TYPE_LOGIN
                 else -> -1
             }
@@ -88,14 +92,14 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_HEADER -> {
-                HeaderHolder.newInstance(parent)
+                HeaderHolder.newInstance(parent, onMovieClickPublisher)
             }
 
             TYPE_POPULAR_PEOPLE -> {
-                PopularPeopleHolder.newInstance(parent, onPersonalityClickPublisher)
+                PersonalitySummaryHolder.newInstance(parent, onPersonalityClickPublisher)
             }
 
-            TYPE_POPULAR_MOVIE, TYPE_NOW_PLAYING_MOVIE, TYPE_UPCOMING_MOVIE, TYPE_TOP_RATED_MOVIE -> {
+            TYPE_MOVIES -> {
                 MovieHolder.newInstance(parent, onMovieClickPublisher)
             }
 
@@ -112,23 +116,11 @@ class DiscoverAdapter(private val onMovieClickPublisher: PublishSubject<Movie>, 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is HeaderHolder -> {
-                val widget = filteredWidgets[TYPE_HEADER]
-                val movies = widget?.second as List<Movie>
-                holder.update(movies, onMovieClickPublisher, currentMovieId)
-            }
-
-            is MovieHolder -> {
-                val widget = filteredWidgets[getDiscoverPosition(position)]
-                val movies = widget?.second as List<Movie>
-                val widgetTitle = widget.first
-                holder.update(movies, widgetTitle)
-            }
-
-            is PopularPeopleHolder -> {
-                val widget = filteredWidgets[getDiscoverPosition(position)]
-                val personalities = widget?.second as List<Personality>
-                holder.update(personalities)
+            is ContentHolder -> {
+                val content = filteredContent[getDiscoverPosition(position)]
+                content?.let {
+                    holder.update(content)
+                }
             }
 
             is LoginViewHolder -> {

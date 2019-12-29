@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieListAdapter
-import elieomatuku.cineast_android.adapter.PopularPeopleItemAdapter
+import elieomatuku.cineast_android.adapter.PersonalitySummaryAdapter
 import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.model.data.Person
 import elieomatuku.cineast_android.model.data.Content
@@ -32,8 +32,8 @@ class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
         MovieListAdapter(movieSelectPublisher, R.layout.holder_movie_list)
     }
 
-    val popularPeopleItemAdapter: PopularPeopleItemAdapter by lazy {
-        PopularPeopleItemAdapter(personSelectPublisher, R.layout.holder_people_list)
+    val popularPeopleItemAdapter: PersonalitySummaryAdapter by lazy {
+        PersonalitySummaryAdapter(personSelectPublisher, R.layout.holder_people_list)
     }
 
 

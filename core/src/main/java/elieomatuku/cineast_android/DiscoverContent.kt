@@ -28,11 +28,15 @@ class DiscoverContent(
         fun emptyDiscoverContent(): DiscoverContent {
             return DiscoverContent()
         }
+
+        fun isUpToDate(timeStamp: Long): Boolean {
+            return System.currentTimeMillis() - timeStamp < STALE_MS
+        }
     }
 
 
-    fun getFilteredWidgets(): MutableMap<Int, Pair<Int, List<Content>?>> {
-        val filteredWidgets: MutableMap<Int, Pair<Int, List<Content>?>> = mutableMapOf()
+    fun getFilteredWidgets(): MutableMap<Int, Pair<Int, List<Content>>> {
+        val filteredWidgets: MutableMap<Int, Pair<Int, List<Content>>> = mutableMapOf()
 
         filteredWidgets[getSummaryPosition(TYPE_POPULAR_MOVIE)] = Pair(R.string.popular_movies, popularMovies)
         filteredWidgets[getSummaryPosition(TYPE_PERSONALITIES)] = Pair(R.string.popular_people, personalities)
@@ -49,9 +53,5 @@ class DiscoverContent(
 
     fun isEmpty(): Boolean {
         return  popularMovies.isEmpty() && nowPlayingMovies.isEmpty() && upcomingMovies.isEmpty() && topRatedMovies.isEmpty() && personalities.isEmpty()
-    }
-
-    fun isUpToDate(timeStamp: Long): Boolean {
-        return System.currentTimeMillis() - timeStamp < STALE_MS
     }
 }

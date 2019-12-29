@@ -8,18 +8,19 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.MovieListAdapter
+import elieomatuku.cineast_android.model.data.Content
 import elieomatuku.cineast_android.model.data.Movie
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
 import timber.log.Timber
 
-class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubject<Movie>): RecyclerView.ViewHolder (itemView) {
+class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubject<Movie>) :  ContentHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_movie, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup, onItemClickPublisher: PublishSubject<Movie>): MovieHolder{
+        fun newInstance(parent: ViewGroup, onItemClickPublisher: PublishSubject<Movie>): MovieHolder {
             return MovieHolder(createView(parent), onItemClickPublisher)
         }
     }
@@ -36,24 +37,23 @@ class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubje
         itemView.recyclerview_popular_movie
     }
 
-    private val adapter :  MovieListAdapter by lazy {
+    private val adapter: MovieListAdapter by lazy {
         MovieListAdapter(onItemClickPublisher)
     }
 
-    fun update(movies: List<Movie>, resources: Int){
+    override fun update(content: Pair<Int, List<Content>>) {
+        val movies = content.second as List<Movie>
+        val contentTitle = content.first
 
         Timber.d("movies from discover: $movies")
 
-//        if (movies.isNotEmpty()) {
-            sectionTitle.text = itemView.context.getString(resources)
-            adapter.movies = movies.toMutableList()
-            listView.adapter = adapter
-            listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-
-//        }
+        sectionTitle.text = itemView.context.getString(contentTitle)
+        adapter.movies = movies.toMutableList()
+        listView.adapter = adapter
+        listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            ItemListActivity.startItemListActivity(itemView.context, movies, resources)
+            ItemListActivity.startItemListActivity(itemView.context, movies, contentTitle)
         }
     }
 }
