@@ -105,14 +105,14 @@ class TmdbContentClient(
         }
     }
 
-    suspend fun getMovieVideos(movie: Movie): TrailerResponse? {
+    suspend fun getMovieVideos(movie: Movie): ApiResult<TrailerResponse> {
         return try {
-            val results = movieApi.getMovieVideos(movie.id, API_KEY).await()
-            Timber.i("get Movie Videos was succesful: $results")
-            results
+            val value = movieApi.getMovieVideos(movie.id, API_KEY).await()
+            Timber.i("get Movie Videos was succesful: $value")
+            ApiResult.success(value)
         } catch (e: Exception) {
             Timber.w("get Movie Videos failed with $e")
-            null
+            ApiResult.fail(e)
         }
     }
 
@@ -130,27 +130,25 @@ class TmdbContentClient(
     }
 
 
-    suspend fun getMovieCredits(movie: Movie) : MovieCreditsResponse? {
+    suspend fun getMovieCredits(movie: Movie) : ApiResult<MovieCreditsResponse> {
         return try {
-            val results = movieApi.getCredits(movie.id, API_KEY).await()
-            Timber.i("get Movie Credits was succesful: $results")
-            results
-
+            val value = movieApi.getCredits(movie.id, API_KEY).await()
+            Timber.i("get Movie Credits was succesful: $value")
+            ApiResult.success(value)
         } catch (e: Exception) {
             Timber.w("get Movie Credits failed with $e")
-            null
+            ApiResult.fail(e)
         }
     }
 
-    suspend fun getSimilarMovie(movie: Movie): MovieResponse? {
+    suspend fun getSimilarMovie(movie: Movie): ApiResult<MovieResponse> {
         return try {
-            val results = movieApi.getSimilarMovie(movie.id, API_KEY).await()
-            Timber.i("get Similar Movie was succesful: $results")
-            results
-
+            val value = movieApi.getSimilarMovie(movie.id, API_KEY).await()
+            Timber.i("get Similar Movie was succesful: $value")
+            ApiResult.success(value)
         } catch (e: Exception) {
             Timber.w("get Similar Movie failed with $e")
-            null
+            ApiResult.fail(e)
         }
     }
 

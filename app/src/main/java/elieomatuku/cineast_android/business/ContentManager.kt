@@ -202,7 +202,7 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     suspend fun getMovieVideos(movie: Movie): TrailerResponse? {
-        return tmdbContentClient.getMovieVideos(movie)
+        return tmdbContentClient.getMovieVideos(movie).getOrNull()
     }
 
     suspend fun getMovieDetails(movie: Movie): MovieFacts? {
@@ -210,11 +210,11 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     suspend fun getMovieCredits(movie: Movie ): MovieCreditsResponse? {
-        return tmdbContentClient.getMovieCredits(movie)
+        return tmdbContentClient.getMovieCredits(movie).getOrNull()
     }
 
     suspend fun getSimilarMovie(movie: Movie): MovieResponse? {
-        return tmdbContentClient.getSimilarMovie(movie)
+        return tmdbContentClient.getSimilarMovie(movie).getOrNull()
     }
 
     fun getMovieImages(movieId: Int, asyncResponse: AsyncResponse<ImageResponse>) {
