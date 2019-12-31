@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.model.data.MovieDetails
+import elieomatuku.cineast_android.model.data.MovieFacts
 import kotlinx.android.synthetic.main.holder_movie_facts.view.*
 import java.text.DecimalFormat
 
-class MovieFactsHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
-        fun createView (parent: ViewGroup): View {
+        fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_movie_facts, parent, false)
         }
 
@@ -20,7 +20,6 @@ class MovieFactsHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             return MovieFactsHolder(createView(parent))
         }
     }
-
 
 
     val releaseDateView: TextView by lazy {
@@ -39,12 +38,11 @@ class MovieFactsHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.revenue_view
     }
 
-    fun update(movieDetails: MovieDetails) {
+    fun update(movieFacts: MovieFacts) {
         val formatter = DecimalFormat("#,###,###")
-        releaseDateView.text = "Release date: ${movieDetails.release_date}"
-        runtimeView.text = "Runtime: ${movieDetails.runtime}"
-        budgetView.text = "Budget: $${formatter.format(movieDetails.budget)}"
-        revenueView.text = "Revenue: $${movieDetails.revenue}"
-//        NumberFormat.getInstance(Locale.getDefault()).parse(s).doubleValue()
+        releaseDateView.text = "Release date: ${movieFacts.release_date}"
+        runtimeView.text = "Runtime: ${movieFacts.runtime}"
+        budgetView.text = "Budget: $${formatter.format(movieFacts.budget)}"
+        revenueView.text = "Revenue: $${movieFacts.revenue}"
     }
 }
