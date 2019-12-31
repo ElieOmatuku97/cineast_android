@@ -127,7 +127,7 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
             }
         }
 
-        val homepage = movieSummary.details?.homepage
+        val homepage = movieSummary.facts?.homepage
         if (!homepage.isNullOrEmpty()) {
             linkTextView.visibility = View.VISIBLE
             val spannable = SpannableString(Html.fromHtml(homepage))

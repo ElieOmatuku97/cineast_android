@@ -32,7 +32,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
 
 
-    var movieDetails: MovieDetails? = null
+    var movieFacts: MovieFacts? = null
     var trailers: List<Trailer>? = listOf()
     var cast: List<Cast>? = listOf()
     var crew: List<Crew>? = listOf()
@@ -47,7 +47,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         val genres: List<Genre> = args.getParcelableArrayList(MOVIE_GENRES_KEY)
 
 
-        movieDetails = inState?.getParcelable(MOVIE_DETAILS_KEY)
+        movieFacts = inState?.getParcelable(MOVIE_DETAILS_KEY)
         trailers = inState?.getParcelableArrayList(MOVIE_TRAILERS_KEY)
         cast = inState?.getParcelableArrayList(MOVIE_CAST_KEY)
         crew = inState?.getParcelableArrayList(MOVIE_CREW_KEY)
@@ -55,10 +55,10 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
         vu.moviePresentedPublisher?.onNext(movie)
 
-        if (movieDetails == null || trailers == null || cast == null || crew == null || similarMovies == null) {
+        if (movieFacts == null || trailers == null || cast == null || crew == null || similarMovies == null) {
             getMovieVideos(movie, screenName, genres)
         } else {
-            val movieSummary = MovieSummary(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+            val movieSummary = MovieSummary(movie, trailers, movieFacts, genres, screenName, cast, crew, similarMovies)
             vu.showMovie(movieSummary)
         }
 
@@ -98,26 +98,26 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
     private fun getMovieDetails(movie: Movie, screenName: String?, genres: List<Genre>?, trailers: List<Trailer>?) {
         launch {
-            movieDetails = contentManager.getMovieDetails(movie)
-            getMovieCredits(movie, screenName, movieDetails, genres, trailers)
+            movieFacts = contentManager.getMovieDetails(movie)
+            getMovieCredits(movie, screenName, movieFacts, genres, trailers)
         }
     }
 
-    private fun getMovieCredits(movie: Movie, screenName: String?, movieDetails: MovieDetails?, genres: List<Genre>?, trailers: List<Trailer>?) {
+    private fun getMovieCredits(movie: Movie, screenName: String?, movieFacts: MovieFacts?, genres: List<Genre>?, trailers: List<Trailer>?) {
         launch {
             val response = contentManager.getMovieCredits(movie)
             cast = response?.cast
             crew = response?.crew
-            getSimilarMovies(movie, screenName, genres, movieDetails, trailers, cast, crew)
+            getSimilarMovies(movie, screenName, genres, movieFacts, trailers, cast, crew)
         }
     }
 
-    private fun getSimilarMovies(movie: Movie, screenName: String?, genres: List<Genre>?, movieDetails: MovieDetails?, trailers: List<Trailer>?, cast: List<Cast>?, crew: List<Crew>?) {
+    private fun getSimilarMovies(movie: Movie, screenName: String?, genres: List<Genre>?, movieFacts: MovieFacts?, trailers: List<Trailer>?, cast: List<Cast>?, crew: List<Crew>?) {
 
         launch {
             val response = contentManager.getSimilarMovie(movie)
             similarMovies = response?.results
-            val movieSummary = MovieSummary(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+            val movieSummary = MovieSummary(movie, trailers, movieFacts, genres, screenName, cast, crew, similarMovies)
 
 
             if (!tmdbUserClient.isLoggedIn()) {
@@ -179,7 +179,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
-        movieDetails?.let {
+        movieFacts?.let {
             outState.putParcelable(MOVIE_DETAILS_KEY, it)
         }
 

@@ -24,7 +24,7 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
 
 
     var personalityDetails: PersonalityDetails by Delegates.observable(PersonalityDetails()) { prop, oldPeopleDetails, nuPeopleDetails ->
-        Timber.d("peopleApi details = $nuPeopleDetails")
+        Timber.d("peopleApi facts = $nuPeopleDetails")
         hasValidData = true
         errorMessage = null
     }

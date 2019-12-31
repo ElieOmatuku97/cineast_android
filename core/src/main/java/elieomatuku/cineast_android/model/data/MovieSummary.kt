@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class MovieSummary (val movie: Movie? = null,
                          val trailers: List<Trailer>? = null,
-                         val details: MovieDetails? = null,
+                         val facts: MovieFacts? = null,
                          val genres: List<Genre>? = null,
                          val screenName: String? = null,
                          val cast: List<Cast>? = null,

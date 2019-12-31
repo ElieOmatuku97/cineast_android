@@ -10,7 +10,6 @@ import elieomatuku.cineast_android.DiscoverContent
 import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.ValueStore
 import elieomatuku.cineast_android.database.entity.MovieType
-import io.flatcircle.coroutinehelper.ApiResult
 import io.flatcircle.coroutinehelper.onFail
 import io.flatcircle.coroutinehelper.onSuccess
 import io.reactivex.*
@@ -63,6 +62,7 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
                     if (it.isEmpty()) {
                         Timber.i("Empty Content fetch from Client")
                         downloadContent()
+                        downloadGenres()
                     } else if (!isContentUpToDate()) {
                         Timber.i("Needs to be refreshed, fetch from Client: ${!isContentUpToDate()}")
                         updateContent(it)
@@ -205,8 +205,8 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         return tmdbContentClient.getMovieVideos(movie)
     }
 
-    suspend fun getMovieDetails(movie: Movie): MovieDetails? {
-        return  tmdbContentClient.getMovieDetails(movie)
+    suspend fun getMovieDetails(movie: Movie): MovieFacts? {
+        return  tmdbContentClient.getMovieFacts(movie).getOrNull()
     }
 
     suspend fun getMovieCredits(movie: Movie ): MovieCreditsResponse? {

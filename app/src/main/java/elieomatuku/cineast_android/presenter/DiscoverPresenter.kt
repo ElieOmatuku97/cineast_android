@@ -156,6 +156,5 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
     private fun fetchDiscover() {
         contentManager.fetchDiscoverContent()
-        contentManager.downloadGenres()
     }
 }

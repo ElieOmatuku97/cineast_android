@@ -117,15 +117,15 @@ class TmdbContentClient(
     }
 
 
-    suspend fun getMovieDetails(movie: Movie): MovieDetails? {
+    suspend fun getMovieFacts(movie: Movie): ApiResult<MovieFacts> {
         return try {
-            val results = movieApi.getMovieDetails(movie.id, API_KEY).await()
-            Timber.i("get Movie Details was succesful: $results")
-            results
+            val value = movieApi.getMovieDetails(movie.id, API_KEY).await()
+            Timber.i("get Movie Details was succesful: $value")
+            ApiResult.success(value)
 
         } catch (e: Exception) {
             Timber.w("get Movie Details failed with $e")
-            null
+            ApiResult.fail(e)
         }
     }
 

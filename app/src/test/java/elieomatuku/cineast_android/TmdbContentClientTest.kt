@@ -2,6 +2,7 @@ package elieomatuku.cineast_android
 
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.client.TmdbContentClient
+import elieomatuku.cineast_android.model.data.Movie
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -46,7 +47,14 @@ class TmdbContentClientTest {
     @Test
     fun testGetGenres() = runBlocking {
         Assert.assertEquals(true, unauthorizedClient.getGenres().isFailure)
-        Assert.assertEquals(true, mockedClient("genre/movie/list?api_key=490e29e92ea126a6878a02b2779beb24", "downloadGenres.json").getGenres().isSuccess)
+        Assert.assertEquals(true, mockedClient("genre/movie/list?api_key=490e29e92ea126a6878a02b2779beb24", "getGenres.json").getGenres().isSuccess)
+    }
+
+    @Test
+    fun testGetMovieFacts() = runBlocking {
+        var movie = Movie(id = 181812, original_title = "Star Wars: The Rise of Skywalker",genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+        Assert.assertEquals(true, unauthorizedClient.getMovieFacts(movie).isFailure)
+        Assert.assertEquals(true, mockedClient("movie/181812?api_key=490e29e92ea126a6878a02b2779beb24", "getMovieDetails.json").getMovieFacts(movie).isSuccess)
     }
 
 }
