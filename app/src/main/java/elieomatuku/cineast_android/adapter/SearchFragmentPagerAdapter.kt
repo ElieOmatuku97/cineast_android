@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Widget
+import elieomatuku.cineast_android.model.data.Content
 import elieomatuku.cineast_android.fragment.PopularMoviesFragment
-import elieomatuku.cineast_android.fragment.PopularPeopleFragment
+import elieomatuku.cineast_android.fragment.PersonalityFragment
 import timber.log.Timber
 
 
@@ -18,7 +18,7 @@ class SearchFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) 
         }
     }
 
-    var widget : List<Widget> = listOf()
+    var content : List<Content> = listOf()
     override fun getCount(): Int {
         return titleResList.size
     }
@@ -27,8 +27,8 @@ class SearchFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) 
         Timber.d("SearchFragmentPagerAdapter position: $position")
         return when (titleResList[position]){
             R.string.movies -> PopularMoviesFragment.newInstance()
-            R.string.people -> PopularPeopleFragment.newInstance()
-            else -> PopularPeopleFragment.newInstance()
+            R.string.people -> PersonalityFragment.newInstance()
+            else -> PersonalityFragment.newInstance()
         }
     }
 }

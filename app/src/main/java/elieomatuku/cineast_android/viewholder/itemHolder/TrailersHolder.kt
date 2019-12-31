@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.TrailersAdapter
-import elieomatuku.cineast_android.business.model.data.Trailer
+import elieomatuku.cineast_android.model.data.Trailer
 import kotlinx.android.synthetic.main.holder_trailers.view.*
 
 

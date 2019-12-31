@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.PeopleDetails
+import elieomatuku.cineast_android.model.data.PersonalityDetails
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_people.view.*
@@ -48,7 +48,7 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
         itemView.homepage_view
     }
 
-    fun update(peopleDetails: PeopleDetails?) {
+    fun update(peopleDetails: PersonalityDetails?) {
         val imageUrl: String? =  if (peopleDetails?.profile_path != null) {
             UiUtils.getImageUrl(peopleDetails.profile_path,  itemView.context.getString(R.string.image_small))
         } else null
@@ -60,8 +60,9 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
         }
 
         profileImageView.setOnClickListener {
-            if (peopleDetails?.id != null)
-                onProfileClickedPicturePublisher.onNext(peopleDetails.id)
+            peopleDetails?.id?.let {
+                onProfileClickedPicturePublisher.onNext(it)
+            }
         }
 
         if (!peopleDetails?.name.isNullOrEmpty()) {

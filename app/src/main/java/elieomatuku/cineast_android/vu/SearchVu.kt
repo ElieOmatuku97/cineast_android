@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.vu_search.view.*
 import com.google.android.material.tabs.TabLayout
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.business.model.data.Widget
+import elieomatuku.cineast_android.model.data.Content
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -98,7 +98,7 @@ class SearchVu(inflater: LayoutInflater,
     }
 
 
-    fun openItemListActivity(results: List<Widget>?) {
+    fun openItemListActivity(results: List<Content>?) {
         if (results != null) {
             ItemListActivity.startItemListActivity(activity, results, R.string.search_hint)
         }

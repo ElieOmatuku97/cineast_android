@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 def apikeyPropertiesFile = rootProject.file("apikeys.properties.txt");
 def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
@@ -12,7 +14,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "elieomatuku.cineast_android"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -33,13 +35,13 @@ android {
         dev {
             applicationIdSuffix = ".dev"
             resValue "string", "app_name", (rootProject.ext.appName + "_dev")
-            resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName  + "_dev_leaks")
+            resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_dev_leaks")
         }
 
         beta {
             applicationIdSuffix = ".beta"
             resValue "string", "app_name", (rootProject.ext.appName + "_beta")
-            resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName  + "_beta_leaks")
+            resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_beta_leaks")
         }
 
         prod {
@@ -53,6 +55,11 @@ android {
         targetCompatibility 1.8
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+
 }
 
 androidExtensions {
@@ -62,21 +69,25 @@ androidExtensions {
 repositories {
     maven { url "https://jitpack.io" }
     maven { url "https://kotlin.bintray.com/kotlinx" }
-    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://oss.sonatype.org/discoverContent/repositories/snapshots" }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
 
+
+    // Local modules
+    implementation project(':database')
+    implementation project(':core')
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
     // kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2'
 
     //ui
     api 'com.squareup.picasso:picasso:2.71828'
@@ -85,6 +96,7 @@ dependencies {
     api 'info.hoang8f:android-segmented:1.0.6'
     implementation 'me.zhanghai.android.materialratingbar:library:1.3.1'
     implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
     // network
     api 'com.squareup.retrofit2:retrofit:2.6.1'
@@ -92,6 +104,7 @@ dependencies {
     api 'com.squareup.okhttp3:okhttp:4.2.0'
     api 'com.squareup.okio:okio:2.2.2'
     api 'com.squareup.okhttp3:logging-interceptor:4.0.1'
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 
 
     // rxjava2
@@ -102,7 +115,7 @@ dependencies {
     implementation 'com.github.jhavatar:mythos:1.0.5'
 
     //dependency
-    implementation 'org.kodein.di:kodein-di-generic-jvm:6.1.0'
+    implementation 'org.kodein.di:kodein-di-generic-jvm:6.4.0'
 
     // support
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -117,28 +130,29 @@ dependencies {
     //other
     implementation 'com.squareup.moshi:moshi:1.8.0'
 
-    // test
-    testImplementation 'junit:junit:4.12'
-
-    testImplementation 'androidx.test:runner:1.2.0'
-    testImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    testImplementation 'org.robolectric:robolectric:3.9-SNAPSHOT'
-
-    testImplementation 'org.mockito:mockito-core:2.23.4'
-    androidTestImplementation 'org.mockito:mockito-android:2.23.4'
-//    implementation files('libs/android-async-http-1.4.6.jar')
-
-
+    //flatcircle coroutine helper
+    implementation 'io.flatcircle:coroutinehelper:0.0.3'
 
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
     // Optional, if you use support library fragments:
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+
+
+    // test
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'androidx.test:runner:1.2.0'
+    testImplementation 'androidx.test:rules:1.2.0'
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testImplementation "org.robolectric:robolectric:4.3.1"
+    testImplementation 'org.mockito:mockito-core:2.23.4'
+    testImplementation 'com.github.gmazzo:okhttp-mock:1.3.1'
+    testImplementation 'io.mockk:mockk:1.9'
+    testImplementation 'io.mockk:mockk-android:1.9'
+
+
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'org.mockito:mockito-android:2.23.4'
 }

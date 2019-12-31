@@ -10,7 +10,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_item_movie.view.*
 
@@ -73,6 +73,7 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             Picasso.get()
                     .load(imageUrl)
                     .into(movieImage)
+
 
             releaseDate?.text =  movie.release_date
             movieTitle?.text =   movie.title

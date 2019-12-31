@@ -4,7 +4,7 @@ import android.content.IntentFilter
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.model.data.broadReceiver.NetworkConnectivityBroadcastReceiver
+import elieomatuku.cineast_android.business.broadReceiver.NetworkConnectivityBroadcastReceiver
 import elieomatuku.cineast_android.business.service.ConnectionService
 import org.kodein.di.generic.instance
 

@@ -7,8 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.business.client.TmdbContentClient
+import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.presenter.MoviePresenter
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils
@@ -23,14 +24,15 @@ import timber.log.Timber
 class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
     companion object {
         private val MVP_UID by lazy {
-            MovieActivity.hashCode()
+            hashCode()
         }
     }
 
     private var currentMovie: Movie? = null
     private var isInWatchList: Boolean = false
     private var isInFavoriteList: Boolean = false
-    private val userService : UserService by App.kodein.instance()
+    private val tmdbUserClient : TmdbUserClient by App.kodein.instance()
+    private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
 
     val moviePresentedPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()
@@ -121,7 +123,7 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
                 }
 
                 updateWatchListIcon(it)
-                it.isVisible = userService.isLoggedIn()
+                it.isVisible = tmdbUserClient.isLoggedIn()
         }
 
         menu?.findItem(R.id.action_favorites)?.let {
@@ -131,7 +133,7 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
                     menuItem.isChecked = isInFavoriteList
                 }
                 updateFavoriteListIcon(it)
-                it.isVisible = userService.isLoggedIn()
+                it.isVisible = tmdbUserClient.isLoggedIn()
         }
 
         return true
@@ -192,12 +194,12 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
         if (checked) {
             currentMovie?.let {
-                userService.addMovieToWatchList(it)
+                tmdbContentClient.addMovieToWatchList(it)
             }
 
         } else {
             currentMovie?.let {
-                userService.removeMovieFromWatchList(it)
+                tmdbContentClient.removeMovieFromWatchList(it)
             }
         }
     }
@@ -220,12 +222,12 @@ class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
 
         if (checked) {
             currentMovie?.let {
-                userService.addMovieToFavoriteList(it)
+                tmdbContentClient.addMovieToFavoriteList(it)
             }
 
         } else {
             currentMovie?.let {
-                userService.removeMovieFromFavoriteList(it)
+                tmdbContentClient.removeMovieFromFavoriteList(it)
             }
         }
     }

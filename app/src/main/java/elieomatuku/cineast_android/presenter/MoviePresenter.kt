@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.business.model.response.ImageResponse
-import elieomatuku.cineast_android.business.model.response.MovieCreditsResponse
-import elieomatuku.cineast_android.business.model.response.MovieResponse
-import elieomatuku.cineast_android.business.model.response.TrailerResponse
-import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.service.UserService
+import elieomatuku.cineast_android.business.client.TmdbContentClient
+import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.business.api.response.ImageResponse
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance
 import timber.log.Timber
 import java.util.*
@@ -20,7 +18,7 @@ import java.util.*
 
 class MoviePresenter : BasePresenter<MovieVu>() {
     companion object {
-        const val MOVIE_KEY = "movie"
+        const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
         const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_DETAILS_KEY = "movie_details"
@@ -30,10 +28,11 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         const val MOVIE_SIMILAR_KEY = "movie_similar_key"
     }
 
-    private val contentManager: ContentManager by App.kodein.instance()
-    private val userService: UserService by App.kodein.instance()
+    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
+    private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
 
-    var movieDetails: MovieDetails? = null
+
+    var movieFacts: MovieFacts? = null
     var trailers: List<Trailer>? = listOf()
     var cast: List<Cast>? = listOf()
     var crew: List<Crew>? = listOf()
@@ -48,9 +47,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         val genres: List<Genre> = args.getParcelableArrayList(MOVIE_GENRES_KEY)
 
 
-        Timber.d("movie presenter")
-
-        movieDetails = inState?.getParcelable(MOVIE_DETAILS_KEY)
+        movieFacts = inState?.getParcelable(MOVIE_DETAILS_KEY)
         trailers = inState?.getParcelableArrayList(MOVIE_TRAILERS_KEY)
         cast = inState?.getParcelableArrayList(MOVIE_CAST_KEY)
         crew = inState?.getParcelableArrayList(MOVIE_CREW_KEY)
@@ -58,10 +55,10 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
         vu.moviePresentedPublisher?.onNext(movie)
 
-        if (movieDetails == null || trailers == null || cast == null || crew == null || similarMovies == null) {
+        if (movieFacts == null || trailers == null || cast == null || crew == null || similarMovies == null) {
             getMovieVideos(movie, screenName, genres)
         } else {
-            val movieSummary = MovieSummary(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+            val movieSummary = MovieSummary(movie, trailers, movieFacts, genres, screenName, cast, crew, similarMovies)
             vu.showMovie(movieSummary)
         }
 
@@ -92,83 +89,55 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     private fun getMovieVideos(movie: Movie, screenName: String?, genres: List<Genre>?) {
         vu?.showLoading()
 
-        contentManager.getMovieVideos(movie, object : AsyncResponse<TrailerResponse> {
-            override fun onSuccess(response: TrailerResponse?) {
-                trailers = response?.results
-                getMovieDetails(movie, screenName, genres, trailers)
-            }
+        launch {
+            trailers = contentManager.getMovieVideos(movie)?.results
+            getMovieDetails(movie, screenName, genres, trailers)
 
-            override fun onFail(error: CineastError) {
-                Timber.e("error: $error")
-
-                handler.post {
-                    vu?.hideLoading()
-                    vu?.updateErrorView(error.status_message)
-                }
-            }
-        })
+        }
     }
 
     private fun getMovieDetails(movie: Movie, screenName: String?, genres: List<Genre>?, trailers: List<Trailer>?) {
-        contentManager.getMovieDetails(movie, object : AsyncResponse<MovieDetails> {
-            override fun onSuccess(response: MovieDetails?) {
-                movieDetails = response
-                getMovieCredits(movie, screenName, movieDetails, genres, trailers)
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.e("error: $error")
-                vu?.updateErrorView(error.status_message)
-            }
-        })
+        launch {
+            movieFacts = contentManager.getMovieDetails(movie)
+            getMovieCredits(movie, screenName, movieFacts, genres, trailers)
+        }
     }
 
-    private fun getMovieCredits(movie: Movie, screenName: String?, movieDetails: MovieDetails?, genres: List<Genre>?, trailers: List<Trailer>?) {
-        contentManager.getMovieCredits(movie, object : AsyncResponse<MovieCreditsResponse> {
-            override fun onSuccess(response: MovieCreditsResponse?) {
-                cast = response?.cast
-                crew = response?.crew
-                getSimilarMovies(movie, screenName, genres, movieDetails, trailers, cast, crew)
-            }
-
-            override fun onFail(error: CineastError) {
-                Timber.e("error: $error")
-                vu?.updateErrorView(error.status_message)
-            }
-        })
+    private fun getMovieCredits(movie: Movie, screenName: String?, movieFacts: MovieFacts?, genres: List<Genre>?, trailers: List<Trailer>?) {
+        launch {
+            val response = contentManager.getMovieCredits(movie)
+            cast = response?.cast
+            crew = response?.crew
+            getSimilarMovies(movie, screenName, genres, movieFacts, trailers, cast, crew)
+        }
     }
 
-    private fun getSimilarMovies(movie: Movie, screenName: String?, genres: List<Genre>?, movieDetails: MovieDetails?, trailers: List<Trailer>?, cast: List<Cast>?, crew: List<Crew>?) {
-        contentManager.getSimilarMovie(movie, object : AsyncResponse<MovieResponse> {
-            override fun onSuccess(response: MovieResponse?) {
-                similarMovies = response?.results
-                val movieSummary = MovieSummary(movie, trailers, movieDetails, genres, screenName, cast, crew, similarMovies)
+    private fun getSimilarMovies(movie: Movie, screenName: String?, genres: List<Genre>?, movieFacts: MovieFacts?, trailers: List<Trailer>?, cast: List<Cast>?, crew: List<Crew>?) {
 
-                if (!userService.isLoggedIn()) {
-                    handler.post {
-                        vu?.hideLoading()
-                        vu?.showMovie(movieSummary)
-                    }
-                } else {
-                    movieSummary.movie?.let {
-                        checkIfMovieInWatchList(movieSummary)
-                    }
+        launch {
+            val response = contentManager.getSimilarMovie(movie)
+            similarMovies = response?.results
+            val movieSummary = MovieSummary(movie, trailers, movieFacts, genres, screenName, cast, crew, similarMovies)
 
+
+            if (!tmdbUserClient.isLoggedIn()) {
+                handler.post {
+                    vu?.hideLoading()
+                    vu?.showMovie(movieSummary)
+                }
+            } else {
+                movieSummary.movie?.let {
+                    checkIfMovieInWatchList(movieSummary)
                 }
             }
-
-            override fun onFail(error: CineastError) {
-                Timber.e("error: $error")
-                vu?.updateErrorView(error.status_message)
-            }
-        })
+        }
     }
 
 
     private fun checkIfMovieInWatchList(movieSummary: MovieSummary) {
-        userService.getWatchList(object : AsyncResponse<List<Movie>> {
+        tmdbContentClient.getWatchList(object : AsyncResponse<List<Movie>> {
             override fun onSuccess(result: List<Movie>?) {
-                Timber.d("watch list result: ${result} \n movie selected: ${movieSummary.movie}")
+                Timber.d("watch list result: ${result} \n movieApi selected: ${movieSummary.movie}")
                 val isInWatchList = result?.let {
                     it.contains(movieSummary.movie)
                 } ?: false
@@ -185,9 +154,9 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
 
     private fun checkIfMovieInFavoriteList(movieSummary: MovieSummary) {
-        userService.getFavoriteList(object : AsyncResponse<List<Movie>> {
+        tmdbContentClient.getFavoriteList(object : AsyncResponse<List<Movie>> {
             override fun onSuccess(result: List<Movie>?) {
-                Timber.d("favorite list result: ${result} \n movie selected: ${movieSummary.movie}")
+                Timber.d("favorite list result: ${result} \n movieApi selected: ${movieSummary.movie}")
                 val isInFavoriteList = result?.let {
                     it.contains(movieSummary.movie)
                 } ?: false
@@ -210,7 +179,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
-        movieDetails?.let {
+        movieFacts?.let {
             outState.putParcelable(MOVIE_DETAILS_KEY, it)
         }
 

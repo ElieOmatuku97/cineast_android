@@ -2,29 +2,25 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.service.ContentManager
-import elieomatuku.cineast_android.business.model.data.*
-import elieomatuku.cineast_android.business.model.response.ImageResponse
-import elieomatuku.cineast_android.business.model.response.PeopleCreditsResponse
+import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.business.api.response.ImageResponse
+import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.vu.PeopleVu
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.kodein.di.generic.instance
 import timber.log.Timber
 
 class PeoplePresenter : BasePresenter<PeopleVu>() {
     companion object {
-        const val PEOPLE_KEY = "people"
+        const val PEOPLE_KEY = "peopleApi"
         const val SCREEN_NAME_KEY = "screen_name"
         const val PEOPLE_DETAILS_KEY = "people_details"
         const val PEOPLE_MOVIES_KEY = "people_movies"
         const val MOVIE_TEAM_KEY = "movie_team"
     }
 
-    private val contentManager: ContentManager by App.kodein.instance()
 
-    var peopleDetails: PeopleDetails? = null
+    var personalityDetails: PersonalityDetails? = null
     var peopleMovies: List<KnownFor>? = listOf()
 
     override fun onLink(vu: PeopleVu, inState: Bundle?, args: Bundle) {
@@ -35,17 +31,17 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
 
         vu.personPresentedPublisher?.onNext(people)
 
-        peopleDetails = inState?.getParcelable(PEOPLE_DETAILS_KEY)
+        personalityDetails = inState?.getParcelable(PEOPLE_DETAILS_KEY)
         peopleMovies = inState?.getParcelableArrayList(PEOPLE_MOVIES_KEY)
 
-        if (peopleDetails != null && peopleMovies != null) {
-            vu.updateVu(peopleDetails, screenName, peopleMovies)
+        if (personalityDetails != null && peopleMovies != null) {
+            vu.updateVu(personalityDetails, screenName, peopleMovies)
         } else {
             vu.showLoading()
-            contentManager.getPeopleDetails(people, object : AsyncResponse<PeopleDetails> {
-                override fun onSuccess(response: PeopleDetails?) {
-                    peopleDetails = response
-                    getPeopleMovies(people, peopleDetails, screenName)
+            contentManager.getPeopleDetails(people, object : AsyncResponse<PersonalityDetails> {
+                override fun onSuccess(response: PersonalityDetails?) {
+                    personalityDetails = response
+                    getPeopleMovies(people, personalityDetails, screenName)
                 }
 
                 override fun onFail(error: CineastError) {
@@ -79,13 +75,13 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
 
     }
 
-    private fun getPeopleMovies(actor: Person, peopleDetails: PeopleDetails?, screenName: String) {
+    private fun getPeopleMovies(actor: Person, personalityDetails: PersonalityDetails?, screenName: String) {
         contentManager.getPeopleMovies(actor, object : AsyncResponse<PeopleCreditsResponse> {
             override fun onSuccess(response: PeopleCreditsResponse?) {
                 peopleMovies = response?.cast as List<KnownFor>
                 handler.post {
                     vu?.hideLoading()
-                    vu?.updateVu(peopleDetails, screenName, peopleMovies)
+                    vu?.updateVu(personalityDetails, screenName, peopleMovies)
                 }
             }
 
@@ -101,7 +97,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
     override fun onSaveState(outState: Bundle) {
         super.onSaveState(outState)
 
-        peopleDetails?.let {
+        personalityDetails?.let {
             outState.putParcelable(PEOPLE_DETAILS_KEY, it)
         }
 

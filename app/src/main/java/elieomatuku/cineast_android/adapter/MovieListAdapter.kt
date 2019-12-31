@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.adapter
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.ViewGroup
-import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.model.data.Movie
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.MovieItemHolder
 import io.reactivex.subjects.PublishSubject
@@ -86,7 +86,7 @@ open class MovieListAdapter(private val onItemClickPublisher: PublishSubject<Mov
                 holder.update(movie)
 
                 holder.itemView.setOnClickListener {
-                    Log.d(MovieListAdapter::class.java.simpleName, "CLICKED && movie:  ${movies[position]}")
+                    Log.d(MovieListAdapter::class.java.simpleName, "CLICKED && movieApi:  ${movies[position]}")
                     onItemClickPublisher.onNext(movies[position])
                 }
             }

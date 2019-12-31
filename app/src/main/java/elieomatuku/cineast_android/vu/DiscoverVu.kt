@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import elieomatuku.cineast_android.DiscoverContent
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
-import elieomatuku.cineast_android.business.model.data.*
+import elieomatuku.cineast_android.model.data.*
 import elieomatuku.cineast_android.fragment.LoginWebviewFragment
 import elieomatuku.cineast_android.fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
@@ -21,14 +23,15 @@ import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_discover.view.*
+import timber.log.Timber
 
-class DiscoverVu (inflater: LayoutInflater,
-                  activity: Activity,
-                  fragmentWrapper: FragmentWrapper?,
-                  parentView: ViewGroup?) : BaseVu(inflater,
+class DiscoverVu(inflater: LayoutInflater,
+                 activity: Activity,
+                 fragmentWrapper: FragmentWrapper?,
+                 parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
-        parentView = parentView), WebLink <AccessToken?>{
+        parentView = parentView), WebLink<AccessToken?> {
 
 
     private val movieSelectPublisher: PublishSubject<Movie> by lazy {
@@ -38,12 +41,11 @@ class DiscoverVu (inflater: LayoutInflater,
         get() = movieSelectPublisher.hide()
 
 
-
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()
     }
 
-    val personSelectObservable: Observable <Person>
+    val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
 
 
@@ -51,14 +53,25 @@ class DiscoverVu (inflater: LayoutInflater,
         PublishSubject.create<Boolean>()
     }
 
-    val loginClickObservable : Observable <Boolean>
+    val loginClickObservable: Observable<Boolean>
         get() = loginClickPublisher.hide()
 
-    private val listView : RecyclerView by lazy {
+    private val listView: RecyclerView by lazy {
         rootView.recyclerview
     }
 
-    private val sessionPublisher : PublishSubject<String> by lazy {
+    private val refreshLayout: SwipeRefreshLayout by lazy {
+        rootView.refresh_layout
+    }
+
+    private val refreshPublisher: PublishSubject<Boolean> by lazy {
+        PublishSubject.create<Boolean>()
+    }
+
+    val refreshObservable: Observable<Boolean>
+        get() = refreshPublisher.hide()
+
+    private val sessionPublisher: PublishSubject<String> by lazy {
         (activity as elieomatuku.cineast_android.activity.MainActivity).sessionPublisher
     }
 
@@ -67,7 +80,7 @@ class DiscoverVu (inflater: LayoutInflater,
     }
 
     val adapter: DiscoverAdapter by lazy {
-         DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
+        DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
     }
 
     override fun getRootViewLayoutId(): Int {
@@ -76,6 +89,7 @@ class DiscoverVu (inflater: LayoutInflater,
 
     override fun onCreate() {
         super.onCreate()
+
         listView.adapter = adapter
         val itemDecoration = DividerItemDecoration(listView.context, DividerItemDecoration.VERTICAL)
         val drawable: Drawable? = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
@@ -84,24 +98,29 @@ class DiscoverVu (inflater: LayoutInflater,
         }
         listView.addItemDecoration(itemDecoration)
         listView.layoutManager = LinearLayoutManager(activity)
+
+
+        refreshLayout.setOnRefreshListener {
+            refreshPublisher.onNext(true)
+        }
     }
 
-    fun updateView(discoverContainer: DiscoverContainer, isLoggedIn: Boolean){
-        adapter.filteredWidgets = discoverContainer.getFilteredWidgets()
+    fun updateView(discoverContent: DiscoverContent, isLoggedIn: Boolean) {
+        Timber.d("update View is called")
+        adapter.filteredContent = discoverContent.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
+        dismissRefreshLayout()
     }
-
 
 
     fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
+        dismissRefreshLayout()
     }
-
-
 
     override fun gotoWebview(value: AccessToken?) {
         value?.let {
@@ -111,7 +130,7 @@ class DiscoverVu (inflater: LayoutInflater,
                     .build()
                     .toString()
 
-            val webviewFragment: WebviewFragment? =  LoginWebviewFragment.newInstance(authenticateUrl)
+            val webviewFragment: WebviewFragment? = LoginWebviewFragment.newInstance(authenticateUrl)
             val fm = (activity as AppCompatActivity).supportFragmentManager
 
             if (webviewFragment != null && fm != null) {
@@ -125,4 +144,7 @@ class DiscoverVu (inflater: LayoutInflater,
         adapter.notifyDataSetChanged()
     }
 
+    fun dismissRefreshLayout() {
+        refreshLayout.setRefreshing(false)
+    }
 }

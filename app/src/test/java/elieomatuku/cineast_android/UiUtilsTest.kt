@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android
 
-import elieomatuku.cineast_android.business.model.data.Genre
+import elieomatuku.cineast_android.model.data.Genre
 import elieomatuku.cineast_android.utils.UiUtils
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -8,6 +8,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest= Config.NONE)
@@ -42,12 +43,4 @@ class UiUtilsTest {
         assertEquals(UiUtils.mapMovieGenreIdsWithGenreNames(movieGenreIds, genres), "action, comedy, drama, sci-fi")
         assertNotEquals(UiUtils.mapMovieGenreIdsWithGenreNames(movieGenreIds, genres), "sci-fi, drama, comedy, action")
     }
-
-//    @Test
-//    fun testFilterWidgets(){
-//
-//    }
-
-
-
 }

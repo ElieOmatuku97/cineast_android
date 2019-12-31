@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Widget
+import elieomatuku.cineast_android.model.data.Content
 
 class ResultsFragment(): Fragment() {
     companion object {
         val LOG_TAG = ResultsFragment::class.java.simpleName
 
-        fun newInstance(widgets: List<Widget>): ResultsFragment{
+        fun newInstance(contents: List<Content>): ResultsFragment{
             val fragment =  ResultsFragment()
             val args = Bundle()
             fragment.arguments = args

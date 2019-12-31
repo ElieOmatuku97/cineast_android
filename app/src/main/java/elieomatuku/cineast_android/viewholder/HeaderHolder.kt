@@ -4,68 +4,61 @@ package elieomatuku.cineast_android.viewholder
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.HeaderAdapter
-import elieomatuku.cineast_android.business.model.data.Movie
+import elieomatuku.cineast_android.model.data.Content
+import elieomatuku.cineast_android.model.data.Movie
 import kotlinx.android.synthetic.main.holder_header.view.*
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 
 
-class HeaderHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class HeaderHolder(itemView: View, private val onItemClickPublisher: PublishSubject<Movie>) : ContentHolder(itemView) {
     companion object {
-        fun createView(parent: ViewGroup): View{
+        fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_header, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup): HeaderHolder{
-            return HeaderHolder(createView(parent))
+        fun newInstance(parent: ViewGroup, onItemClickPublisher: PublishSubject<Movie>): HeaderHolder {
+            return HeaderHolder(createView(parent), onItemClickPublisher)
         }
+
+        const val CURRENT_MOVIE_ID = -1
     }
+
     private val listView: RecyclerView by lazy {
-          itemView.header_popular_movie
+        itemView.header_popular_movie
     }
 
     private val smoothScroller: RecyclerView.SmoothScroller by lazy {
         object : LinearSmoothScroller(itemView.context) {
             override fun getVerticalSnapPreference(): Int {
-                return LinearSmoothScroller.SNAP_TO_START
+                return SNAP_TO_START
             }
         }
     }
 
-    fun update(movies: List<Movie>, onItemClickPublisher: PublishSubject<Movie>, currentMovieId: Int? = null){
-        if (movies != null) {
-            val adapter = HeaderAdapter(movies, onItemClickPublisher)
-            listView.adapter = adapter
-            adapter.notifyDataSetChanged()
-            listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-            listView.visibility = View.VISIBLE
 
-            if (currentMovieId != null) {
-                Log.d (HeaderHolder::class.java.simpleName, "current movie: $currentMovieId")
-                val lm = listView.layoutManager
-                val position = adapter.getArticlePosition(currentMovieId)
+    override fun update(content: Pair<Int, List<Content>>) {
+        val movies = content.second as List<Movie>
 
-                if ((position >= 0) && (position < adapter.itemCount)) {
-//                    scrollToPositionInList(position, true)
-                    smoothScroller.setTargetPosition(position);
-                    listView.post {
-                        lm?.startSmoothScroll(smoothScroller);
-                    }
+        val adapter = HeaderAdapter(movies, onItemClickPublisher)
+        listView.adapter = adapter
+        adapter.notifyDataSetChanged()
+        listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+        listView.visibility = View.VISIBLE
 
-                } else {
-                    Timber.w("focusOnArticle fail. No such article with position $position mathcing key in list")
-                }
+        val lm = listView.layoutManager
+        val position = adapter.getArticlePosition(CURRENT_MOVIE_ID)
 
+        if ((position >= 0) && (position < adapter.itemCount)) {
+//            scrollToPositionInList(position, true)
+            smoothScroller.setTargetPosition(position)
+            listView.post {
+                lm?.startSmoothScroll(smoothScroller)
             }
-
-        } else {
-            listView.visibility = View.GONE
         }
     }
 }

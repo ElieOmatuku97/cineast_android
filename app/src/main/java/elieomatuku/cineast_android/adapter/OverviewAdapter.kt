@@ -3,15 +3,15 @@ package elieomatuku.cineast_android.adapter
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.Movie
-import elieomatuku.cineast_android.business.model.data.MovieDetails
-import elieomatuku.cineast_android.business.model.data.Trailer
+import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.model.data.MovieFacts
+import elieomatuku.cineast_android.model.data.Trailer
 import elieomatuku.cineast_android.viewholder.SummaryHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.BottomHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.MovieFactsHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.TrailersHolder
 
-class OverviewAdapter(private val movie: Movie, private val trailers: List<Trailer>, private val movieDetails: MovieDetails)
+class OverviewAdapter(private val movie: Movie, private val trailers: List<Trailer>, private val movieFacts: MovieFacts)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -62,7 +62,7 @@ class OverviewAdapter(private val movie: Movie, private val trailers: List<Trail
 
             TYPE_MOVIE_FACTS -> {
                 val movieFactsHolder = holder as MovieFactsHolder
-                movieFactsHolder.update(movieDetails)
+                movieFactsHolder.update(movieFacts)
             }
         }
     }

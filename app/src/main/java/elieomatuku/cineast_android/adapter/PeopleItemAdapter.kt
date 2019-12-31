@@ -4,8 +4,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.model.data.KnownFor
-import elieomatuku.cineast_android.business.model.data.PeopleDetails
+import elieomatuku.cineast_android.model.data.KnownFor
+import elieomatuku.cineast_android.model.data.PersonalityDetails
 import elieomatuku.cineast_android.fragment.KnownForFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
@@ -23,8 +23,8 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
     }
 
 
-    var peopleDetails: PeopleDetails by Delegates.observable(PeopleDetails()) { prop, oldPeopleDetails, nuPeopleDetails ->
-        Timber.d("people details = $nuPeopleDetails")
+    var personalityDetails: PersonalityDetails by Delegates.observable(PersonalityDetails()) { prop, oldPeopleDetails, nuPeopleDetails ->
+        Timber.d("peopleApi facts = $nuPeopleDetails")
         hasValidData = true
         errorMessage = null
     }
@@ -51,7 +51,7 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
 
     val hasEmptyState: Boolean
         // only display empty state after valid data is set
-        get() = hasValidData && (peopleDetails.isEmpty())
+        get() = hasValidData && (personalityDetails.isEmpty())
 
     override fun getItemCount(): Int {
         Timber.d("hasEmptyState: $hasEmptyState")
@@ -93,21 +93,21 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
         when (viewType) {
             TYPE_PEOPLE_PROFILE -> {
                 val movieProfileHolder = holder as ProfilePeopleHolder
-                movieProfileHolder.update(peopleDetails)
+                movieProfileHolder.update(personalityDetails)
             }
 
             TYPE_MENU_PEOPLE -> {
                 val menuPeopleHolder = holder as MenuPeopleHolder
                 menuPeopleHolder.overviewSegmentBtn.setOnClickListener {
                     val activity = it.context as FragmentActivity
-                    val overviewFragment = OverviewPeopleFragment.newInstance(peopleDetails?.biography)
+                    val overviewFragment = OverviewPeopleFragment.newInstance(personalityDetails?.biography)
                     (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, overviewFragment).commit()
 
                 }
 
                 menuPeopleHolder.knownForSegmentBtn.setOnClickListener {
                     val activity = it.context as FragmentActivity
-                    val peopleFragment = KnownForFragment.newInstance(peopleMovies, peopleDetails.name)
+                    val peopleFragment = KnownForFragment.newInstance(peopleMovies, personalityDetails.name)
                     (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, peopleFragment).commit()
                 }
             }
