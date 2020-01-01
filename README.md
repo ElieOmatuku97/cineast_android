@@ -1,6 +1,6 @@
 # Cineast_android_clone
 
-Cineast_Android is an Android app Querying TMDb API to provide information on popular, trending, upcoming, top rated movies and popular actors. Cineast_Android comes in with sharing, searching features, when signed in a user can add movies to their Favorites and  watch lists or rate them.  
+Cineast is an Android app Querying TMDb API to provide information on popular, trending, upcoming, top rated movies and popular actors. Cineast_Android comes in with sharing, searching features, when signed in a user can add movies to their Favorites and  watch lists or rate them.  
 
 This Android is clone of the iOS [Cineast](https://apps.apple.com/us/app/cineast/id376167296) App which uses TMDB as well.
 
