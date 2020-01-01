@@ -4,7 +4,7 @@ Cineast is an android app querying [TMDb API](https://developers.themoviedb.org/
 
 This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/cineast/id376167296) App which uses [TMDb API](https://developers.themoviedb.org/3/getting-started/introduction) as well.
 
-### Prerequisites
+## Prerequisites
 
   #### 1. Obtain Key
   
@@ -18,7 +18,23 @@ This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/c
    
  On completion of the above steps, the app will be able to pick up your TMDb API KEY.
  
- ## Screenshots
+## Project Structure
+  This app is built to be modularized to some degree. The modules are:
+  
+  - app: brings everything together. 
+  - core: contains the data models.
+  - database: contains the database and repository.
+
+
+## Project Architecture
+
+This app uses the Model-View-Presenter architecture, with the help of the [Mythos library](https://github.com/jhavatar/mythos). 
+
+[Room ORM](https://developer.android.com/topic/libraries/architecture/room) which is part of Android Architecture Components is used. 
+
+A mixture of Callbacks and Coroutines are used for async/background. Future milestones are going to be the sole usage of Coroutines for async/background operations. This [blog post](https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb) explains the basics of Coroutines in kotlin.   
+ 
+## Screenshots
 
 <img src="screenshots/Screenshot_20200101-014642.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014651.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014702.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014722.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014737.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014823.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014833.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014848.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014901.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014915.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014924.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014958.jpg" width="200"> <img src="screenshots/Screenshot_20200101-015015.jpg" width="200">  <img src="screenshots/Screenshot_20200101-015050.jpg" width="200"> 
 
