@@ -24,6 +24,8 @@ This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/c
   - app: brings everything together. 
   - core: contains the data models.
   - database: contains the database and repository.
+  
+  This [blog post](https://proandroiddev.com/build-a-modular-android-app-architecture-25342d99de82) explains the basics of modularization and its benefits. 
 
 
 ## Project Architecture
