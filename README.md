@@ -12,4 +12,12 @@
 
 
 ## Libraries Used
-[I'm an inline-style link](https://www.google.com)
+[Mythos](https://github.com/jhavatar/mythos) - A Model-View-Presenter library for Android apps.
+[CoroutineHelper](https://github.com/flatcircle/CoroutineHelper) - Various helper functions, delegates and extension functions for use in Coroutines
+[Leak Canary](https://github.com/square/leakcanary) - Capture Memory Leaks
+[Retrofit](https://square.github.io/retrofit/) - Http Client for Api Calls
+[Gson](https://github.com/google/gson) - Serialization/Deserialization Library
+[Okhttp](https://github.com/square/okhttp) - An HTTP+HTTP/2 client for Android
+[Picasso](https://square.github.io/picasso/) - Image Loading Library
+[Kodein](https://github.com/Kodein-Framework/Kodein-DI) - View Binding Library
+[Architecture Components](https://developer.android.com/topic/libraries/architecture) - Room ORM
