@@ -2,7 +2,7 @@
 
 Cineast is an android app querying [TMDb API](https://developers.themoviedb.org/3/getting-started/introduction) to provide information on popular, trending, upcoming, top rated movies and popular actors. Cineast comes in with sharing, searching features, when signed in a user can add movies to their Favorites and  watch lists or rate them.  
 
-This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/cineast/id376167296) App which uses (TMDb API)[https://developers.themoviedb.org/3/getting-started/introduction] as well.
+This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/cineast/id376167296) App which uses [TMDb API](https://developers.themoviedb.org/3/getting-started/introduction) as well.
 
 ### Prerequisites
 
