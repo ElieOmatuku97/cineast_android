@@ -12,7 +12,7 @@
 
 
 ## Libraries Used
-[Mythos](https://github.com/jhavatar/mythos) - A Model-View-Presenter library for Android apps.
+⋅⋅* [Mythos](https://github.com/jhavatar/mythos) - A Model-View-Presenter library for Android apps.
 [CoroutineHelper](https://github.com/flatcircle/CoroutineHelper) - Various helper functions, delegates and extension functions for use in Coroutines
 [Leak Canary](https://github.com/square/leakcanary) - Capture Memory Leaks
 [Retrofit](https://square.github.io/retrofit/) - Http Client for Api Calls
