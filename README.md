@@ -4,6 +4,12 @@ Cineast is an Android app Querying TMDb API to provide information on popular, t
 
 This Android App is clone of the iOS [Cineast](https://apps.apple.com/us/app/cineast/id376167296) App which uses TMDb API as well.
 
+### Prerequisites
+
+  1. Obtain Key
+Create an account with TMDB to obtain an API key.  
+  
+
 ## Screenshots
 
 <img src="screenshots/Screenshot_20200101-014642.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014651.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014702.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014722.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014737.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014823.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014833.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014848.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014901.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014915.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014924.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014958.jpg" width="200"> <img src="screenshots/Screenshot_20200101-015015.jpg" width="200">  <img src="screenshots/Screenshot_20200101-015050.jpg" width="200"> 
