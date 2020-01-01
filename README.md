@@ -13,7 +13,7 @@ This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/c
   #### 2. Configure gradle.properties  
   
   On obtention of your TMDB key, you will need to add it to a global gradle.properties file so as not to add it to version     control and expose your key and configure the projects app module build.gradle to reflect the name you gave your API Key. To add the newly obtained key to a global gradle.properties: 
-   - In the roots folder add a txt file named `apikeys.properties` 
+   - In the roots folder of the project,  add a txt file named `apikeys.properties` 
    - then inside the file add a property `api_key = TMDb API KEY`. 
    
  On completion of the above steps, the app will be able to pick up your TMDb API KEY.
