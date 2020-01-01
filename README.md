@@ -7,7 +7,8 @@ This Android App is clone of the iOS [Cineast](https://apps.apple.com/us/app/cin
 ### Prerequisites
 
   1. Obtain Key
-Create an account with TMDB to obtain an API key.  
+  
+    Create an account with TMDB to obtain an API key.  
   
 
 ## Screenshots
