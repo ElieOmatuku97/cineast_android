@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#3F51B5</color>
     <color name="color_primary_dark">#303F9F</color>
     <color name="color_accent">@color/color_orange_app</color>
     <color name="colorblack">#000000</color>
@@ -9,7 +8,6 @@
     <color name="color_grey_app">#696969</color>
 
     <color name="orange">#FF3909</color>
-    <color name="color_accent_dark">#00B482</color>
     <color name="color_black">#555555</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_grey">#707070</color>
