@@ -10,12 +10,8 @@ import io.chthonic.mythos.mvp.MVPFragment
 
 class MovieGalleryFragment: MVPFragment<MovieGalleryPresenter, MovieGalleryVu>() {
     companion object {
-        val TAG: String by lazy {
-            MovieGalleryFragment::class.java.simpleName
-        }
-
         private val MVP_UID by lazy {
-            MovieGalleryFragment.hashCode()
+           hashCode()
         }
 
         fun newInstance(): MovieGalleryFragment{
