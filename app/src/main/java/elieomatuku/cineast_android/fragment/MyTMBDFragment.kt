@@ -3,10 +3,10 @@ package elieomatuku.cineast_android.fragment
 
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
+import elieomatuku.cineast_android.BuildConfig
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.activity.UserListActivity
@@ -18,6 +18,9 @@ import elieomatuku.cineast_android.utils.WebLink
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import timber.log.Timber
+import android.text.style.ForegroundColorSpan
+import android.text.SpannableString
+import androidx.core.content.ContextCompat
 
 
 class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
@@ -45,11 +48,16 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         findPreference(getString(R.string.pref_rated))
     }
 
-    private val handler: Handler = Handler()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceManager.sharedPreferencesName = getString(R.string.pref_app_settings)
         setPreferencesFromResource(R.xml.settings, null)
+
+        val appVersion = findPreference(getString(R.string.pref_app_version))
+        val summary = SpannableString("${getString(R.string.version_name)} (${BuildConfig.VERSION_CODE})")
+        summary.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.color_accent)), 0, summary.length, 0)
+        appVersion.summary = summary
+
 
         updateState(tmdbUserClient.isLoggedIn())
     }
@@ -106,7 +114,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
                 .subscribe({ sessionId: String? ->
                     updateState(!sessionId.isNullOrEmpty())
                 }, { t: Throwable ->
-                    Timber.e("sessionPublisher failed", t)
+                    Timber.e("sessionPublisher failed $t")
                 })
         )
     }
