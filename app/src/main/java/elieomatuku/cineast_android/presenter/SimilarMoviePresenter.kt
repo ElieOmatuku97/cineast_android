@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
-import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

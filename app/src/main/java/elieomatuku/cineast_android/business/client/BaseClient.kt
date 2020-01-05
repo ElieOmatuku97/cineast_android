@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.business.client
 import android.content.res.Resources
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ValueStore
+import elieomatuku.cineast_android.core.ValueStore
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,7 +29,7 @@ interface BaseClient {
      get() = buildHttpClient()
 
 
-    val persistClient: ValueStore
+    val persistClient: elieomatuku.cineast_android.core.ValueStore
 
     val interceptor: Interceptor?
 

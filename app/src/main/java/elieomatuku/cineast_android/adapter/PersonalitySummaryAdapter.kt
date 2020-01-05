@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.model.data.Person
+import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.PopularPeopleItemHolder
 import io.reactivex.subjects.PublishSubject

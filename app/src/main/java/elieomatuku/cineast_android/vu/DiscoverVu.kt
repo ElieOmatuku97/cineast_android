@@ -12,10 +12,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import elieomatuku.cineast_android.DiscoverContent
+import elieomatuku.cineast_android.core.DiscoverContent
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
-import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.fragment.LoginWebviewFragment
 import elieomatuku.cineast_android.fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
@@ -105,7 +105,7 @@ class DiscoverVu(inflater: LayoutInflater,
         }
     }
 
-    fun updateView(discoverContent: DiscoverContent, isLoggedIn: Boolean) {
+    fun updateView(discoverContent: elieomatuku.cineast_android.core.DiscoverContent, isLoggedIn: Boolean) {
         Timber.d("update View is called")
         adapter.filteredContent = discoverContent.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn

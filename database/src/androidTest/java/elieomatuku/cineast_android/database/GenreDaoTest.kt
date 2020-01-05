@@ -7,7 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import elieomatuku.cineast_android.database.dao.GenreDao
 import elieomatuku.cineast_android.database.entity.GenreEntity
-import elieomatuku.cineast_android.model.data.Genre
+import elieomatuku.cineast_android.core.model.Genre
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

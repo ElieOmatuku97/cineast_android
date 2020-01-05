@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android
 
-import elieomatuku.cineast_android.model.data.Genre
+import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.utils.UiUtils
 import org.junit.Test
 import org.junit.runner.RunWith

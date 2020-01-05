@@ -4,7 +4,7 @@ package elieomatuku.cineast_android.business.api
 import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.business.api.response.PersonalityResponse
-import elieomatuku.cineast_android.model.data.PersonalityDetails
+import elieomatuku.cineast_android.core.model.PersonalityDetails
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET

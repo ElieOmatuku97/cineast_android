@@ -5,7 +5,7 @@ import android.os.Handler
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.model.data.CineastError
+import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import org.kodein.di.generic.instance
 import timber.log.Timber

@@ -7,8 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import elieomatuku.cineast_android.database.dao.MovieDao
 import elieomatuku.cineast_android.database.entity.MovieEntity
-import elieomatuku.cineast_android.model.data.Movie
-import kotlinx.coroutines.runBlocking
+import elieomatuku.cineast_android.core.model.Movie
 import org.junit.*
 import org.junit.runner.RunWith
 

@@ -12,7 +12,7 @@ import elieomatuku.cineast_android.database.entity.MovieEntity
 import elieomatuku.cineast_android.database.entity.MovieType
 import elieomatuku.cineast_android.database.entity.MovieTypeEntity
 import elieomatuku.cineast_android.database.entity.MovieTypeJoin
-import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.core.model.Movie
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith

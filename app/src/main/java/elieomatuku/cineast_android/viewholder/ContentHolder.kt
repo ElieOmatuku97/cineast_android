@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.viewholder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.model.data.Content
+import elieomatuku.cineast_android.core.model.Content
 
 
 /**

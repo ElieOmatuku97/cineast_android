@@ -9,7 +9,7 @@ import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.CrewAdapter
-import elieomatuku.cineast_android.model.data.Crew
+import elieomatuku.cineast_android.core.model.Crew
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 

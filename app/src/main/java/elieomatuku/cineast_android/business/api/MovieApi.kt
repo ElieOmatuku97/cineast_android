@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.business.api
 
 import elieomatuku.cineast_android.business.api.response.PostResponse
-import elieomatuku.cineast_android.model.data.Movie
-import elieomatuku.cineast_android.model.data.MovieFacts
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.MovieFacts
 import elieomatuku.cineast_android.business.api.response.*
 import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody

@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.model.data.Content
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.fragment.PopularMoviesFragment
 import elieomatuku.cineast_android.fragment.PersonalityFragment
 import timber.log.Timber

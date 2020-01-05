@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.adapter
 import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.ViewGroup
-import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.MovieItemHolder
 import io.reactivex.subjects.PublishSubject

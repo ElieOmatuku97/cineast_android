@@ -4,8 +4,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.model.data.KnownFor
-import elieomatuku.cineast_android.model.data.PersonalityDetails
+import elieomatuku.cineast_android.core.model.KnownFor
+import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.fragment.KnownForFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
