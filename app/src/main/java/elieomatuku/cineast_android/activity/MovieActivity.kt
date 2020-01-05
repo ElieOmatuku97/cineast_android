@@ -8,7 +8,7 @@ import android.view.MenuItem
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.presenter.MoviePresenter
 import elieomatuku.cineast_android.utils.MovieUtils

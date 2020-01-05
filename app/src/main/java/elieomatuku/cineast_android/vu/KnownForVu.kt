@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.KnownForAdapter
-import elieomatuku.cineast_android.model.data.KnownFor
+import elieomatuku.cineast_android.core.model.KnownFor
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

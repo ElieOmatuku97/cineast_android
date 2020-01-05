@@ -9,7 +9,7 @@ import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.SimilarAdapter
-import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.core.model.Movie
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

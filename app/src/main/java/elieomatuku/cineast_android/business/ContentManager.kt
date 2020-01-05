@@ -6,9 +6,9 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.api.response.*
 import elieomatuku.cineast_android.database.repository.ContentRepository
-import elieomatuku.cineast_android.DiscoverContent
-import elieomatuku.cineast_android.model.data.*
-import elieomatuku.cineast_android.ValueStore
+import elieomatuku.cineast_android.core.DiscoverContent
+import elieomatuku.cineast_android.core.model.*
+import elieomatuku.cineast_android.core.ValueStore
 import elieomatuku.cineast_android.database.entity.MovieType
 import io.flatcircle.coroutinehelper.onFail
 import io.flatcircle.coroutinehelper.onSuccess
@@ -28,17 +28,17 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job
 
-    private val persistClient: ValueStore by App.kodein.instance()
+    private val persistClient: elieomatuku.cineast_android.core.ValueStore by App.kodein.instance()
     private val timeStamp: Long
         get() {
-            return persistClient.get(DiscoverContent.TIMESTAMP, null)?.toLong() ?: 0
+            return persistClient.get(elieomatuku.cineast_android.core.DiscoverContent.TIMESTAMP, null)?.toLong() ?: 0
         }
 
     /**
      * This is a list of discoverContent (movies & people) as seen on the database. Can not be changed directly
      */
 
-    fun discoverContent(): Flowable<DiscoverContent> {
+    fun discoverContent(): Flowable<elieomatuku.cineast_android.core.DiscoverContent> {
         return contentRepository.discoverContent()
     }
 
@@ -73,7 +73,7 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     private fun isContentUpToDate(): Boolean {
-        return DiscoverContent.isUpToDate(timeStamp)
+        return elieomatuku.cineast_android.core.DiscoverContent.isUpToDate(timeStamp)
     }
 
     fun downloadContent() {
@@ -96,7 +96,7 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
         }
     }
 
-    private fun updateContent(oldDiscoverContent: DiscoverContent = DiscoverContent.emptyDiscoverContent()) {
+    private fun updateContent(oldDiscoverContent: elieomatuku.cineast_android.core.DiscoverContent = elieomatuku.cineast_android.core.DiscoverContent.emptyDiscoverContent()) {
         Timber.i("update Content Called.")
         setContentInsertionTimeStamp()
         launch(Dispatchers.IO) {
@@ -248,6 +248,6 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
 
 
     private fun setContentInsertionTimeStamp() {
-        persistClient.set(DiscoverContent.TIMESTAMP, System.currentTimeMillis().toString())
+        persistClient.set(elieomatuku.cineast_android.core.DiscoverContent.TIMESTAMP, System.currentTimeMillis().toString())
     }
 }

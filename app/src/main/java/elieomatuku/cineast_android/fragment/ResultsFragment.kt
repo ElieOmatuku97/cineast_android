@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.model.data.Content
+import elieomatuku.cineast_android.core.model.Content
 
 class ResultsFragment(): Fragment() {
     companion object {

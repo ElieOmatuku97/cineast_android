@@ -8,7 +8,7 @@ import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.*
 import io.reactivex.subjects.PublishSubject

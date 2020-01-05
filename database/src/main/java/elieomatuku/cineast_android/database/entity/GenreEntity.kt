@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import elieomatuku.cineast_android.model.data.Genre
+import elieomatuku.cineast_android.core.model.Genre
 
 
 /**

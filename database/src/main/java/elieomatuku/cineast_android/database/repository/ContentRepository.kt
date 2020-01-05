@@ -1,12 +1,12 @@
 package elieomatuku.cineast_android.database.repository
 
 
-import elieomatuku.cineast_android.DiscoverContent
+import elieomatuku.cineast_android.core.DiscoverContent
 import elieomatuku.cineast_android.database.ContentDatabase
 import elieomatuku.cineast_android.database.entity.*
-import elieomatuku.cineast_android.model.data.Genre
-import elieomatuku.cineast_android.model.data.Movie
-import elieomatuku.cineast_android.model.data.Personality
+import elieomatuku.cineast_android.core.model.Genre
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.Personality
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.functions.BiFunction
@@ -30,11 +30,11 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
      * @return a [Flowable] that will emit every time the db has been updated.
      */
 
-    fun discoverContent(): Flowable<DiscoverContent> {
+    fun discoverContent(): Flowable<elieomatuku.cineast_android.core.DiscoverContent> {
         val moviesFlowable = Flowable.zip(popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies,
-                Function4<List<Movie>, List<Movie>, List<Movie>, List<Movie>, DiscoverContent>
+                Function4<List<Movie>, List<Movie>, List<Movie>, List<Movie>, elieomatuku.cineast_android.core.DiscoverContent>
                 { popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies ->
-                    DiscoverContent(
+                    elieomatuku.cineast_android.core.DiscoverContent(
                             popularMovies = popularMovies,
                             upcomingMovies = upcomingMovies,
                             nowPlayingMovies = nowPlayingMovies,

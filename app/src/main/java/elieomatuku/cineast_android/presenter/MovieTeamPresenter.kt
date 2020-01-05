@@ -1,9 +1,9 @@
 package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
-import elieomatuku.cineast_android.model.data.Cast
-import elieomatuku.cineast_android.model.data.Crew
-import elieomatuku.cineast_android.model.data.Person
+import elieomatuku.cineast_android.core.model.Cast
+import elieomatuku.cineast_android.core.model.Crew
+import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.vu.MovieTeamVu
 import io.reactivex.android.schedulers.AndroidSchedulers

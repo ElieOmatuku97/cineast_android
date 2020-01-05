@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.utils
 
 import elieomatuku.cineast_android.business.client.MoshiSerializer
 import elieomatuku.cineast_android.business.client.Serializer
-import elieomatuku.cineast_android.model.data.CineastError
+import elieomatuku.cineast_android.core.model.CineastError
 import okhttp3.ResponseBody
 
 object ApiUtils {

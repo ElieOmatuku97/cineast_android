@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.vu_search.view.*
 import com.google.android.material.tabs.TabLayout
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.model.data.Content
+import elieomatuku.cineast_android.core.model.Content
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

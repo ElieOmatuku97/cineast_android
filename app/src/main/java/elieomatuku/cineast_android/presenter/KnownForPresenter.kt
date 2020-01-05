@@ -3,10 +3,10 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.model.data.CineastError
-import elieomatuku.cineast_android.model.data.Genre
-import elieomatuku.cineast_android.model.data.Movie
-import elieomatuku.cineast_android.model.data.KnownFor
+import elieomatuku.cineast_android.core.model.CineastError
+import elieomatuku.cineast_android.core.model.Genre
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.vu.KnownForVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

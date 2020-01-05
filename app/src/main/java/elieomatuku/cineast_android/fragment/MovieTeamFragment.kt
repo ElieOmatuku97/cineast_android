@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.model.data.MovieSummary
+import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.presenter.MovieTeamPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.vu.MovieTeamVu

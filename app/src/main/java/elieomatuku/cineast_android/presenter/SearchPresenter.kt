@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.model.data.CineastError
+import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.business.api.response.PersonalityResponse
 import elieomatuku.cineast_android.vu.SearchVu

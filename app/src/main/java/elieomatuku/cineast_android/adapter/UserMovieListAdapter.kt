@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.adapter
 
 
-import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.core.model.Movie
 import io.reactivex.subjects.PublishSubject
 
 

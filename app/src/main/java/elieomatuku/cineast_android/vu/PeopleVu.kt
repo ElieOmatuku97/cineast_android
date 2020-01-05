@@ -15,7 +15,7 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.PeopleActivity
 import elieomatuku.cineast_android.adapter.PeopleItemAdapter
-import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter

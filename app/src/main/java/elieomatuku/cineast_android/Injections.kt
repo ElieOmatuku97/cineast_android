@@ -7,6 +7,7 @@ import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.service.ConnectionService
 import elieomatuku.cineast_android.business.ContentManager
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.database.DatabaseKodeinModule
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -22,7 +23,7 @@ fun depInjecT(app: Application): Kodein {
         bind<ContentManager>() with singleton { ContentManager(instance(), instance()) }
         bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
-        importOnce(CoreKodeinModule.getModule())
+        importOnce(elieomatuku.cineast_android.core.CoreKodeinModule.getModule())
 
         bind<TmdbUserClient>() with singleton {
             TmdbUserClient(instance(), instance())

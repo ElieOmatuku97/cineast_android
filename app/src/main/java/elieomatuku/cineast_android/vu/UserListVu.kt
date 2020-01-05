@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.adapter.UserMovieListAdapter
-import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.core.model.Movie
 
-import elieomatuku.cineast_android.model.data.Content
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.callback.SwipeToDeleteCallback
 import io.chthonic.mythos.mvp.FragmentWrapper
 

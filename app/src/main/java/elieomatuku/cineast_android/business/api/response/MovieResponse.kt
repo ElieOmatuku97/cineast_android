@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.business.api.response
 
 import androidx.annotation.Keep
-import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.core.model.Movie
 
 @Keep
 class MovieResponse {

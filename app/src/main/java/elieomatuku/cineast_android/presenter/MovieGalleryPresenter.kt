@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
-import elieomatuku.cineast_android.model.data.Poster
+import elieomatuku.cineast_android.core.model.Poster
 import elieomatuku.cineast_android.vu.MovieGalleryVu
 
 

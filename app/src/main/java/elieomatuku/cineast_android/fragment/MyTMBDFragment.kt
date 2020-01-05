@@ -11,8 +11,8 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.activity.UserListActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.model.data.AccessToken
-import elieomatuku.cineast_android.model.data.CineastError
+import elieomatuku.cineast_android.core.model.AccessToken
+import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.utils.WebLink
 import io.reactivex.android.schedulers.AndroidSchedulers

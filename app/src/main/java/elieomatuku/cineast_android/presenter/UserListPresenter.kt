@@ -2,8 +2,8 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.model.data.CineastError
-import elieomatuku.cineast_android.model.data.Movie
+import elieomatuku.cineast_android.core.model.CineastError
+import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.vu.UserListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber

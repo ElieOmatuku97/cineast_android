@@ -8,8 +8,8 @@ import elieomatuku.cineast_android.database.ContentDatabase
 import elieomatuku.cineast_android.database.repository.ContentRepository
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import elieomatuku.cineast_android.database.entity.MovieTypeEntity
-import elieomatuku.cineast_android.model.data.Movie
-import elieomatuku.cineast_android.model.data.Personality
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.Personality
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

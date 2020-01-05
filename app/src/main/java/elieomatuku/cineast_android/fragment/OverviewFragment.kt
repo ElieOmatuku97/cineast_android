@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.OverviewAdapter
-import elieomatuku.cineast_android.model.data.Movie
-import elieomatuku.cineast_android.model.data.MovieFacts
-import elieomatuku.cineast_android.model.data.MovieSummary
-import elieomatuku.cineast_android.model.data.Trailer
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.MovieFacts
+import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.core.model.Trailer
 import kotlinx.android.synthetic.main.fragment_overview.view.*
 import java.util.ArrayList
 

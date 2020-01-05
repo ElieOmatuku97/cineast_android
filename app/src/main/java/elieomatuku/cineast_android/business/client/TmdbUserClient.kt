@@ -3,11 +3,11 @@ package elieomatuku.cineast_android.business.client
 
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.model.data.*
+import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.business.api.AuthenticationApi
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
-import elieomatuku.cineast_android.ValueStore
+import elieomatuku.cineast_android.core.ValueStore
 import okhttp3.Interceptor
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +17,7 @@ import timber.log.Timber
 
 class TmdbUserClient(
         override val resources: Resources,
-        override val persistClient: ValueStore,
+        override val persistClient: elieomatuku.cineast_android.core.ValueStore,
         override val interceptor: Interceptor? = null) : BaseClient {
 
     val authenticationApi: AuthenticationApi by lazy {
