@@ -13,6 +13,7 @@ import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.MovieFacts
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Trailer
+import kotlinx.android.synthetic.main.fragment_overview.view.*
 import java.util.ArrayList
 
 class OverviewFragment: Fragment(){

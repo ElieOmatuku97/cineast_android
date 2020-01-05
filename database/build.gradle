@@ -35,8 +35,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
 
     // Local modules
     implementation project(':core')
@@ -67,15 +65,12 @@ dependencies {
     implementation 'org.kodein.di:kodein-di-generic-jvm:6.4.0'
 
 
-    // Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
-
     implementation "com.squareup.moshi:moshi:1.8.0"
 
 
-
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
     testImplementation 'junit:junit:4.12'
-
     androidTestImplementation 'androidx.arch.core:core-testing:2.0.0'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
