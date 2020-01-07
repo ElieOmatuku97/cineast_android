@@ -1,7 +1,8 @@
 # Cineast_android
 
 
-<img alt="screenshots/google-play-badge.png" src="screenshots/google-play-badge.png" />
+<img alt="https://play.google.com/store/apps/details?id=elieomatuku.cineast_android" 
+src="screenshots/google-play-badge.png" width="100"/>
 
 Cineast is an android app querying [TMDb API](https://developers.themoviedb.org/3/getting-started/introduction) to provide information on popular, trending, upcoming, top rated movies and popular actors. Cineast comes in with sharing, searching features, when signed in a user can add movies to their Favorites and  watch lists or rate them.  
 
