@@ -139,6 +139,13 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
             linkTextView.visibility = View.GONE
         }
 
+
+        if (movieSummary.isEmpty()) {
+            rateBtn.visibility = View.GONE
+        } else {
+            rateBtn.visibility = View.VISIBLE
+        }
+
         rateBtn.setOnClickListener {
             val rateDialogFragment = RateDialogFragment.newInstance(movie)
 
