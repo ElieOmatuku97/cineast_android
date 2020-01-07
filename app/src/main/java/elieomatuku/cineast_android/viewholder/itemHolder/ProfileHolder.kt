@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
 
 
-abstract class ProfileHolder (itemView: View): RecyclerView.ViewHolder(itemView), WebLink<String>  {
+abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView), WebLink<String> {
 
 
     fun linkify(spannable: Spannable): Spannable {
@@ -20,7 +20,7 @@ abstract class ProfileHolder (itemView: View): RecyclerView.ViewHolder(itemView)
                 override fun onClick(view: View) {
                     gotoWebview(url)
                 }
-            } )
+            })
         }
 
         return spannable
@@ -36,7 +36,7 @@ abstract class ProfileHolder (itemView: View): RecyclerView.ViewHolder(itemView)
 
 
     override fun gotoWebview(value: String) {
-        val webviewFragment: WebviewFragment? =  WebviewFragment.newInstance(value)
+        val webviewFragment: WebviewFragment? = WebviewFragment.newInstance(value)
         val fm = (itemView.context as AppCompatActivity).supportFragmentManager
 
         if (webviewFragment != null && fm != null) {

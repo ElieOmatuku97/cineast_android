@@ -24,7 +24,7 @@ import android.view.MenuItem
 import android.webkit.*
 
 
-object  UiUtils {
+object UiUtils {
 
     val LOG_TAG = UiUtils::class.java.simpleName
     val loadingViewDimRes: Int
@@ -35,7 +35,6 @@ object  UiUtils {
 
     val WIDGET_KEY = "content"
     val SCREEN_NAME_KEY = "screen_name"
-
 
 
     fun createLoadingIndicator(activity: Activity): PopupWindow {
@@ -61,15 +60,15 @@ object  UiUtils {
     }
 
 
-    fun getImageUrl (path: String?, imageUrl: String?, fallBackImageUrl:String? = null ): String {
-         return  getImageUri(imageUrl,  fallBackImageUrl)
+    fun getImageUrl(path: String?, imageUrl: String?, fallBackImageUrl: String? = null): String {
+        return getImageUri(imageUrl, fallBackImageUrl)
                 .buildUpon()
                 .appendEncodedPath(path)
                 .toString()
     }
 
-    private fun getImageUri (imageUrl: String?, fallBackImageUrl: String?): Uri {
-        return if (imageUrl != null)  {
+    private fun getImageUri(imageUrl: String?, fallBackImageUrl: String?): Uri {
+        return if (imageUrl != null) {
             Uri.parse(imageUrl)
         } else {
             Uri.parse(fallBackImageUrl)
@@ -97,10 +96,10 @@ object  UiUtils {
                 .toString()
     }
 
-    fun mapMovieGenreIdsWithGenreNames (movieGenreIds: List<Int>, genres: List<Genre>): String?{
+    fun mapMovieGenreIdsWithGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): String? {
         val genresNames = getGenreNames(movieGenreIds, genres)
-        return if ( (genresNames!= null) && !genresNames.isEmpty()) {
-            genresNames.joinToString ( ", " )
+        return if ((genresNames != null) && !genresNames.isEmpty()) {
+            genresNames.joinToString(", ")
         } else {
             null
         }
@@ -118,18 +117,18 @@ object  UiUtils {
     fun tintMenuItem(item: MenuItem, context: Context, colorRes: Int?) {
         val icon = item.icon
         if (colorRes != null)
-         item.icon = getTintedDrawable(icon, context, colorRes)
+            item.icon = getTintedDrawable(icon, context, colorRes)
     }
 
-    fun  getShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent? {
-        return if ((itemTitleOrName != null) && (itemId != null)){
+    fun getShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent? {
+        return if ((itemTitleOrName != null) && (itemId != null)) {
             configureShareIntent(itemTitleOrName, itemId, tmdbPath)
         } else {
-             null
+            null
         }
     }
 
-    private fun configureShareIntent (itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent {
+    private fun configureShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent {
         return Intent()
                 .setAction(Intent.ACTION_SEND)
                 .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
@@ -143,9 +142,9 @@ object  UiUtils {
         return drawableCompat
     }
 
-    private fun getGenreNames (movieGenreIds: List<Int>, genres: List<Genre>): MutableList<String>? {
-        val genresNames : MutableList<String>  = mutableListOf()
-        movieGenreIds.forEach {id ->
+    private fun getGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): MutableList<String>? {
+        val genresNames: MutableList<String> = mutableListOf()
+        movieGenreIds.forEach { id ->
             genres.forEach {
                 if (id == it.id)
                     genresNames.add(it.name)
@@ -155,7 +154,7 @@ object  UiUtils {
     }
 
 
-    fun configureWebView(webView: WebView, progressBar: androidx.core.widget.ContentLoadingProgressBar? = null) : WebView {
+    fun configureWebView(webView: WebView, progressBar: androidx.core.widget.ContentLoadingProgressBar? = null): WebView {
         val webv = webView
 
         webv.webChromeClient = object : WebChromeClient() {
@@ -172,22 +171,17 @@ object  UiUtils {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                 Log.d(LOG_TAG, "shouldOverrideUrl: ${request?.url}")
-                UiUtils.viewUrl(request?.url?.toString(), webv.context)
+                viewUrl(request?.url?.toString(), webv.context)
                 return true
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 Log.d(LOG_TAG, "shouldOverrideUrl: $url")
-                UiUtils.viewUrl(url, webv.context)
+                viewUrl(url, webv.context)
 
                 return true
             }
 
-            override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
-                Log.d(LOG_TAG, "SslError = $error")
-                handler.proceed() // Ignore SSL certificate errors
-
-            }
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
