@@ -3,6 +3,7 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
+import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.vu.MovieTeamVu
@@ -10,23 +11,24 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 
 
-class MovieTeamPresenter : BasePresenter <MovieTeamVu>() {
+class MovieTeamPresenter : BasePresenter<MovieTeamVu>() {
     companion object {
-        const val MOVIE_CAST = "movie_cast"
-        const val MOVIE_CREW = "movie_crew"
         const val SCREEN_NAME_KEY = "screen_name"
         const val PEOPLE_KEY = "peopleApi"
     }
 
 
-    var movieTitle : String? = null
+    var movieTitle: String? = null
 
     override fun onLink(vu: MovieTeamVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        val cast: List<Cast>? = args.get(MOVIE_CAST)  as List<Cast>
-        val crew: List<Crew>? = args.get(MOVIE_CREW) as List<Crew>
-        movieTitle = args.getString(MovieTeamFragment.MOVIE_TITLE)
+        val movieSummary: MovieSummary = args.get(MovieTeamFragment.MOVIE_SUMMARY) as MovieSummary
+
+        val cast: List<Cast>? = movieSummary.cast
+        val crew: List<Crew>? = movieSummary.crew
+        movieTitle = movieSummary.movie?.title
+
 
         if (cast != null && crew != null) {
             vu.updateVu(cast, crew)
@@ -34,7 +36,7 @@ class MovieTeamPresenter : BasePresenter <MovieTeamVu>() {
 
         rxSubs.add(vu.onCastSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPersonSelectedSuccess,this::onSelectionFail))
+                .subscribe(this::onPersonSelectedSuccess, this::onSelectionFail))
 
         rxSubs.add(vu.onCrewSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -50,6 +52,6 @@ class MovieTeamPresenter : BasePresenter <MovieTeamVu>() {
     }
 
     private fun onSelectionFail(t: Throwable) {
-        Timber.d( "movieSelectObservable failed:$t")
+        Timber.d("movieSelectObservable failed:$t")
     }
 }

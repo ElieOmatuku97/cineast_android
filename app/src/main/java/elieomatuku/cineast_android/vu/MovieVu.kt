@@ -25,6 +25,7 @@ import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 import java.util.ArrayList
 
 
@@ -100,6 +101,8 @@ class MovieVu(inflater: LayoutInflater,
 
     fun showMovie(movieSummary: MovieSummary) {
         toolbar?.title = movieSummary.screenName
+
+        Timber.d("movie summary: $movieSummary")
 
         adapter.movieSummary = movieSummary
         adapter.notifyDataSetChanged()

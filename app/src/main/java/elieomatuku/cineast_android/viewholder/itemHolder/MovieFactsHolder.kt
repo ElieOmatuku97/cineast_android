@@ -38,11 +38,14 @@ class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.revenue_view
     }
 
-    fun update(movieFacts: MovieFacts) {
+    fun update(movieFacts: MovieFacts?) {
         val formatter = DecimalFormat("#,###,###")
-        releaseDateView.text = "Release date: ${movieFacts.release_date}"
-        runtimeView.text = "Runtime: ${movieFacts.runtime}"
-        budgetView.text = "Budget: $${formatter.format(movieFacts.budget)}"
-        revenueView.text = "Revenue: $${movieFacts.revenue}"
+
+        movieFacts?.let {
+            releaseDateView.text = "Release date: ${movieFacts.release_date}"
+            runtimeView.text = "Runtime: ${movieFacts.runtime}"
+            budgetView.text = "Budget: $${formatter.format(movieFacts.budget)}"
+            revenueView.text = "Revenue: $${movieFacts.revenue}"
+        }
     }
 }

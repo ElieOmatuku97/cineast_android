@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.util.Log
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.core.model.*
+import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -14,8 +15,6 @@ import java.util.ArrayList
 
 class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
     companion object {
-        val LOG_TAG = SimilarMoviePresenter::class.java.simpleName
-        const val MOVIE_SIMILAR_MOVIES_KEY = "movie_similar_movies"
         const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
@@ -25,10 +24,12 @@ class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
 
     override fun onLink(vu: SimilarMovieVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
-        val similarMovies: List<Movie> = args.getParcelableArrayList(MOVIE_SIMILAR_MOVIES_KEY)
-        val movieTitle = args.getString(SimilarMovieFragment.MOVIE_TITLE)
-        vu.updateVu(similarMovies)
 
+        val movieSummary: MovieSummary = args.get(SimilarMovieFragment.MOVIE_SUMMARY) as MovieSummary
+
+        val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
+        val movieTitle = movieSummary.movie?.title
+        vu.updateVu(similarMovies)
 
         rxSubs.add(contentManager.genres()
                 .subscribeOn(Schedulers.io())
@@ -52,7 +53,7 @@ class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
                     params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                     vu.gotoMovie(params)
                 }, { t: Throwable ->
-                    Log.d(LOG_TAG, "movieSelectObservable failed:$t")
+                    Timber.e("movieSelectObservable failed:$t")
                 }
                 ))
     }
