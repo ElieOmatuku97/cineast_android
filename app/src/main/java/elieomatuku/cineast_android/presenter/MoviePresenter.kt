@@ -152,7 +152,8 @@ class MoviePresenter : BasePresenter<MovieVu>() {
             }
 
             override fun onFail(error: CineastError) {
-                Timber.e("error from fetching watch list: $error")
+                vu?.hideLoading()
+                vu?.showMovie(movieSummary)
             }
         })
     }
