@@ -39,6 +39,8 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     var similarMovies: List<Movie>? = listOf()
 
 
+
+
     override fun onLink(vu: MovieVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
@@ -54,6 +56,8 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         similarMovies = inState?.getParcelableArrayList(MOVIE_SIMILAR_KEY)
 
         vu.moviePresentedPublisher?.onNext(movie)
+
+        vu.countingIdlingResource.increment()
 
         if (movieFacts == null || trailers == null || cast == null || crew == null || similarMovies == null) {
             getMovieVideos(movie, screenName, genres)
@@ -131,6 +135,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
                 }
             }
         }
+
     }
 
 

@@ -30,9 +30,9 @@
         tools:visibility="visible"/>
 
     <TextView
+        android:id="@+id/item_release_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/item_release_view"
         android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
         android:layout_marginTop="@dimen/activity_margin_top"
         android:textSize="@dimen/holder_profile_movie_text_size"
