@@ -10,6 +10,7 @@ import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance
 import timber.log.Timber
@@ -37,8 +38,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     var cast: List<Cast>? = listOf()
     var crew: List<Crew>? = listOf()
     var similarMovies: List<Movie>? = listOf()
-
-
 
 
     override fun onLink(vu: MovieVu, inState: Bundle?, args: Bundle) {
@@ -140,22 +139,30 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
 
     private fun checkIfMovieInWatchList(movieSummary: MovieSummary) {
-        tmdbContentClient.getWatchList(object : AsyncResponse<List<Movie>> {
-            override fun onSuccess(result: List<Movie>?) {
-                Timber.d("watch list result: ${result} \n movieApi selected: ${movieSummary.movie}")
-                val isInWatchList = result?.let {
+        launch {
+            val movieResponse = tmdbContentClient.getWatchList()
+
+            if (movieResponse.isSuccess) {
+
+                val movies = movieResponse.getOrNull()?.results
+
+                val isInWatchList = movies?.let {
                     it.contains(movieSummary.movie)
                 } ?: false
 
-                vu?.watchListCheckPublisher?.onNext(isInWatchList)
-                checkIfMovieInFavoriteList(movieSummary)
-            }
+                launch(Dispatchers.Main) {
+                    vu?.watchListCheckPublisher?.onNext(isInWatchList)
+                }
 
-            override fun onFail(error: CineastError) {
-                vu?.hideLoading()
-                vu?.showMovie(movieSummary)
+                checkIfMovieInFavoriteList(movieSummary)
+
+            } else {
+                launch(Dispatchers.Main) {
+                    vu?.hideLoading()
+                    vu?.showMovie(movieSummary)
+                }
             }
-        })
+        }
     }
 
 

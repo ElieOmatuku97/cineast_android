@@ -23,7 +23,7 @@ import timber.log.Timber
 
 class TmdbContentClient(
         override val resources: Resources,
-        override val persistClient: elieomatuku.cineast_android.core.ValueStore,
+        override val persistClient: ValueStore,
         override val interceptor: Interceptor? = null) : BaseClient {
     companion object {
         const val MOVIE = "movieApi"
@@ -98,7 +98,7 @@ class TmdbContentClient(
 
     suspend fun getGenres(): ApiResult<GenreResponse> {
         return try {
-            val value =  movieApi.getGenre(API_KEY).await()
+            val value = movieApi.getGenre(API_KEY).await()
             ApiResult.success(value)
         } catch (e: Exception) {
             ApiResult.fail(e)
@@ -130,7 +130,7 @@ class TmdbContentClient(
     }
 
 
-    suspend fun getMovieCredits(movie: Movie) : ApiResult<MovieCreditsResponse> {
+    suspend fun getMovieCredits(movie: Movie): ApiResult<MovieCreditsResponse> {
         return try {
             val value = movieApi.getCredits(movie.id, API_KEY).await()
             Timber.i("get Movie Credits was succesful: $value")
@@ -290,25 +290,20 @@ class TmdbContentClient(
     }
 
 
-    fun getWatchList(asyncResponse: AsyncResponse<List<Movie>>) {
+    suspend fun getWatchList(): ApiResult<MovieResponse> {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
-            movieApi.getWatchList(API_KEY, it).enqueue(object : Callback<MovieResponse> {
-                override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                    val success = response?.isSuccessful ?: false
-                    if (success) {
-                        response.body()?.results?.let {
-                            asyncResponse.onSuccess(it)
-                        }
-                    } else {
-                        asyncResponse.onFail(ApiUtils.throwableToCineastError(response.errorBody()))
-                    }
-                }
-
-                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-                }
-            })
+            return try {
+                val movieResponse = movieApi.getWatchList(API_KEY, it).await()
+                Timber.i("getWatchList was succesful: $movieResponse")
+                ApiResult.success(movieResponse)
+            } catch (e: Exception) {
+                Timber.w("getWatchList failed with $e")
+                ApiResult.fail(e)
+            }
         }
+
+        Timber.w("getWatchList failed, session id null.")
+        return ApiResult.notImplemented()
     }
 
     fun addMovieToWatchList(movie: Movie) {

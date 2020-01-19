@@ -4,6 +4,4 @@ import androidx.annotation.Keep
 import elieomatuku.cineast_android.core.model.Movie
 
 @Keep
-class MovieResponse {
-    var results: List<Movie> = listOf()
-}
+data class MovieResponse (val results: List<Movie> = listOf())

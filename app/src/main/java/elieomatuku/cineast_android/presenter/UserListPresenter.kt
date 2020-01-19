@@ -6,6 +6,8 @@ import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.vu.UserListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
@@ -50,21 +52,23 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                 }
             })
         } else if (isWatchList) {
-            tmdbContentClient.getWatchList(object : AsyncResponse<List<Movie>> {
-                override fun onSuccess(result: List<Movie>?) {
-                    handler.post {
-                        result?.let {
+            launch {
+                val movieResponse = tmdbContentClient.getWatchList()
+                if (movieResponse.isSuccess) {
+                    val movies = movieResponse.getOrNull()?.results
+                    movies?.let {
+                        launch(Dispatchers.Main) {
                             vu.updateVu(it, screenNameRes)
                         }
                     }
+                } else {
+                    launch(Dispatchers.Main){
+                        Timber.e("error : ${movieResponse.exceptionOrNull()}")
+                        vu.updateErrorView(movieResponse.exceptionOrNull()?.message)
+                    }
                 }
+            }
 
-                override fun onFail(error: CineastError) {
-                    Timber.e("error : $error")
-
-                    vu.updateErrorView(error?.status_message)
-                }
-            })
         } else {
             tmdbContentClient.getUserRatedMovies(object : AsyncResponse<List<Movie>> {
                 override fun onSuccess(result: List<Movie>?) {

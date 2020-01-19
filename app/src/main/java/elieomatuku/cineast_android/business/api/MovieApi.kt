@@ -76,7 +76,7 @@ interface MovieApi {
     fun getMoviesWithSearch(@Query(API_KEY) apiKey: String, @Query(QUERY) query: String): Call<MovieResponse>
 
     @GET(WATCHLIST_MOVIE)
-    fun getWatchList(@Query(API_KEY) apiKey: String, @Query(SESSION_ID) sessionId: String): Call<MovieResponse>
+    fun getWatchList(@Query(API_KEY) apiKey: String, @Query(SESSION_ID) sessionId: String): Deferred<MovieResponse>
 
     @POST(UPDATE_WATCHLIST_MOVIE)
     fun updateWatchList(@Query(API_KEY) apyKey: String, @Query(SESSION_ID) sessionId: String, @Body media: RequestBody): Call<PostResponse>
