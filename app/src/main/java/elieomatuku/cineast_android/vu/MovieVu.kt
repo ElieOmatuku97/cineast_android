@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.test.espresso.idling.CountingIdlingResource
 import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
@@ -25,6 +26,7 @@ import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 import java.util.ArrayList
 
 
@@ -82,6 +84,11 @@ class MovieVu(inflater: LayoutInflater,
         MovieAdapter(onProfileClickedPicturePublisher)
     }
 
+    /**
+     * Only used for UI test, instance of [CountingIdlingResource].
+     */
+    val countingIdlingResource = CountingIdlingResource("Movie loader")
+
     override fun onCreate() {
         super.onCreate()
 
@@ -101,11 +108,18 @@ class MovieVu(inflater: LayoutInflater,
     fun showMovie(movieSummary: MovieSummary) {
         toolbar?.title = movieSummary.screenName
 
+        Timber.d("movie summary: $movieSummary")
+
         adapter.movieSummary = movieSummary
         adapter.notifyDataSetChanged()
 
         val overViewFragment = OverviewFragment.newInstance(movieSummary)
         replaceFragment(overViewFragment)
+
+        /**
+         * This decrement idle resource method, used for espresso ui test.
+         */
+        countingIdlingResource.decrement()
     }
 
     private fun replaceFragment(fragment: Fragment) {

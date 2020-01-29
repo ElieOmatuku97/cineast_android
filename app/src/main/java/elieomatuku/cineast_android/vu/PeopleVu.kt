@@ -96,16 +96,14 @@ class PeopleVu(inflater: LayoutInflater,
 
 
             adapter.notifyDataSetChanged()
-            initializeFragmentOnPeopleClicked(personalityDetails.biography)
+            initializeFragmentOnPeopleClicked(personalityDetails)
         }
     }
 
 
-    private fun initializeFragmentOnPeopleClicked(peopleBio: String?) {
-        if (peopleBio != null) {
-            val initialFragmentOnMovieClicked = OverviewPeopleFragment.newInstance(peopleBio)
-            (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, initialFragmentOnMovieClicked).commit()
-        }
+    private fun initializeFragmentOnPeopleClicked(personalityDetails: PersonalityDetails) {
+        val initialFragmentOnMovieClicked = OverviewPeopleFragment.newInstance(personalityDetails)
+        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, initialFragmentOnMovieClicked).commit()
     }
 
     fun goToGallery(posters: List<Poster>?) {

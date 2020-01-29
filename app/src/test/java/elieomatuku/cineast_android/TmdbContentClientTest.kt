@@ -57,4 +57,5 @@ class TmdbContentClientTest {
         Assert.assertEquals(true, mockedClient("movie/181812?api_key=490e29e92ea126a6878a02b2779beb24", "getMovieDetails.json").getMovieFacts(movie).isSuccess)
     }
 
+
 }

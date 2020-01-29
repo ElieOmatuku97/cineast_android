@@ -100,7 +100,7 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
                 val menuPeopleHolder = holder as MenuPeopleHolder
                 menuPeopleHolder.overviewSegmentBtn.setOnClickListener {
                     val activity = it.context as FragmentActivity
-                    val overviewFragment = OverviewPeopleFragment.newInstance(personalityDetails?.biography)
+                    val overviewFragment = OverviewPeopleFragment.newInstance(personalityDetails)
                     (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, overviewFragment).commit()
 
                 }

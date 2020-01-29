@@ -1,37 +1,26 @@
 package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
-import android.os.Parcelable
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.presenter.MovieTeamPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.vu.MovieTeamVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
-import java.util.ArrayList
 
 
-class MovieTeamFragment:  MVPFragment <MovieTeamPresenter, MovieTeamVu>()  {
+class MovieTeamFragment : MVPFragment<MovieTeamPresenter, MovieTeamVu>() {
     companion object {
-        const val MOVIE_CAST = "movie_cast"
-        const val MOVIE_CREW = "movie_crew"
-        const val MOVIE_TITLE = "movie_title"
+        const val MOVIE_SUMMARY = "movie_summary"
 
         private val MVP_UID by lazy {
-            MovieTeamFragment.hashCode()
+            hashCode()
         }
 
         fun newInstance(movieSummary: MovieSummary): MovieTeamFragment {
             val args = Bundle()
 
-            val cast = movieSummary.cast
-            args.putParcelableArrayList(MOVIE_CAST, cast as ArrayList<out Parcelable>)
-
-            val crew = movieSummary.crew
-            args.putParcelableArrayList(MOVIE_CREW, crew as ArrayList<out Parcelable>)
-
-            val title = movieSummary.movie?.title
-            args.putString(MOVIE_TITLE, title)
+            args.putParcelable(MOVIE_SUMMARY, movieSummary)
 
             val fragment = MovieTeamFragment()
             fragment.arguments = args

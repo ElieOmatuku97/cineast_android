@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.viewholder.SummaryHolder
+import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.viewholder.BiographyHolder
+
 
 class OverviewPeopleFragment: Fragment() {
     companion object {
-        const val OVERVIEW_PEOPLE_BIO = "overview_people_bio"
+        const val OVERVIEW_PEOPLE_DETAILS = "overview_people_details"
 
-        fun newInstance(peopleBio: String?): OverviewPeopleFragment {
+        fun newInstance(personalityDetails: PersonalityDetails): OverviewPeopleFragment {
             val args = Bundle()
-            args.putString(OVERVIEW_PEOPLE_BIO, peopleBio)
+            args.putParcelable(OVERVIEW_PEOPLE_DETAILS, personalityDetails)
 
             val fragment = OverviewPeopleFragment()
             fragment.arguments = args
@@ -24,13 +25,14 @@ class OverviewPeopleFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val peopleBio: String = arguments?.get(OVERVIEW_PEOPLE_BIO) as String
+        val peopleDetails: PersonalityDetails = arguments?.get(OVERVIEW_PEOPLE_DETAILS)  as PersonalityDetails
         val rootView = FrameLayout(this.activity)
         rootView.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-        val holder = SummaryHolder.newInstance(rootView, R.layout.holder_bio)
+        val holder = BiographyHolder.newInstance(rootView)
         rootView.addView(holder.itemView)
-        holder.update(peopleBio, R.string.biography)
+        val biography = peopleDetails.biography
+        holder.update(biography)
         return rootView
     }
 }

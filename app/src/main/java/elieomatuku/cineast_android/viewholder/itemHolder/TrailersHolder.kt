@@ -1,21 +1,21 @@
 package elieomatuku.cineast_android.viewholder.itemHolder
 
 
-
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.TrailersAdapter
 import elieomatuku.cineast_android.core.model.Trailer
 import kotlinx.android.synthetic.main.holder_trailers.view.*
 
 
-class TrailersHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
+class TrailersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
-        fun createView (parent: ViewGroup): View {
+        fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_trailers, parent, false)
         }
 
@@ -28,24 +28,37 @@ class TrailersHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.trailers_view
     }
 
-    val adapter: TrailersAdapter by lazy {
+    private val adapter: TrailersAdapter by lazy {
         TrailersAdapter()
     }
 
 
-    fun update (movieTrailers: List<Trailer>) {
+    private val root: ConstraintLayout by lazy {
+        itemView.root
+    }
+
+    fun update(movieTrailers: List<Trailer>) {
         val trailersVideoIds = mutableListOf<String?>()
-        val trailersVideosTitleMap  = mutableMapOf<String?, String?>()
+        val trailersVideosTitleMap = mutableMapOf<String?, String?>()
 
-        movieTrailers.forEach {
-            trailersVideoIds.add(it.key)
-            trailersVideosTitleMap[it.key] = it.name
+
+        if (!movieTrailers.isNullOrEmpty()) {
+
+            root.visibility = View.VISIBLE
+
+            movieTrailers.forEach {
+                trailersVideoIds.add(it.key)
+                trailersVideosTitleMap[it.key] = it.name
+            }
+
+            listView.adapter = adapter
+            listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+            adapter.trailers = trailersVideoIds as List<String>
+            adapter.trailersVideosTitleMap = trailersVideosTitleMap as Map<String, String>
+            adapter.notifyDataSetChanged()
+
+        } else {
+            root.visibility = View.GONE
         }
-
-        listView.adapter = adapter
-        listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-        adapter.trailers = trailersVideoIds as List<String>
-        adapter.trailersVideosTitleMap = trailersVideosTitleMap as Map<String, String>
-        adapter.notifyDataSetChanged()
     }
 }
