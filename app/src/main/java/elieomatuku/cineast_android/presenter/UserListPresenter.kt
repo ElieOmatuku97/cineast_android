@@ -33,24 +33,20 @@ class UserListPresenter : ListPresenter<UserListVu>() {
         val screenNameRes = args.getInt(SCREEN_NAME_KEY)
 
 
-
         if (isFavoriteList) {
-            tmdbContentClient.getFavoriteList(object : AsyncResponse<List<Movie>> {
-                override fun onSuccess(result: List<Movie>?) {
-
-                    handler.post {
-                        result?.let {
+            launch {
+                val movieResponse = tmdbContentClient.getFavoriteList()
+                if (movieResponse.isSuccess) {
+                    val movies = movieResponse.getOrNull()?.results
+                    movies?.let {
+                        launch(Dispatchers.Main) {
                             vu.updateVu(it, screenNameRes)
                         }
                     }
+                } else {
+                    vu.updateErrorView(movieResponse.exceptionOrNull()?.message)
                 }
-
-                override fun onFail(error: CineastError) {
-                    Timber.e("error : $error")
-
-                    vu.updateErrorView(error?.status_message)
-                }
-            })
+            }
         } else if (isWatchList) {
             launch {
                 val movieResponse = tmdbContentClient.getWatchList()

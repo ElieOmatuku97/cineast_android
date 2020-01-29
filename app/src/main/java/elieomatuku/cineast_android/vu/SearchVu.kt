@@ -43,7 +43,7 @@ class SearchVu(inflater: LayoutInflater,
 
     private var searchAdapter: SearchFragmentPagerAdapter? = null
 
-    val tabLayout by lazy {
+    private val tabLayout by lazy {
         rootView.sliding_tabs
     }
 
