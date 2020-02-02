@@ -48,7 +48,7 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
             hasValidData = true
         }
 
-    val hasEmptyState: Boolean
+    private val hasEmptyState: Boolean
         // only display empty state after valid data is set
         get() = hasValidData && (personalityDetails.isEmpty())
 
@@ -97,6 +97,8 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
 
             TYPE_MENU_PEOPLE -> {
                 val menuPeopleHolder = holder as MenuPeopleHolder
+                menuPeopleHolder.update(personalityDetails)
+
                 menuPeopleHolder.overviewSegmentBtn.setOnClickListener {
                     val overviewFragment = OverviewPeopleFragment.newInstance(personalityDetails)
                     onMenuClickedPublisher.onNext(overviewFragment)
