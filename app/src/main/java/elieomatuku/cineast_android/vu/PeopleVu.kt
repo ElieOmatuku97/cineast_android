@@ -61,8 +61,15 @@ class PeopleVu(inflater: LayoutInflater,
         }
     }
 
+    private val onMenuClickedPublisher: PublishSubject<Fragment> by lazy {
+        PublishSubject.create<Fragment>()
+    }
+
+    val onMenuClickedObservable: Observable<Fragment>
+        get() = onMenuClickedPublisher.hide()
+
     val adapter: PeopleItemAdapter by lazy {
-        PeopleItemAdapter(onProfileClickedPicturePublisher)
+        PeopleItemAdapter(onProfileClickedPicturePublisher, onMenuClickedPublisher)
     }
 
     override fun onCreate() {
@@ -128,5 +135,9 @@ class PeopleVu(inflater: LayoutInflater,
     fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
+    }
+
+    fun gotoMenu(fragment: Fragment){
+        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 }

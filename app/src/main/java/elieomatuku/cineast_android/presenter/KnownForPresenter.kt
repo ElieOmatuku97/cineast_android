@@ -27,7 +27,7 @@ class KnownForPresenter : BasePresenter<KnownForVu>() {
         super.onLink(vu, inState, args)
 
         val knownFor: List<KnownFor> = args.getParcelableArrayList(PEOPLE_CAST_KEY)
-        val peopleName: String = args.getString(PEOPLE_NAME_KEY)
+        val peopleName: String? = args.getString(PEOPLE_NAME_KEY)
         vu.updateVu(knownFor)
 
 
@@ -56,15 +56,16 @@ class KnownForPresenter : BasePresenter<KnownForVu>() {
     }
 
 
-    private fun getMovie(movieId: Int, peopleName: String? = null) {
+    private fun getMovie(movieId: Int, peopleName: String?) {
         contentManager.getMovie(movieId, object : AsyncResponse<Movie> {
             override fun onSuccess(response: Movie?) {
                 val movie: Movie = response as Movie
                 handler.post {
                     val params = Bundle()
-                    if (peopleName != null) {
-                        params.putString(SCREEN_NAME_KEY, peopleName)
+                    peopleName?.let {
+                        params.putString(SCREEN_NAME_KEY, it)
                     }
+
                     params.putParcelable(MOVIE_KEY, movie)
                     params.putParcelableArrayList(SimilarMoviePresenter.MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                     vu?.gotoMovie(params)

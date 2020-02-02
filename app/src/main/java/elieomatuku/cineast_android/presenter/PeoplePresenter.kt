@@ -73,6 +73,13 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
                 }))
 
 
+        rxSubs.add(vu.onMenuClickedObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    vu.gotoMenu(it)
+                }))
+
+
     }
 
     private fun getPeopleMovies(actor: Person, personalityDetails: PersonalityDetails?, screenName: String) {

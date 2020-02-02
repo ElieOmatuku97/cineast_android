@@ -1,9 +1,8 @@
 package elieomatuku.cineast_android.adapter
 
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.R
+import androidx.fragment.app.Fragment
 import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.fragment.KnownForFragment
@@ -15,7 +14,7 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>, private val onMenuClickedPublisher: PublishSubject<Fragment>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_PEOPLE_PROFILE = 0
         const val TYPE_MENU_PEOPLE = 1
@@ -99,16 +98,13 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
             TYPE_MENU_PEOPLE -> {
                 val menuPeopleHolder = holder as MenuPeopleHolder
                 menuPeopleHolder.overviewSegmentBtn.setOnClickListener {
-                    val activity = it.context as FragmentActivity
                     val overviewFragment = OverviewPeopleFragment.newInstance(personalityDetails)
-                    (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, overviewFragment).commit()
-
+                    onMenuClickedPublisher.onNext(overviewFragment)
                 }
 
                 menuPeopleHolder.knownForSegmentBtn.setOnClickListener {
-                    val activity = it.context as FragmentActivity
                     val peopleFragment = KnownForFragment.newInstance(peopleMovies, personalityDetails.name)
-                    (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, peopleFragment).commit()
+                    onMenuClickedPublisher.onNext(peopleFragment)
                 }
             }
 
