@@ -106,7 +106,6 @@ class MovieVu(inflater: LayoutInflater,
 
     override fun onCreate() {
         super.onCreate()
-
         setUpListView()
     }
 
@@ -129,7 +128,7 @@ class MovieVu(inflater: LayoutInflater,
         adapter.notifyDataSetChanged()
 
         val overViewFragment = OverviewFragment.newInstance(movieSummary)
-        replaceFragment(overViewFragment)
+        updateContainer(overViewFragment)
 
         /**
          * This decrement idle resource method, used for espresso ui test.
@@ -137,23 +136,12 @@ class MovieVu(inflater: LayoutInflater,
         countingIdlingResource.decrement()
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
-    }
-
     fun goToGallery(posters: List<Poster>?) {
         val galleryFragment = MovieGalleryFragment.newInstance()
         val args = Bundle()
         args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
         galleryFragment.arguments = args
-        addFragment(galleryFragment, activity)
-    }
-
-    private fun addFragment(fragment: Fragment?, activity: Activity) {
-        val fm = (activity as AppCompatActivity).supportFragmentManager
-        if (fragment != null && fm != null) {
-            fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
-        }
+        addFragment(galleryFragment)
     }
 
     fun updateErrorView(errorMsg: String?) {
@@ -163,31 +151,33 @@ class MovieVu(inflater: LayoutInflater,
     }
 
     fun gotoTab(displayAndMovieSummary: Pair<String, MovieSummary>) {
-        when (displayAndMovieSummary.first) {
-            SIMILAR_MOVIES -> gotoSimilarMovies(displayAndMovieSummary.second)
-            MOVIE_CREW -> gotoMovieCrew(displayAndMovieSummary.second)
-            MOVIE_OVERVIEW -> gotoMovieOverview(displayAndMovieSummary.second)
+        val fragment = when (displayAndMovieSummary.first) {
+            SIMILAR_MOVIES -> {
+                SimilarMovieFragment.newInstance(displayAndMovieSummary.second)
+            }
+            MOVIE_CREW -> {
+                MovieTeamFragment.newInstance(displayAndMovieSummary.second)
+            }
+            MOVIE_OVERVIEW -> {
+                OverviewFragment.newInstance(displayAndMovieSummary.second)
+            }
+            else -> null
+        }
+
+        if (fragment != null) {
+            updateContainer(fragment)
         }
     }
 
-    fun gotoMovieOverview(movieSummary: MovieSummary) {
+    fun updateContainer(fragment: Fragment) {
         if (activity is FragmentActivity) {
-            val overviewFragment = OverviewFragment.newInstance(movieSummary)
-            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, overviewFragment).commit()
+            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
         }
     }
 
-    fun gotoMovieCrew(movieSummary: MovieSummary) {
-        if (activity is FragmentActivity) {
-            val peopleFragment = MovieTeamFragment.newInstance(movieSummary)
-            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, peopleFragment).commit()
-        }
-    }
-
-    fun gotoSimilarMovies(movieSummary: MovieSummary) {
-        if (activity is FragmentActivity) {
-            val similarFragment = SimilarMovieFragment.newInstance(movieSummary)
-            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, similarFragment).commit()
+    private fun addFragment(fragment: Fragment) {
+        if (activity is AppCompatActivity) {
+            activity.supportFragmentManager.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
         }
     }
 }
