@@ -36,6 +36,8 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         val genres: List<Genre> = args.getParcelableArrayList(MOVIE_GENRES_KEY)
 
 
+        Timber.d("onLink called")
+
         vu.moviePresentedPublisher?.onNext(movie)
         vu.countingIdlingResource.increment()
 
@@ -88,7 +90,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
             val response = contentManager.getSimilarMovie(movie)
             similarMovies = response?.results
             val movieSummary = MovieSummary(movie, trailers, movieFacts, genres, screenName, cast, crew, similarMovies)
-
 
             if (!tmdbUserClient.isLoggedIn()) {
                 handler.post {

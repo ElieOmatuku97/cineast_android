@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.vu.MovieVu
 import kotlinx.android.synthetic.main.holder_menu_movie.view.*
 
 
@@ -34,4 +36,13 @@ class MenuMovieHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     }
 
 
+    fun update(movieSummary: MovieSummary, checkedTab: String) {
+       itemView.visibility = if (movieSummary.movie != null) View.VISIBLE else View.GONE
+
+        when(checkedTab) {
+            MovieVu.MOVIE_OVERVIEW -> overviewSegmentBtn.isChecked = true
+            MovieVu.MOVIE_CREW -> peopleSegmentBtn.isChecked = true
+            MovieVu.SIMILAR_MOVIES -> similarSegmentBtn.isChecked = true
+        }
+    }
 }

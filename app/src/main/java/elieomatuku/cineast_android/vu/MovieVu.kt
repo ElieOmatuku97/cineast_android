@@ -120,10 +120,9 @@ class MovieVu(inflater: LayoutInflater,
     }
 
     fun showMovie(movieSummary: MovieSummary) {
+        Timber.d("showMovie: movie summary = $movieSummary")
+
         toolbar?.title = movieSummary.screenName
-
-        Timber.d("movie summary: $movieSummary")
-
         adapter.movieSummary = movieSummary
         adapter.notifyDataSetChanged()
 

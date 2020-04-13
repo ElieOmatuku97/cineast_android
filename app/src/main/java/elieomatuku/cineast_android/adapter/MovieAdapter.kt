@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android.adapter
 
-import android.view.View
+
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.*
@@ -25,6 +25,7 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
         errorMessage = null
     }
 
+    private var initialCheckedTab: String = MovieVu.MOVIE_OVERVIEW
 
     var hasValidData = false
         private set
@@ -70,43 +71,34 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
         return when (viewType) {
             TYPE_MOVIE_PROFILE -> ProfileMovieHolder.newInstance(parent, onProfileClickedPicturePublisher)
             TYPE_MENU_MOVIE -> MenuMovieHolder.newInstance(parent)
-            TYPE_EMPTY_STATE -> {
-                EmptyStateHolder.newInstance(parent)
-            }
+            TYPE_EMPTY_STATE -> EmptyStateHolder.newInstance(parent)
             else -> throw RuntimeException("View Type does not exist.")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val viewType = getItemViewType(position)
-        when (viewType) {
-            TYPE_MOVIE_PROFILE -> {
-                val movieProfileHolder = holder as ProfileMovieHolder
-                movieProfileHolder.update(movieSummary)
+        if (holder is ProfileMovieHolder) {
+            holder.update(movieSummary)
+        }
+
+        if (holder is MenuMovieHolder) {
+            holder.update(movieSummary, initialCheckedTab)
+
+            holder.overviewSegmentBtn.setOnClickListener {
+                segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_OVERVIEW, movieSummary))
             }
 
-            TYPE_MENU_MOVIE -> {
-                val menuMovieHolder = holder as MenuMovieHolder
-
-                menuMovieHolder.itemView.visibility = if (movieSummary.movie != null) View.VISIBLE else View.GONE
-
-                menuMovieHolder.overviewSegmentBtn.setOnClickListener {
-                    segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_OVERVIEW, movieSummary))
-                }
-
-                menuMovieHolder.peopleSegmentBtn.setOnClickListener {
-                    segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_CREW, movieSummary))
-                }
-
-                menuMovieHolder.similarSegmentBtn.setOnClickListener {
-                    segmentedButtonsPublisher.onNext(Pair(MovieVu.SIMILAR_MOVIES, movieSummary))
-                }
+            holder.peopleSegmentBtn.setOnClickListener {
+                segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_CREW, movieSummary))
             }
 
-            TYPE_EMPTY_STATE -> {
-                (holder as EmptyStateHolder).update(errorMessage)
+            holder.similarSegmentBtn.setOnClickListener {
+                segmentedButtonsPublisher.onNext(Pair(MovieVu.SIMILAR_MOVIES, movieSummary))
             }
+        }
 
+        if (holder is EmptyStateHolder) {
+            holder.update(errorMessage)
         }
     }
 }
