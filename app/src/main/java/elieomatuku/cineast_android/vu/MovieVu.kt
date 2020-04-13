@@ -21,6 +21,8 @@ import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
 import elieomatuku.cineast_android.core.model.*
+import elieomatuku.cineast_android.fragment.MovieTeamFragment
+import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -37,6 +39,12 @@ class MovieVu(inflater: LayoutInflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
+
+    companion object {
+        const val MOVIE_OVERVIEW = "overview"
+        const val MOVIE_CREW = "crew"
+        const val SIMILAR_MOVIES = "similar_movies"
+    }
 
     override val toolbar: Toolbar?
         get() = rootView.toolbar
@@ -56,6 +64,13 @@ class MovieVu(inflater: LayoutInflater,
     val onProfileClickedPictureObservable: Observable<Int>
         get() = onProfileClickedPicturePublisher.hide()
 
+
+    private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>> by lazy {
+        PublishSubject.create<Pair<String, MovieSummary>>()
+    }
+    val segmentedButtonsObservable: Observable<Pair<String, MovieSummary>>
+        get() = segmentedButtonsPublisher.hide()
+
     val moviePresentedPublisher: PublishSubject<Movie>? by lazy {
         if (activity is MovieActivity) {
             activity.moviePresentedPublisher
@@ -64,7 +79,7 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
-    val watchListCheckPublisher: PublishSubject<Boolean> ? by lazy {
+    val watchListCheckPublisher: PublishSubject<Boolean>? by lazy {
         if (activity is MovieActivity) {
             activity.watchListCheckPublisher
         } else {
@@ -72,7 +87,7 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
-    val favoriteListCheckPublisher: PublishSubject<Boolean> ? by lazy {
+    val favoriteListCheckPublisher: PublishSubject<Boolean>? by lazy {
         if (activity is MovieActivity) {
             activity.favoriteListCheckPublisher
         } else {
@@ -81,7 +96,7 @@ class MovieVu(inflater: LayoutInflater,
     }
 
     private val adapter: MovieAdapter by lazy {
-        MovieAdapter(onProfileClickedPicturePublisher)
+        MovieAdapter(onProfileClickedPicturePublisher, segmentedButtonsPublisher)
     }
 
     /**
@@ -91,30 +106,28 @@ class MovieVu(inflater: LayoutInflater,
 
     override fun onCreate() {
         super.onCreate()
-
         setUpListView()
     }
 
-    private fun setUpListView(){
+    private fun setUpListView() {
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity)
 
         val itemDecorationDrawable = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
-        val dividerItemDecoration =  DividerItemDecorator(itemDecorationDrawable)
+        val dividerItemDecoration = DividerItemDecorator(itemDecorationDrawable)
 
         listView.addItemDecoration(dividerItemDecoration)
     }
 
     fun showMovie(movieSummary: MovieSummary) {
+        Timber.d("showMovie: movie summary = $movieSummary")
+
         toolbar?.title = movieSummary.screenName
-
-        Timber.d("movie summary: $movieSummary")
-
         adapter.movieSummary = movieSummary
         adapter.notifyDataSetChanged()
 
         val overViewFragment = OverviewFragment.newInstance(movieSummary)
-        replaceFragment(overViewFragment)
+        updateContainer(overViewFragment)
 
         /**
          * This decrement idle resource method, used for espresso ui test.
@@ -122,28 +135,48 @@ class MovieVu(inflater: LayoutInflater,
         countingIdlingResource.decrement()
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
-    }
-
     fun goToGallery(posters: List<Poster>?) {
         val galleryFragment = MovieGalleryFragment.newInstance()
         val args = Bundle()
         args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
-        galleryFragment.arguments =  args
-        addFragment(galleryFragment, activity)
-    }
-
-    private fun addFragment(fragment: Fragment?, activity: Activity) {
-        val fm = (activity as AppCompatActivity).supportFragmentManager
-        if (fragment != null && fm != null) {
-            fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
-        }
+        galleryFragment.arguments = args
+        addFragment(galleryFragment)
     }
 
     fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
+    }
+
+    fun gotoTab(displayAndMovieSummary: Pair<String, MovieSummary>) {
+        val fragment = when (displayAndMovieSummary.first) {
+            SIMILAR_MOVIES -> {
+                SimilarMovieFragment.newInstance(displayAndMovieSummary.second)
+            }
+            MOVIE_CREW -> {
+                MovieTeamFragment.newInstance(displayAndMovieSummary.second)
+            }
+            MOVIE_OVERVIEW -> {
+                OverviewFragment.newInstance(displayAndMovieSummary.second)
+            }
+            else -> null
+        }
+
+        if (fragment != null) {
+            updateContainer(fragment)
+        }
+    }
+
+    fun updateContainer(fragment: Fragment) {
+        if (activity is FragmentActivity) {
+            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+        }
+    }
+
+    private fun addFragment(fragment: Fragment) {
+        if (activity is AppCompatActivity) {
+            activity.supportFragmentManager.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
+        }
     }
 }

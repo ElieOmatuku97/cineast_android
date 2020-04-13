@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             app:backgroundTint="@color/color_grey_app"
             android:text="@string/overview"
-            android:checked="true"
+
             app:buttonTint="@color/color_orange_app" />
 
         <androidx.appcompat.widget.AppCompatRadioButton

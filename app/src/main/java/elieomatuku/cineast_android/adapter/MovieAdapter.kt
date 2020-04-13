@@ -1,21 +1,17 @@
 package elieomatuku.cineast_android.adapter
 
-import android.view.View
-import androidx.fragment.app.FragmentActivity
+
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.fragment.OverviewFragment
-import elieomatuku.cineast_android.fragment.MovieTeamFragment
-import elieomatuku.cineast_android.fragment.SimilarMovieFragment
-import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.*
+import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>, private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_MOVIE_PROFILE = 0
         const val TYPE_MENU_MOVIE = 1
@@ -29,6 +25,7 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
         errorMessage = null
     }
 
+    private var initialCheckedTab: String = MovieVu.MOVIE_OVERVIEW
 
     var hasValidData = false
         private set
@@ -74,49 +71,34 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
         return when (viewType) {
             TYPE_MOVIE_PROFILE -> ProfileMovieHolder.newInstance(parent, onProfileClickedPicturePublisher)
             TYPE_MENU_MOVIE -> MenuMovieHolder.newInstance(parent)
-            TYPE_EMPTY_STATE -> {
-                EmptyStateHolder.newInstance(parent)
-            }
+            TYPE_EMPTY_STATE -> EmptyStateHolder.newInstance(parent)
             else -> throw RuntimeException("View Type does not exist.")
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val viewType = getItemViewType(position)
-        when (viewType) {
-            TYPE_MOVIE_PROFILE -> {
-                val movieProfileHolder = holder as ProfileMovieHolder
-                movieProfileHolder.update(movieSummary)
+        if (holder is ProfileMovieHolder) {
+            holder.update(movieSummary)
+        }
+
+        if (holder is MenuMovieHolder) {
+            holder.update(movieSummary, initialCheckedTab)
+
+            holder.overviewSegmentBtn.setOnClickListener {
+                segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_OVERVIEW, movieSummary))
             }
 
-            TYPE_MENU_MOVIE -> {
-                val menuMovieHolder = holder as MenuMovieHolder
-
-                menuMovieHolder.itemView.visibility = if (movieSummary.movie != null) View.VISIBLE else View.GONE
-
-                menuMovieHolder.overviewSegmentBtn.setOnClickListener {
-                    val activity = it.context as FragmentActivity
-                    val overviewFragment = OverviewFragment.newInstance(movieSummary)
-                    (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, overviewFragment).commit()
-                }
-
-                menuMovieHolder.peopleSegmentBtn.setOnClickListener {
-                    val activity = it.context as FragmentActivity
-                    val peopleFragment = MovieTeamFragment.newInstance(movieSummary)
-                    (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, peopleFragment).commit()
-                }
-
-                menuMovieHolder.similarSegmentBtn.setOnClickListener {
-                    val activity = it.context as FragmentActivity
-                    val similarFragment = SimilarMovieFragment.newInstance(movieSummary)
-                    (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, similarFragment).commit()
-                }
+            holder.peopleSegmentBtn.setOnClickListener {
+                segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_CREW, movieSummary))
             }
 
-            TYPE_EMPTY_STATE -> {
-                (holder as EmptyStateHolder).update(errorMessage)
+            holder.similarSegmentBtn.setOnClickListener {
+                segmentedButtonsPublisher.onNext(Pair(MovieVu.SIMILAR_MOVIES, movieSummary))
             }
+        }
 
+        if (holder is EmptyStateHolder) {
+            holder.update(errorMessage)
         }
     }
 }
