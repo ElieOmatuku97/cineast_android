@@ -1,21 +1,17 @@
 package elieomatuku.cineast_android.adapter
 
 import android.view.View
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.fragment.OverviewFragment
-import elieomatuku.cineast_android.fragment.MovieTeamFragment
-import elieomatuku.cineast_android.fragment.SimilarMovieFragment
-import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.*
+import elieomatuku.cineast_android.vu.MovieVu
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>, private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_MOVIE_PROFILE = 0
         const val TYPE_MENU_MOVIE = 1
@@ -95,21 +91,15 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
                 menuMovieHolder.itemView.visibility = if (movieSummary.movie != null) View.VISIBLE else View.GONE
 
                 menuMovieHolder.overviewSegmentBtn.setOnClickListener {
-                    val activity = it.context as FragmentActivity
-                    val overviewFragment = OverviewFragment.newInstance(movieSummary)
-                    (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, overviewFragment).commit()
+                    segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_OVERVIEW, movieSummary))
                 }
 
                 menuMovieHolder.peopleSegmentBtn.setOnClickListener {
-                    val activity = it.context as FragmentActivity
-                    val peopleFragment = MovieTeamFragment.newInstance(movieSummary)
-                    (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, peopleFragment).commit()
+                    segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_CREW, movieSummary))
                 }
 
                 menuMovieHolder.similarSegmentBtn.setOnClickListener {
-                    val activity = it.context as FragmentActivity
-                    val similarFragment = SimilarMovieFragment.newInstance(movieSummary)
-                    (activity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, similarFragment).commit()
+                    segmentedButtonsPublisher.onNext(Pair(MovieVu.SIMILAR_MOVIES, movieSummary))
                 }
             }
 

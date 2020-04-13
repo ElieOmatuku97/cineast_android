@@ -37,18 +37,24 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
 
         vu.moviePresentedPublisher?.onNext(movie)
-
         vu.countingIdlingResource.increment()
 
         getMovieVideos(movie, screenName, genres)
 
         rxSubs.add(vu.onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ movieId ->
+                .subscribe { movieId ->
                     launch {
                         getMovieImages(movieId)
                     }
-                })
+                }
+        )
+
+        rxSubs.add(vu.segmentedButtonsObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe { displayAndMovieSummary ->
+                    vu.gotoTab(displayAndMovieSummary)
+                }
         )
     }
 
@@ -78,7 +84,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     }
 
     private fun getSimilarMovies(movie: Movie, screenName: String?, genres: List<Genre>?, movieFacts: MovieFacts?, trailers: List<Trailer>?, cast: List<Cast>?, crew: List<Crew>?) {
-
         launch {
             val response = contentManager.getSimilarMovie(movie)
             similarMovies = response?.results
@@ -154,7 +159,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     }
 
     suspend fun getMovieImages(movieId: Int) {
-        val imageResponse =  contentManager.getMovieImages(movieId)
+        val imageResponse = contentManager.getMovieImages(movieId)
         if (imageResponse.isSuccess) {
             val posters = imageResponse.getOrNull()?.posters
 

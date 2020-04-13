@@ -21,6 +21,8 @@ import elieomatuku.cineast_android.fragment.MovieGalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
 import elieomatuku.cineast_android.core.model.*
+import elieomatuku.cineast_android.fragment.MovieTeamFragment
+import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -37,6 +39,12 @@ class MovieVu(inflater: LayoutInflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
+
+    companion object {
+        const val MOVIE_OVERVIEW = "overview"
+        const val MOVIE_CREW = "crew"
+        const val SIMILAR_MOVIES = "similar_movies"
+    }
 
     override val toolbar: Toolbar?
         get() = rootView.toolbar
@@ -56,6 +64,13 @@ class MovieVu(inflater: LayoutInflater,
     val onProfileClickedPictureObservable: Observable<Int>
         get() = onProfileClickedPicturePublisher.hide()
 
+
+    private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>> by lazy {
+        PublishSubject.create<Pair<String, MovieSummary>>()
+    }
+    val segmentedButtonsObservable: Observable<Pair<String, MovieSummary>>
+        get() = segmentedButtonsPublisher.hide()
+
     val moviePresentedPublisher: PublishSubject<Movie>? by lazy {
         if (activity is MovieActivity) {
             activity.moviePresentedPublisher
@@ -64,7 +79,7 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
-    val watchListCheckPublisher: PublishSubject<Boolean> ? by lazy {
+    val watchListCheckPublisher: PublishSubject<Boolean>? by lazy {
         if (activity is MovieActivity) {
             activity.watchListCheckPublisher
         } else {
@@ -72,7 +87,7 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
-    val favoriteListCheckPublisher: PublishSubject<Boolean> ? by lazy {
+    val favoriteListCheckPublisher: PublishSubject<Boolean>? by lazy {
         if (activity is MovieActivity) {
             activity.favoriteListCheckPublisher
         } else {
@@ -81,7 +96,7 @@ class MovieVu(inflater: LayoutInflater,
     }
 
     private val adapter: MovieAdapter by lazy {
-        MovieAdapter(onProfileClickedPicturePublisher)
+        MovieAdapter(onProfileClickedPicturePublisher, segmentedButtonsPublisher)
     }
 
     /**
@@ -95,12 +110,12 @@ class MovieVu(inflater: LayoutInflater,
         setUpListView()
     }
 
-    private fun setUpListView(){
+    private fun setUpListView() {
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity)
 
         val itemDecorationDrawable = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
-        val dividerItemDecoration =  DividerItemDecorator(itemDecorationDrawable)
+        val dividerItemDecoration = DividerItemDecorator(itemDecorationDrawable)
 
         listView.addItemDecoration(dividerItemDecoration)
     }
@@ -130,7 +145,7 @@ class MovieVu(inflater: LayoutInflater,
         val galleryFragment = MovieGalleryFragment.newInstance()
         val args = Bundle()
         args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
-        galleryFragment.arguments =  args
+        galleryFragment.arguments = args
         addFragment(galleryFragment, activity)
     }
 
@@ -145,5 +160,34 @@ class MovieVu(inflater: LayoutInflater,
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE
+    }
+
+    fun gotoTab(displayAndMovieSummary: Pair<String, MovieSummary>) {
+        when (displayAndMovieSummary.first) {
+            SIMILAR_MOVIES -> gotoSimilarMovies(displayAndMovieSummary.second)
+            MOVIE_CREW -> gotoMovieCrew(displayAndMovieSummary.second)
+            MOVIE_OVERVIEW -> gotoMovieOverview(displayAndMovieSummary.second)
+        }
+    }
+
+    fun gotoMovieOverview(movieSummary: MovieSummary) {
+        if (activity is FragmentActivity) {
+            val overviewFragment = OverviewFragment.newInstance(movieSummary)
+            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, overviewFragment).commit()
+        }
+    }
+
+    fun gotoMovieCrew(movieSummary: MovieSummary) {
+        if (activity is FragmentActivity) {
+            val peopleFragment = MovieTeamFragment.newInstance(movieSummary)
+            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, peopleFragment).commit()
+        }
+    }
+
+    fun gotoSimilarMovies(movieSummary: MovieSummary) {
+        if (activity is FragmentActivity) {
+            val similarFragment = SimilarMovieFragment.newInstance(movieSummary)
+            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, similarFragment).commit()
+        }
     }
 }
