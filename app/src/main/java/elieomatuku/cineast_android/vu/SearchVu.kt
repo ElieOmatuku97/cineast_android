@@ -27,6 +27,10 @@ class SearchVu(inflater: LayoutInflater,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
 
+    companion object {
+        const val GRIDVIEW_NUMBER_OF_COLUMNS = 2
+    }
+
     override val toolbar: Toolbar?
         get() = rootView.toolbar
 

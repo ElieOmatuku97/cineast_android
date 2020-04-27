@@ -8,23 +8,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.vu.SearchVu.Companion.GRIDVIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
-class PopularMoviesVu(inflater: LayoutInflater,
-                      activity: Activity,
-                      fragmentWrapper: FragmentWrapper?,
-                      parentView: ViewGroup?) : BaseVu(inflater,
+class MoviesSearchVu(inflater: LayoutInflater,
+                     activity: Activity,
+                     fragmentWrapper: FragmentWrapper?,
+                     parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
 
-    companion object {
-        const val GRIDVIEW_NUMBER_OF_COLUMNS = 2
-    }
 
     override fun getRootViewLayoutId() = R.layout.fragment_search
 

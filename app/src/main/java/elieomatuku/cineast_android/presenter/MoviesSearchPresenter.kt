@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.vu.PopularMoviesVu
+import elieomatuku.cineast_android.vu.MoviesSearchVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 
-class PopularMoviesPresenter : BasePresenter<PopularMoviesVu>() {
+class MoviesSearchPresenter : BasePresenter<MoviesSearchVu>() {
     companion object {
         const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
@@ -22,7 +22,7 @@ class PopularMoviesPresenter : BasePresenter<PopularMoviesVu>() {
     private var genres: List<Genre>? = listOf()
 
 
-    override fun onLink(vu: PopularMoviesVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: MoviesSearchVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         vu.showLoading()

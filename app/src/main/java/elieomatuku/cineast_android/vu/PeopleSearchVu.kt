@@ -9,6 +9,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.PersonalitySummaryAdapter
 import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.vu.SearchVu.Companion.GRIDVIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -30,8 +31,6 @@ class PeopleSearchVu(inflater: LayoutInflater,
     private val gridView by lazy {
         rootView.grid_view
     }
-
-    private val GRIDVIEW_NUMBER_OF_COLUMNS = 2
 
     var gridLayoutManager: GridLayoutManager? = null
     private val adapter: PersonalitySummaryAdapter by lazy {

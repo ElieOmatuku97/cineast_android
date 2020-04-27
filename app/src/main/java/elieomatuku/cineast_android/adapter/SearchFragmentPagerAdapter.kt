@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.fragment.PopularMoviesFragment
+import elieomatuku.cineast_android.fragment.MoviesSearchFragment
 import elieomatuku.cineast_android.fragment.PeopleSearchFragment
 import timber.log.Timber
 
@@ -26,7 +26,7 @@ class SearchFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) 
     override fun getItem(position: Int): Fragment {
         Timber.d("SearchFragmentPagerAdapter position: $position")
         return when (titleResList[position]){
-            R.string.movies -> PopularMoviesFragment.newInstance()
+            R.string.movies -> MoviesSearchFragment.newInstance()
             R.string.people -> PeopleSearchFragment.newInstance()
             else -> PeopleSearchFragment.newInstance()
         }
