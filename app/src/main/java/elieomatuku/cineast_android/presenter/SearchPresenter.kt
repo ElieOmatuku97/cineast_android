@@ -30,12 +30,12 @@ class SearchPresenter: BasePresenter<SearchVu>() {
     }
 
 
-    fun searchMovies(argQuery: String) {
+    private fun searchMovies(argQuery: String) {
         contentManager.searchMovies(argQuery, object: AsyncResponse<MovieResponse>{
             override fun onSuccess(response: MovieResponse?) {
                 handler.post {
                     vu?.hideLoading()
-                    vu?.openItemListActivity(response?.results)
+                    vu?.showSearchResults(response?.results)
                 }
             }
 
@@ -48,12 +48,12 @@ class SearchPresenter: BasePresenter<SearchVu>() {
         })
     }
 
-    fun searchPeople(argQuery: String) {
+    private fun searchPeople(argQuery: String) {
         contentManager.searchPeople(argQuery, object: AsyncResponse<PersonalityResponse> {
             override fun onSuccess(response: PersonalityResponse?) {
                 handler.post {
                     vu?.hideLoading()
-                    vu?.openItemListActivity(response?.results)
+                    vu?.showSearchResults(response?.results)
                 }
             }
 

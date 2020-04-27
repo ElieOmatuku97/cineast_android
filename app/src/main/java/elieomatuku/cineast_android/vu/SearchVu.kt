@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.adapter.SearchFragmentPagerAdapter
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.vu_main.view.*
 import kotlinx.android.synthetic.main.vu_search.view.*
-import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.core.model.Content
@@ -45,20 +45,16 @@ class SearchVu(inflater: LayoutInflater,
     val searchQueryObservable: Observable<String>
         get() = searchQueryPublisher.hide()
 
-    private var searchAdapter: SearchFragmentPagerAdapter? = null
+    private val searchAdapter by lazy {
+        SearchFragmentPagerAdapter(checkNotNull(fragmentWrapper?.support))
+    }
 
     private val tabLayout by lazy {
         rootView.sliding_tabs
     }
 
     private val searchPager by lazy {
-        val pager = rootView.search_viewpager
-
-        pager
-    }
-
-    val tabLayoutOnPageChangeListener by lazy {
-        TabLayout.TabLayoutOnPageChangeListener(tabLayout)
+        rootView.search_viewpager
     }
 
     var isMovieSearchScreen: Boolean = true
@@ -66,52 +62,26 @@ class SearchVu(inflater: LayoutInflater,
     override fun onCreate() {
         Timber.d("SearchVu created")
 
-        searchAdapter = fragmentWrapper?.support?.childFragmentManager?.let {
-            SearchFragmentPagerAdapter(it)
-        }
-
-        if (searchAdapter != null) {
-            searchPager.adapter = searchAdapter
-            searchPager.addOnPageChangeListener(tabLayoutOnPageChangeListener)
-        }
+        searchPager.adapter = searchAdapter
+        TabLayoutMediator(tabLayout, searchPager) { tab, position ->
+            if (position == 0) {
+                tab.text = activity.getText(R.string.movies)
+                isMovieSearchScreen = true
+            } else {
+                tab.text = activity.getText(R.string.people)
+                isMovieSearchScreen = false
+            }
+        }.attach()
 
         if (toolbar != null) {
             UiUtils.initToolbar(activity as AppCompatActivity, toolbar)
         }
-
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                if (tab != null) {
-                    if (tab.position == 0) {
-                        isMovieSearchScreen = true
-                    } else {
-                        isMovieSearchScreen = false
-                    }
-                    searchPager.setCurrentItem(tab.position, true)
-                }
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Timber.d("Tab : ${tab?.position} unselected")
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                Timber.d("Tab : ${tab?.position} reselected")
-            }
-        })
     }
 
-
-    fun openItemListActivity(results: List<Content>?) {
-        if (results != null) {
+    fun showSearchResults(results: List<Content>?) {
+        results?.let {
             ItemListActivity.startItemListActivity(activity, results, R.string.search_hint)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        searchPager.removeOnPageChangeListener(tabLayoutOnPageChangeListener)
-
     }
 }
 
