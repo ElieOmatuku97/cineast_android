@@ -15,11 +15,12 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 
-class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) : ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
+class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) :
+        ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
 
     override val adapter: RecyclerView.Adapter<*>
-        get() =  movieListAdapter
+        get() = movieListAdapter
 
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()

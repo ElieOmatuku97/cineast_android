@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
 
-class PersonalityVu(inflater: LayoutInflater,
-                    activity: Activity,
-                    fragmentWrapper: FragmentWrapper?,
-                    parentView: ViewGroup?) : BaseVu(inflater,
+class PeopleSearchVu(inflater: LayoutInflater,
+                     activity: Activity,
+                     fragmentWrapper: FragmentWrapper?,
+                     parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {

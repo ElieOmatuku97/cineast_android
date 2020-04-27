@@ -2,12 +2,12 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.vu.PersonalityVu
+import elieomatuku.cineast_android.vu.PeopleSearchVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class PersonalityPresenter : BasePresenter<PersonalityVu>() {
+class PeopleSearchPresenter : BasePresenter<PeopleSearchVu>() {
     companion object {
         const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
@@ -15,7 +15,7 @@ class PersonalityPresenter : BasePresenter<PersonalityVu>() {
     }
 
 
-    override fun onLink(vu: PersonalityVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: PeopleSearchVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         vu.showLoading()

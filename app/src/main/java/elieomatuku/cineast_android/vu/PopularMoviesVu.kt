@@ -22,6 +22,10 @@ class PopularMoviesVu(inflater: LayoutInflater,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
 
+    companion object {
+        const val GRIDVIEW_NUMBER_OF_COLUMNS = 2
+    }
+
     override fun getRootViewLayoutId() = R.layout.fragment_search
 
 
@@ -35,8 +39,6 @@ class PopularMoviesVu(inflater: LayoutInflater,
     private val gridView by lazy {
         rootView.grid_view
     }
-
-    private val GRIDVIEW_NUMBER_OF_COLUMNS = 2
 
     var gridLayoutManager: GridLayoutManager? = null
     private val adapter: MovieListAdapter by lazy {

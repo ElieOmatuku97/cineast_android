@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.fragment.PopularMoviesFragment
-import elieomatuku.cineast_android.fragment.PersonalityFragment
+import elieomatuku.cineast_android.fragment.PeopleSearchFragment
 import timber.log.Timber
 
 
@@ -27,8 +27,8 @@ class SearchFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) 
         Timber.d("SearchFragmentPagerAdapter position: $position")
         return when (titleResList[position]){
             R.string.movies -> PopularMoviesFragment.newInstance()
-            R.string.people -> PersonalityFragment.newInstance()
-            else -> PersonalityFragment.newInstance()
+            R.string.people -> PeopleSearchFragment.newInstance()
+            else -> PeopleSearchFragment.newInstance()
         }
     }
 }
