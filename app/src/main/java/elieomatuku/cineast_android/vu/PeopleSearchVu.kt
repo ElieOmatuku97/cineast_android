@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.PersonalitySummaryAdapter
+import elieomatuku.cineast_android.adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.vu.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -16,10 +17,10 @@ import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
 
-class PersonalityVu(inflater: LayoutInflater,
-                    activity: Activity,
-                    fragmentWrapper: FragmentWrapper?,
-                    parentView: ViewGroup?) : BaseVu(inflater,
+class PeopleSearchVu(inflater: LayoutInflater,
+                     activity: Activity,
+                     fragmentWrapper: FragmentWrapper?,
+                     parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
@@ -31,11 +32,9 @@ class PersonalityVu(inflater: LayoutInflater,
         rootView.grid_view
     }
 
-    private val GRIDVIEW_NUMBER_OF_COLUMNS = 2
-
     var gridLayoutManager: GridLayoutManager? = null
-    private val adapter: PersonalitySummaryAdapter by lazy {
-        PersonalitySummaryAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
+    private val adapter: PeopleLisAdapter by lazy {
+        PeopleLisAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
     }
 
     private val peopleSelectPublisher: PublishSubject<Person> by lazy {
@@ -50,7 +49,7 @@ class PersonalityVu(inflater: LayoutInflater,
         super.onCreate()
 
         gridView.adapter = adapter
-        gridLayoutManager = GridLayoutManager(this.fragmentWrapper?.support?.context, GRIDVIEW_NUMBER_OF_COLUMNS)
+        gridLayoutManager = GridLayoutManager(this.fragmentWrapper?.support?.context, GRID_VIEW_NUMBER_OF_COLUMNS)
         gridView.layoutManager = gridLayoutManager
 
     }

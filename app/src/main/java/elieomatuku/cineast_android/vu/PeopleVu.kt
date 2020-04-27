@@ -14,11 +14,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.PeopleActivity
-import elieomatuku.cineast_android.adapter.PeopleItemAdapter
+import elieomatuku.cineast_android.adapter.PeopleSummaryAdapter
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.fragment.MovieGalleryFragment
+import elieomatuku.cineast_android.fragment.GalleryFragment
+import elieomatuku.cineast_android.fragment.KnownForFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
-import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.presenter.GalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -34,6 +35,11 @@ class PeopleVu(inflater: LayoutInflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
+
+    companion object {
+        const val OVERVIEW = "overview"
+        const val KNOWN_FOR = "known_for"
+    }
 
     override val toolbar: Toolbar?
         get() = rootView.toolbar
@@ -61,16 +67,18 @@ class PeopleVu(inflater: LayoutInflater,
         }
     }
 
-    private val onMenuClickedPublisher: PublishSubject<Fragment> by lazy {
-        PublishSubject.create<Fragment>()
+    private val onSegmentedButtonsPublisher: PublishSubject<Pair<String, PersonalityDetails>> by lazy {
+        PublishSubject.create<Pair<String, PersonalityDetails>>()
     }
 
-    val onMenuClickedObservable: Observable<Fragment>
-        get() = onMenuClickedPublisher.hide()
+    val onSegmentedButtonsObservable: Observable<Pair<String, PersonalityDetails>>
+        get() = onSegmentedButtonsPublisher.hide()
 
-    val adapter: PeopleItemAdapter by lazy {
-        PeopleItemAdapter(onProfileClickedPicturePublisher, onMenuClickedPublisher)
+    val adapter: PeopleSummaryAdapter by lazy {
+        PeopleSummaryAdapter(onProfileClickedPicturePublisher, onSegmentedButtonsPublisher)
     }
+
+    private var _knownFor: List<KnownFor> = listOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -89,47 +97,33 @@ class PeopleVu(inflater: LayoutInflater,
         listView.layoutManager = null
     }
 
-    fun updateVu(personalityDetails: PersonalityDetails?, screenName: String?, peopleMovies: List<KnownFor>?) {
-        if (personalityDetails != null && screenName != null && peopleMovies != null) {
+    fun updateVu(personalityDetails: PersonalityDetails?, screenName: String?, knownFor: List<KnownFor>?) {
+        if (personalityDetails != null && screenName != null && knownFor != null) {
             toolbar?.title = screenName
 
-
             adapter.personalityDetails = personalityDetails
-            adapter.peopleMovies = peopleMovies.toMutableList()
-
+            _knownFor = knownFor.toMutableList()
 
             val dividerItemDecoration = DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
             listView.addItemDecoration(dividerItemDecoration)
 
-
             adapter.notifyDataSetChanged()
-            initializeFragmentOnPeopleClicked(personalityDetails)
+            initDetailsFragment(personalityDetails)
         }
     }
 
-
-    private fun initializeFragmentOnPeopleClicked(personalityDetails: PersonalityDetails) {
-        val initialFragmentOnMovieClicked = OverviewPeopleFragment.newInstance(personalityDetails)
-        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, initialFragmentOnMovieClicked).commit()
+    private fun initDetailsFragment(personalityDetails: PersonalityDetails) {
+        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, OverviewPeopleFragment.newInstance(personalityDetails)).commit()
     }
 
     fun goToGallery(posters: List<Poster>?) {
-        val galleryFragment = MovieGalleryFragment.newInstance()
-        galleryFragment.arguments = getArgs(posters)
-        addFragment(galleryFragment, activity)
-    }
+        val galleryFragment = GalleryFragment.newInstance()
 
-    private fun getArgs(posters: List<Poster>?): Bundle {
         val args = Bundle()
-        args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
-        return args
-    }
+        args.putParcelableArrayList(GalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
+        galleryFragment.arguments = args
 
-    private fun addFragment(fragment: Fragment, activity: Activity) {
-        val fm = (activity as AppCompatActivity).supportFragmentManager
-        if (fragment != null && fm != null) {
-            fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
-        }
+        (activity as AppCompatActivity).supportFragmentManager.beginTransaction().add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
     }
 
     fun updateErrorView(errorMsg: String?) {
@@ -137,7 +131,19 @@ class PeopleVu(inflater: LayoutInflater,
         adapter.notifyDataSetChanged()
     }
 
-    fun gotoMenu(fragment: Fragment){
-        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+    fun gotoTab(displayAndPersonalityDetails: Pair<String, PersonalityDetails>) {
+        val fragment = when (displayAndPersonalityDetails.first) {
+            OVERVIEW -> {
+                OverviewPeopleFragment.newInstance(displayAndPersonalityDetails.second)
+            }
+            KNOWN_FOR -> {
+                KnownForFragment.newInstance(_knownFor, displayAndPersonalityDetails.second.name)
+            }
+            else -> null
+        }
+
+        if (fragment != null) {
+            (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+        }
     }
 }

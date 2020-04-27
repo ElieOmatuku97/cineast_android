@@ -6,7 +6,7 @@ import androidx.appcompat.widget.*
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.MovieAdapter
+import elieomatuku.cineast_android.adapter.MovieSummaryAdapter
 import kotlinx.android.synthetic.main.vu_movie.view.*
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
@@ -17,13 +17,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.test.espresso.idling.CountingIdlingResource
-import elieomatuku.cineast_android.fragment.MovieGalleryFragment
+import elieomatuku.cineast_android.fragment.GalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
-import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.presenter.GalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -95,8 +95,8 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
-    private val adapter: MovieAdapter by lazy {
-        MovieAdapter(onProfileClickedPicturePublisher, segmentedButtonsPublisher)
+    private val adapter: MovieSummaryAdapter by lazy {
+        MovieSummaryAdapter(onProfileClickedPicturePublisher, segmentedButtonsPublisher)
     }
 
     /**
@@ -136,11 +136,14 @@ class MovieVu(inflater: LayoutInflater,
     }
 
     fun goToGallery(posters: List<Poster>?) {
-        val galleryFragment = MovieGalleryFragment.newInstance()
+        val galleryFragment = GalleryFragment.newInstance()
         val args = Bundle()
-        args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
+        args.putParcelableArrayList(GalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
         galleryFragment.arguments = args
-        addFragment(galleryFragment)
+
+        if (activity is AppCompatActivity) {
+            activity.supportFragmentManager.beginTransaction().add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
+        }
     }
 
     fun updateErrorView(errorMsg: String?) {
@@ -168,15 +171,9 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
-    fun updateContainer(fragment: Fragment) {
+    private fun updateContainer(fragment: Fragment) {
         if (activity is FragmentActivity) {
             activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
-        }
-    }
-
-    private fun addFragment(fragment: Fragment) {
-        if (activity is AppCompatActivity) {
-            activity.supportFragmentManager.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
         }
     }
 }

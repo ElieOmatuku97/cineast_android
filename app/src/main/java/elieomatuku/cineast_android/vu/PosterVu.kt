@@ -9,33 +9,32 @@ import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
-import kotlinx.android.synthetic.main.fragment_image.view.*
+import kotlinx.android.synthetic.main.fragment_poster.view.*
 
-class MoviePosterVu (inflater: LayoutInflater,
-                     activity: Activity,
-                     fragmentWrapper: FragmentWrapper?,
-                     parentView: ViewGroup?) : BaseVu(inflater,
+class PosterVu(inflater: LayoutInflater,
+               activity: Activity,
+               fragmentWrapper: FragmentWrapper?,
+               parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
 
-    val imageView : ImageView by lazy {
-        rootView.image_view
+    private val posterView: ImageView by lazy {
+        rootView.poster_view
     }
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.fragment_image
+        return R.layout.fragment_poster
     }
-
 
 
     fun updateImage(moviePosterPath: String?) {
         if (!moviePosterPath.isNullOrEmpty()) {
             val imageUrl = UiUtils.getImageUrl(moviePosterPath, activity.getString(R.string.image_header))
-            imageView.visibility = View.VISIBLE
+            posterView.visibility = View.VISIBLE
             Picasso.get()
                     .load(imageUrl)
-                    .into(imageView)
+                    .into(posterView)
         }
     }
 }

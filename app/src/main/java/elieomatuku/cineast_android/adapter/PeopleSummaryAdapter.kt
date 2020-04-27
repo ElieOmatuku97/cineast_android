@@ -2,25 +2,22 @@ package elieomatuku.cineast_android.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.core.model.PersonalityDetails
-import elieomatuku.cineast_android.fragment.KnownForFragment
-import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
-import elieomatuku.cineast_android.viewholder.MenuPeopleHolder
+import elieomatuku.cineast_android.viewholder.PeopleSegmentedButtonHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.ProfilePeopleHolder
+import elieomatuku.cineast_android.vu.PeopleVu
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>, private val onMenuClickedPublisher: PublishSubject<Fragment>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PeopleSummaryAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>,
+                           private val segmentedButtonPublisher: PublishSubject<Pair<String, PersonalityDetails>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_PEOPLE_PROFILE = 0
         const val TYPE_MENU_PEOPLE = 1
         const val TYPE_EMPTY_STATE = -2
     }
-
 
     var personalityDetails: PersonalityDetails by Delegates.observable(PersonalityDetails()) { prop, oldPeopleDetails, nuPeopleDetails ->
         Timber.d("peopleApi facts = $nuPeopleDetails")
@@ -28,16 +25,10 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
         errorMessage = null
     }
 
-
-    var peopleMovies: MutableList<KnownFor> by Delegates.observable(mutableListOf()) { prop, oldMovies, nuMovies ->
-        Timber.d("widgets = $nuMovies")
-        hasValidData = true
-        errorMessage = null
-    }
+    private var initialCheckedTab: String = PeopleVu.OVERVIEW
 
     var hasValidData = false
         private set
-
 
     private var _errorMessage: String? = null
     var errorMessage: String?
@@ -77,7 +68,7 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_PEOPLE_PROFILE -> ProfilePeopleHolder.newInstance(parent, onProfileClickedPicturePublisher)
-            TYPE_MENU_PEOPLE -> MenuPeopleHolder.newInstance(parent)
+            TYPE_MENU_PEOPLE -> PeopleSegmentedButtonHolder.newInstance(parent)
             TYPE_EMPTY_STATE -> {
                 EmptyStateHolder.newInstance(parent)
             }
@@ -85,33 +76,20 @@ class PeopleItemAdapter(private val onProfileClickedPicturePublisher: PublishSub
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val viewType = getItemViewType(position)
+        when (holder) {
+            is EmptyStateHolder ->  holder.update(errorMessage)
+            is ProfilePeopleHolder ->  holder.update(personalityDetails)
+            is PeopleSegmentedButtonHolder -> {
+                holder.update(personalityDetails, initialCheckedTab)
 
-        when (viewType) {
-            TYPE_PEOPLE_PROFILE -> {
-                val movieProfileHolder = holder as ProfilePeopleHolder
-                movieProfileHolder.update(personalityDetails)
-            }
-
-            TYPE_MENU_PEOPLE -> {
-                val menuPeopleHolder = holder as MenuPeopleHolder
-                menuPeopleHolder.update(personalityDetails)
-
-                menuPeopleHolder.overviewSegmentBtn.setOnClickListener {
-                    val overviewFragment = OverviewPeopleFragment.newInstance(personalityDetails)
-                    onMenuClickedPublisher.onNext(overviewFragment)
+                holder.overviewSegmentBtn.setOnClickListener {
+                    segmentedButtonPublisher.onNext(Pair(PeopleVu.OVERVIEW, personalityDetails))
                 }
 
-                menuPeopleHolder.knownForSegmentBtn.setOnClickListener {
-                    val peopleFragment = KnownForFragment.newInstance(peopleMovies, personalityDetails.name)
-                    onMenuClickedPublisher.onNext(peopleFragment)
+                holder.knownForSegmentBtn.setOnClickListener {
+                    segmentedButtonPublisher.onNext(Pair(PeopleVu.KNOWN_FOR, personalityDetails))
                 }
-            }
-
-            MovieAdapter.TYPE_EMPTY_STATE -> {
-                (holder as EmptyStateHolder).update(errorMessage)
             }
         }
     }

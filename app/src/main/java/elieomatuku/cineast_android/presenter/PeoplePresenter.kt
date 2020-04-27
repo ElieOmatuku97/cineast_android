@@ -73,10 +73,10 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
                 }))
 
 
-        rxSubs.add(vu.onMenuClickedObservable
+        rxSubs.add(vu.onSegmentedButtonsObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    vu.gotoMenu(it)
+                    vu.gotoTab(it)
                 }))
 
 

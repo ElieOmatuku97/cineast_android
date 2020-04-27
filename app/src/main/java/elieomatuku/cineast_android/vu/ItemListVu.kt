@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieListAdapter
-import elieomatuku.cineast_android.adapter.PersonalitySummaryAdapter
+import elieomatuku.cineast_android.adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Content
@@ -15,11 +15,12 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 
-class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) : ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
+class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) :
+        ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
 
     override val adapter: RecyclerView.Adapter<*>
-        get() =  movieListAdapter
+        get() = movieListAdapter
 
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()
@@ -32,8 +33,8 @@ class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
         MovieListAdapter(movieSelectPublisher, R.layout.holder_movie_list)
     }
 
-    val popularPeopleItemAdapter: PersonalitySummaryAdapter by lazy {
-        PersonalitySummaryAdapter(personSelectPublisher, R.layout.holder_people_list)
+    val popularPeopleItemAdapter: PeopleLisAdapter by lazy {
+        PeopleLisAdapter(personSelectPublisher, R.layout.holder_people_list)
     }
 
 

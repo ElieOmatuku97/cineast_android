@@ -8,19 +8,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.vu.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
-class PopularMoviesVu(inflater: LayoutInflater,
-                      activity: Activity,
-                      fragmentWrapper: FragmentWrapper?,
-                      parentView: ViewGroup?) : BaseVu(inflater,
+class MoviesSearchVu(inflater: LayoutInflater,
+                     activity: Activity,
+                     fragmentWrapper: FragmentWrapper?,
+                     parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
+
 
     override fun getRootViewLayoutId() = R.layout.fragment_search
 
@@ -36,8 +38,6 @@ class PopularMoviesVu(inflater: LayoutInflater,
         rootView.grid_view
     }
 
-    private val GRIDVIEW_NUMBER_OF_COLUMNS = 2
-
     var gridLayoutManager: GridLayoutManager? = null
     private val adapter: MovieListAdapter by lazy {
         MovieListAdapter(movieSelectPublisher, R.layout.holder_popular_movie)
@@ -45,7 +45,7 @@ class PopularMoviesVu(inflater: LayoutInflater,
 
     override fun onCreate() {
         super.onCreate()
-        gridLayoutManager = GridLayoutManager(this.fragmentWrapper?.support?.context, GRIDVIEW_NUMBER_OF_COLUMNS)
+        gridLayoutManager = GridLayoutManager(this.fragmentWrapper?.support?.context, GRID_VIEW_NUMBER_OF_COLUMNS)
         gridView.adapter = adapter
     }
 

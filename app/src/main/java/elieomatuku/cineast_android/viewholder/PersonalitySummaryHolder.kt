@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.adapter.PersonalitySummaryAdapter
+import elieomatuku.cineast_android.adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
@@ -31,8 +31,8 @@ class PersonalitySummaryHolder(itemView: View, private val onPersonalityClickPub
         itemView.see_all
     }
 
-    private val adapter: PersonalitySummaryAdapter by lazy {
-        PersonalitySummaryAdapter(onPersonalityClickPublisher)
+    private val adapter: PeopleLisAdapter by lazy {
+        PeopleLisAdapter(onPersonalityClickPublisher)
     }
 
     private val listView: RecyclerView by lazy {
