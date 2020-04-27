@@ -73,7 +73,7 @@ class SearchVu(inflater: LayoutInflater,
             }
         }.attach()
 
-        if (toolbar != null) {
+        toolbar?.let {
             UiUtils.initToolbar(activity as AppCompatActivity, toolbar)
         }
     }

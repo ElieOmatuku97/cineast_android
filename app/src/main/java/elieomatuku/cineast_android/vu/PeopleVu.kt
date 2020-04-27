@@ -16,9 +16,9 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.PeopleActivity
 import elieomatuku.cineast_android.adapter.PeopleItemAdapter
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.fragment.MovieGalleryFragment
+import elieomatuku.cineast_android.fragment.GalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
-import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.presenter.GalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -114,14 +114,14 @@ class PeopleVu(inflater: LayoutInflater,
     }
 
     fun goToGallery(posters: List<Poster>?) {
-        val galleryFragment = MovieGalleryFragment.newInstance()
+        val galleryFragment = GalleryFragment.newInstance()
         galleryFragment.arguments = getArgs(posters)
         addFragment(galleryFragment, activity)
     }
 
     private fun getArgs(posters: List<Poster>?): Bundle {
         val args = Bundle()
-        args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
+        args.putParcelableArrayList(GalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
         return args
     }
 

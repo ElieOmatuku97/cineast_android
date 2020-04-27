@@ -17,13 +17,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.test.espresso.idling.CountingIdlingResource
-import elieomatuku.cineast_android.fragment.MovieGalleryFragment
+import elieomatuku.cineast_android.fragment.GalleryFragment
 import elieomatuku.cineast_android.fragment.OverviewFragment
 import elieomatuku.cineast_android.activity.MovieActivity
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
-import elieomatuku.cineast_android.presenter.MovieGalleryPresenter
+import elieomatuku.cineast_android.presenter.GalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -136,9 +136,9 @@ class MovieVu(inflater: LayoutInflater,
     }
 
     fun goToGallery(posters: List<Poster>?) {
-        val galleryFragment = MovieGalleryFragment.newInstance()
+        val galleryFragment = GalleryFragment.newInstance()
         val args = Bundle()
-        args.putParcelableArrayList(MovieGalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
+        args.putParcelableArrayList(GalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
         galleryFragment.arguments = args
         addFragment(galleryFragment)
     }
