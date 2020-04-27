@@ -1,29 +1,29 @@
 package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
-import elieomatuku.cineast_android.presenter.MoviePosterPresenter
+import elieomatuku.cineast_android.presenter.PosterPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
-import elieomatuku.cineast_android.vu.MoviePosterVu
+import elieomatuku.cineast_android.vu.PosterVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 
-class MoviePosterFragment: MVPFragment<MoviePosterPresenter, MoviePosterVu>() {
+class PosterFragment: MVPFragment<PosterPresenter, PosterVu>() {
     companion object {
         private val MVP_UID by lazy {
-            MoviePosterFragment.hashCode()
+            PosterFragment.hashCode()
         }
 
-        fun newInstance(args: Bundle): MoviePosterFragment{
-            val fragment = MoviePosterFragment()
+        fun newInstance(args: Bundle): PosterFragment{
+            val fragment = PosterFragment()
             fragment.arguments = args
             return fragment
         }
     }
 
-    override fun createMVPDispatcher(): MVPDispatcher<MoviePosterPresenter, MoviePosterVu> {
+    override fun createMVPDispatcher(): MVPDispatcher<PosterPresenter, PosterVu> {
         return MVPDispatcher(MVP_UID,
                 // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ MoviePosterPresenter() }),
-                ::MoviePosterVu)
+                PresenterCacheLazy({ PosterPresenter() }),
+                ::PosterVu)
     }
 }
