@@ -25,6 +25,8 @@ class PeopleSummaryAdapter(private val onProfileClickedPicturePublisher: Publish
         errorMessage = null
     }
 
+    private var initialCheckedTab: String = PeopleVu.OVERVIEW
+
     var hasValidData = false
         private set
 
@@ -75,24 +77,19 @@ class PeopleSummaryAdapter(private val onProfileClickedPicturePublisher: Publish
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (holder) {
+            is EmptyStateHolder ->  holder.update(errorMessage)
+            is ProfilePeopleHolder ->  holder.update(personalityDetails)
+            is PeopleSegmentedButtonHolder -> {
+                holder.update(personalityDetails, initialCheckedTab)
 
-        if (holder is EmptyStateHolder) {
-            holder.update(errorMessage)
-        }
+                holder.overviewSegmentBtn.setOnClickListener {
+                    segmentedButtonPublisher.onNext(Pair(PeopleVu.OVERVIEW, personalityDetails))
+                }
 
-        if (holder is ProfilePeopleHolder) {
-            holder.update(personalityDetails)
-        }
-
-        if (holder is PeopleSegmentedButtonHolder) {
-            holder.update(personalityDetails)
-
-            holder.overviewSegmentBtn.setOnClickListener {
-                segmentedButtonPublisher.onNext(Pair(PeopleVu.OVERVIEW, personalityDetails))
-            }
-
-            holder.knownForSegmentBtn.setOnClickListener {
-                segmentedButtonPublisher.onNext(Pair(PeopleVu.KNOWN_FOR, personalityDetails))
+                holder.knownForSegmentBtn.setOnClickListener {
+                    segmentedButtonPublisher.onNext(Pair(PeopleVu.KNOWN_FOR, personalityDetails))
+                }
             }
         }
     }

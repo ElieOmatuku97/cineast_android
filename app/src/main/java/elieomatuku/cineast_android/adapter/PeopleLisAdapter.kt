@@ -78,7 +78,6 @@ class PeopleLisAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-
             is PopularPeopleItemHolder -> {
                 holder.update(popularPersonalities[position])
 

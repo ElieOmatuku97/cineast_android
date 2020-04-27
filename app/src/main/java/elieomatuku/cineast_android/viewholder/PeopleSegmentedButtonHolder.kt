@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.vu.PeopleVu
 import info.hoang8f.android.segmented.SegmentedGroup
 import kotlinx.android.synthetic.main.holder_menu_people.view.*
 
@@ -34,11 +35,16 @@ class PeopleSegmentedButtonHolder (itemView: View): RecyclerView.ViewHolder(item
         itemView.known_for_view
     }
 
-    fun update(peopleDetails: PersonalityDetails?) {
+    fun update(peopleDetails: PersonalityDetails?, checkedTab: String) {
         if (peopleDetails != null && !peopleDetails.isEmpty() ) {
             segmentedGroup.visibility = View.VISIBLE
         } else {
             segmentedGroup.visibility = View.GONE
+        }
+
+        when(checkedTab) {
+            PeopleVu.OVERVIEW -> overviewSegmentBtn.isChecked = true
+            PeopleVu.KNOWN_FOR -> knownForSegmentBtn.isChecked = true
         }
     }
 }
