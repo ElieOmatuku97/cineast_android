@@ -7,7 +7,7 @@ import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 
 
-class MoviesSearchFragment : MVPFragment <MoviesSearchPresenter, MoviesSearchVu>() {
+class MoviesSearchFragment : MVPFragment<MoviesSearchPresenter, MoviesSearchVu>() {
     companion object {
         private val MVP_UID by lazy {
             MoviesSearchFragment.hashCode()

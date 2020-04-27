@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.fragment.PeopleSearchFragment
 import timber.log.Timber
 
 
-class SearchFragmentPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
+class SearchFragmentPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     companion object {
         val titleResList: List<Int> by lazy {
             listOf(R.string.movies,
@@ -17,14 +17,14 @@ class SearchFragmentPagerAdapter(fragment: Fragment): FragmentStateAdapter(fragm
         }
     }
 
-    var content : List<Content> = listOf()
+    var content: List<Content> = listOf()
     override fun getItemCount(): Int {
         return titleResList.size
     }
 
     override fun createFragment(position: Int): Fragment {
         Timber.d("SearchFragmentPagerAdapter position: $position")
-        return when (titleResList[position]){
+        return when (titleResList[position]) {
             R.string.movies -> MoviesSearchFragment.newInstance()
             R.string.people -> PeopleSearchFragment.newInstance()
             else -> PeopleSearchFragment.newInstance()

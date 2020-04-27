@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.vu.SearchVu.Companion.GRIDVIEW_NUMBER_OF_COLUMNS
+import elieomatuku.cineast_android.vu.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -45,7 +45,7 @@ class MoviesSearchVu(inflater: LayoutInflater,
 
     override fun onCreate() {
         super.onCreate()
-        gridLayoutManager = GridLayoutManager(this.fragmentWrapper?.support?.context, GRIDVIEW_NUMBER_OF_COLUMNS)
+        gridLayoutManager = GridLayoutManager(this.fragmentWrapper?.support?.context, GRID_VIEW_NUMBER_OF_COLUMNS)
         gridView.adapter = adapter
     }
 

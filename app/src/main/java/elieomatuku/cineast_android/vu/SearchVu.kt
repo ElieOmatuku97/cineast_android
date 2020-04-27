@@ -28,7 +28,7 @@ class SearchVu(inflater: LayoutInflater,
         parentView = parentView) {
 
     companion object {
-        const val GRIDVIEW_NUMBER_OF_COLUMNS = 2
+        const val GRID_VIEW_NUMBER_OF_COLUMNS = 2
     }
 
     override val toolbar: Toolbar?
