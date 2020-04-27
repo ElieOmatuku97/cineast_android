@@ -12,14 +12,14 @@ import elieomatuku.cineast_android.vu.MovieVu
 import kotlinx.android.synthetic.main.holder_menu_movie.view.*
 
 
-class MenuMovieHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class MovieSegmentedButtonHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_menu_movie, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup): MenuMovieHolder {
-            return MenuMovieHolder(createView(parent))
+        fun newInstance(parent: ViewGroup): MovieSegmentedButtonHolder {
+            return MovieSegmentedButtonHolder(createView(parent))
         }
     }
 

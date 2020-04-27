@@ -6,7 +6,8 @@ import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.viewholder.itemHolder.CastItemHolder
 import io.reactivex.subjects.PublishSubject
 
-class CastAdapter(private val cast: List<Cast>, private val onCastClickPublisher: PublishSubject<Cast>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CastAdapter(private val cast: List<Cast>,
+                  private val onCastClickPublisher: PublishSubject<Cast>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int {
         return cast.size
     }
@@ -16,7 +17,7 @@ class CastAdapter(private val cast: List<Cast>, private val onCastClickPublisher
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as  CastItemHolder).update(cast[position])
+        (holder as CastItemHolder).update(cast[position])
         holder.itemView.setOnClickListener {
             onCastClickPublisher.onNext(cast[position])
         }

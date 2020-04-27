@@ -11,7 +11,7 @@ import timber.log.Timber
 import kotlin.properties.Delegates
 
 
-class PersonalitySummaryAdapter(
+class PeopleLisAdapter(
         private val onItemClickPublisher: PublishSubject<Person>,
         private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -21,7 +21,7 @@ class PersonalitySummaryAdapter(
     }
 
 
-    var popularPersonalities: MutableList<Person>  by Delegates.observable(mutableListOf()) { prop, oldEdition, nuEdition ->
+    var popularPersonalities: MutableList<Person> by Delegates.observable(mutableListOf()) { prop, oldEdition, nuEdition ->
         hasValidData = true
         errorMessage = null
     }

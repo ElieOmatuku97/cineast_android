@@ -14,9 +14,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.PeopleActivity
-import elieomatuku.cineast_android.adapter.PeopleItemAdapter
+import elieomatuku.cineast_android.adapter.PeopleSummaryAdapter
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.fragment.GalleryFragment
+import elieomatuku.cineast_android.fragment.KnownForFragment
 import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
 import elieomatuku.cineast_android.presenter.GalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
@@ -34,6 +35,11 @@ class PeopleVu(inflater: LayoutInflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
+
+    companion object {
+        const val OVERVIEW = "overview"
+        const val KNOWN_FOR = "known_for"
+    }
 
     override val toolbar: Toolbar?
         get() = rootView.toolbar
@@ -61,16 +67,18 @@ class PeopleVu(inflater: LayoutInflater,
         }
     }
 
-    private val onMenuClickedPublisher: PublishSubject<Fragment> by lazy {
-        PublishSubject.create<Fragment>()
+    private val onSegmentedButtonsPublisher: PublishSubject<Pair<String, PersonalityDetails>> by lazy {
+        PublishSubject.create<Pair<String, PersonalityDetails>>()
     }
 
-    val onMenuClickedObservable: Observable<Fragment>
-        get() = onMenuClickedPublisher.hide()
+    val onSegmentedButtonsObservable: Observable<Pair<String, PersonalityDetails>>
+        get() = onSegmentedButtonsPublisher.hide()
 
-    val adapter: PeopleItemAdapter by lazy {
-        PeopleItemAdapter(onProfileClickedPicturePublisher, onMenuClickedPublisher)
+    val adapter: PeopleSummaryAdapter by lazy {
+        PeopleSummaryAdapter(onProfileClickedPicturePublisher, onSegmentedButtonsPublisher)
     }
+
+    private var _knownFor: List<KnownFor> = listOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -89,12 +97,12 @@ class PeopleVu(inflater: LayoutInflater,
         listView.layoutManager = null
     }
 
-    fun updateVu(personalityDetails: PersonalityDetails?, screenName: String?, peopleMovies: List<KnownFor>?) {
-        if (personalityDetails != null && screenName != null && peopleMovies != null) {
+    fun updateVu(personalityDetails: PersonalityDetails?, screenName: String?, knownFor: List<KnownFor>?) {
+        if (personalityDetails != null && screenName != null && knownFor != null) {
             toolbar?.title = screenName
 
             adapter.personalityDetails = personalityDetails
-            adapter.peopleMovies = peopleMovies.toMutableList()
+            _knownFor = knownFor.toMutableList()
 
             val dividerItemDecoration = DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
             listView.addItemDecoration(dividerItemDecoration)
@@ -123,7 +131,19 @@ class PeopleVu(inflater: LayoutInflater,
         adapter.notifyDataSetChanged()
     }
 
-    fun gotoMenu(fragment: Fragment){
-        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+    fun gotoTab(displayAndPersonalityDetails: Pair<String, PersonalityDetails>) {
+        val fragment = when (displayAndPersonalityDetails.first) {
+            OVERVIEW -> {
+                OverviewPeopleFragment.newInstance(displayAndPersonalityDetails.second)
+            }
+            KNOWN_FOR -> {
+                KnownForFragment.newInstance(_knownFor, displayAndPersonalityDetails.second.name)
+            }
+            else -> null
+        }
+
+        if (fragment != null) {
+            (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+        }
     }
 }

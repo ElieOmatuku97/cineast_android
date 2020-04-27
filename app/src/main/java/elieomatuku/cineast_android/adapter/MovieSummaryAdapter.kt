@@ -11,7 +11,8 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>, private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieSummaryAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>,
+                          private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_MOVIE_PROFILE = 0
         const val TYPE_MENU_MOVIE = 1
@@ -70,7 +71,7 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_MOVIE_PROFILE -> ProfileMovieHolder.newInstance(parent, onProfileClickedPicturePublisher)
-            TYPE_MENU_MOVIE -> MenuMovieHolder.newInstance(parent)
+            TYPE_MENU_MOVIE -> MovieSegmentedButtonHolder.newInstance(parent)
             TYPE_EMPTY_STATE -> EmptyStateHolder.newInstance(parent)
             else -> throw RuntimeException("View Type does not exist.")
         }
@@ -81,7 +82,7 @@ class MovieAdapter(private val onProfileClickedPicturePublisher: PublishSubject<
             holder.update(movieSummary)
         }
 
-        if (holder is MenuMovieHolder) {
+        if (holder is MovieSegmentedButtonHolder) {
             holder.update(movieSummary, initialCheckedTab)
 
             holder.overviewSegmentBtn.setOnClickListener {

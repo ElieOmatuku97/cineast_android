@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.PersonalitySummaryAdapter
+import elieomatuku.cineast_android.adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.vu.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
@@ -33,8 +33,8 @@ class PeopleSearchVu(inflater: LayoutInflater,
     }
 
     var gridLayoutManager: GridLayoutManager? = null
-    private val adapter: PersonalitySummaryAdapter by lazy {
-        PersonalitySummaryAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
+    private val adapter: PeopleLisAdapter by lazy {
+        PeopleLisAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
     }
 
     private val peopleSelectPublisher: PublishSubject<Person> by lazy {

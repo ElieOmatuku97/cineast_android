@@ -6,7 +6,7 @@ import androidx.appcompat.widget.*
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.MovieAdapter
+import elieomatuku.cineast_android.adapter.MovieSummaryAdapter
 import kotlinx.android.synthetic.main.vu_movie.view.*
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
@@ -95,8 +95,8 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
-    private val adapter: MovieAdapter by lazy {
-        MovieAdapter(onProfileClickedPicturePublisher, segmentedButtonsPublisher)
+    private val adapter: MovieSummaryAdapter by lazy {
+        MovieSummaryAdapter(onProfileClickedPicturePublisher, segmentedButtonsPublisher)
     }
 
     /**
@@ -171,7 +171,7 @@ class MovieVu(inflater: LayoutInflater,
         }
     }
 
-    fun updateContainer(fragment: Fragment) {
+    private fun updateContainer(fragment: Fragment) {
         if (activity is FragmentActivity) {
             activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
         }
