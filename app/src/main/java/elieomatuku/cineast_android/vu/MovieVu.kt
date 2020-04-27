@@ -140,7 +140,10 @@ class MovieVu(inflater: LayoutInflater,
         val args = Bundle()
         args.putParcelableArrayList(GalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
         galleryFragment.arguments = args
-        addFragment(galleryFragment)
+
+        if (activity is AppCompatActivity) {
+            activity.supportFragmentManager.beginTransaction().add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
+        }
     }
 
     fun updateErrorView(errorMsg: String?) {
@@ -171,12 +174,6 @@ class MovieVu(inflater: LayoutInflater,
     fun updateContainer(fragment: Fragment) {
         if (activity is FragmentActivity) {
             activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
-        }
-    }
-
-    private fun addFragment(fragment: Fragment) {
-        if (activity is AppCompatActivity) {
-            activity.supportFragmentManager.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
         }
     }
 }

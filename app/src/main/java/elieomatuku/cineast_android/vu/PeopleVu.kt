@@ -93,43 +93,29 @@ class PeopleVu(inflater: LayoutInflater,
         if (personalityDetails != null && screenName != null && peopleMovies != null) {
             toolbar?.title = screenName
 
-
             adapter.personalityDetails = personalityDetails
             adapter.peopleMovies = peopleMovies.toMutableList()
-
 
             val dividerItemDecoration = DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
             listView.addItemDecoration(dividerItemDecoration)
 
-
             adapter.notifyDataSetChanged()
-            initializeFragmentOnPeopleClicked(personalityDetails)
+            initDetailsFragment(personalityDetails)
         }
     }
 
-
-    private fun initializeFragmentOnPeopleClicked(personalityDetails: PersonalityDetails) {
-        val initialFragmentOnMovieClicked = OverviewPeopleFragment.newInstance(personalityDetails)
-        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, initialFragmentOnMovieClicked).commit()
+    private fun initDetailsFragment(personalityDetails: PersonalityDetails) {
+        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, OverviewPeopleFragment.newInstance(personalityDetails)).commit()
     }
 
     fun goToGallery(posters: List<Poster>?) {
         val galleryFragment = GalleryFragment.newInstance()
-        galleryFragment.arguments = getArgs(posters)
-        addFragment(galleryFragment, activity)
-    }
 
-    private fun getArgs(posters: List<Poster>?): Bundle {
         val args = Bundle()
         args.putParcelableArrayList(GalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
-        return args
-    }
+        galleryFragment.arguments = args
 
-    private fun addFragment(fragment: Fragment, activity: Activity) {
-        val fm = (activity as AppCompatActivity).supportFragmentManager
-        if (fragment != null && fm != null) {
-            fm.beginTransaction().add(android.R.id.content, fragment, null).addToBackStack(null).commit()
-        }
+        (activity as AppCompatActivity).supportFragmentManager.beginTransaction().add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
     }
 
     fun updateErrorView(errorMsg: String?) {

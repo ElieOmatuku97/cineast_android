@@ -31,8 +31,7 @@ class GalleryVu(inflater: LayoutInflater,
     }
 
     private val galleryPagerAdapter: GalleryPagerAdapter by lazy {
-        val fm =  fragmentWrapper?.support?.childFragmentManager
-        GalleryPagerAdapter(fm!!)
+        GalleryPagerAdapter(checkNotNull(fragmentWrapper?.support?.childFragmentManager))
     }
 
     override fun getRootViewLayoutId(): Int {
@@ -44,7 +43,7 @@ class GalleryVu(inflater: LayoutInflater,
         viewPager.adapter = galleryPagerAdapter
         galleryPagerAdapter.notifyDataSetChanged()
 
-        viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
@@ -62,7 +61,7 @@ class GalleryVu(inflater: LayoutInflater,
         }
     }
 
-    fun updateImages(posters: List<Poster> ) {
+    fun updateImages(posters: List<Poster>) {
         galleryPagerAdapter.posters = posters
         galleryPagerAdapter.notifyDataSetChanged()
     }
