@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.business
+package elieomatuku.cineast_android.business.service
 
 
 import elieomatuku.cineast_android.App
@@ -24,7 +24,7 @@ import org.kodein.di.generic.instance
 
 
 class ContentService(private val tmdbContentClient: TmdbContentClient, private val contentRepository: ContentRepository) : CoroutineScope {
-    val job: Job by lazy { SupervisorJob() }
+    private val job: Job by lazy { SupervisorJob() }
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job

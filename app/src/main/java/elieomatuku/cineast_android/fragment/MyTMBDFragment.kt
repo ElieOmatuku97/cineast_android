@@ -120,17 +120,10 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
     }
 
     private fun updateState(isLoggedIn: Boolean) {
-        if (isLoggedIn) {
-            logInBtn.title = activity?.getString(R.string.settings_logout)
-            favoritesBtn.isVisible = true
-            watchListBtn.isVisible = true
-            ratedBtn.isVisible = true
-        } else {
-            logInBtn.title = activity?.getString(R.string.settings_login)
-            favoritesBtn.isVisible = false
-            watchListBtn.isVisible = false
-            ratedBtn.isVisible = false
-        }
+        logInBtn.title =  if (isLoggedIn) activity?.getString(R.string.settings_logout) else activity?.getString(R.string.settings_login)
+        favoritesBtn.isVisible = isLoggedIn
+        watchListBtn.isVisible = isLoggedIn
+        ratedBtn.isVisible = isLoggedIn
     }
 
     override fun gotoWebview(value: AccessToken?) {

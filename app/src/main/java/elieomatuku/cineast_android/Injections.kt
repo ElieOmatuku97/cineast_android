@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.service.ConnectionService
-import elieomatuku.cineast_android.business.ContentService
+import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.database.DatabaseKodeinModule
 import org.kodein.di.Kodein

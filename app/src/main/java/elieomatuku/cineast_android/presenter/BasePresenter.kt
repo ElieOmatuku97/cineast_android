@@ -5,7 +5,7 @@ import io.chthonic.mythos.mvp.Presenter
 import io.chthonic.mythos.mvp.Vu
 import android.os.Handler
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.ContentService
+import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.business.service.ConnectionService
 import kotlinx.coroutines.*
 import org.kodein.di.generic.instance
