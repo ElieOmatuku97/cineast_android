@@ -38,7 +38,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
             vu.updateVu(personalityDetails, screenName, peopleMovies)
         } else {
             vu.showLoading()
-            contentManager.getPeopleDetails(people, object : AsyncResponse<PersonalityDetails> {
+            contentService.getPeopleDetails(people, object : AsyncResponse<PersonalityDetails> {
                 override fun onSuccess(response: PersonalityDetails?) {
                     personalityDetails = response
                     getPeopleMovies(people, personalityDetails, screenName)
@@ -58,7 +58,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ peopleId ->
 
-                    contentManager.getPeopleImages(peopleId, object : AsyncResponse<ImageResponse> {
+                    contentService.getPeopleImages(peopleId, object : AsyncResponse<ImageResponse> {
                         override fun onSuccess(response: ImageResponse?) {
                             val poster = response?.peoplePosters
                             handler.post {
@@ -83,7 +83,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
     }
 
     private fun getPeopleMovies(actor: Person, personalityDetails: PersonalityDetails?, screenName: String) {
-        contentManager.getPeopleMovies(actor, object : AsyncResponse<PeopleCreditsResponse> {
+        contentService.getPeopleMovies(actor, object : AsyncResponse<PeopleCreditsResponse> {
             override fun onSuccess(response: PeopleCreditsResponse?) {
                 peopleMovies = response?.cast as List<KnownFor>
                 handler.post {

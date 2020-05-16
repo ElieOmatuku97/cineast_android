@@ -2,10 +2,8 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.fragment.MovieTeamFragment
 import elieomatuku.cineast_android.vu.SimilarMovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -31,7 +29,7 @@ class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
         val movieTitle = movieSummary.movie?.title
         vu.updateVu(similarMovies)
 
-        rxSubs.add(contentManager.genres()
+        rxSubs.add(contentService.genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

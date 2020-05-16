@@ -23,7 +23,7 @@ import kotlin.reflect.KFunction1
 import org.kodein.di.generic.instance
 
 
-class ContentManager(private val tmdbContentClient: TmdbContentClient, private val contentRepository: ContentRepository) : CoroutineScope {
+class ContentService(private val tmdbContentClient: TmdbContentClient, private val contentRepository: ContentRepository) : CoroutineScope {
     val job: Job by lazy { SupervisorJob() }
 
     override val coroutineContext: CoroutineContext
@@ -171,7 +171,7 @@ class ContentManager(private val tmdbContentClient: TmdbContentClient, private v
 
     private fun updatePersonalitiesDatabase(nuPersonalities: List<Personality>, oldPersonalities: List<Personality>) {
         if (nuPersonalities.isEmpty()) {
-            contentRepository.deleteAllPersonalitites()
+            contentRepository.deleteAllPersonalities()
         } else {
             oldPersonalities.forEach { oldPersonalitiy ->
                 if (nuPersonalities.firstOrNull { it.id == oldPersonalitiy.id } == null) {

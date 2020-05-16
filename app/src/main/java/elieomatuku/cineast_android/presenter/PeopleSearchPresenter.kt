@@ -20,7 +20,7 @@ class PeopleSearchPresenter : BasePresenter<PeopleSearchVu>() {
 
         vu.showLoading()
 
-        rxSubs.add(contentManager.personalities()
+        rxSubs.add(contentService.personalities()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

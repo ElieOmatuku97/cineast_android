@@ -28,7 +28,7 @@ class MoviesSearchPresenter : BasePresenter<MoviesSearchVu>() {
         vu.showLoading()
 
 
-        rxSubs.add(contentManager.genres()
+        rxSubs.add(contentService.genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -41,7 +41,7 @@ class MoviesSearchPresenter : BasePresenter<MoviesSearchVu>() {
         )
 
 
-        rxSubs.add(contentManager.popularMovies()
+        rxSubs.add(contentService.popularMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

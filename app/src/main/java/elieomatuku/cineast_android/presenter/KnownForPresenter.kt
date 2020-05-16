@@ -31,7 +31,7 @@ class KnownForPresenter : BasePresenter<KnownForVu>() {
         vu.updateVu(knownFor)
 
 
-        rxSubs.add(contentManager.genres()
+        rxSubs.add(contentService.genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -57,7 +57,7 @@ class KnownForPresenter : BasePresenter<KnownForVu>() {
 
 
     private fun getMovie(movieId: Int, peopleName: String?) {
-        contentManager.getMovie(movieId, object : AsyncResponse<Movie> {
+        contentService.getMovie(movieId, object : AsyncResponse<Movie> {
             override fun onSuccess(response: Movie?) {
                 val movie: Movie = response as Movie
                 handler.post {
