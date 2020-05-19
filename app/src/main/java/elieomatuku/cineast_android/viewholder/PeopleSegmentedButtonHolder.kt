@@ -1,14 +1,15 @@
 package elieomatuku.cineast_android.viewholder
 
-import androidx.appcompat.widget.AppCompatRadioButton
+
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.vu.PeopleVu
-import info.hoang8f.android.segmented.SegmentedGroup
 import kotlinx.android.synthetic.main.holder_menu_people.view.*
 
 class PeopleSegmentedButtonHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -23,15 +24,15 @@ class PeopleSegmentedButtonHolder (itemView: View): RecyclerView.ViewHolder(item
     }
 
 
-    private val segmentedGroup: SegmentedGroup by lazy {
+    private val segmentedGroup: RadioGroup by lazy {
         itemView.segmented_group
     }
 
-    val overviewSegmentBtn: AppCompatRadioButton by lazy {
+    val overviewSegmentBtn: RadioButton by lazy {
         itemView.overview
     }
 
-    val knownForSegmentBtn: AppCompatRadioButton by lazy {
+    val knownForSegmentBtn: RadioButton by lazy {
         itemView.known_for_view
     }
 
