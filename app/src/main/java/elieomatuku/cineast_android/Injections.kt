@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.service.ConnectionService
-import elieomatuku.cineast_android.business.ContentManager
+import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.database.DatabaseKodeinModule
 import org.kodein.di.Kodein
@@ -20,7 +20,7 @@ fun depInjecT(app: Application): Kodein {
         bind<Application>() with instance(app)
         bind<Context>() with instance(app.applicationContext)
         bind<Resources>() with instance(app.applicationContext.resources)
-        bind<ContentManager>() with singleton { ContentManager(instance(), instance()) }
+        bind<ContentService>() with singleton { ContentService(instance(), instance()) }
         bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
         importOnce(elieomatuku.cineast_android.core.CoreKodeinModule.getModule())

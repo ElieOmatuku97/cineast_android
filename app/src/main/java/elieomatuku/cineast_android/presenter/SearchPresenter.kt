@@ -31,7 +31,7 @@ class SearchPresenter: BasePresenter<SearchVu>() {
 
 
     private fun searchMovies(argQuery: String) {
-        contentManager.searchMovies(argQuery, object: AsyncResponse<MovieResponse>{
+        contentService.searchMovies(argQuery, object: AsyncResponse<MovieResponse>{
             override fun onSuccess(response: MovieResponse?) {
                 handler.post {
                     vu?.hideLoading()
@@ -49,7 +49,7 @@ class SearchPresenter: BasePresenter<SearchVu>() {
     }
 
     private fun searchPeople(argQuery: String) {
-        contentManager.searchPeople(argQuery, object: AsyncResponse<PersonalityResponse> {
+        contentService.searchPeople(argQuery, object: AsyncResponse<PersonalityResponse> {
             override fun onSuccess(response: PersonalityResponse?) {
                 handler.post {
                     vu?.hideLoading()

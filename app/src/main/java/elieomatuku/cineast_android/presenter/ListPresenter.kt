@@ -30,7 +30,7 @@ abstract class ListPresenter<V> : BasePresenter<V>() where V : ListVu {
     override fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        rxSubs.add(contentManager.genres()
+        rxSubs.add(contentService.genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

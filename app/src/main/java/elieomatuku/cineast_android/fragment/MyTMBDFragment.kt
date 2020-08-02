@@ -8,19 +8,22 @@ import androidx.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.BuildConfig
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.activity.UserListActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.AccessToken
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.utils.WebLink
-import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import timber.log.Timber
 import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import elieomatuku.cineast_android.activity.MainActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 
 class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
@@ -31,43 +34,20 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
     }
 
     private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
-
-    private val logInBtn: Preference by lazy {
-        findPreference(getString(R.string.pref_logout))
-    }
-
-    private val favoritesBtn: Preference by lazy {
-        findPreference(getString(R.string.pref_favorites))
-    }
-
-    private val watchListBtn: Preference by lazy {
-        findPreference(getString(R.string.pref_watchlist))
-    }
-
-    private val ratedBtn: Preference by lazy {
-        findPreference(getString(R.string.pref_rated))
-    }
-
+    private var logInBtn : Preference? = null
+    private var favoritesBtn: Preference? = null
+    private var watchListBtn: Preference? = null
+    private var ratedBtn: Preference? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceManager.sharedPreferencesName = getString(R.string.pref_app_settings)
-        setPreferencesFromResource(R.xml.settings, null)
-
-        val appVersion = findPreference(getString(R.string.pref_app_version))
-        val summary = SpannableString("${getString(R.string.version_name)} (${BuildConfig.VERSION_CODE})")
-        summary.setSpan(ForegroundColorSpan(ContextCompat.getColor(context!!, R.color.color_accent)), 0, summary.length, 0)
-        appVersion.summary = summary
-
-
-        updateState(tmdbUserClient.isLoggedIn())
     }
 
     override fun onResume() {
         super.onResume()
+        Timber.d("onResume called.")
 
-        updateState(tmdbUserClient.isLoggedIn())
-
-        logInBtn.setOnPreferenceClickListener {
+        logInBtn?.setOnPreferenceClickListener {
             if (!tmdbUserClient.isLoggedIn()) {
                 tmdbUserClient.getAccessToken(object : AsyncResponse<AccessToken> {
                     override fun onSuccess(response: AccessToken?) {
@@ -86,22 +66,17 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
             true
         }
 
-        watchListBtn.setOnPreferenceClickListener {
-            this@MyTMBDFragment.context?.let {
-                UserListActivity.gotoWatchList(it)
-            }
+        watchListBtn?.setOnPreferenceClickListener {
+            UserListActivity.gotoWatchList(requireContext())
             true
         }
 
-        favoritesBtn.setOnPreferenceClickListener {
-            this@MyTMBDFragment.context?.let {
-                UserListActivity.gotoFavoriteList(it)
-            }
-
+        favoritesBtn?.setOnPreferenceClickListener {
+            UserListActivity.gotoFavoriteList(requireContext())
             true
         }
 
-        ratedBtn.setOnPreferenceClickListener {
+        ratedBtn?.setOnPreferenceClickListener {
             this@MyTMBDFragment.context?.let {
                 UserListActivity.gotoRatedMovies(it)
             }
@@ -120,17 +95,10 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
     }
 
     private fun updateState(isLoggedIn: Boolean) {
-        if (isLoggedIn) {
-            logInBtn.title = activity?.getString(R.string.settings_logout)
-            favoritesBtn.isVisible = true
-            watchListBtn.isVisible = true
-            ratedBtn.isVisible = true
-        } else {
-            logInBtn.title = activity?.getString(R.string.settings_login)
-            favoritesBtn.isVisible = false
-            watchListBtn.isVisible = false
-            ratedBtn.isVisible = false
-        }
+        logInBtn?.title =  if (isLoggedIn) activity?.getString(R.string.settings_logout) else activity?.getString(R.string.settings_login)
+        favoritesBtn?.isVisible = isLoggedIn
+        watchListBtn?.isVisible = isLoggedIn
+        ratedBtn?.isVisible = isLoggedIn
     }
 
     override fun gotoWebview(value: AccessToken?) {
@@ -141,12 +109,43 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
                     .build()
                     .toString()
 
-            val webviewFragment: WebviewFragment? = LoginWebviewFragment.newInstance(authenticateUrl)
             val fm = activity?.supportFragmentManager
-
-            if (webviewFragment != null && fm != null) {
-                fm.beginTransaction().add(android.R.id.content, webviewFragment, null).addToBackStack(null).commit()
-            }
+            fm?.beginTransaction()?.add(android.R.id.content, LoginWebviewFragment.newInstance(authenticateUrl), null)?.addToBackStack(null)?.commit()
         }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Timber.d("onCreateView called.")
+        setPreferencesFromResource(R.xml.settings, null)
+        setUpPreferenceViews()
+
+        val appVersion = findPreference(getString(R.string.pref_app_version))
+        val summary = SpannableString("${getString(R.string.version_name)} (${BuildConfig.VERSION_CODE})")
+        summary.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_accent)), 0, summary.length, 0)
+        appVersion.summary = summary
+
+        updateState(tmdbUserClient.isLoggedIn())
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        clearPreferenceViews()
+    }
+
+    private fun setUpPreferenceViews() {
+        logInBtn = findPreference(getString(R.string.pref_logout))
+        favoritesBtn = findPreference(getString(R.string.pref_favorites))
+        watchListBtn = findPreference(getString(R.string.pref_watchlist))
+        ratedBtn = findPreference(getString(R.string.pref_rated))
+    }
+
+    private fun clearPreferenceViews() {
+        preferenceScreen = null
+        logInBtn = null
+        favoritesBtn = null
+        watchListBtn = null
+        ratedBtn = null
     }
 }

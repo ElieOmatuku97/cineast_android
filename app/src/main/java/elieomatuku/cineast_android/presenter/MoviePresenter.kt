@@ -63,7 +63,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     private fun getMovieVideos(movie: Movie, screenName: String?, genres: List<Genre>?) {
         vu?.showLoading()
         launch {
-            trailers = contentManager.getMovieVideos(movie)?.results
+            trailers = contentService.getMovieVideos(movie)?.results
             getMovieDetails(movie, screenName, genres, trailers)
 
         }
@@ -71,14 +71,14 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
     private fun getMovieDetails(movie: Movie, screenName: String?, genres: List<Genre>?, trailers: List<Trailer>?) {
         launch {
-            movieFacts = contentManager.getMovieDetails(movie)
+            movieFacts = contentService.getMovieDetails(movie)
             getMovieCredits(movie, screenName, movieFacts, genres, trailers)
         }
     }
 
     private fun getMovieCredits(movie: Movie, screenName: String?, movieFacts: MovieFacts?, genres: List<Genre>?, trailers: List<Trailer>?) {
         launch {
-            val response = contentManager.getMovieCredits(movie)
+            val response = contentService.getMovieCredits(movie)
             cast = response?.cast
             crew = response?.crew
             getSimilarMovies(movie, screenName, genres, movieFacts, trailers, cast, crew)
@@ -87,7 +87,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
     private fun getSimilarMovies(movie: Movie, screenName: String?, genres: List<Genre>?, movieFacts: MovieFacts?, trailers: List<Trailer>?, cast: List<Cast>?, crew: List<Crew>?) {
         launch {
-            val response = contentManager.getSimilarMovie(movie)
+            val response = contentService.getSimilarMovie(movie)
             similarMovies = response?.results
             val movieSummary = MovieSummary(movie, trailers, movieFacts, genres, screenName, cast, crew, similarMovies)
 
@@ -108,7 +108,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
     private fun checkIfMovieInWatchList(movieSummary: MovieSummary) {
         launch {
-            val movieResponse = contentManager.getWatchList()
+            val movieResponse = contentService.getWatchList()
 
             if (movieResponse.isSuccess) {
 
@@ -136,7 +136,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
 
     private fun checkIfMovieInFavoriteList(movieSummary: MovieSummary) {
         launch {
-            val movieResponse = contentManager.getFavoriteList()
+            val movieResponse = contentService.getFavoriteList()
             if (movieResponse.isSuccess) {
                 val movies = movieResponse.getOrNull()?.results
                 val isInFavoriteList = movies?.let {
@@ -160,7 +160,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     }
 
     suspend fun getMovieImages(movieId: Int) {
-        val imageResponse = contentManager.getMovieImages(movieId)
+        val imageResponse = contentService.getMovieImages(movieId)
         if (imageResponse.isSuccess) {
             val posters = imageResponse.getOrNull()?.posters
 

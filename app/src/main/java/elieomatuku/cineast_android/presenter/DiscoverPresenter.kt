@@ -33,7 +33,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         vu.showLoading()
         fetchDiscover()
 
-        rxSubs.add(contentManager.discoverContent()
+        rxSubs.add(contentService.discoverContent()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -45,7 +45,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 })
         )
 
-        rxSubs.add(contentManager.genres()
+        rxSubs.add(contentService.genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -136,7 +136,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     Timber.i("Successful Refresh!")
-                    contentManager.downloadContent()
+                    contentService.downloadContent()
 
                 }, {
                     Timber.e("Refreshed Failed with $it")
@@ -155,6 +155,6 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     }
 
     private fun fetchDiscover() {
-        contentManager.fetchDiscoverContent()
+        contentService.fetchDiscoverContent()
     }
 }

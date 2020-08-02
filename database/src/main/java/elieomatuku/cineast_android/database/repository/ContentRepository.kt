@@ -30,11 +30,11 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
      * @return a [Flowable] that will emit every time the db has been updated.
      */
 
-    fun discoverContent(): Flowable<elieomatuku.cineast_android.core.DiscoverContent> {
+    fun discoverContent(): Flowable<DiscoverContent> {
         val moviesFlowable = Flowable.zip(popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies,
-                Function4<List<Movie>, List<Movie>, List<Movie>, List<Movie>, elieomatuku.cineast_android.core.DiscoverContent>
+                Function4<List<Movie>, List<Movie>, List<Movie>, List<Movie>, DiscoverContent>
                 { popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies ->
-                    elieomatuku.cineast_android.core.DiscoverContent(
+                    DiscoverContent(
                             popularMovies = popularMovies,
                             upcomingMovies = upcomingMovies,
                             nowPlayingMovies = nowPlayingMovies,
@@ -182,7 +182,7 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         }
     }
 
-    fun deleteAllPersonalitites() {
+    fun deleteAllPersonalities() {
         GlobalScope.launch(Dispatchers.IO) {
             contentDatabase.personalityDao().deleteAll()
         }
