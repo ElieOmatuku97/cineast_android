@@ -6,10 +6,6 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-def apikeyPropertiesFile = rootProject.file("apikeys.properties.txt");
-def apikeyProperties = new Properties()
-apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
-
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -35,7 +31,11 @@ android {
             applicationIdSuffix = ".dev"
             resValue "string", "app_name", (rootProject.ext.appName + "_dev")
             resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_dev_leaks")
-            buildConfigField("String", "api_key", apikeyProperties['api_key'])
+
+            def apiKeyPropertiesFile = rootProject.file("apikeys.properties.txt");
+            def apiKeyProperties = new Properties()
+            apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
+            buildConfigField("String", "api_key", apiKeyProperties['api_key'])
         }
 
         beta {

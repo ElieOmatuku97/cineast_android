@@ -29,7 +29,7 @@ interface BaseClient {
      get() = buildHttpClient()
 
 
-    val persistClient: elieomatuku.cineast_android.core.ValueStore
+    val persistClient: ValueStore
 
     val interceptor: Interceptor?
 
