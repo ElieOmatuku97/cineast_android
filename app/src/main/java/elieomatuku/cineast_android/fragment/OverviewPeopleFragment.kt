@@ -26,7 +26,7 @@ class OverviewPeopleFragment: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val peopleDetails: PersonalityDetails = arguments?.get(OVERVIEW_PEOPLE_DETAILS)  as PersonalityDetails
-        val rootView = FrameLayout(this.activity)
+        val rootView = FrameLayout(requireContext())
         rootView.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
         val holder = BiographyHolder.newInstance(rootView)

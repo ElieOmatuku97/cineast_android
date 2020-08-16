@@ -32,16 +32,18 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         super.onLink(vu, inState, args)
 
         val screenName = args.getString(SCREEN_NAME_KEY)
-        val movie: Movie = args.getParcelable(MOVIE_KEY)
-        val genres: List<Genre> = args.getParcelableArrayList(MOVIE_GENRES_KEY)
+        val movie: Movie? = args.getParcelable(MOVIE_KEY)
+        val genres: List<Genre>? = args.getParcelableArrayList(MOVIE_GENRES_KEY)
 
 
         Timber.d("onLink called")
 
-        vu.moviePresentedPublisher?.onNext(movie)
         vu.countingIdlingResource.increment()
 
-        getMovieVideos(movie, screenName, genres)
+        movie?.let {
+            vu.moviePresentedPublisher?.onNext(movie)
+            getMovieVideos(movie, screenName, genres)
+        }
 
         rxSubs.add(vu.onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -159,7 +161,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         }
     }
 
-    suspend fun getMovieImages(movieId: Int) {
+    private suspend fun getMovieImages(movieId: Int) {
         val imageResponse = contentService.getMovieImages(movieId)
         if (imageResponse.isSuccess) {
             val posters = imageResponse.getOrNull()?.posters

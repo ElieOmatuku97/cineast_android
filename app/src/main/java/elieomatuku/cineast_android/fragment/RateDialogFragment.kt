@@ -52,7 +52,7 @@ class RateDialogFragment : DialogFragment() {
         movie = arguments?.getParcelable(MOVIE_KEY)
 
 
-        val dialog = Dialog(activity)
+        val dialog = Dialog(requireContext())
 
         dialogView?.let {
             dialog.setContentView(it)

@@ -26,9 +26,11 @@ class KnownForPresenter : BasePresenter<KnownForVu>() {
     override fun onLink(vu: KnownForVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        val knownFor: List<KnownFor> = args.getParcelableArrayList(PEOPLE_CAST_KEY)
+        val knownFor: List<KnownFor>? = args.getParcelableArrayList(PEOPLE_CAST_KEY)
         val peopleName: String? = args.getString(PEOPLE_NAME_KEY)
-        vu.updateVu(knownFor)
+        knownFor?.let {
+            vu.updateVu(knownFor)
+        }
 
 
         rxSubs.add(contentService.genres()

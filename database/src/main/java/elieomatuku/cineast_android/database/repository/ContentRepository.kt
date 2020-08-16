@@ -121,7 +121,6 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
 
     fun updatePersonality(personality: Personality) {
         GlobalScope.launch(Dispatchers.IO) {
-            require(personality.id != null)
             contentDatabase.personalityDao().updatePersonality(PersonalityEntity.fromPersonality(personality))
         }
     }
@@ -133,7 +132,6 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
     }
 
     fun insertPersonality(personality: Personality) {
-        require(personality.id != null)
         GlobalScope.launch(Dispatchers.IO) {
             contentDatabase.personalityDao().insertPersonality(PersonalityEntity.fromPersonality(personality))
         }
@@ -146,8 +144,6 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
     }
 
     fun insertMovie(movie: Movie, type: MovieType) {
-        require(movie.id != null)
-
         contentDatabase.movieDao().insertMovie(MovieEntity.fromMovie(movie))
         contentDatabase.movieTypeJoinDao().insert(MovieTypeJoin(movie.id, type.id))
     }
@@ -161,8 +157,6 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
      * Below methods delete content in the database on the IO thread
      */
     fun deleteMovie(movie: Movie) {
-        require(movie.id != null)
-
         GlobalScope.launch(Dispatchers.IO) {
             contentDatabase.movieDao().delete(movie.id)
         }
@@ -175,8 +169,6 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
     }
 
     fun deletePersonality(personality: Personality) {
-        require(personality.id != null)
-
         GlobalScope.launch(Dispatchers.IO) {
             contentDatabase.personalityDao().delete(personality.id)
         }

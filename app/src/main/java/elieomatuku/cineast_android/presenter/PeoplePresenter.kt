@@ -27,9 +27,11 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
         super.onLink(vu, inState, args)
 
         val screenName = args.getString(SCREEN_NAME_KEY)
-        val people: Person = args.getParcelable(PEOPLE_KEY) as Person
+        val people: Person? = args.getParcelable(PEOPLE_KEY)
 
-        vu.personPresentedPublisher?.onNext(people)
+        people?.let {
+            vu.personPresentedPublisher?.onNext(people)
+        }
 
         personalityDetails = inState?.getParcelable(PEOPLE_DETAILS_KEY)
         peopleMovies = inState?.getParcelableArrayList(PEOPLE_MOVIES_KEY)
@@ -38,25 +40,30 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
             vu.updateVu(personalityDetails, screenName, peopleMovies)
         } else {
             vu.showLoading()
-            contentService.getPeopleDetails(people, object : AsyncResponse<PersonalityDetails> {
-                override fun onSuccess(response: PersonalityDetails?) {
-                    personalityDetails = response
-                    getPeopleMovies(people, personalityDetails, screenName)
-                }
 
-                override fun onFail(error: CineastError) {
-                    Timber.e("error: $error")
-                    handler.post {
-                        vu.hideLoading()
-                        vu.updateErrorView(error.status_message)
+            people?.let {
+                contentService.getPeopleDetails(people, object : AsyncResponse<PersonalityDetails> {
+                    override fun onSuccess(response: PersonalityDetails?) {
+                        personalityDetails = response
+                        if (screenName != null) {
+                            getPeopleMovies(people, personalityDetails, screenName)
+                        }
                     }
-                }
-            })
+
+                    override fun onFail(error: CineastError) {
+                        Timber.e("error: $error")
+                        handler.post {
+                            vu.hideLoading()
+                            vu.updateErrorView(error.status_message)
+                        }
+                    }
+                })
+            }
         }
 
         rxSubs.add(vu.onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ peopleId ->
+                .subscribe { peopleId ->
 
                     contentService.getPeopleImages(peopleId, object : AsyncResponse<ImageResponse> {
                         override fun onSuccess(response: ImageResponse?) {
@@ -70,14 +77,14 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
                             Timber.d("error: $error")
                         }
                     })
-                }))
+                })
 
 
         rxSubs.add(vu.onSegmentedButtonsObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+                .subscribe {
                     vu.gotoTab(it)
-                }))
+                })
 
 
     }
