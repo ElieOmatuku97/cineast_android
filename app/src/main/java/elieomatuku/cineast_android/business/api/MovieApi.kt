@@ -11,11 +11,9 @@ import retrofit2.http.*
 
 interface MovieApi {
     companion object {
-
-        const val API_KEY = "api_key"
-        const val MOVIE_ID = "movie_id"
-        const val SESSION_ID = "session_id"
-        const val ACCOUNT_ID = "account_id"
+        private const val MOVIE_ID = "movie_id"
+        private const val SESSION_ID = "session_id"
+        private const val ACCOUNT_ID = "account_id"
         const val QUERY = "query"
 
         const val TOP_RATED_MOVIE = "movie/top_rated"
@@ -40,58 +38,57 @@ interface MovieApi {
 
 
     @GET(TOP_RATED_MOVIE)
-    fun getTopRatedMovies(@Query(API_KEY) apyKey: String): Deferred<MovieResponse>
+    fun getTopRatedMovies(): Deferred<MovieResponse>
 
     @GET(UPCOMING_MOVIE)
-    fun getUpcomingMovies(@Query(API_KEY) apiKey: String): Deferred<MovieResponse>
+    fun getUpcomingMovies(): Deferred<MovieResponse>
 
     @GET(POPULAR_MOVIE)
-    fun getPopularMovie(@Query(API_KEY) apiKey: String): Deferred<MovieResponse>
+    fun getPopularMovie(): Deferred<MovieResponse>
 
     @GET(NOW_PLAYING_MOVIE)
-    fun getNowPlayingMovie(@Query(API_KEY) apiKey: String): Deferred<MovieResponse>
+    fun getNowPlayingMovie(): Deferred<MovieResponse>
 
     @GET(MOVIE_VIDEOS)
-    fun getMovieVideos(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<TrailerResponse>
+    fun getMovieVideos(@Path(MOVIE_ID) movie_id: Int): Deferred<TrailerResponse>
 
     @GET(MOVIE_DETAILS)
-    fun getMovieDetails(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<MovieFacts>
+    fun getMovieDetails(@Path(MOVIE_ID) movie_id: Int): Deferred<MovieFacts>
 
     @GET(MOVIE)
-    fun getMovie(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Call<Movie>
+    fun getMovie(@Path(MOVIE_ID) movie_id: Int): Call<Movie>
 
     @GET(GENRE)
-    fun getGenre(@Query(API_KEY) apiKey: String): Deferred<GenreResponse>
+    fun getGenre(): Deferred<GenreResponse>
 
     @GET(CREDITS)
-    fun getCredits(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<MovieCreditsResponse>
+    fun getCredits(@Path(MOVIE_ID) movie_id: Int): Deferred<MovieCreditsResponse>
 
     @GET(SIMILAR_MOVIE)
-    fun getSimilarMovie(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<MovieResponse>
+    fun getSimilarMovie(@Path(MOVIE_ID) movie_id: Int): Deferred<MovieResponse>
 
     @GET(MOVIE_IMAGE)
-    fun getMovieImages(@Path(MOVIE_ID) movie_id: Int, @Query(API_KEY) apiKey: String): Deferred<ImageResponse>
+    fun getMovieImages(@Path(MOVIE_ID) movie_id: Int): Deferred<ImageResponse>
 
     @GET(SEARCH_MOVIE)
-    fun getMoviesWithSearch(@Query(API_KEY) apiKey: String, @Query(QUERY) query: String): Call<MovieResponse>
+    fun getMoviesWithSearch(@Query(QUERY) query: String): Call<MovieResponse>
 
     @GET(WATCHLIST_MOVIE)
-    fun getWatchList(@Query(API_KEY) apiKey: String, @Query(SESSION_ID) sessionId: String): Deferred<MovieResponse>
+    fun getWatchList(@Query(SESSION_ID) sessionId: String): Deferred<MovieResponse>
 
     @POST(UPDATE_WATCHLIST_MOVIE)
-    fun updateWatchList(@Query(API_KEY) apyKey: String, @Query(SESSION_ID) sessionId: String, @Body media: RequestBody): Call<PostResponse>
+    fun updateWatchList(@Query(SESSION_ID) sessionId: String, @Body media: RequestBody): Call<PostResponse>
 
     @GET(FAVORITES_MOVIE)
-    fun getFavoritesList(@Query(API_KEY) apiKey: String, @Query(SESSION_ID) sessionId: String): Deferred<MovieResponse>
+    fun getFavoritesList(@Query(SESSION_ID) sessionId: String): Deferred<MovieResponse>
 
     @POST(UPDATE_FAVORITES_MOVIE)
-    fun updateFavoritesList(@Query(API_KEY) apyKey: String, @Query(SESSION_ID) sessionId: String, @Body media: RequestBody): Call<PostResponse>
-
+    fun updateFavoritesList(@Query(SESSION_ID) sessionId: String, @Body media: RequestBody): Call<PostResponse>
 
     @GET(RATED_MOVIE)
-    fun getUserRatedMovies(@Query(API_KEY) apiKey: String, @Query(SESSION_ID) sessionId: String): Call<MovieResponse>
+    fun getUserRatedMovies(@Query(SESSION_ID) sessionId: String): Call<MovieResponse>
 
     @POST(POST_MOVIE_RATE)
-    fun postMovieRate(@Path(MOVIE_ID) movieId: Int, @Query(API_KEY) apiKey: String, @Query(SESSION_ID) sessionId: String, @Body value: RequestBody): Call<PostResponse>
+    fun postMovieRate(@Path(MOVIE_ID) movieId: Int, @Query(SESSION_ID) sessionId: String, @Body value: RequestBody): Call<PostResponse>
 
 }
