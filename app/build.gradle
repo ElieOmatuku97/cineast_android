@@ -21,7 +21,6 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-        buildConfigField("String", "api_key", apikeyProperties['api_key'])
     }
     buildTypes {
         release {
@@ -36,17 +35,20 @@ android {
             applicationIdSuffix = ".dev"
             resValue "string", "app_name", (rootProject.ext.appName + "_dev")
             resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_dev_leaks")
+            buildConfigField("String", "api_key", apikeyProperties['api_key'])
         }
 
         beta {
             applicationIdSuffix = ".beta"
             resValue "string", "app_name", (rootProject.ext.appName + "_beta")
             resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_beta_leaks")
+            buildConfigField("String", "api_key", "\"${System.env.API_KEY}\"")
         }
 
         prod {
             resValue "string", "app_name", rootProject.ext.appName
             resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_leaks")
+            buildConfigField("String", "api_key", "\"${System.env.API_KEY}\"")
         }
     }
 
