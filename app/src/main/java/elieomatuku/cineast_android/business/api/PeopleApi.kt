@@ -13,8 +13,6 @@ import retrofit2.http.Query
 
 interface PeopleApi {
     companion object {
-
-        const val API_KEY = "api_key"
         const val POPULAR_PERSON = "person/popular"
         const val QUERY = "query"
         const val PERSON_ID = "person_id"
@@ -26,19 +24,19 @@ interface PeopleApi {
     }
 
     @GET (POPULAR_PERSON )
-    fun getPersonalities (@Query( API_KEY) apiKey: String): Deferred<PersonalityResponse>
+    fun getPersonalities (): Deferred<PersonalityResponse>
 
     @GET (GET_PERSON_ID )
-    fun getPeopleDetails (@Path(PERSON_ID) personId: Int, @Query( API_KEY) apiKey: String): Call <PersonalityDetails>
+    fun getPeopleDetails (@Path(PERSON_ID) personId: Int): Call <PersonalityDetails>
 
     @GET (PERSON_MOVIE_CREDITS)
-    fun getPeopleCredits (@Path(PERSON_ID) personId: Int, @Query ( API_KEY) apiKey: String): Call <PeopleCreditsResponse>
+    fun getPeopleCredits (@Path(PERSON_ID) personId: Int): Call <PeopleCreditsResponse>
 
 
     @GET(GET_PERSON_IMAGES)
-    fun getPeopleImages(@Path(PERSON_ID) movie_id: Int, @Query( API_KEY) apiKey: String): Call <ImageResponse>
+    fun getPeopleImages(@Path(PERSON_ID) movie_id: Int): Call <ImageResponse>
 
 
     @GET (SEARCH_PERSON)
-    fun getPeopleWithSearch(@Query( API_KEY) apiKey: String, @Query(QUERY) query: String): Call <PersonalityResponse>
+    fun getPeopleWithSearch(@Query(QUERY) query: String): Call <PersonalityResponse>
 }

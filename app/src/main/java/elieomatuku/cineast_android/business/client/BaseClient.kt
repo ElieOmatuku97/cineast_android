@@ -4,6 +4,7 @@ import android.content.res.Resources
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.ValueStore
+import elieomatuku.cineast_android.utils.RestUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -51,6 +52,20 @@ interface BaseClient {
 
 
         val builder =  OkHttpClient.Builder()
+                .addNetworkInterceptor {chain ->
+                    val original = chain.request()
+                    val url = original.url.newBuilder()
+                            .addQueryParameter("api_key", RestUtils.API_KEY)
+                            .build()
+
+                    val request = original.newBuilder()
+                            .method(original.method, original.body)
+                            .url(url)
+                            .build()
+
+                     chain.proceed(request)
+
+                }
                 .addInterceptor(logging)
                 .connectTimeout(30000, TimeUnit.MILLISECONDS)
                 .readTimeout(30000, TimeUnit.MILLISECONDS)

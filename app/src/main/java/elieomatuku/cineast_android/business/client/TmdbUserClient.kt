@@ -17,10 +17,10 @@ import timber.log.Timber
 
 class TmdbUserClient(
         override val resources: Resources,
-        override val persistClient: elieomatuku.cineast_android.core.ValueStore,
+        override val persistClient: ValueStore,
         override val interceptor: Interceptor? = null) : BaseClient {
 
-    val authenticationApi: AuthenticationApi by lazy {
+    private val authenticationApi: AuthenticationApi by lazy {
         retrofit.create(AuthenticationApi::class.java)
     }
 
@@ -29,7 +29,7 @@ class TmdbUserClient(
     }
 
     fun getAccessToken(asyncResponse: AsyncResponse<AccessToken>) {
-        authenticationApi.getAccessToken(RestUtils.API_KEY).enqueue(object : Callback<AccessToken> {
+        authenticationApi.getAccessToken().enqueue(object : Callback<AccessToken> {
             override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>?) {
                 Timber.d("AccessToken: $response")
 
@@ -50,7 +50,7 @@ class TmdbUserClient(
     }
 
     fun getSession(requestToken: String?, asyncResponse: AsyncResponse<String>) {
-        authenticationApi.getSession(RestUtils.API_KEY, requestToken).enqueue(object : Callback<Session> {
+        authenticationApi.getSession(requestToken).enqueue(object : Callback<Session> {
             override fun onResponse(call: Call<Session>, response: Response<Session>) {
                 response.body()?.session_id?.let {
                     persistClient.set(RestUtils.SESSION_ID_KEY, it)
@@ -67,7 +67,7 @@ class TmdbUserClient(
 
     private fun setAccount(sessionId: String?) {
         sessionId?.let {
-            authenticationApi.getAccount(RestUtils.API_KEY, it).enqueue(object : Callback<Account> {
+            authenticationApi.getAccount(it).enqueue(object : Callback<Account> {
                 override fun onResponse(call: Call<Account>, response: Response<Account>) {
                     Timber.d("account: ${response.body()}")
 
