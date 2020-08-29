@@ -62,7 +62,6 @@ class RateDialogFragment : DialogFragment() {
             dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(it, R.drawable.bg_rate_dialog))
         }
 
-
         onRatingInput()
         onSubmitClick()
         dialog.show()
