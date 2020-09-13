@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.adapter.MovieListAdapter
+import elieomatuku.cineast_android.adapter.MoviesAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import io.reactivex.subjects.PublishSubject
@@ -36,8 +36,8 @@ class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubje
         itemView.recyclerview_popular_movie
     }
 
-    private val adapter: MovieListAdapter by lazy {
-        MovieListAdapter(onItemClickPublisher)
+    private val adapter: MoviesAdapter by lazy {
+        MoviesAdapter(onItemClickPublisher)
     }
 
     override fun update(content: Pair<Int, List<Content>>) {

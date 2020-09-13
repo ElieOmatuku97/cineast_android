@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.adapter.MovieListAdapter
+import elieomatuku.cineast_android.adapter.MoviesAdapter
 import elieomatuku.cineast_android.core.model.Movie
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -49,8 +49,8 @@ class SimilarMovieVu(inflater: LayoutInflater,
         rootView.see_all
     }
 
-    private val adapter: MovieListAdapter by lazy {
-        MovieListAdapter(itemSelectPublisher)
+    private val adapter: MoviesAdapter by lazy {
+        MoviesAdapter(itemSelectPublisher)
     }
 
     override fun onCreate() {

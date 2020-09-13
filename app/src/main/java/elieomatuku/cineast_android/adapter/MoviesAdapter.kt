@@ -10,8 +10,8 @@ import timber.log.Timber
 import kotlin.properties.Delegates
 
 
-open class MovieListAdapter(private val onItemClickPublisher: PublishSubject<Movie>,
-                            private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class MoviesAdapter(private val onItemClickPublisher: PublishSubject<Movie>,
+                         private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_EMPTY_STATE = -2
