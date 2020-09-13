@@ -38,7 +38,7 @@ class KnownForVu (inflater: LayoutInflater,
 
 
     private val listView : RecyclerView by lazy {
-        rootView.recyclerview_popular_movie
+        rootView.recyclerview_movie
     }
 
     private val sectionTitleView: TextView by lazy {

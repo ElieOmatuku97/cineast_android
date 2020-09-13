@@ -33,7 +33,7 @@ class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubje
     }
 
     private val listView by lazy {
-        itemView.recyclerview_popular_movie
+        itemView.recyclerview_movie
     }
 
     private val adapter: MoviesAdapter by lazy {

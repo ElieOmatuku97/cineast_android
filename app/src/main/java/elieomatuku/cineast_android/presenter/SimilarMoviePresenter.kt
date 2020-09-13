@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.fragment.SimilarMovieFragment
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.vu.SimilarMovieVu
+import elieomatuku.cineast_android.vu.MoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.ArrayList
 
 
-class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
+class SimilarMoviePresenter : BasePresenter<MoviesVu>() {
     companion object {
         const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_KEY = "movieApi"
@@ -20,7 +20,7 @@ class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
 
     private var genres: List<Genre> = listOf()
 
-    override fun onLink(vu: SimilarMovieVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: MoviesVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         val movieSummary: MovieSummary = args.get(SimilarMovieFragment.MOVIE_SUMMARY) as MovieSummary
@@ -42,7 +42,7 @@ class SimilarMoviePresenter : BasePresenter<SimilarMovieVu>() {
         )
 
 
-        rxSubs.add(vu.itemSelectObservable
+        rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ movie: Movie ->
                     val params = Bundle()

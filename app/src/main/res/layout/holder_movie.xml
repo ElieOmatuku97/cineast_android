@@ -71,7 +71,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_popular_movie"
+        android:id="@+id/recyclerview_movie"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/holder_movie_listview_padding_start"
