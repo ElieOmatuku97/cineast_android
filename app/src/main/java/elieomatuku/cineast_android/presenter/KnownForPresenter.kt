@@ -2,18 +2,19 @@ package elieomatuku.cineast_android.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
+import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.KnownFor
-import elieomatuku.cineast_android.vu.KnownForVu
+import elieomatuku.cineast_android.vu.MoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.ArrayList
 
-class KnownForPresenter : BasePresenter<KnownForVu>() {
+class KnownForPresenter : BasePresenter<MoviesVu>() {
     companion object {
         const val PEOPLE_CAST_KEY = "people_cast"
         const val MOVIE_KEY = "movieApi"
@@ -23,13 +24,13 @@ class KnownForPresenter : BasePresenter<KnownForVu>() {
 
     private var genres: List<Genre>? = listOf()
 
-    override fun onLink(vu: KnownForVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: MoviesVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         val knownFor: List<KnownFor>? = args.getParcelableArrayList(PEOPLE_CAST_KEY)
         val peopleName: String? = args.getString(PEOPLE_NAME_KEY)
         knownFor?.let {
-            vu.updateVu(knownFor)
+            vu.updateVu(knownFor.mapNotNull { it.toMovie() }, R.string.cast)
         }
 
 
@@ -46,10 +47,10 @@ class KnownForPresenter : BasePresenter<KnownForVu>() {
         )
 
 
-        rxSubs.add(vu.itemSelectObservable
+        rxSubs.add(vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ movieId: Int ->
-                    getMovie(movieId, peopleName)
+                .subscribe({ movie: Movie ->
+                    getMovie(movie.id, peopleName)
 
                 }, { t: Throwable ->
                     Timber.e("movieSelectObservable failed:$t")

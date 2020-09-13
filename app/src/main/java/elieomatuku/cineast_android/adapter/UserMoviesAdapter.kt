@@ -5,9 +5,9 @@ import elieomatuku.cineast_android.core.model.Movie
 import io.reactivex.subjects.PublishSubject
 
 
-class UserMovieListAdapter(onItemClickPublisher: PublishSubject<Movie>,
-                           itemListLayoutRes: Int? = null, private val onMovieRemovedPublisher: PublishSubject<Movie>? = null)
-    : MovieListAdapter(onItemClickPublisher, itemListLayoutRes) {
+class UserMoviesAdapter(onItemClickPublisher: PublishSubject<Movie>,
+                        itemListLayoutRes: Int? = null, private val onMovieRemovedPublisher: PublishSubject<Movie>? = null)
+    : MoviesAdapter(onItemClickPublisher, itemListLayoutRes) {
 
 
     fun deleteItem(position: Int) {

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.MovieListAdapter
+import elieomatuku.cineast_android.adapter.MoviesAdapter
 import elieomatuku.cineast_android.adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
@@ -20,7 +20,7 @@ class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
 
 
     override val adapter: RecyclerView.Adapter<*>
-        get() = movieListAdapter
+        get() = moviesAdapter
 
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()
@@ -29,20 +29,20 @@ class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
     val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
 
-    val movieListAdapter: MovieListAdapter by lazy {
-        MovieListAdapter(movieSelectPublisher, R.layout.holder_movie_list)
+    private val moviesAdapter: MoviesAdapter by lazy {
+        MoviesAdapter(movieSelectPublisher, R.layout.holder_movie_list)
     }
 
-    val popularPeopleItemAdapter: PeopleLisAdapter by lazy {
+    private val popularPeopleItemAdapter: PeopleLisAdapter by lazy {
         PeopleLisAdapter(personSelectPublisher, R.layout.holder_people_list)
     }
 
 
     override fun setUpListView(contents: List<Content>) {
         if (areWidgetsMovies(contents)) {
-            movieListAdapter.movies = contents as MutableList<Movie>
-            listView.adapter = movieListAdapter
-            movieListAdapter.notifyDataSetChanged()
+            moviesAdapter.movies = contents as MutableList<Movie>
+            listView.adapter = moviesAdapter
+            moviesAdapter.notifyDataSetChanged()
 
         } else {
             popularPeopleItemAdapter.popularPersonalities = contents as MutableList<Person>

@@ -4,12 +4,12 @@ import android.os.Bundle
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.presenter.SimilarMoviePresenter
-import elieomatuku.cineast_android.vu.SimilarMovieVu
+import elieomatuku.cineast_android.vu.MoviesVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 
 
-class SimilarMovieFragment : MVPFragment<SimilarMoviePresenter, SimilarMovieVu>() {
+class SimilarMovieFragment : MVPFragment<SimilarMoviePresenter, MoviesVu>() {
     companion object {
         const val MOVIE_SUMMARY = "movie_summary"
 
@@ -27,10 +27,10 @@ class SimilarMovieFragment : MVPFragment<SimilarMoviePresenter, SimilarMovieVu>(
         }
     }
 
-    override fun createMVPDispatcher(): MVPDispatcher<SimilarMoviePresenter, SimilarMovieVu> {
+    override fun createMVPDispatcher(): MVPDispatcher<SimilarMoviePresenter, MoviesVu> {
         return MVPDispatcher(MVP_UID,
                 // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ SimilarMoviePresenter() }),
-                ::SimilarMovieVu)
+                PresenterCacheLazy { SimilarMoviePresenter() },
+                ::MoviesVu)
     }
 }

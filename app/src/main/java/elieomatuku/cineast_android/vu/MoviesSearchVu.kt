@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.MovieListAdapter
+import elieomatuku.cineast_android.adapter.MoviesAdapter
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.vu.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -39,8 +39,8 @@ class MoviesSearchVu(inflater: LayoutInflater,
     }
 
     var gridLayoutManager: GridLayoutManager? = null
-    private val adapter: MovieListAdapter by lazy {
-        MovieListAdapter(movieSelectPublisher, R.layout.holder_popular_movie)
+    private val adapter: MoviesAdapter by lazy {
+        MoviesAdapter(movieSelectPublisher, R.layout.holder_popular_movie)
     }
 
     override fun onCreate() {

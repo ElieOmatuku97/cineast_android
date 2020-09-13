@@ -1,7 +1,6 @@
 package elieomatuku.cineast_android.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
@@ -11,8 +10,8 @@ import timber.log.Timber
 import kotlin.properties.Delegates
 
 
-open class MovieListAdapter(private val onItemClickPublisher: PublishSubject<Movie>,
-                            private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class MoviesAdapter(private val onItemClickPublisher: PublishSubject<Movie>,
+                         private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_EMPTY_STATE = -2
@@ -21,7 +20,6 @@ open class MovieListAdapter(private val onItemClickPublisher: PublishSubject<Mov
     }
 
     var movies: MutableList<Movie> by Delegates.observable(mutableListOf()) { prop, oldMovies, nuMovies ->
-
         Timber.d("widgets = $nuMovies")
         hasValidData = true
         errorMessage = null
@@ -81,12 +79,11 @@ open class MovieListAdapter(private val onItemClickPublisher: PublishSubject<Mov
         when (holder) {
 
             is MovieItemHolder -> {
-
                 val movie = movies[position]
                 holder.update(movie)
 
                 holder.itemView.setOnClickListener {
-                    Log.d(MovieListAdapter::class.java.simpleName, "CLICKED && movieApi:  ${movies[position]}")
+                    Timber.d("CLICKED && movieApi:  ${movies[position]}")
                     onItemClickPublisher.onNext(movies[position])
                 }
             }
