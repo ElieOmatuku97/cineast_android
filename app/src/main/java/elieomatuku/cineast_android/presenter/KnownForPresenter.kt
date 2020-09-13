@@ -48,8 +48,8 @@ class KnownForPresenter : BasePresenter<KnownForVu>() {
 
         rxSubs.add(vu.itemSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ movieId: Int ->
-                    getMovie(movieId, peopleName)
+                .subscribe({ movie: Movie ->
+                    getMovie(movie.id, peopleName)
 
                 }, { t: Throwable ->
                     Timber.e("movieSelectObservable failed:$t")

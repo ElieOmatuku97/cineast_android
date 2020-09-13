@@ -5,14 +5,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.adapter.KnownForAdapter
 import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.core.model.KnownFor
+import elieomatuku.cineast_android.core.model.Movie
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -30,11 +29,11 @@ class KnownForVu (inflater: LayoutInflater,
         return R.layout.holder_movie
     }
 
-    private val itemSelectPublisher: PublishSubject<Int> by lazy {
-        PublishSubject.create<Int>()
+    private val itemSelectPublisher: PublishSubject<Movie> by lazy {
+        PublishSubject.create<Movie>()
     }
 
-    val itemSelectObservable: Observable<Int>
+    val itemSelectObservable: Observable<Movie>
         get() = itemSelectPublisher.hide()
 
 
@@ -46,9 +45,9 @@ class KnownForVu (inflater: LayoutInflater,
         rootView.section_title
     }
 
-//    private val adapter: MovieListAdapter by lazy {
-//        MovieListAdapter(itemSelectPublisher)
-//    }
+    private val adapter: MovieListAdapter by lazy {
+        MovieListAdapter(itemSelectPublisher)
+    }
 
     private val seeAllClickView: LinearLayout by lazy {
         rootView.see_all
@@ -61,14 +60,14 @@ class KnownForVu (inflater: LayoutInflater,
 
 
     fun updateVu(knownFor: List<KnownFor>){
-        val adapter = KnownForAdapter(knownFor , itemSelectPublisher)
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val movies = knownFor.map {it.toMovie()}.filterNotNull()
+        adapter.movies = movies.toMutableList()
         adapter.notifyDataSetChanged()
 
         seeAllClickView.setOnClickListener {
-            val movies = knownFor.map {it.toMovie()}
-            ItemListActivity.startItemListActivity(activity, movies.filterNotNull() , R.string.movies)
+            ItemListActivity.startItemListActivity(activity, movies, R.string.movies)
         }
     }
 
