@@ -1,12 +1,12 @@
 package elieomatuku.cineast_android.vu
 
 import android.app.Activity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.MoviesAdapter
@@ -17,7 +17,11 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
 
 
-class SimilarMovieVu(inflater: LayoutInflater,
+/**
+ * Created by elieomatuku on 2020-09-13
+ */
+
+class MoviesVu(inflater: LayoutInflater,
                      activity: Activity,
                      fragmentWrapper: FragmentWrapper?,
                      parentView: ViewGroup?) : BaseVu(inflater,
@@ -29,16 +33,16 @@ class SimilarMovieVu(inflater: LayoutInflater,
         return R.layout.holder_movie
     }
 
-    private val itemSelectPublisher: PublishSubject<Movie> by lazy {
+    private val movieSelectPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()
     }
 
-    val itemSelectObservable: Observable<Movie>
-        get() = itemSelectPublisher.hide()
+    val movieSelectObservable: Observable<Movie>
+        get() = movieSelectPublisher.hide()
 
 
     private val listView: RecyclerView by lazy {
-        rootView.recyclerview_popular_movie
+        rootView.recyclerview_movie
     }
 
     private val sectionTitleView: TextView by lazy {
@@ -50,23 +54,18 @@ class SimilarMovieVu(inflater: LayoutInflater,
     }
 
     private val adapter: MoviesAdapter by lazy {
-        MoviesAdapter(itemSelectPublisher)
+        MoviesAdapter(movieSelectPublisher)
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        sectionTitleView.text = activity.getText(R.string.movies)
-    }
-
-
-    fun updateVu(similarMovies: List<Movie>) {
+    fun updateVu(movies: List<Movie>, titleRes: Int = R.string.movies) {
+        sectionTitleView.text = activity.getText(titleRes)
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        adapter.movies = similarMovies.toMutableList()
+        adapter.movies = movies.toMutableList()
         adapter.notifyDataSetChanged()
 
         seeAllClickView.setOnClickListener {
-            ItemListActivity.startItemListActivity(activity, similarMovies, R.string.movies)
+            ItemListActivity.startItemListActivity(activity, movies, R.string.movies)
         }
     }
 }
