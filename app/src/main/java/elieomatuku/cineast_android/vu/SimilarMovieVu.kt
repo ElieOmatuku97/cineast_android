@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
@@ -44,19 +45,13 @@ class SimilarMovieVu(inflater: LayoutInflater,
         rootView.section_title
     }
 
-    private val seeAllView: TextView by lazy {
-        rootView.see_all_title
+    private val seeAllClickView: LinearLayout by lazy {
+        rootView.see_all
     }
 
     override fun onCreate() {
         super.onCreate()
         sectionTitleView.text = activity.getText(R.string.movies)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        listView.adapter = null
-        listView.layoutManager = null
     }
 
 
@@ -66,7 +61,7 @@ class SimilarMovieVu(inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         adapter.notifyDataSetChanged()
 
-        seeAllView.setOnClickListener {
+        seeAllClickView.setOnClickListener {
             ItemListActivity.startItemListActivity(activity, similarMovies, R.string.movies)
         }
     }

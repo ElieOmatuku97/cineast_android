@@ -20,10 +20,9 @@ class KnownForAdapter(private val knownFor: List<KnownFor>, private val onItemCl
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val itemMovieHolder = holder as MovieItemHolder
         val knownFor = knownFor[position]
+        val movie = knownFor.toMovie()
 
-        knownFor.id?.let {
-            val movie = Movie(id = it, poster_path = knownFor.poster_path, release_date = knownFor.release_date, original_title = knownFor.original_title)
-
+        movie?.let {
             itemMovieHolder.update(movie)
 
             itemMovieHolder.itemView.setOnClickListener {

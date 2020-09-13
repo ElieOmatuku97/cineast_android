@@ -15,8 +15,8 @@ class KnownForFragment : MVPFragment<KnownForPresenter, KnownForVu>() {
         private val MVP_UID by lazy {
             hashCode()
         }
-        const val PEOPLE_CAST = "people_cast"
-        const val PEOPLE_NAME_KEY = "people_name"
+        private const val PEOPLE_CAST = "people_cast"
+        private const val PEOPLE_NAME_KEY = "people_name"
         fun newInstance(peopleMovies: List<KnownFor>, peopleName: String?): KnownForFragment {
             val args = Bundle()
             args.putParcelableArrayList(PEOPLE_CAST, peopleMovies as ArrayList<out Parcelable>)
@@ -32,7 +32,7 @@ class KnownForFragment : MVPFragment<KnownForPresenter, KnownForVu>() {
     override fun createMVPDispatcher(): MVPDispatcher<KnownForPresenter, KnownForVu> {
         return MVPDispatcher(MVP_UID,
                 // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ KnownForPresenter() }),
+                PresenterCacheLazy { KnownForPresenter() },
                 ::KnownForVu)
     }
 }

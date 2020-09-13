@@ -30,7 +30,7 @@ class SimilarMovieFragment : MVPFragment<SimilarMoviePresenter, SimilarMovieVu>(
     override fun createMVPDispatcher(): MVPDispatcher<SimilarMoviePresenter, SimilarMovieVu> {
         return MVPDispatcher(MVP_UID,
                 // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ SimilarMoviePresenter() }),
+                PresenterCacheLazy { SimilarMoviePresenter() },
                 ::SimilarMovieVu)
     }
 }

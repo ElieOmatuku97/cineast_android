@@ -91,11 +91,6 @@ class PeopleVu(inflater: LayoutInflater,
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        listView.adapter = null
-        listView.layoutManager = null
-    }
 
     fun updateVu(personalityDetails: PersonalityDetails?, screenName: String?, knownFor: List<KnownFor>?) {
         if (personalityDetails != null && screenName != null && knownFor != null) {
