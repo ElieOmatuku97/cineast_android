@@ -21,7 +21,6 @@ open class MovieListAdapter(private val onItemClickPublisher: PublishSubject<Mov
     }
 
     var movies: MutableList<Movie> by Delegates.observable(mutableListOf()) { prop, oldMovies, nuMovies ->
-
         Timber.d("widgets = $nuMovies")
         hasValidData = true
         errorMessage = null

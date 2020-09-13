@@ -11,6 +11,7 @@ import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.KnownForAdapter
+import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.core.model.KnownFor
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -44,6 +45,10 @@ class KnownForVu (inflater: LayoutInflater,
     private val sectionTitleView: TextView by lazy {
         rootView.section_title
     }
+
+//    private val adapter: MovieListAdapter by lazy {
+//        MovieListAdapter(itemSelectPublisher)
+//    }
 
     private val seeAllClickView: LinearLayout by lazy {
         rootView.see_all

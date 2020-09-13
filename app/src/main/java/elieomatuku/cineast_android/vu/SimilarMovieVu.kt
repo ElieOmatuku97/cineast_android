@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
-import elieomatuku.cineast_android.adapter.SimilarAdapter
+import elieomatuku.cineast_android.adapter.MovieListAdapter
 import elieomatuku.cineast_android.core.model.Movie
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -49,6 +49,10 @@ class SimilarMovieVu(inflater: LayoutInflater,
         rootView.see_all
     }
 
+    private val adapter: MovieListAdapter by lazy {
+        MovieListAdapter(itemSelectPublisher)
+    }
+
     override fun onCreate() {
         super.onCreate()
         sectionTitleView.text = activity.getText(R.string.movies)
@@ -56,9 +60,9 @@ class SimilarMovieVu(inflater: LayoutInflater,
 
 
     fun updateVu(similarMovies: List<Movie>) {
-        val adapter = SimilarAdapter(similarMovies, itemSelectPublisher)
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        adapter.movies = similarMovies.toMutableList()
         adapter.notifyDataSetChanged()
 
         seeAllClickView.setOnClickListener {
