@@ -62,7 +62,7 @@ abstract class ListVu(inflater: LayoutInflater,
     fun updateVu(contents: List<Content>?, screenNameRes: Int? = null) {
         setToolbarTitle(screenNameRes)
         contents?.let {
-            if (!it.isEmpty()) {
+            if (it.isNotEmpty()) {
                 setUpListView(it)
             }
         }
