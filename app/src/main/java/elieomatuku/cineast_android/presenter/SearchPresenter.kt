@@ -20,6 +20,7 @@ class SearchPresenter: BasePresenter<SearchVu>() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {argQuery ->
                     vu.showLoading()
+                    Timber.d( "search screen isMovieSearchScreen: ${vu.isMovieSearchScreen}")
 
                     if (vu.isMovieSearchScreen) {
                         searchMovies(argQuery)
@@ -40,7 +41,7 @@ class SearchPresenter: BasePresenter<SearchVu>() {
             }
 
             override fun onFail(error: CineastError) {
-                Timber.d( "response: ${error}")
+                Timber.d( "response: $error")
                 handler.post {
                     vu?.hideLoading()
                 }
@@ -58,7 +59,7 @@ class SearchPresenter: BasePresenter<SearchVu>() {
             }
 
             override fun onFail(error: CineastError) {
-                Timber.d("response: ${error}")
+                Timber.d("response: $error")
                 handler.post {
                     vu?.hideLoading()
                 }
