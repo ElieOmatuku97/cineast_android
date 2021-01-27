@@ -1,21 +1,22 @@
 package elieomatuku.cineast_android.vu
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import elieomatuku.cineast_android.adapter.SearchFragmentPagerAdapter
-import elieomatuku.cineast_android.utils.UiUtils
-import kotlinx.android.synthetic.main.vu_main.view.*
-import kotlinx.android.synthetic.main.vu_search.view.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.adapter.SearchFragmentPagerAdapter
 import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.vu_main.view.*
+import kotlinx.android.synthetic.main.vu_search.view.*
 import timber.log.Timber
 
 
@@ -58,20 +59,37 @@ class SearchVu(inflater: LayoutInflater,
     }
 
     var isMovieSearchScreen: Boolean = true
+    private val onTabSelectedListener: TabLayout.OnTabSelectedListener  = object: TabLayout.OnTabSelectedListener {
+        override fun onTabReselected(tab: TabLayout.Tab?) {
+
+        }
+
+        override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+        }
+
+        override fun onTabSelected(tab: TabLayout.Tab?) {
+            Timber.d("Selected Tab ${tab?.position}")
+            tab?.let {
+                isMovieSearchScreen = it.position == 0
+            }
+        }
+    }
 
     override fun onCreate() {
         Timber.d("SearchVu created")
 
         searchPager.adapter = searchAdapter
         TabLayoutMediator(tabLayout, searchPager) { tab, position ->
+            Timber.d("tab at position = $position created")
             if (position == 0) {
                 tab.text = activity.getText(R.string.movies)
-                isMovieSearchScreen = true
             } else {
                 tab.text = activity.getText(R.string.people)
-                isMovieSearchScreen = false
             }
         }.attach()
+
+        tabLayout.addOnTabSelectedListener(onTabSelectedListener)
 
         toolbar?.let {
             UiUtils.initToolbar(activity as AppCompatActivity, toolbar)
@@ -82,6 +100,11 @@ class SearchVu(inflater: LayoutInflater,
         results?.let {
             ItemListActivity.startItemListActivity(activity, results, R.string.search_hint)
         }
+    }
+
+    override fun onDestroy() {
+        tabLayout.removeOnTabSelectedListener(onTabSelectedListener)
+        super.onDestroy()
     }
 }
 
