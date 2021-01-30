@@ -54,7 +54,7 @@ class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         movieFacts?.let {
             rootView.visibility = View.VISIBLE
             releaseDateView.text = displayFacts(RELEASE_DATE, movieFacts.release_date)
-            runtimeView.text = displayFacts(RUNTIME, movieFacts.runtime)
+            runtimeView.text = displayFacts(RUNTIME, movieFacts.runtimeInHoursAndMinutes)
             budgetView.text = displayFacts(BUDGET, movieFacts.budget )
             revenueView.text = displayFacts(REVENUE, movieFacts.revenue )
         } ?: hideRootView()

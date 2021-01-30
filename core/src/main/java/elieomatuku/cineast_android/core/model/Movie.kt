@@ -23,7 +23,7 @@ data class Movie(
 
 
     override fun equals(other: Any?): Boolean {
-        if (!(other is Movie))
+        if (other !is Movie)
             return false
 
         val movie: Movie = other
