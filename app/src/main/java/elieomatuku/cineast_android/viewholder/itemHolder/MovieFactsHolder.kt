@@ -9,7 +9,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.MovieFacts
 import kotlinx.android.synthetic.main.holder_movie_facts.view.*
-import java.text.DecimalFormat
 
 class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
@@ -20,11 +19,6 @@ class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun newInstance(parent: ViewGroup): MovieFactsHolder {
             return MovieFactsHolder(createView(parent))
         }
-
-        const val RELEASE_DATE = "Release date"
-        const val RUNTIME = "Runtime"
-        const val BUDGET = "Budget"
-        const val REVENUE = "Revenue"
     }
 
 
@@ -49,22 +43,14 @@ class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun update(movieFacts: MovieFacts?) {
-        val formatter = DecimalFormat("#,###,###")
-
         movieFacts?.let {
             rootView.visibility = View.VISIBLE
-            releaseDateView.text = displayFacts(RELEASE_DATE, movieFacts.release_date)
-            runtimeView.text = displayFacts(RUNTIME, movieFacts.runtimeInHoursAndMinutes)
-            budgetView.text = displayFacts(BUDGET, movieFacts.budget )
-            revenueView.text = displayFacts(REVENUE, movieFacts.revenue )
+            releaseDateView.text = displayFacts(itemView.context.getString(R.string.release_date), movieFacts.release_date)
+            runtimeView.text = displayFacts(itemView.context.getString(R.string.runtime), movieFacts.runtimeInHoursAndMinutes)
+            budgetView.text = displayFacts(itemView.context.getString(R.string.budget), String.format("$%,.2f", movieFacts.budget?.toDouble()))
+            revenueView.text = displayFacts(itemView.context.getString(R.string.revenue), String.format("$%,.2f",movieFacts.revenue?.toDouble()))
         } ?: hideRootView()
 
-    }
-
-    private fun displayFacts(factName: String, factValue: Int?): String {
-        return factValue?.let {
-            String.format("%s: %d", factName, it)
-        } ?: String.format("%s: n/a", factName)
     }
 
     private fun displayFacts(factName: String, factValue: String?): String {

@@ -29,7 +29,7 @@
         android:paddingTop="@dimen/activity_margin_top"
         android:paddingRight="@dimen/holder_movie_facts_textview_padding_right"
         android:paddingBottom="@dimen/holder_movie_layout_padding"
-        android:text="@string/release"
+        android:text="@string/release_date"
         android:textColor="@color/color_white"
         android:textSize="@dimen/holder_movie_facts_text_size"
         app:layout_constraintStart_toStartOf="parent"

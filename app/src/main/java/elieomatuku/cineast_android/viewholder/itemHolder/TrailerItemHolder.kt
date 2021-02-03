@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.viewholder.itemHolder
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import elieomatuku.cineast_android.fragment.YoutubeFragment
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_trailer_item.view.*
+import timber.log.Timber
 
 
 class TrailerItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -36,27 +36,21 @@ class TrailerItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     }
 
     fun update(trailerKey: String, trailerName: String?) {
-        Log.d(TrailerItemHolder::class.java.simpleName, "Path: $trailerKey and name: $trailerName")
+        Timber.d( "Path: $trailerKey and name: $trailerName")
 
         Picasso.get()
-                .load(UiUtils.getYoutubeThumbnailPath(trailerKey, "default.jpg" /*itemView.context.getString(R.string.param_video_size))*/))
+                .load(UiUtils.getYoutubeThumbnailPath(trailerKey, "default.jpg"))
                 .into(trailerThumbnailView)
 
         trailerThumbnailView.setOnClickListener {
             val youtubeFragment = YoutubeFragment.newInstance(trailerKey)
             val fm = (itemView.context as AppCompatActivity).supportFragmentManager
-
-            if (youtubeFragment != null && fm != null) {
-                fm.beginTransaction().add(android.R.id.content, youtubeFragment, null).addToBackStack(null).commit()
-            }
+            fm.beginTransaction().add(android.R.id.content, youtubeFragment, null).addToBackStack(null).commit()
         }
 
-//        if (!trailerName.isNullOrEmpty()) {
+        trailerName?.let {
             trailerTitleView.visibility = View.VISIBLE
-            trailerTitleView.text = trailerName
-//        } else {
-//            trailerTitleView.visibility = View.GONE
-//        }
-
+            trailerTitleView.text = it
+        }
     }
 }

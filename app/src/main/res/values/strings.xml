@@ -1,12 +1,9 @@
 <resources>
-    <!-- Client -->
-  <!--  <string name="app_name">RestApiPractice</string>  -->
     <string name="rest_base_url">http://api.themoviedb.org/3/</string>
     <string name="image_small">http://image.tmdb.org/t/p/w342//</string>
     <string name="image_header">http://image.tmdb.org/t/p/w1280//</string>
     <string name="param_video_size">3.jpg</string>
     <string name="authenticate_url">https://www.themoviedb.org/authenticate</string>
-
 
     <!-- Toolbar title -->
     <string name="nav_title_discover">Discover</string>
@@ -25,10 +22,10 @@
     <string name="people">People</string>
     <string name="similar">Similar</string>
     <string name="movie_facts">Movie Facts</string>
-    <string name="release">release</string>
-    <string name="runtime">runtime</string>
-    <string name="budget">budget</string>
-    <string name="revenue">revenue</string>
+    <string name="release_date">Release</string>
+    <string name="runtime">Runtime</string>
+    <string name="budget">Budget</string>
+    <string name="revenue">Revenue</string>
     <string name="known_for">Known for</string>
     <string name="biography">Biography</string>
     <string name="cast">Cast</string>
@@ -60,7 +57,6 @@
 
     <string name="rate_this_movie">Rate this movie a</string>
     <string name="submit">Submit</string>
-
 
     <string name="empty_state_no_internet_msg" >Cineast cannot connect to a network. Please check your internet connection and try again.</string>
     <string name="no_content_title">No Content</string>
