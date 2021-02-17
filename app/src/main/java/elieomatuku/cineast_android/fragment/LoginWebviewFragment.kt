@@ -7,6 +7,7 @@ import elieomatuku.cineast_android.activity.MainActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.core.model.Account
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
@@ -34,8 +35,8 @@ class LoginWebviewFragment : WebviewFragment() {
     override fun closeIconListener() {
         val activity: MainActivity = this.activity as MainActivity
 
-        tmdbUserClient.getSession(tmdbUserClient.getRequestToken(), object: AsyncResponse<String> {
-            override fun onSuccess(response: String?) {
+        tmdbUserClient.getSession(tmdbUserClient.getRequestToken(), object: AsyncResponse<Pair<String, Account>> {
+            override fun onSuccess(response: Pair<String, Account>?) {
 
                 handler.post {
                     response?.let {

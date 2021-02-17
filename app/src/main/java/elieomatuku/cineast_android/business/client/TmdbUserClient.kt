@@ -49,13 +49,12 @@ class TmdbUserClient(
         })
     }
 
-    fun getSession(requestToken: String?, asyncResponse: AsyncResponse<String>) {
+    fun getSession(requestToken: String?, asyncResponse: AsyncResponse<Pair<String, Account>>) {
         authenticationApi.getSession(requestToken).enqueue(object : Callback<Session> {
             override fun onResponse(call: Call<Session>, response: Response<Session>) {
                 response.body()?.session_id?.let {
                     persistClient.set(RestUtils.SESSION_ID_KEY, it)
-                    asyncResponse.onSuccess(it)
-                    setAccount(it)
+                    setAccount(it, asyncResponse)
                 }
             }
 
@@ -65,14 +64,18 @@ class TmdbUserClient(
         })
     }
 
-    private fun setAccount(sessionId: String?) {
-        sessionId?.let {
-            authenticationApi.getAccount(it).enqueue(object : Callback<Account> {
+    private fun setAccount(sessionId: String?, asyncResponse: AsyncResponse<Pair<String, Account>>) {
+        sessionId?.let { sessionId ->
+            authenticationApi.getAccount(sessionId).enqueue(object : Callback<Account> {
                 override fun onResponse(call: Call<Account>, response: Response<Account>) {
                     Timber.d("account: ${response.body()}")
 
                     response.body()?.let {
                         persistClient.set(RestUtils.ACCOUNT_ID_KEY, accountSerializer.toJson(it))
+                        it.username?.let { username ->
+                            persistClient.set(RestUtils.ACCOUNT_USERNAME, username)
+                        }
+                        asyncResponse.onSuccess(Pair(sessionId, it))
                     }
 
                 }
@@ -89,11 +92,15 @@ class TmdbUserClient(
         return persistClient.get(RestUtils.REQUEST_TOKEN_KEY, null)
     }
 
+    fun getUsername(): String? {
+        return persistClient.get(RestUtils.ACCOUNT_USERNAME, null)
+    }
+
     fun logout() {
         persistClient.remove(RestUtils.SESSION_ID_KEY)
         persistClient.remove(RestUtils.REQUEST_TOKEN_KEY)
         persistClient.remove(RestUtils.ACCOUNT_ID_KEY)
-
+        persistClient.remove(RestUtils.ACCOUNT_USERNAME)
     }
 
     fun isLoggedIn(): Boolean {

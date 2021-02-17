@@ -71,11 +71,11 @@ class DiscoverVu(inflater: LayoutInflater,
     val refreshObservable: Observable<Boolean>
         get() = refreshPublisher.hide()
 
-    private val sessionPublisher: PublishSubject<String> by lazy {
+    private val sessionPublisher: PublishSubject<Pair<String, Account>> by lazy {
         (activity as elieomatuku.cineast_android.activity.MainActivity).sessionPublisher
     }
 
-    val sessionObservable: Observable<String> by lazy {
+    val sessionObservable: Observable<Pair<String, Account>> by lazy {
         sessionPublisher.hide()
     }
 

@@ -107,8 +107,8 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 
         rxSubs.add(vu.sessionObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { sessionId ->
-                    vu.updateLoginState(!sessionId.isNullOrEmpty())
+                .subscribe { sessionResponse ->
+                    vu.updateLoginState(!sessionResponse.first.isNullOrEmpty())
                 })
 
 

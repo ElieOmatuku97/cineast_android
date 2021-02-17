@@ -54,10 +54,13 @@
     <string name="settings_login">Login</string>
     <string name="settings_tmdb">TmdbAccount</string>
     <string name="settings_app_version">App Version</string>
+    <string name="settings_username">Username</string>
 
     <string name="rate_this_movie">Rate this movie a</string>
     <string name="submit">Submit</string>
 
-    <string name="empty_state_no_internet_msg" >Cineast cannot connect to a network. Please check your internet connection and try again.</string>
+    <string name="empty_state_no_internet_msg">Cineast cannot connect to a network. Please check your internet connection and try again.</string>
     <string name="no_content_title">No Content</string>
+
+
 </resources>

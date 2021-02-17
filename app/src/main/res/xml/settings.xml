@@ -4,6 +4,12 @@
 
     <Preference
         persistent="false"
+        android:key="@string/pref_settings_username"
+        android:title="@string/settings_username"
+        app:iconSpaceReserved="false" />
+
+    <Preference
+        persistent="false"
         android:key="@string/pref_favorites"
         android:title="@string/settings_favorites"
         app:iconSpaceReserved="false" />
