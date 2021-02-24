@@ -4,6 +4,7 @@ package elieomatuku.cineast_android.activity
 
 import android.os.Bundle
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.core.model.Account
 import elieomatuku.cineast_android.presenter.MainPresenter
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.vu.MainVu
@@ -21,8 +22,8 @@ class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){
     }
 
 
-    val sessionPublisher: PublishSubject<String> by lazy {
-        PublishSubject.create<String>()
+    val sessionPublisher: PublishSubject<Pair<String, Account>> by lazy {
+        PublishSubject.create<Pair<String, Account>>()
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<MainPresenter, MainVu> {

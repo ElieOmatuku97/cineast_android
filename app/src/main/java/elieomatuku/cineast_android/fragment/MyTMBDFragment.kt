@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import elieomatuku.cineast_android.activity.MainActivity
+import elieomatuku.cineast_android.core.model.Account
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 
@@ -34,10 +35,11 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
     }
 
     private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
-    private var logInBtn : Preference? = null
+    private var logInBtn: Preference? = null
     private var favoritesBtn: Preference? = null
     private var watchListBtn: Preference? = null
     private var ratedBtn: Preference? = null
+    private var userName: Preference? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceManager.sharedPreferencesName = getString(R.string.pref_app_settings)
@@ -86,16 +88,25 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
 
         (activity as MainActivity).rxSubs.add((activity as MainActivity).sessionPublisher.hide()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ sessionId: String? ->
-                    updateState(!sessionId.isNullOrEmpty())
+                .subscribe({ sessionResponse: Pair<String?, Account> ->
+                    updateState(!sessionResponse.first.isNullOrEmpty(), sessionResponse.second)
                 }, { t: Throwable ->
                     Timber.e("sessionPublisher failed $t")
                 })
         )
     }
 
-    private fun updateState(isLoggedIn: Boolean) {
-        logInBtn?.title =  if (isLoggedIn) activity?.getString(R.string.settings_logout) else activity?.getString(R.string.settings_login)
+    private fun updateState(isLoggedIn: Boolean, account: Account? = null) {
+        logInBtn?.title = if (isLoggedIn) activity?.getString(R.string.settings_logout) else activity?.getString(R.string.settings_login)
+        userName?.isVisible = isLoggedIn
+        if ((account?.username) != null || (tmdbUserClient.getUsername() != null)) {
+            val summary = SpannableString(account?.username ?: tmdbUserClient.getUsername())
+            summary.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_white)), 0, summary.length, 0)
+            userName?.summary = summary
+        } else {
+            userName?.isVisible = false
+        }
+
         favoritesBtn?.isVisible = isLoggedIn
         watchListBtn?.isVisible = isLoggedIn
         ratedBtn?.isVisible = isLoggedIn
@@ -139,6 +150,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         favoritesBtn = findPreference(getString(R.string.pref_favorites))
         watchListBtn = findPreference(getString(R.string.pref_watchlist))
         ratedBtn = findPreference(getString(R.string.pref_rated))
+        userName = findPreference(getString(R.string.pref_settings_username))
     }
 
     private fun clearPreferenceViews() {
@@ -147,5 +159,6 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         favoritesBtn = null
         watchListBtn = null
         ratedBtn = null
+        userName = null
     }
 }
