@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/arrow_icon_height"
                     android:layout_marginLeft="2dp"
-                    android:tint="@color/color_orange_app"
+                    app:tint="@color/color_orange_app"
                     app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
 
             </LinearLayout>
