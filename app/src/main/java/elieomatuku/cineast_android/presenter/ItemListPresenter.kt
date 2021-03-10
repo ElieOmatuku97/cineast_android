@@ -3,6 +3,7 @@ package elieomatuku.cineast_android.presenter
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.discover.DiscoverPresenter
 import elieomatuku.cineast_android.vu.ItemListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 

@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_descriptor">
 
-        <activity android:name="elieomatuku.cineast_android.activity.MainActivity"
+        <activity android:name="elieomatuku.cineast_android.discover.MainActivity"
             android:theme="@style/AppThemeSplash"
             >
 
@@ -31,8 +31,8 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name="elieomatuku.cineast_android.activity.MovieActivity" />
-        <activity android:name="elieomatuku.cineast_android.activity.PeopleActivity" />
+        <activity android:name="elieomatuku.cineast_android.details.movie.MovieActivity" />
+        <activity android:name="elieomatuku.cineast_android.details.people.PeopleActivity" />
         <activity android:name=".activity.UserListActivity" />
         <activity android:name=".activity.ItemListActivity" />
 

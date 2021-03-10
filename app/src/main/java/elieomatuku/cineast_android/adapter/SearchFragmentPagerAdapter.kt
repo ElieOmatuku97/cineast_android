@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.fragment.MoviesSearchFragment
-import elieomatuku.cineast_android.fragment.PeopleSearchFragment
+import elieomatuku.cineast_android.search.movie.MoviesSearchFragment
+import elieomatuku.cineast_android.search.people.PeopleSearchFragment
 import timber.log.Timber
 
 

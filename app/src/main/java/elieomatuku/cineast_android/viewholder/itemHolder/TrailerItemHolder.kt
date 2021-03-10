@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
-import elieomatuku.cineast_android.fragment.YoutubeFragment
+import elieomatuku.cineast_android.common_fragment.YoutubeFragment
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_trailer_item.view.*

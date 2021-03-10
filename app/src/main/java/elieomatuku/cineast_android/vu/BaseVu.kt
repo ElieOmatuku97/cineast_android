@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import elieomatuku.cineast_android.activity.BaseActivity
-import elieomatuku.cineast_android.activity.MovieActivity
-import elieomatuku.cineast_android.activity.PeopleActivity
+import elieomatuku.cineast_android.details.movie.MovieActivity
+import elieomatuku.cineast_android.details.people.PeopleActivity
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.Vu

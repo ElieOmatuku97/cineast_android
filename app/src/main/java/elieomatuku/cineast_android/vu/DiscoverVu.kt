@@ -12,17 +12,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import elieomatuku.cineast_android.core.DiscoverContent
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.fragment.LoginWebviewFragment
-import elieomatuku.cineast_android.fragment.WebviewFragment
+import elieomatuku.cineast_android.discover.MainActivity
+import elieomatuku.cineast_android.settings.LoginWebviewFragment
+import elieomatuku.cineast_android.common_fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.vu_discover.view.*
 import timber.log.Timber
 
 class DiscoverVu(inflater: LayoutInflater,
@@ -72,7 +71,7 @@ class DiscoverVu(inflater: LayoutInflater,
         get() = refreshPublisher.hide()
 
     private val sessionPublisher: PublishSubject<Pair<String, Account>> by lazy {
-        (activity as elieomatuku.cineast_android.activity.MainActivity).sessionPublisher
+        (activity as MainActivity).sessionPublisher
     }
 
     val sessionObservable: Observable<Pair<String, Account>> by lazy {

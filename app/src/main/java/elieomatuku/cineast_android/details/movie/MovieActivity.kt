@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.activity
+package elieomatuku.cineast_android.details.movie
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.business.client.TmdbUserClient
@@ -21,7 +22,7 @@ import io.reactivex.subjects.PublishSubject
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
-class MovieActivity: ToolbarMVPActivity <MoviePresenter, MovieVu>(){
+class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
     companion object {
         private val MVP_UID by lazy {
             hashCode()

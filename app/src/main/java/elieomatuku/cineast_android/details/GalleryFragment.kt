@@ -1,7 +1,6 @@
-package elieomatuku.cineast_android.fragment
+package elieomatuku.cineast_android.details
 
 
-import elieomatuku.cineast_android.presenter.GalleryPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.vu.GalleryVu
 import io.chthonic.mythos.mvp.MVPDispatcher
@@ -14,7 +13,7 @@ class GalleryFragment: MVPFragment<GalleryPresenter, GalleryVu>() {
            hashCode()
         }
 
-        fun newInstance(): GalleryFragment{
+        fun newInstance(): GalleryFragment {
             return GalleryFragment()
         }
     }

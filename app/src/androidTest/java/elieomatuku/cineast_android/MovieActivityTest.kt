@@ -14,10 +14,10 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import elieomatuku.cineast_android.activity.MovieActivity
+import elieomatuku.cineast_android.details.movie.MovieActivity
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.presenter.DiscoverPresenter
+import elieomatuku.cineast_android.discover.DiscoverPresenter
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

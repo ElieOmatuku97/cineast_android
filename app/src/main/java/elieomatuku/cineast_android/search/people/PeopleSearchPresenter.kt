@@ -1,7 +1,8 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.search.people
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.presenter.BasePresenter
 import elieomatuku.cineast_android.vu.PeopleSearchVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

@@ -1,9 +1,10 @@
-package elieomatuku.cineast_android.activity
+package elieomatuku.cineast_android.discover
 
 
 
 import android.os.Bundle
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.core.model.Account
 import elieomatuku.cineast_android.presenter.MainPresenter
 import elieomatuku.cineast_android.utils.UiUtils
@@ -11,7 +12,6 @@ import elieomatuku.cineast_android.vu.MainVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 
 
 class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){

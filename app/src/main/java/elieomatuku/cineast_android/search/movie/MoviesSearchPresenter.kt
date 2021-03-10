@@ -1,9 +1,10 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.search.movie
 
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.presenter.BasePresenter
 import elieomatuku.cineast_android.vu.MoviesSearchVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

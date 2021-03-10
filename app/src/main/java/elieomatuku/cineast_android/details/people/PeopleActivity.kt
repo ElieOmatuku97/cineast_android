@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.activity
+package elieomatuku.cineast_android.details.people
 
 
 
@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.presenter.PeoplePresenter
 import elieomatuku.cineast_android.utils.MovieUtils
@@ -20,7 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 
 
-class PeopleActivity: ToolbarMVPActivity <PeoplePresenter, PeopleVu>() {
+class PeopleActivity: ToolbarMVPActivity<PeoplePresenter, PeopleVu>() {
     companion object {
         private val MVP_UID by lazy {
            hashCode()

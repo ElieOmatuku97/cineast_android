@@ -1,9 +1,8 @@
-package elieomatuku.cineast_android.fragment
+package elieomatuku.cineast_android.details.people
 
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.core.model.KnownFor
-import elieomatuku.cineast_android.presenter.KnownForPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.vu.MoviesVu
 import io.chthonic.mythos.mvp.MVPDispatcher

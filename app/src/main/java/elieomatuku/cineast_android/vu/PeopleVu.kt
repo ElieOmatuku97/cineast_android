@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.vu
 import android.app.Activity
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.appcompat.app.AppCompatActivity
@@ -13,13 +12,13 @@ import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.PeopleActivity
+import elieomatuku.cineast_android.details.people.PeopleActivity
 import elieomatuku.cineast_android.adapter.PeopleSummaryAdapter
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.fragment.GalleryFragment
-import elieomatuku.cineast_android.fragment.KnownForFragment
-import elieomatuku.cineast_android.fragment.OverviewPeopleFragment
-import elieomatuku.cineast_android.presenter.GalleryPresenter
+import elieomatuku.cineast_android.details.GalleryFragment
+import elieomatuku.cineast_android.details.people.KnownForFragment
+import elieomatuku.cineast_android.details.people.OverviewPeopleFragment
+import elieomatuku.cineast_android.details.GalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper

@@ -6,7 +6,7 @@ import android.text.Spannable
 import android.text.Spanned
 import android.text.style.URLSpan
 import android.view.View
-import elieomatuku.cineast_android.fragment.WebviewFragment
+import elieomatuku.cineast_android.common_fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
 
 

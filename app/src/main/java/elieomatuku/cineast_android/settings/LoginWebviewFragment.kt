@@ -1,13 +1,14 @@
-package elieomatuku.cineast_android.fragment
+package elieomatuku.cineast_android.settings
 
 import android.os.Bundle
 import android.os.Handler
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.activity.MainActivity
+import elieomatuku.cineast_android.discover.MainActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.core.model.Account
+import elieomatuku.cineast_android.common_fragment.WebviewFragment
 import org.kodein.di.generic.instance
 import timber.log.Timber
 

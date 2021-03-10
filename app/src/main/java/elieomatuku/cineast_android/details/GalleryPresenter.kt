@@ -1,11 +1,12 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.details
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.presenter.BasePresenter
 import elieomatuku.cineast_android.vu.GalleryVu
 
 
-class GalleryPresenter: BasePresenter<GalleryVu> () {
+class GalleryPresenter: BasePresenter<GalleryVu>() {
     companion object {
         const val POSTERS = "posters"
         const val MOVIE_POSTER_PATH = "movie_poster_path"

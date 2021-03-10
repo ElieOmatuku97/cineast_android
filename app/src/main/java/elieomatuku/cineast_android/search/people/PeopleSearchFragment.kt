@@ -1,6 +1,5 @@
-package elieomatuku.cineast_android.fragment
+package elieomatuku.cineast_android.search.people
 
-import elieomatuku.cineast_android.presenter.PeopleSearchPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.vu.PeopleSearchVu
 import io.chthonic.mythos.mvp.MVPDispatcher

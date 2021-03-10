@@ -18,7 +18,7 @@ import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.widget.RatingBar
 import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.fragment.RateDialogFragment
+import elieomatuku.cineast_android.common_fragment.RateDialogFragment
 
 
 

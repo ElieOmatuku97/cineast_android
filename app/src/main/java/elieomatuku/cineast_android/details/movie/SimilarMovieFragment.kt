@@ -1,15 +1,15 @@
-package elieomatuku.cineast_android.fragment
+package elieomatuku.cineast_android.details.movie
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.presenter.MovieTeamPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
-import elieomatuku.cineast_android.vu.MovieTeamVu
+import elieomatuku.cineast_android.presenter.SimilarMoviePresenter
+import elieomatuku.cineast_android.vu.MoviesVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 
 
-class MovieTeamFragment : MVPFragment<MovieTeamPresenter, MovieTeamVu>() {
+class SimilarMovieFragment : MVPFragment<SimilarMoviePresenter, MoviesVu>() {
     companion object {
         const val MOVIE_SUMMARY = "movie_summary"
 
@@ -17,21 +17,20 @@ class MovieTeamFragment : MVPFragment<MovieTeamPresenter, MovieTeamVu>() {
             hashCode()
         }
 
-        fun newInstance(movieSummary: MovieSummary): MovieTeamFragment {
+        fun newInstance(movieSummary: MovieSummary): SimilarMovieFragment {
             val args = Bundle()
-
             args.putParcelable(MOVIE_SUMMARY, movieSummary)
 
-            val fragment = MovieTeamFragment()
+            val fragment = SimilarMovieFragment()
             fragment.arguments = args
             return fragment
         }
     }
 
-    override fun createMVPDispatcher(): MVPDispatcher<MovieTeamPresenter, MovieTeamVu> {
+    override fun createMVPDispatcher(): MVPDispatcher<SimilarMoviePresenter, MoviesVu> {
         return MVPDispatcher(MVP_UID,
                 // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ MovieTeamPresenter() }),
-                ::MovieTeamVu)
+                PresenterCacheLazy { SimilarMoviePresenter() },
+                ::MoviesVu)
     }
 }

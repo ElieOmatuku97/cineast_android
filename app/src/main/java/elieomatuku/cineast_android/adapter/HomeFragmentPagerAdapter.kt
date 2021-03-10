@@ -3,9 +3,9 @@ package elieomatuku.cineast_android.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import elieomatuku.cineast_android.fragment.DiscoverFragment
-import elieomatuku.cineast_android.fragment.MyTMBDFragment
-import elieomatuku.cineast_android.fragment.SearchFragment
+import elieomatuku.cineast_android.discover.DiscoverFragment
+import elieomatuku.cineast_android.settings.MyTMBDFragment
+import elieomatuku.cineast_android.search.SearchFragment
 import elieomatuku.cineast_android.R
 
 class HomeFragmentPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {

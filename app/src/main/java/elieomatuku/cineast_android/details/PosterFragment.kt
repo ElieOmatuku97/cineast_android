@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.fragment
+package elieomatuku.cineast_android.details
 
 import android.os.Bundle
 import elieomatuku.cineast_android.presenter.PosterPresenter
@@ -13,7 +13,7 @@ class PosterFragment: MVPFragment<PosterPresenter, PosterVu>() {
             PosterFragment.hashCode()
         }
 
-        fun newInstance(args: Bundle): PosterFragment{
+        fun newInstance(args: Bundle): PosterFragment {
             val fragment = PosterFragment()
             fragment.arguments = args
             return fragment

@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.fragment
+package elieomatuku.cineast_android.common_fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
