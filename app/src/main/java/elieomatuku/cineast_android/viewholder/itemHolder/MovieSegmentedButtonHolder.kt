@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.vu.MovieVu
+import elieomatuku.cineast_android.details.movie.MovieVu
 import kotlinx.android.synthetic.main.holder_menu_movie.view.*
 
 

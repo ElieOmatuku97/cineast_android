@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.settings
 import android.os.Bundle
 import android.os.Handler
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.discover.MainActivity
+import elieomatuku.cineast_android.home.MainActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.client.TmdbUserClient

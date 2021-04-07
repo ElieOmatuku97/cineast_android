@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.discover
 
 import android.app.Activity
 import android.graphics.drawable.Drawable
@@ -15,13 +15,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.discover.MainActivity
+import elieomatuku.cineast_android.home.MainActivity
 import elieomatuku.cineast_android.settings.LoginWebviewFragment
 import elieomatuku.cineast_android.common_fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
+import elieomatuku.cineast_android.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.vu_discover.view.*
 import timber.log.Timber
 
 class DiscoverVu(inflater: LayoutInflater,

@@ -2,7 +2,6 @@ package elieomatuku.cineast_android.discover
 
 
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
-import elieomatuku.cineast_android.vu.DiscoverVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

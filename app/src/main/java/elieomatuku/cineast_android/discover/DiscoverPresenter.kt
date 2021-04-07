@@ -7,7 +7,6 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.presenter.BasePresenter
-import elieomatuku.cineast_android.vu.DiscoverVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.kodein.di.generic.instance

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.*
-import elieomatuku.cineast_android.vu.MovieVu
+import elieomatuku.cineast_android.details.movie.MovieVu
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates

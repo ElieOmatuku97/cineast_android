@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.search.people
 
 import android.app.Activity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -9,7 +9,8 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.vu.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
+import elieomatuku.cineast_android.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
+import elieomatuku.cineast_android.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

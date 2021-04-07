@@ -7,7 +7,6 @@ import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.business.api.response.PersonalityResponse
 import elieomatuku.cineast_android.presenter.BasePresenter
-import elieomatuku.cineast_android.vu.SearchVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 

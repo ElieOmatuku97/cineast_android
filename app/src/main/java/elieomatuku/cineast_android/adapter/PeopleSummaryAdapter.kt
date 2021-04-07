@@ -6,7 +6,7 @@ import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.PeopleSegmentedButtonHolder
 import elieomatuku.cineast_android.viewholder.itemHolder.ProfilePeopleHolder
-import elieomatuku.cineast_android.vu.PeopleVu
+import elieomatuku.cineast_android.details.people.PeopleVu
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates

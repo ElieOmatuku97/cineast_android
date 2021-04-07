@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.adapter
+package elieomatuku.cineast_android.home
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

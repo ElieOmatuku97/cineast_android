@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.search
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import elieomatuku.cineast_android.activity.ItemListActivity
 import elieomatuku.cineast_android.adapter.SearchFragmentPagerAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.vu.ToolbarVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

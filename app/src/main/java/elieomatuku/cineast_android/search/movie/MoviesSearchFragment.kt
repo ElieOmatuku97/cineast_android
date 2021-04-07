@@ -1,7 +1,6 @@
 package elieomatuku.cineast_android.search.movie
 
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
-import elieomatuku.cineast_android.vu.MoviesSearchVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

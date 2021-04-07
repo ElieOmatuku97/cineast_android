@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.home
 
 import android.app.Activity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -8,15 +8,15 @@ import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.HomeFragmentPagerAdapter
 import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.vu.ToolbarVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.vu_main.view.*
 
 class MainVu (inflater: LayoutInflater,
               activity: Activity,
               fragmentWrapper: FragmentWrapper?,
-              parentView: ViewGroup?): ToolbarVu (inflater,
+              parentView: ViewGroup?): ToolbarVu(inflater,
         activity,
         fragmentWrapper,
         parentView){

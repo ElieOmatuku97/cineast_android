@@ -4,7 +4,6 @@ package elieomatuku.cineast_android.search
 import android.app.SearchManager
 import android.content.Context
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
-import elieomatuku.cineast_android.vu.SearchVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 import android.os.Bundle

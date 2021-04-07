@@ -7,10 +7,10 @@ import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 
 
-class GalleryFragment: MVPFragment<GalleryPresenter, GalleryVu>() {
+class GalleryFragment : MVPFragment<GalleryPresenter, GalleryVu>() {
     companion object {
         private val MVP_UID by lazy {
-           hashCode()
+            hashCode()
         }
 
         fun newInstance(): GalleryFragment {

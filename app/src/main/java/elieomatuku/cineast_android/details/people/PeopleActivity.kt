@@ -14,7 +14,6 @@ import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.presenter.PeoplePresenter
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.vu.PeopleVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import io.reactivex.android.schedulers.AndroidSchedulers

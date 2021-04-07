@@ -22,7 +22,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import elieomatuku.cineast_android.discover.MainActivity
+import elieomatuku.cineast_android.home.MainActivity
 import elieomatuku.cineast_android.core.model.Account
 import io.reactivex.android.schedulers.AndroidSchedulers
 

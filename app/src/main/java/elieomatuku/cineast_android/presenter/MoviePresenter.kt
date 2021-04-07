@@ -4,7 +4,7 @@ import android.os.Bundle
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.business.client.TmdbUserClient
-import elieomatuku.cineast_android.vu.MovieVu
+import elieomatuku.cineast_android.details.movie.MovieVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
