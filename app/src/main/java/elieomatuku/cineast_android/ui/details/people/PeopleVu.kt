@@ -12,10 +12,11 @@ import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.PeopleSummaryAdapter
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
+import elieomatuku.cineast_android.ui.details.people.knownfor.KnownForFragment
+import elieomatuku.cineast_android.ui.details.people.overview.OverviewPeopleFragment
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.ui.vu.ToolbarVu

@@ -34,7 +34,7 @@ class DiscoverAdapter(
     var hasValidData = false
         private set
 
-    var filteredContent: MutableMap<Int, Pair<Int, List<Content>>>  by Delegates.observable(mutableMapOf()) { prop, oldDiscoverContent, nuDiscoverContent ->
+    var filteredContent: MutableMap<Int, Pair<Int, List<Content>>> by Delegates.observable(mutableMapOf()) { prop, oldDiscoverContent, nuDiscoverContent ->
         Timber.d("content = $nuDiscoverContent")
         hasValidData = true
         errorMessage = null

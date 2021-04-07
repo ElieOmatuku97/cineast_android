@@ -1,7 +1,8 @@
-package elieomatuku.cineast_android.ui.adapter
+package elieomatuku.cineast_android.ui.settings.userlist
 
 
 import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
 import io.reactivex.subjects.PublishSubject
 
 
@@ -14,6 +15,6 @@ class UserMoviesAdapter(onItemClickPublisher: PublishSubject<Movie>,
         val movie = movies[position]
         onMovieRemovedPublisher?.onNext(movie)
         (movies).removeAt(position)
-        notifyItemRemoved(position)  
+        notifyItemRemoved(position)
     }
 }

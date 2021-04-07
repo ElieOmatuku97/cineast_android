@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.callback
+package elieomatuku.cineast_android.ui.settings.userlist
 
 
 import android.graphics.Canvas
@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ItemTouchHelper
 import android.graphics.drawable.ColorDrawable
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.UserMoviesAdapter
+import elieomatuku.cineast_android.ui.settings.userlist.UserMoviesAdapter
 import timber.log.Timber
 
 
-class SwipeToDeleteCallback(val adapter:  UserMoviesAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+class SwipeToDeleteCallback(val adapter: UserMoviesAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
     private val background: ColorDrawable? = ColorDrawable(Color.RED)
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

@@ -1,10 +1,10 @@
-package elieomatuku.cineast_android.ui.adapter
+package elieomatuku.cineast_android.ui.details.movie.overview
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.ui.viewholder.itemHolder.TrailerItemHolder
 
-class TrailersAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TrailersAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var trailers: List<String> = listOf()
     var trailersVideosTitleMap: Map<String, String> = mapOf()
 
@@ -17,7 +17,6 @@ class TrailersAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val trailerItemHolder = holder as TrailerItemHolder
-        holder.update(trailers[position], trailersVideosTitleMap[trailers.get(position)])
+        (holder as TrailerItemHolder).update(trailers[position], trailersVideosTitleMap[trailers.get(position)])
     }
 }

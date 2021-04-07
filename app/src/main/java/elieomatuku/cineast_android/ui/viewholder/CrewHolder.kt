@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
-import elieomatuku.cineast_android.ui.adapter.CrewAdapter
+import elieomatuku.cineast_android.ui.details.movie.movie_team.CrewAdapter
 import elieomatuku.cineast_android.core.model.Crew
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*

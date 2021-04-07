@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.TrailersAdapter
+import elieomatuku.cineast_android.ui.details.movie.overview.TrailersAdapter
 import elieomatuku.cineast_android.core.model.Trailer
 import kotlinx.android.synthetic.main.holder_trailers.view.*
 

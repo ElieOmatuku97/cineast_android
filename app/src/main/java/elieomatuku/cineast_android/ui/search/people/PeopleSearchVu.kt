@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.PeopleLisAdapter
+import elieomatuku.cineast_android.ui.common_adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS

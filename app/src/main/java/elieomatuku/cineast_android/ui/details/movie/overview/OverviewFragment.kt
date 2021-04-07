@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.movie
+package elieomatuku.cineast_android.ui.details.movie.overview
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.OverviewAdapter
 import elieomatuku.cineast_android.core.model.MovieSummary
 import kotlinx.android.synthetic.main.fragment_overview.view.*
 

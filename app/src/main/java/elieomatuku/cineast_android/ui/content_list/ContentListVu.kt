@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
-import elieomatuku.cineast_android.ui.adapter.PeopleLisAdapter
+import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
+import elieomatuku.cineast_android.ui.common_adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Content

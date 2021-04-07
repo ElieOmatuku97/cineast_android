@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.adapter
+package elieomatuku.cineast_android.ui.details.people
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.ui.viewholder.PeopleSegmentedButtonHolder
 import elieomatuku.cineast_android.ui.viewholder.itemHolder.ProfilePeopleHolder
-import elieomatuku.cineast_android.ui.details.people.PeopleVu
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
@@ -78,8 +77,8 @@ class PeopleSummaryAdapter(private val onProfileClickedPicturePublisher: Publish
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is EmptyStateHolder ->  holder.update(errorMessage)
-            is ProfilePeopleHolder ->  holder.update(personalityDetails)
+            is EmptyStateHolder -> holder.update(errorMessage)
+            is ProfilePeopleHolder -> holder.update(personalityDetails)
             is PeopleSegmentedButtonHolder -> {
                 holder.update(personalityDetails, initialCheckedTab)
 

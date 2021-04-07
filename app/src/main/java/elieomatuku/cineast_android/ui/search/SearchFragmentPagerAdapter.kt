@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.adapter
+package elieomatuku.cineast_android.ui.search
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter

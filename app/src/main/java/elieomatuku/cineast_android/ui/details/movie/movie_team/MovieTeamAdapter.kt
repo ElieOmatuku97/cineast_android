@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.adapter
+package elieomatuku.cineast_android.ui.details.movie.movie_team
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
@@ -9,8 +9,8 @@ import elieomatuku.cineast_android.ui.viewholder.CrewHolder
 import io.reactivex.subjects.PublishSubject
 
 
-class PeopleAdapter(private val cast: List<Cast>, private val crew: List<Crew>,  private val onCrewClickPublisher: PublishSubject<Crew>,
-                    private val onCastClickPublisher: PublishSubject<Cast>)
+class MovieTeamAdapter(private val cast: List<Cast>, private val crew: List<Crew>, private val onCrewClickPublisher: PublishSubject<Crew>,
+                       private val onCastClickPublisher: PublishSubject<Cast>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_CAST = 0

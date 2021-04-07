@@ -1,11 +1,10 @@
-package elieomatuku.cineast_android.ui.details.movie
+package elieomatuku.cineast_android.ui.details.movie.movie_team
 
 import android.app.Activity
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.PeopleAdapter
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.ui.vu.BaseVu
@@ -46,7 +45,7 @@ class MovieTeamVu(inflater: LayoutInflater,
         get() = onCastSelectPublisher.hide()
 
     fun updateVu(cast: List<Cast>, crew: List<Crew>) {
-        overviewList.adapter = PeopleAdapter(cast, crew, onCrewSelectPublisher, onCastSelectPublisher)
+        overviewList.adapter = MovieTeamAdapter(cast, crew, onCrewSelectPublisher, onCastSelectPublisher)
         overviewList.layoutManager = LinearLayoutManager(activity)
     }
 }

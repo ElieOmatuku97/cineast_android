@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.movie
+package elieomatuku.cineast_android.ui.details.movie.similar
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.MovieSummary

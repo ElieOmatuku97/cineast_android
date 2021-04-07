@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.adapter
+package elieomatuku.cineast_android.ui.discover
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.viewholder.itemHolder.HeaderItemHolder
 import io.reactivex.subjects.PublishSubject
 
-class HeaderAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>, private val itemListLayoutRes: Int? = null): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class HeaderAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>, private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int {
         return movies.size
     }
@@ -20,13 +20,13 @@ class HeaderAdapter(private val movies: List<Movie>, private val onItemClickPubl
         headerItemHolder.update(movies[position])
 
         headerItemHolder.imageView.setOnClickListener {
-              onItemClickPublisher.onNext(movies[position])
+            onItemClickPublisher.onNext(movies[position])
         }
     }
 
     fun getArticlePosition(key: Int): Int {
         val widgetPosition = movies.indexOfFirst {
-            it.id  == key
+            it.id == key
         }
 
         return widgetPosition

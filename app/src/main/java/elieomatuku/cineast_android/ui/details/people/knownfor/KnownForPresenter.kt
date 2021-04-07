@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.people
+package elieomatuku.cineast_android.ui.details.people.knownfor
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.ui.presenter.BasePresenter
-import elieomatuku.cineast_android.ui.details.movie.SimilarMoviePresenter
+import elieomatuku.cineast_android.ui.details.movie.similar.SimilarMoviePresenter
 import elieomatuku.cineast_android.ui.details.MoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

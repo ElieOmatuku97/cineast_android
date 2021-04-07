@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.people
+package elieomatuku.cineast_android.ui.details.people.overview
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

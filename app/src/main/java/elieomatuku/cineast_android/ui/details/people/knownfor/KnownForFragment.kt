@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.people
+package elieomatuku.cineast_android.ui.details.people.knownfor
 
 import android.os.Bundle
 import android.os.Parcelable

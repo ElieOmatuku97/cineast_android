@@ -6,7 +6,6 @@ import androidx.appcompat.widget.*
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.MovieSummaryAdapter
 import kotlinx.android.synthetic.main.vu_movie.view.*
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
@@ -20,6 +19,9 @@ import androidx.test.espresso.idling.CountingIdlingResource
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
+import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
+import elieomatuku.cineast_android.ui.details.movie.overview.OverviewFragment
+import elieomatuku.cineast_android.ui.details.movie.similar.SimilarMovieFragment
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import io.chthonic.mythos.mvp.FragmentWrapper

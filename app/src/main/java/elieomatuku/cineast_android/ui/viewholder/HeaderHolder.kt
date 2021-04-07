@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.adapter.HeaderAdapter
+import elieomatuku.cineast_android.ui.discover.HeaderAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import kotlinx.android.synthetic.main.holder_header.view.*
@@ -54,7 +54,6 @@ class HeaderHolder(itemView: View, private val onItemClickPublisher: PublishSubj
         val position = adapter.getArticlePosition(CURRENT_MOVIE_ID)
 
         if ((position >= 0) && (position < adapter.itemCount)) {
-//            scrollToPositionInList(position, true)
             smoothScroller.setTargetPosition(position)
             listView.post {
                 lm?.startSmoothScroll(smoothScroller)
