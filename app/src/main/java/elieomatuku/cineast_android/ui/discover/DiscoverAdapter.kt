@@ -96,7 +96,7 @@ class DiscoverAdapter(
             }
 
             TYPE_POPULAR_PEOPLE -> {
-                PersonalitySummaryHolder.newInstance(parent, onPersonalityClickPublisher)
+                PopularPeopleSummaryHolder.newInstance(parent, onPersonalityClickPublisher)
             }
 
             TYPE_MOVIES -> {

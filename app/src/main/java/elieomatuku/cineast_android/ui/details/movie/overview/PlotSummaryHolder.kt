@@ -1,9 +1,10 @@
-package elieomatuku.cineast_android.ui.viewholder
+package elieomatuku.cineast_android.ui.details.movie.overview
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.ui.viewholder.SummaryHolder
 import kotlinx.android.synthetic.main.holder_summary.view.*
 
 

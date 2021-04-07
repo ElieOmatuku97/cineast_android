@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder
+package elieomatuku.cineast_android.ui.details.movie.movie_team
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
-import elieomatuku.cineast_android.ui.details.movie.movie_team.CastAdapter
 import elieomatuku.cineast_android.core.model.Cast
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*

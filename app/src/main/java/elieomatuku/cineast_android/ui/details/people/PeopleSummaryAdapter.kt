@@ -4,8 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
-import elieomatuku.cineast_android.ui.viewholder.PeopleSegmentedButtonHolder
-import elieomatuku.cineast_android.ui.viewholder.itemHolder.ProfilePeopleHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates

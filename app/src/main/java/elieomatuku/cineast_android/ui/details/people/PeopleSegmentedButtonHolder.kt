@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder
+package elieomatuku.cineast_android.ui.details.people
 
 
 import androidx.recyclerview.widget.RecyclerView
@@ -9,10 +9,9 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.PersonalityDetails
-import elieomatuku.cineast_android.ui.details.people.PeopleVu
 import kotlinx.android.synthetic.main.holder_menu_people.view.*
 
-class PeopleSegmentedButtonHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
+class PeopleSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_menu_people, parent, false)
@@ -37,13 +36,13 @@ class PeopleSegmentedButtonHolder (itemView: View): RecyclerView.ViewHolder(item
     }
 
     fun update(peopleDetails: PersonalityDetails?, checkedTab: String) {
-        if (peopleDetails != null && !peopleDetails.isEmpty() ) {
+        if (peopleDetails != null && !peopleDetails.isEmpty()) {
             segmentedGroup.visibility = View.VISIBLE
         } else {
             segmentedGroup.visibility = View.GONE
         }
 
-        when(checkedTab) {
+        when (checkedTab) {
             PeopleVu.OVERVIEW -> overviewSegmentBtn.isChecked = true
             PeopleVu.KNOWN_FOR -> knownForSegmentBtn.isChecked = true
         }

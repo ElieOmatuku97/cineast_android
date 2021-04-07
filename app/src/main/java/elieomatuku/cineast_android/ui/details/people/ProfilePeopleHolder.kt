@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder.itemHolder
+package elieomatuku.cineast_android.ui.details.people
 
 
 import androidx.appcompat.widget.AppCompatImageView
@@ -13,13 +13,14 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.ui.viewholder.itemHolder.ProfileHolder
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_people.view.*
 
-class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>): ProfileHolder(itemView){
+class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>) : ProfileHolder(itemView) {
     companion object {
-        fun createView(parent: ViewGroup): View{
+        fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_profile_people, parent, false)
         }
 
@@ -49,8 +50,8 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
     }
 
     fun update(peopleDetails: PersonalityDetails?) {
-        val imageUrl: String? =  if (peopleDetails?.profile_path != null) {
-            UiUtils.getImageUrl(peopleDetails.profile_path,  itemView.context.getString(R.string.image_small))
+        val imageUrl: String? = if (peopleDetails?.profile_path != null) {
+            UiUtils.getImageUrl(peopleDetails.profile_path, itemView.context.getString(R.string.image_small))
         } else null
 
         if (!imageUrl.isNullOrEmpty()) {
@@ -88,7 +89,7 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
         }
 
 
-        if (!peopleDetails?.homepage.isNullOrEmpty() ) {
+        if (!peopleDetails?.homepage.isNullOrEmpty()) {
             homepageView.visibility = View.VISIBLE
             val spannable = SpannableString(Html.fromHtml(peopleDetails?.homepage))
             Linkify.addLinks(spannable, Linkify.WEB_URLS)

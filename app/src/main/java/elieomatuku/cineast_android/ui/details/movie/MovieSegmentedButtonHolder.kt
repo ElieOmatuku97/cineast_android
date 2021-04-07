@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder.itemHolder
+package elieomatuku.cineast_android.ui.details.movie
 
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.recyclerview.widget.RecyclerView
@@ -8,11 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.ui.details.movie.MovieVu
 import kotlinx.android.synthetic.main.holder_menu_movie.view.*
 
 
-class MovieSegmentedButtonHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class MovieSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_menu_movie, parent, false)
@@ -37,9 +36,9 @@ class MovieSegmentedButtonHolder(itemView: View): RecyclerView.ViewHolder(itemVi
 
 
     fun update(movieSummary: MovieSummary, checkedTab: String) {
-       itemView.visibility = if (movieSummary.movie != null) View.VISIBLE else View.GONE
+        itemView.visibility = if (movieSummary.movie != null) View.VISIBLE else View.GONE
 
-        when(checkedTab) {
+        when (checkedTab) {
             MovieVu.MOVIE_OVERVIEW -> overviewSegmentBtn.isChecked = true
             MovieVu.MOVIE_CREW -> peopleSegmentBtn.isChecked = true
             MovieVu.SIMILAR_MOVIES -> similarSegmentBtn.isChecked = true

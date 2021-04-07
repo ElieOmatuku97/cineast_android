@@ -4,8 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
-import elieomatuku.cineast_android.ui.viewholder.CastHolder
-import elieomatuku.cineast_android.ui.viewholder.CrewHolder
 import io.reactivex.subjects.PublishSubject
 
 

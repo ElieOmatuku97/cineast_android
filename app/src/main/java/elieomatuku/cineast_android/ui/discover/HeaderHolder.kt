@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder
+package elieomatuku.cineast_android.ui.discover
 
 
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,9 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.discover.HeaderAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import kotlinx.android.synthetic.main.holder_header.view.*
 import io.reactivex.subjects.PublishSubject
 

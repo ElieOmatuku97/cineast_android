@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import elieomatuku.cineast_android.core.model.PersonalityDetails
-import elieomatuku.cineast_android.ui.viewholder.BiographyHolder
 
 
 class OverviewPeopleFragment: Fragment() {

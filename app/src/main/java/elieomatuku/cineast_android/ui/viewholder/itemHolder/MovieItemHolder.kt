@@ -15,14 +15,14 @@ import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_item_movie.view.*
 
 
-
 class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         const val USER_RATING_STRING_FORMAT = "(%.1f, me)"
         const val MOVIE_RATING_STRING_FORMAT = "(%.1f, %d)"
 
-        fun createView(parent: ViewGroup, layoutRes: Int? = null): View{
-            return LayoutInflater.from(parent.context).inflate(layoutRes ?: R.layout.holder_item_movie, parent, false)
+        fun createView(parent: ViewGroup, layoutRes: Int? = null): View {
+            return LayoutInflater.from(parent.context).inflate(layoutRes
+                    ?: R.layout.holder_item_movie, parent, false)
         }
 
         fun newInstance(parent: ViewGroup, layoutRes: Int? = null): MovieItemHolder {
@@ -36,7 +36,7 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val releaseDate: TextView? by lazy {
         itemView.release_date
     }
-    private val movieTitle : TextView? by lazy {
+    private val movieTitle: TextView? by lazy {
         itemView.movie_name_view
     }
 
@@ -64,7 +64,7 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    fun update(movie: Movie){
+    fun update(movie: Movie) {
         val posterPath = movie.poster_path
 
         if ((posterPath != null) && !(posterPath.isNullOrEmpty())) {
@@ -75,8 +75,8 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     .into(movieImage)
 
 
-            releaseDate?.text =  movie.release_date
-            movieTitle?.text =   movie.title ?: movie.original_title
+            releaseDate?.text = movie.release_date
+            movieTitle?.text = movie.title ?: movie.original_title
         } else {
             itemView.visibility = View.GONE
         }
@@ -99,10 +99,10 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         movie.rating?.let {
             userRatingBar?.visibility = View.VISIBLE
-            userRatingBar?.rating  = it
+            userRatingBar?.rating = it
 
             userRatingTextview?.visibility = View.VISIBLE
-            userRatingTextview?.text  = String.format(USER_RATING_STRING_FORMAT, it)
+            userRatingTextview?.text = String.format(USER_RATING_STRING_FORMAT, it)
         }
     }
 }

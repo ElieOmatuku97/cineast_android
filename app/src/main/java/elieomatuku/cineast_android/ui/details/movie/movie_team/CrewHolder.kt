@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder
+package elieomatuku.cineast_android.ui.details.movie.movie_team
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
-import elieomatuku.cineast_android.ui.details.movie.movie_team.CrewAdapter
 import elieomatuku.cineast_android.core.model.Crew
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 
-class CrewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
+class CrewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_people, parent, false)
@@ -30,7 +29,7 @@ class CrewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
 
     fun update(crew: List<Crew>, onCrewClickPublisher: PublishSubject<Crew>) {
         itemView.section_title.text = itemView.context.getString(R.string.crew)
-        itemView.recyclerview_people.adapter = CrewAdapter (crew, onCrewClickPublisher)
+        itemView.recyclerview_people.adapter = CrewAdapter(crew, onCrewClickPublisher)
         itemView.recyclerview_people.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView?.setOnClickListener {

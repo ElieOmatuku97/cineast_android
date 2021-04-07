@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder
+package elieomatuku.cineast_android.ui.discover
 
 
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,18 +12,19 @@ import elieomatuku.cineast_android.ui.common_adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 
-class PersonalitySummaryHolder(itemView: View, private val onPersonalityClickPublisher: PublishSubject<Person>) : ContentHolder(itemView) {
+class PopularPeopleSummaryHolder(itemView: View, private val onPersonalityClickPublisher: PublishSubject<Person>) : ContentHolder(itemView) {
 
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_people, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup, onPersonalityClickPublisher: PublishSubject<Person>): PersonalitySummaryHolder {
-            return PersonalitySummaryHolder(createView(parent), onPersonalityClickPublisher)
+        fun newInstance(parent: ViewGroup, onPersonalityClickPublisher: PublishSubject<Person>): PopularPeopleSummaryHolder {
+            return PopularPeopleSummaryHolder(createView(parent), onPersonalityClickPublisher)
         }
     }
 

@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder.itemHolder
+package elieomatuku.cineast_android.ui.details.movie.overview
 
 
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.holder_trailer_item.view.*
 import timber.log.Timber
 
 
-class TrailerItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class TrailerItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
-           return LayoutInflater.from(parent.context).inflate(R.layout.holder_trailer_item, parent, false)
+            return LayoutInflater.from(parent.context).inflate(R.layout.holder_trailer_item, parent, false)
         }
 
         fun newInstance(parent: ViewGroup): TrailerItemHolder {
@@ -31,12 +31,12 @@ class TrailerItemHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         itemView.trailer_thumbnail
     }
 
-    private val trailerTitleView : TextView by lazy {
+    private val trailerTitleView: TextView by lazy {
         itemView.trailer_title
     }
 
     fun update(trailerKey: String, trailerName: String?) {
-        Timber.d( "Path: $trailerKey and name: $trailerName")
+        Timber.d("Path: $trailerKey and name: $trailerName")
 
         Picasso.get()
                 .load(UiUtils.getYoutubeThumbnailPath(trailerKey, "default.jpg"))

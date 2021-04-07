@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder.itemHolder
+package elieomatuku.cineast_android.ui.details.movie
 
 
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +19,7 @@ import android.text.method.LinkMovementMethod
 import android.widget.RatingBar
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.ui.common_fragment.RateDialogFragment
-
+import elieomatuku.cineast_android.ui.viewholder.itemHolder.ProfileHolder
 
 
 class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>) : ProfileHolder(itemView) {
