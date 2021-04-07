@@ -14,8 +14,8 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.PeopleSummaryAdapter
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.details.GalleryFragment
-import elieomatuku.cineast_android.details.GalleryPresenter
+import elieomatuku.cineast_android.details.gallery.GalleryFragment
+import elieomatuku.cineast_android.details.gallery.GalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.vu.ToolbarVu

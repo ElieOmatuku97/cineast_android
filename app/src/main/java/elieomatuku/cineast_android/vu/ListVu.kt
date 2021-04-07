@@ -15,11 +15,10 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_item_list.view.*
 
 
-
 abstract class ListVu(inflater: LayoutInflater,
-             activity: Activity,
-             fragmentWrapper: FragmentWrapper?,
-             parentView: ViewGroup?) : ToolbarVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
+                      activity: Activity,
+                      fragmentWrapper: FragmentWrapper?,
+                      parentView: ViewGroup?) : ToolbarVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
     companion object {
         const val FIRST_WIDGET_TYPE_OCCURENCE = 0

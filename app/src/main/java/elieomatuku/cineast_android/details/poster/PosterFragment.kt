@@ -1,9 +1,7 @@
-package elieomatuku.cineast_android.details
+package elieomatuku.cineast_android.details.poster
 
 import android.os.Bundle
-import elieomatuku.cineast_android.presenter.PosterPresenter
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
-import elieomatuku.cineast_android.vu.PosterVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

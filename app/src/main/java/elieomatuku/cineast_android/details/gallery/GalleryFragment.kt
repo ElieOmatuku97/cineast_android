@@ -1,8 +1,7 @@
-package elieomatuku.cineast_android.details
+package elieomatuku.cineast_android.details.gallery
 
 
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
-import elieomatuku.cineast_android.vu.GalleryVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.adapter.DiscoverAdapter
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.home.MainActivity
 import elieomatuku.cineast_android.settings.LoginWebviewFragment

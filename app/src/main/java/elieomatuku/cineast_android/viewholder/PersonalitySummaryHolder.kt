@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.content_list.ContentListActivity
 import elieomatuku.cineast_android.adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Personality
@@ -48,7 +48,7 @@ class PersonalitySummaryHolder(itemView: View, private val onPersonalityClickPub
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            ItemListActivity.startItemListActivity(itemView.context, personalities, R.string.popular_people)
+            ContentListActivity.startItemListActivity(itemView.context, personalities, R.string.popular_people)
         }
     }
 }

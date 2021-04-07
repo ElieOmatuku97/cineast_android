@@ -1,27 +1,26 @@
-package elieomatuku.cineast_android.activity
+package elieomatuku.cineast_android.content_list
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import elieomatuku.cineast_android.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.presenter.ItemListPresenter
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.vu.ItemListVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import java.util.ArrayList
 
 
-class ItemListActivity : ToolbarMVPActivity<ItemListPresenter, ItemListVu>() {
+class ContentListActivity : ToolbarMVPActivity<ContentListPresenter, ContentListVu>() {
     companion object {
         private val MVP_UID by lazy {
             hashCode()
         }
 
 
-        fun startItemListActivity (context: Context, contents: List<Content>, screenNameRes: Int? = null) {
-            val intent = Intent (context, ItemListActivity::class.java)
+        fun startItemListActivity(context: Context, contents: List<Content>, screenNameRes: Int? = null) {
+            val intent = Intent(context, ContentListActivity::class.java)
             val params = Bundle()
             params.putParcelableArrayList(UiUtils.WIDGET_KEY, contents as ArrayList<out Parcelable>)
 
@@ -43,10 +42,10 @@ class ItemListActivity : ToolbarMVPActivity<ItemListPresenter, ItemListVu>() {
     }
 
 
-    override fun createMVPDispatcher(): MVPDispatcher<ItemListPresenter, ItemListVu> {
+    override fun createMVPDispatcher(): MVPDispatcher<ContentListPresenter, ContentListVu> {
         return MVPDispatcher(MVP_UID,
-                PresenterCacheLoaderCallback(this, { ItemListPresenter() }),
-                ::ItemListVu)
+                PresenterCacheLoaderCallback(this, { ContentListPresenter() }),
+                ::ContentListVu)
     }
 
     override fun onSupportNavigateUp(): Boolean {

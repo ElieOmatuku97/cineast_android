@@ -11,7 +11,6 @@ import android.view.MenuItem
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.presenter.PeoplePresenter
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.MVPDispatcher

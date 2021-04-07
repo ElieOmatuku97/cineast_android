@@ -17,9 +17,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.test.espresso.idling.CountingIdlingResource
-import elieomatuku.cineast_android.details.GalleryFragment
+import elieomatuku.cineast_android.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.details.GalleryPresenter
+import elieomatuku.cineast_android.details.gallery.GalleryPresenter
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.vu.ToolbarVu
 import io.chthonic.mythos.mvp.FragmentWrapper

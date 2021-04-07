@@ -1,10 +1,10 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.details.movie
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.details.movie.SimilarMovieFragment
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.vu.MoviesVu
+import elieomatuku.cineast_android.details.MoviesVu
+import elieomatuku.cineast_android.presenter.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

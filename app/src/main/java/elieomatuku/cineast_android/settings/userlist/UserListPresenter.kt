@@ -1,10 +1,10 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.settings.userlist
 
 import android.os.Bundle
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.vu.UserListVu
+import elieomatuku.cineast_android.presenter.ListPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.details
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.content_list.ContentListActivity
 import elieomatuku.cineast_android.adapter.MoviesAdapter
 import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -65,7 +66,7 @@ class MoviesVu(inflater: LayoutInflater,
         adapter.notifyDataSetChanged()
 
         seeAllClickView.setOnClickListener {
-            ItemListActivity.startItemListActivity(activity, movies, R.string.movies)
+            ContentListActivity.startItemListActivity(activity, movies, R.string.movies)
         }
     }
 }

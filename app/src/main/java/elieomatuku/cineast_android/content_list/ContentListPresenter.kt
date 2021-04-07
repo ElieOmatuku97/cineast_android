@@ -1,20 +1,20 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.content_list
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.discover.DiscoverPresenter
-import elieomatuku.cineast_android.vu.ItemListVu
+import elieomatuku.cineast_android.presenter.ListPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 
-class ItemListPresenter : ListPresenter<ItemListVu>() {
+class ContentListPresenter : ListPresenter<ContentListVu>() {
 
 
-    override fun onLink(vu: ItemListVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: ContentListVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        val listOfContents: List<Content>?  = args.getParcelableArrayList(WIDGET_KEY)
+        val listOfContents: List<Content>? = args.getParcelableArrayList(WIDGET_KEY)
         val screenNameRes = args.getInt(SCREEN_NAME_KEY)
 
 

@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.details.poster
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.fragment_poster.view.*
 

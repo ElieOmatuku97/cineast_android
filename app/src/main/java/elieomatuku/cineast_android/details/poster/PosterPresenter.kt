@@ -1,8 +1,8 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.details.poster
 
 import android.os.Bundle
-import elieomatuku.cineast_android.details.GalleryPresenter
-import elieomatuku.cineast_android.vu.PosterVu
+import elieomatuku.cineast_android.details.gallery.GalleryPresenter
+import elieomatuku.cineast_android.presenter.BasePresenter
 
 
 class PosterPresenter : BasePresenter<PosterVu>() {

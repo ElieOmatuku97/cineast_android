@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.presenter.PresenterCacheLazy
-import elieomatuku.cineast_android.vu.MoviesVu
+import elieomatuku.cineast_android.details.MoviesVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

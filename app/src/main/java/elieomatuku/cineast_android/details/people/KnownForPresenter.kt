@@ -9,8 +9,8 @@ import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.presenter.BasePresenter
-import elieomatuku.cineast_android.presenter.SimilarMoviePresenter
-import elieomatuku.cineast_android.vu.MoviesVu
+import elieomatuku.cineast_android.details.movie.SimilarMoviePresenter
+import elieomatuku.cineast_android.details.MoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

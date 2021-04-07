@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.details.gallery
 
 import android.app.Activity
 import androidx.viewpager.widget.ViewPager
@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
 import com.eftimoff.viewpagertransformers.TabletTransformer
-import elieomatuku.cineast_android.adapter.GalleryPagerAdapter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.fragment_gallery.view.*
 

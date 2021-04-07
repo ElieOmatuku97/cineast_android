@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.details.movie
 
 import android.app.Activity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -8,16 +8,17 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.adapter.PeopleAdapter
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
+import elieomatuku.cineast_android.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_overview.view.*
 
 
-class MovieTeamVu (inflater: LayoutInflater,
-                   activity: Activity,
-                   fragmentWrapper: FragmentWrapper?,
-                   parentView: ViewGroup?) : BaseVu(inflater,
+class MovieTeamVu(inflater: LayoutInflater,
+                  activity: Activity,
+                  fragmentWrapper: FragmentWrapper?,
+                  parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
@@ -45,7 +46,7 @@ class MovieTeamVu (inflater: LayoutInflater,
         get() = onCastSelectPublisher.hide()
 
     fun updateVu(cast: List<Cast>, crew: List<Crew>) {
-        overviewList.adapter = PeopleAdapter (cast, crew, onCrewSelectPublisher, onCastSelectPublisher)
+        overviewList.adapter = PeopleAdapter(cast, crew, onCrewSelectPublisher, onCastSelectPublisher)
         overviewList.layoutManager = LinearLayoutManager(activity)
     }
 }

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.content_list.ContentListActivity
 import elieomatuku.cineast_android.adapter.CrewAdapter
 import elieomatuku.cineast_android.core.model.Crew
 import io.reactivex.subjects.PublishSubject
@@ -34,7 +34,7 @@ class CrewHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
         itemView.recyclerview_people.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView?.setOnClickListener {
-            ItemListActivity.startItemListActivity(itemView.context, crew, R.string.people)
+            ContentListActivity.startItemListActivity(itemView.context, crew, R.string.people)
         }
     }
 }

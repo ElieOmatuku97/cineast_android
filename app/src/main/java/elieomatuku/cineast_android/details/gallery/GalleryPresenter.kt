@@ -1,9 +1,8 @@
-package elieomatuku.cineast_android.details
+package elieomatuku.cineast_android.details.gallery
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Poster
 import elieomatuku.cineast_android.presenter.BasePresenter
-import elieomatuku.cineast_android.vu.GalleryVu
 
 
 class GalleryPresenter: BasePresenter<GalleryVu>() {

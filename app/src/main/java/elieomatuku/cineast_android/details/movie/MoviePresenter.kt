@@ -1,10 +1,10 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.details.movie
 
 import android.os.Bundle
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.business.client.TmdbUserClient
-import elieomatuku.cineast_android.details.movie.MovieVu
+import elieomatuku.cineast_android.presenter.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

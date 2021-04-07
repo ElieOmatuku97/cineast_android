@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.content_list.ContentListActivity
 import elieomatuku.cineast_android.adapter.CastAdapter
 import elieomatuku.cineast_android.core.model.Cast
 import io.reactivex.subjects.PublishSubject
@@ -35,7 +35,7 @@ class CastHolder(itemView: View) : RecyclerView.ViewHolder (itemView){
 
 
         seeAllView?.setOnClickListener {
-            ItemListActivity.startItemListActivity(itemView.context, cast, R.string.people)
+            ContentListActivity.startItemListActivity(itemView.context, cast, R.string.people)
         }
 
     }

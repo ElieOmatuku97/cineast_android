@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.content_list.ContentListActivity
 import elieomatuku.cineast_android.adapter.MoviesAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
@@ -52,7 +52,7 @@ class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubje
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            ItemListActivity.startItemListActivity(itemView.context, movies, contentTitle)
+            ContentListActivity.startItemListActivity(itemView.context, movies, contentTitle)
         }
     }
 }

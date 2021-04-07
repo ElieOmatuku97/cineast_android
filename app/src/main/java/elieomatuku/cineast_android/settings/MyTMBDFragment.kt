@@ -8,7 +8,7 @@ import androidx.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.BuildConfig
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.UserListActivity
+import elieomatuku.cineast_android.settings.userlist.UserListActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.AccessToken
 import elieomatuku.cineast_android.core.model.CineastError

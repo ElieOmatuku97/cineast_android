@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.settings.userlist
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import elieomatuku.cineast_android.core.model.Movie
 
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.callback.SwipeToDeleteCallback
+import elieomatuku.cineast_android.vu.ListVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 
 
@@ -22,7 +23,6 @@ class UserListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
     override val adapter: MoviesAdapter by lazy {
         UserMoviesAdapter(movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
     }
-
 
 
     override fun setUpListView(contents: List<Content>) {

@@ -1,12 +1,12 @@
-package elieomatuku.cineast_android.presenter
+package elieomatuku.cineast_android.details.movie
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.details.movie.MovieTeamFragment
-import elieomatuku.cineast_android.vu.MovieTeamVu
+import elieomatuku.cineast_android.presenter.BasePresenter
+import elieomatuku.cineast_android.details.people.PeoplePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 

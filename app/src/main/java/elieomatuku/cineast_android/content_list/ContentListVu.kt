@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.vu
+package elieomatuku.cineast_android.content_list
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -10,12 +10,13 @@ import elieomatuku.cineast_android.adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.vu.ListVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
 
-class ItemListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) :
+class ContentListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) :
         ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
 

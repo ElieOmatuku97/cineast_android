@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.adapter
+package elieomatuku.cineast_android.discover
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup

@@ -1,13 +1,12 @@
-package elieomatuku.cineast_android.adapter
+package elieomatuku.cineast_android.details.gallery
 
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import elieomatuku.cineast_android.details.PosterFragment
+import elieomatuku.cineast_android.details.poster.PosterFragment
 import elieomatuku.cineast_android.core.model.Poster
-import elieomatuku.cineast_android.details.GalleryPresenter
 import timber.log.Timber
 
 

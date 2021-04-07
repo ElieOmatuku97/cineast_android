@@ -8,7 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.activity.ItemListActivity
+import elieomatuku.cineast_android.content_list.ContentListActivity
 import elieomatuku.cineast_android.adapter.SearchFragmentPagerAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.utils.UiUtils
@@ -99,7 +99,7 @@ class SearchVu(inflater: LayoutInflater,
 
     fun showSearchResults(results: List<Content>?) {
         results?.let {
-            ItemListActivity.startItemListActivity(activity, results, R.string.search_hint)
+            ContentListActivity.startItemListActivity(activity, results, R.string.search_hint)
         }
     }
 

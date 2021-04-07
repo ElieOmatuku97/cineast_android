@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.activity
+package elieomatuku.cineast_android.settings.userlist
 
 import android.content.Context
 import android.content.Intent
@@ -6,13 +6,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.presenter.UserListPresenter
+import elieomatuku.cineast_android.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.vu.UserListVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import timber.log.Timber
-
 
 
 class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
@@ -24,8 +22,8 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
         const val DISPLAY_FAVORITE_LIST = "favorite_list_key"
         const val DISPLAY_WATCH_LIST = "watch_list_key"
 
-        fun gotoUserListActivity  (context: Context, resources: Int? = null): Intent {
-            val intent = Intent (context, UserListActivity::class.java)
+        fun gotoUserListActivity(context: Context, resources: Int? = null): Intent {
+            val intent = Intent(context, UserListActivity::class.java)
             val params = Bundle()
 
             if (resources != null) {
@@ -39,7 +37,7 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
 
 
         fun gotoFavoriteList(context: Context) {
-            val intent = gotoUserListActivity(context,  R.string.settings_favorites)
+            val intent = gotoUserListActivity(context, R.string.settings_favorites)
             val params = Bundle()
             params.putBoolean(DISPLAY_FAVORITE_LIST, true)
             intent.putExtras(params)
