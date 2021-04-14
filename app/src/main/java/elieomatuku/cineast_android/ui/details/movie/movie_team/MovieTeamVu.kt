@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
-import elieomatuku.cineast_android.ui.vu.BaseVu
+import elieomatuku.cineast_android.ui.common_vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

@@ -12,11 +12,10 @@ object ApiUtils {
 
 
     fun throwableToCineastError(throwable: Throwable?): CineastError {
-        val cineastError = CineastError(throwable.toString())
-        return cineastError
+        return CineastError(throwable.toString())
     }
 
-    fun throwableToCineastError (errorBody: ResponseBody?): CineastError {
+    fun throwableToCineastError(errorBody: ResponseBody?): CineastError {
         errorBody?.let {
             val cineastError = errorSerializer.fromJson(it.string())
 

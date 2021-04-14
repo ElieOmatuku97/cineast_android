@@ -4,7 +4,7 @@ package elieomatuku.cineast_android.ui.home
 
 import android.os.Bundle
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.activity.ToolbarMVPActivity
+import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.core.model.Account
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.MVPDispatcher

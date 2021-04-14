@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.ui.details.movie.movie_team
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.Cast
-import elieomatuku.cineast_android.ui.viewholder.itemHolder.CastItemHolder
 import io.reactivex.subjects.PublishSubject
 
 class CastAdapter(private val cast: List<Cast>,

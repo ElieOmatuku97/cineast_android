@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.activity.ToolbarMVPActivity
+import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.business.client.TmdbUserClient

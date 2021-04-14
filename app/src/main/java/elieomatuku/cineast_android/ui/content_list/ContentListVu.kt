@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.ui.common_adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.vu.ListVu
+import elieomatuku.cineast_android.ui.common_vu.ListVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

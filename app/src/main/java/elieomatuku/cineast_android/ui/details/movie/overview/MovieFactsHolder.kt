@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder.itemHolder
+package elieomatuku.cineast_android.ui.details.movie.overview
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -48,7 +48,7 @@ class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             releaseDateView.text = displayFacts(itemView.context.getString(R.string.release_date), movieFacts.release_date)
             runtimeView.text = displayFacts(itemView.context.getString(R.string.runtime), movieFacts.runtimeInHoursAndMinutes)
             budgetView.text = displayFacts(itemView.context.getString(R.string.budget), String.format("$%,.2f", movieFacts.budget?.toDouble()))
-            revenueView.text = displayFacts(itemView.context.getString(R.string.revenue), String.format("$%,.2f",movieFacts.revenue?.toDouble()))
+            revenueView.text = displayFacts(itemView.context.getString(R.string.revenue), String.format("$%,.2f", movieFacts.revenue?.toDouble()))
         } ?: hideRootView()
 
     }

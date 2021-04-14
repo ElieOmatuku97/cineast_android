@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder.itemHolder
+package elieomatuku.cineast_android.ui.common_viewholder
 
 import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.recyclerview.widget.RecyclerView
@@ -30,7 +30,7 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    val movieImage: ImageView by lazy {
+    private val movieImage: ImageView by lazy {
         itemView.movie_image_view
     }
     private val releaseDate: TextView? by lazy {

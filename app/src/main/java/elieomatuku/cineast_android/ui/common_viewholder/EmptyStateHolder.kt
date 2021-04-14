@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder
+package elieomatuku.cineast_android.ui.common_viewholder
 
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +14,9 @@ import kotlinx.android.synthetic.main.holder_empty_state.view.*
 import org.kodein.di.generic.instance
 
 
-class EmptyStateHolder (itemView: View) : RecyclerView.ViewHolder (itemView) {
+class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
-        fun createView(parent: ViewGroup): View{
+        fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_empty_state, parent, false)
         }
 

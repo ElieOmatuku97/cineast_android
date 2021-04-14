@@ -3,8 +3,7 @@ package elieomatuku.cineast_android.ui.discover
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.ui.viewholder.*
-import elieomatuku.cineast_android.ui.viewholder.itemHolder.LoginViewHolder
+import elieomatuku.cineast_android.ui.common_viewholder.*
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates

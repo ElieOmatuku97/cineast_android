@@ -19,7 +19,7 @@ import elieomatuku.cineast_android.ui.details.people.knownfor.KnownForFragment
 import elieomatuku.cineast_android.ui.details.people.overview.OverviewPeopleFragment
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.ui.vu.ToolbarVu
+import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

@@ -1,15 +1,13 @@
-package elieomatuku.cineast_android.ui.activity
+package elieomatuku.cineast_android.ui.common_activity
 
 import android.os.Bundle
 import androidx.loader.app.LoaderManager
-import elieomatuku.cineast_android.ui.vu.ToolbarVu
+import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.Presenter
 
 
-
-
-abstract class ToolbarMVPActivity<P, V>: BaseActivity() where P : Presenter<V>, V : ToolbarVu {
+abstract class ToolbarMVPActivity<P, V> : BaseActivity() where P : Presenter<V>, V : ToolbarVu {
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
         createMVPDispatcher()
     }
@@ -58,7 +56,7 @@ abstract class ToolbarMVPActivity<P, V>: BaseActivity() where P : Presenter<V>, 
     }
 
 
-    override fun onSaveInstanceState(outState: Bundle){
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mvpDispatcher.savePresenterState(outState)
     }

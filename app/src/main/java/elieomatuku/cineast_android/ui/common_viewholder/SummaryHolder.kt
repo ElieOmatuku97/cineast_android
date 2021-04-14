@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder
+package elieomatuku.cineast_android.ui.common_viewholder
 
 
 import androidx.recyclerview.widget.RecyclerView

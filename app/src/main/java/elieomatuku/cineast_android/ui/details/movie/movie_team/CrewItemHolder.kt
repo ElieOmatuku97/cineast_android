@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.viewholder.itemHolder
+package elieomatuku.cineast_android.ui.details.movie.movie_team
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_item_people.view.*
 
-class CrewItemHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+class CrewItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_item_people, parent, false)
@@ -40,7 +40,7 @@ class CrewItemHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         if (!profilePath.isNullOrEmpty()) {
             peopleImageView.visibility = View.VISIBLE
-            val imageUrl = UiUtils.getImageUrl(profilePath,  itemView.context.getString(R.string.image_small))
+            val imageUrl = UiUtils.getImageUrl(profilePath, itemView.context.getString(R.string.image_small))
             Picasso.get()
                     .load(imageUrl)
                     .into(peopleImageView)

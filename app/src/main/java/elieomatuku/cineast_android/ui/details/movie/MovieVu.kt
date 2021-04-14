@@ -23,7 +23,7 @@ import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.ui.details.movie.overview.OverviewFragment
 import elieomatuku.cineast_android.ui.details.movie.similar.SimilarMovieFragment
 import elieomatuku.cineast_android.utils.DividerItemDecorator
-import elieomatuku.cineast_android.ui.vu.ToolbarVu
+import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

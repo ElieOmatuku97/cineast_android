@@ -18,7 +18,7 @@ import elieomatuku.cineast_android.ui.home.MainActivity
 import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
 import elieomatuku.cineast_android.ui.common_fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
-import elieomatuku.cineast_android.ui.vu.BaseVu
+import elieomatuku.cineast_android.ui.common_vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

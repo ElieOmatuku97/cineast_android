@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.viewholder.ContentHolder
+import elieomatuku.cineast_android.ui.common_viewholder.ContentHolder
 import kotlinx.android.synthetic.main.holder_header.view.*
 import io.reactivex.subjects.PublishSubject
 

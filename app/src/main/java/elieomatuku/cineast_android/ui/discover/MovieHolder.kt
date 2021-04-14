@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.viewholder.ContentHolder
+import elieomatuku.cineast_android.ui.common_viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_movie.view.*
 import timber.log.Timber

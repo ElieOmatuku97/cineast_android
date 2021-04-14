@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.ui.discover
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.viewholder.itemHolder.HeaderItemHolder
 import io.reactivex.subjects.PublishSubject
 
 class HeaderAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>, private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

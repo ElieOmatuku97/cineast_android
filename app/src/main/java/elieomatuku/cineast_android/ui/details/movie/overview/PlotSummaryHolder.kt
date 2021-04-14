@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.viewholder.SummaryHolder
+import elieomatuku.cineast_android.ui.common_viewholder.SummaryHolder
 import kotlinx.android.synthetic.main.holder_summary.view.*
 
 

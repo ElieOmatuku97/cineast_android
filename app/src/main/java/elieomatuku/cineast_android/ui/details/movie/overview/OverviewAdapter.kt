@@ -3,8 +3,6 @@ package elieomatuku.cineast_android.ui.details.movie.overview
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
 import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.ui.viewholder.itemHolder.BottomHolder
-import elieomatuku.cineast_android.ui.viewholder.itemHolder.MovieFactsHolder
 
 class OverviewAdapter(private val movieSummary: MovieSummary?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

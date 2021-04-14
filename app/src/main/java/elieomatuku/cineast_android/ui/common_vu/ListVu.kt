@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.vu
+package elieomatuku.cineast_android.ui.common_vu
 
 import android.app.Activity
 import androidx.recyclerview.widget.LinearLayoutManager
