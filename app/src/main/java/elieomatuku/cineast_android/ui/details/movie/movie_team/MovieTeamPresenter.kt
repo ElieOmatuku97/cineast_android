@@ -5,7 +5,7 @@ import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.presenter.BasePresenter
+import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
 import elieomatuku.cineast_android.ui.details.people.PeoplePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber

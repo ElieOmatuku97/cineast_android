@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.ui.details.movie.movie_team
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.ui.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.ui.common_presenter.PresenterCacheLazy
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

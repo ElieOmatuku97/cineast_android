@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.presenter
+package elieomatuku.cineast_android.ui.common_presenter
 
 import android.os.Bundle
 import io.chthonic.mythos.mvp.Presenter
@@ -12,7 +12,7 @@ import org.kodein.di.generic.instance
 import kotlin.coroutines.CoroutineContext
 
 
-abstract class BasePresenter<V>: Presenter<V>(), CoroutineScope where V: Vu{
+abstract class BasePresenter<V> : Presenter<V>(), CoroutineScope where V : Vu {
 
 
     val job: Job by lazy { SupervisorJob() }
@@ -22,7 +22,7 @@ abstract class BasePresenter<V>: Presenter<V>(), CoroutineScope where V: Vu{
 
     protected lateinit var handler: Handler
 
-    protected val rxSubs : io.reactivex.disposables.CompositeDisposable by lazy {
+    protected val rxSubs: io.reactivex.disposables.CompositeDisposable by lazy {
         io.reactivex.disposables.CompositeDisposable()
     }
 

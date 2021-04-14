@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.ui.search
 
 import android.app.SearchManager
 import android.content.Context
-import elieomatuku.cineast_android.ui.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.ui.common_presenter.PresenterCacheLazy
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 import android.os.Bundle

@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.ui.details.poster
 
 import android.os.Bundle
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
-import elieomatuku.cineast_android.ui.presenter.BasePresenter
+import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
 
 
 class PosterPresenter : BasePresenter<PosterVu>() {

@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.ui.details.people.knownfor
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.core.model.KnownFor
-import elieomatuku.cineast_android.ui.presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.ui.common_presenter.PresenterCacheLazy
 import elieomatuku.cineast_android.ui.details.MoviesVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
