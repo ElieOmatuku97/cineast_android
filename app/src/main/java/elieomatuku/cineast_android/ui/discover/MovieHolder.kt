@@ -11,13 +11,13 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.common_viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.holder_movie.view.*
+import kotlinx.android.synthetic.main.fragment_movies.view.*
 import timber.log.Timber
 
 class MovieHolder(itemView: View, private val onItemClickPublisher: PublishSubject<Movie>) : ContentHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context).inflate(R.layout.holder_movie, parent, false)
+            return LayoutInflater.from(parent.context).inflate(R.layout.fragment_movies, parent, false)
         }
 
         fun newInstance(parent: ViewGroup, onItemClickPublisher: PublishSubject<Movie>): MovieHolder {

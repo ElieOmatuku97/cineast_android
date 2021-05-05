@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Cast
@@ -13,6 +12,7 @@ import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.databinding.FragmentOverviewBinding
+import elieomatuku.cineast_android.ui.common_fragment.BaseFragment
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.details.people.PeoplePresenter
 import io.reactivex.Observable
@@ -21,7 +21,7 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
 
-class MovieTeamFragment : Fragment() {
+class MovieTeamFragment : BaseFragment() {
     companion object {
         const val MOVIE_SUMMARY = "movie_summary"
         const val SCREEN_NAME_KEY = "screen_name"
@@ -56,11 +56,6 @@ class MovieTeamFragment : Fragment() {
 
     private val onCastSelectObservable: Observable<Cast>
         get() = onCastSelectPublisher.hide()
-
-
-    protected val rxSubs: io.reactivex.disposables.CompositeDisposable by lazy {
-        io.reactivex.disposables.CompositeDisposable()
-    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -117,8 +112,4 @@ class MovieTeamFragment : Fragment() {
         activity?.startActivity(intent)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        rxSubs.clear()
-    }
 }

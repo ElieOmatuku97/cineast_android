@@ -21,7 +21,7 @@ class MovieTeamAdapter(private val cast: List<Cast>, private val crew: List<Crew
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position){
+        return when (position) {
             TYPE_CAST -> TYPE_CAST
             TYPE_CREW -> TYPE_CREW
             else -> -1

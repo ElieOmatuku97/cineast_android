@@ -15,7 +15,7 @@ import elieomatuku.cineast_android.ui.common_vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.holder_movie.view.*
+import kotlinx.android.synthetic.main.fragment_movies.view.*
 
 
 /**
@@ -23,15 +23,15 @@ import kotlinx.android.synthetic.main.holder_movie.view.*
  */
 
 class MoviesVu(inflater: LayoutInflater,
-                     activity: Activity,
-                     fragmentWrapper: FragmentWrapper?,
-                     parentView: ViewGroup?) : BaseVu(inflater,
+               activity: Activity,
+               fragmentWrapper: FragmentWrapper?,
+               parentView: ViewGroup?) : BaseVu(inflater,
         activity = activity,
         fragmentWrapper = fragmentWrapper,
         parentView = parentView) {
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.holder_movie
+        return R.layout.fragment_movies
     }
 
     private val movieSelectPublisher: PublishSubject<Movie> by lazy {

@@ -24,6 +24,7 @@ import elieomatuku.cineast_android.ui.details.movie.overview.OverviewFragment
 import elieomatuku.cineast_android.ui.details.movie.similar.SimilarMovieFragment
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
+import elieomatuku.cineast_android.ui.details.MoviesFragment
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -154,7 +155,13 @@ class MovieVu(inflater: LayoutInflater,
     fun gotoTab(displayAndMovieSummary: Pair<String, MovieSummary>) {
         val fragment = when (displayAndMovieSummary.first) {
             SIMILAR_MOVIES -> {
-                SimilarMovieFragment.newInstance(displayAndMovieSummary.second)
+
+                val movieSummary: MovieSummary = displayAndMovieSummary.second
+                val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
+                val movieTitle = movieSummary.movie?.title
+
+//                SimilarMovieFragment.newInstance(movieSummary)
+                MoviesFragment.newInstance(similarMovies, movieTitle!!)
             }
             MOVIE_CREW -> {
                 MovieTeamFragment.newInstance(displayAndMovieSummary.second)

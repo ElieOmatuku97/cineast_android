@@ -52,8 +52,7 @@ class SimilarMoviePresenter : BasePresenter<MoviesVu>() {
                     vu.gotoMovie(params)
                 }, { t: Throwable ->
                     Timber.e("movieSelectObservable failed:$t")
-                }
-                ))
+                }))
     }
 
 }

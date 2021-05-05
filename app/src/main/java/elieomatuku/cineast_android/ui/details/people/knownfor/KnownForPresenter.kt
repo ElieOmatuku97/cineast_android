@@ -40,7 +40,7 @@ class KnownForPresenter : BasePresenter<MoviesVu>() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Timber.d("genres from database: ${it}")
+                    Timber.d("genres from database: $it")
                     genres = it
                 }, { error ->
                     Timber.e("Unable to get genres $error")

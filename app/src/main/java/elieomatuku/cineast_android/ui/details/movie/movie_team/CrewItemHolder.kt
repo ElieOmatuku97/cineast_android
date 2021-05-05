@@ -23,15 +23,15 @@ class CrewItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    val peopleImageView: ImageView by lazy {
+    private val peopleImageView: ImageView by lazy {
         itemView.people_image_view
     }
 
-    val peopleNameView: TextView by lazy {
+    private val peopleNameView: TextView by lazy {
         itemView.people_name_view
     }
 
-    val peopleJobView: TextView by lazy {
+    private val peopleJobView: TextView by lazy {
         itemView.people_job_view
     }
 

@@ -44,7 +44,7 @@ class ContentListActivity : ToolbarMVPActivity<ContentListPresenter, ContentList
 
     override fun createMVPDispatcher(): MVPDispatcher<ContentListPresenter, ContentListVu> {
         return MVPDispatcher(MVP_UID,
-                PresenterCacheLoaderCallback(this, { ContentListPresenter() }),
+                PresenterCacheLoaderCallback(this) { ContentListPresenter() },
                 ::ContentListVu)
     }
 
