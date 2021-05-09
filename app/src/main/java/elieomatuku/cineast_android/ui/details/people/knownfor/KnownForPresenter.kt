@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
-import elieomatuku.cineast_android.ui.details.movie.similar.SimilarMoviePresenter
+import elieomatuku.cineast_android.ui.details.MoviesFragment.Companion.MOVIE_GENRES_KEY
 import elieomatuku.cineast_android.ui.details.MoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -56,8 +56,7 @@ class KnownForPresenter : BasePresenter<MoviesVu>() {
 
                 }, { t: Throwable ->
                     Timber.e("movieSelectObservable failed:$t")
-                }
-                ))
+                }))
     }
 
 
@@ -72,7 +71,7 @@ class KnownForPresenter : BasePresenter<MoviesVu>() {
                     }
 
                     params.putParcelable(MOVIE_KEY, movie)
-                    params.putParcelableArrayList(SimilarMoviePresenter.MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
+                    params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                     vu?.gotoMovie(params)
                 }
             }

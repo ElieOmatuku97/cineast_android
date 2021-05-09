@@ -20,7 +20,6 @@ import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
 import elieomatuku.cineast_android.ui.common_fragment.BaseFragment
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.ui.details.movie.similar.SimilarMoviePresenter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -39,6 +38,11 @@ class MoviesFragment : BaseFragment() {
         const val TITLE = "title"
         const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_KEY = "movieApi"
+        const val MOVIE_GENRES_KEY = "genres"
+
+        val TAG: String by lazy {
+            MoviesFragment::class.java.simpleName
+        }
 
         fun newInstance(movies: List<Movie>, title: String? = null): MoviesFragment {
             val args = Bundle()
@@ -113,7 +117,7 @@ class MoviesFragment : BaseFragment() {
                     val params = Bundle()
                     params.putString(SCREEN_NAME_KEY, title)
                     params.putParcelable(MOVIE_KEY, movie)
-                    params.putParcelableArrayList(SimilarMoviePresenter.MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
+                    params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                     gotoMovie(params)
                 }, { t: Throwable ->
                     Timber.e("movieSelectObservable failed:$t")

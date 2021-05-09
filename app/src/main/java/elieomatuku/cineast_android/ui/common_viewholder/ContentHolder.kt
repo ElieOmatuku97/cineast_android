@@ -11,7 +11,6 @@ import elieomatuku.cineast_android.core.model.Content
 
 abstract class ContentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-
     abstract fun update(content: Pair<Int, List<Content>>)
 
 }

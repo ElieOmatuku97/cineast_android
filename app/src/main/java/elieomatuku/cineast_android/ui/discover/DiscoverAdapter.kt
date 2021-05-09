@@ -99,7 +99,7 @@ class DiscoverAdapter(
             }
 
             TYPE_MOVIES -> {
-                MovieHolder.newInstance(parent, onMovieClickPublisher)
+                MovieHolder.newInstance(parent)
             }
 
             TYPE_LOGIN -> {
