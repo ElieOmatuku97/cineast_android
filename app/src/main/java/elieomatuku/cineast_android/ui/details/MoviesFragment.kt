@@ -40,10 +40,13 @@ class MoviesFragment : BaseFragment() {
         const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_KEY = "movieApi"
 
-        fun newInstance(movies: List<Movie>, title: String): MoviesFragment {
+        fun newInstance(movies: List<Movie>, title: String? = null): MoviesFragment {
             val args = Bundle()
             args.putParcelableArrayList(MOVIES, movies as ArrayList<out Parcelable>)
-            args.putString(TITLE, title)
+
+            title?.let {
+                args.putString(TITLE, it)
+            }
 
             val fragment = MoviesFragment()
             fragment.arguments = args
@@ -91,11 +94,6 @@ class MoviesFragment : BaseFragment() {
             movies = it
         }
 
-        arguments?.getString(TITLE)?.let {
-            title = it
-        }
-
-
         viewModel.genresLiveData.observe(this.viewLifecycleOwner, Observer {
             genres = it
         })
@@ -124,6 +122,7 @@ class MoviesFragment : BaseFragment() {
 
 
     private fun updateView() {
+        setTitle(arguments?.getString(TITLE))
         sectionTitleView.text = title
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -137,6 +136,13 @@ class MoviesFragment : BaseFragment() {
         }
     }
 
+    private fun setTitle(title: String?) {
+        if (title != null) {
+            this.title = title
+        } else {
+            this.title = getString(R.string.movies)
+        }
+    }
 
     private fun gotoMovie(params: Bundle) {
         val intent = Intent(activity, MovieActivity::class.java)

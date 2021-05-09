@@ -36,13 +36,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/image_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/arrow_icon_height"
-                        android:layout_marginLeft="2dp"
-                        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
-                        app:tint="@color/color_orange_app" />
 
                     <TextView
                         android:id="@+id/see_all_title"
@@ -50,6 +43,14 @@
                         android:layout_height="wrap_content"
                         android:text="@string/see_all"
                         android:textColor="@color/color_orange_app" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/arrow_icon_height"
+                        android:layout_marginLeft="2dp"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+                        app:tint="@color/color_orange_app" />
 
                 </LinearLayout>
 
