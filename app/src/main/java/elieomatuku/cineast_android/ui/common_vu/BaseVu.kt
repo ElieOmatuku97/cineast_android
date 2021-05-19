@@ -16,18 +16,15 @@ import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.Vu
 import kotlinx.android.synthetic.main.layout_loading.view.*
 
-
-
-abstract class BaseVu (layoutInflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) :
-        Vu (layoutInflater, activity, fragmentWrapper, parentView) {
+abstract class BaseVu(layoutInflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) :
+    Vu(layoutInflater, activity, fragmentWrapper, parentView) {
 
     val baseActivity: BaseActivity
-            get() = activity as BaseActivity
+        get() = activity as BaseActivity
 
     private val loadingViewDim: Int by lazy {
         activity.resources.getDimensionPixelSize(UiUtils.loadingViewDimRes)
     }
-
 
     private val loadingIndicator: PopupWindow by lazy {
         UiUtils.createLoadingIndicator(activity)
@@ -62,9 +59,8 @@ abstract class BaseVu (layoutInflater: LayoutInflater, activity: Activity, fragm
         return change
     }
 
-
     fun showLoading(modal: Boolean = false) {
-        rootView.post{
+        rootView.post {
 
             // do NOT display loading if fragment is resumed but not visible, e.g. in a viewpager
             val supportFragment = fragmentWrapper?.support
@@ -80,13 +76,10 @@ abstract class BaseVu (layoutInflater: LayoutInflater, activity: Activity, fragm
                 if (!loadingIndicator.isShowing) {
                     loadingIndicator.showAtLocation(rootView, Gravity.CENTER, 0, 0)
                 }
-
             } catch (t: Throwable) {
-
             }
         }
     }
-
 
     fun hideLoading() {
         rootView.post {
@@ -94,13 +87,10 @@ abstract class BaseVu (layoutInflater: LayoutInflater, activity: Activity, fragm
                 if (loadingIndicator.isShowing) {
                     loadingIndicator.dismiss()
                 }
-
             } catch (t: Throwable) {
-
             }
         }
     }
-
 
     fun guaranteeUiIsActive(): Boolean {
 
@@ -108,15 +98,14 @@ abstract class BaseVu (layoutInflater: LayoutInflater, activity: Activity, fragm
         return !(destroyed || (fragmentWrapper?.support?.isDetached() ?: false)) && (fragmentWrapper?.support?.isAdded() ?: true)
     }
 
-
-    fun gotoMovie(params: Bundle){
-        val intent = Intent (activity, MovieActivity::class.java)
+    fun gotoMovie(params: Bundle) {
+        val intent = Intent(activity, MovieActivity::class.java)
         intent.putExtras(params)
         activity.startActivity(intent)
     }
 
     fun gotoPeople(params: Bundle) {
-        val intent = Intent (activity, PeopleActivity::class.java)
+        val intent = Intent(activity, PeopleActivity::class.java)
         intent.putExtras(params)
         activity.startActivity(intent)
     }

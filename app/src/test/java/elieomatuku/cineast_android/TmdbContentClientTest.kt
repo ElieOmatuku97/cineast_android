@@ -11,7 +11,6 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-
 /**
  * Created by elieomatuku on 2019-12-29
  */
@@ -26,8 +25,6 @@ class TmdbContentClientTest {
 
     private lateinit var unauthorizedClient: TmdbContentClient
 
-
-
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
@@ -36,13 +33,13 @@ class TmdbContentClientTest {
         unauthorizedClient = TmdbContentClient(resources, persistClient, MockUtils.unAuthorizedInterceptor())
     }
 
-
     private fun mockedClient(urlEnding: String, filename: String): TmdbContentClient {
-        return TmdbContentClient(resources,
-                persistClient,
-                MockUtils.workingInterceptor(urlEnding, filename))
+        return TmdbContentClient(
+            resources,
+            persistClient,
+            MockUtils.workingInterceptor(urlEnding, filename)
+        )
     }
-
 
     @Test
     fun testGetGenres() = runBlocking {
@@ -52,10 +49,8 @@ class TmdbContentClientTest {
 
     @Test
     fun testGetMovieFacts() = runBlocking {
-        var movie = Movie(id = 181812, original_title = "Star Wars: The Rise of Skywalker",genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+        var movie = Movie(id = 181812, original_title = "Star Wars: The Rise of Skywalker", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
         Assert.assertEquals(true, unauthorizedClient.getMovieFacts(movie).isFailure)
         Assert.assertEquals(true, mockedClient("movie/181812?api_key=490e29e92ea126a6878a02b2779beb24", "getMovieDetails.json").getMovieFacts(movie).isSuccess)
     }
-
-
 }

@@ -20,13 +20,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
-
 class MovieTeamFragment : BaseFragment() {
     companion object {
         const val MOVIE_SUMMARY = "movie_summary"
         const val SCREEN_NAME_KEY = "screen_name"
         const val PEOPLE_KEY = "peopleApi"
-
 
         fun newInstance(movieSummary: MovieSummary): MovieTeamFragment {
             val args = Bundle()
@@ -57,7 +55,6 @@ class MovieTeamFragment : BaseFragment() {
     private val onCastSelectObservable: Observable<Cast>
         get() = onCastSelectPublisher.hide()
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_overview, container, false)
         viewDataBinding = FragmentOverviewBinding.bind(rootView)
@@ -68,26 +65,27 @@ class MovieTeamFragment : BaseFragment() {
         val crew: List<Crew>? = movieSummary?.crew
         movieTitle = movieSummary?.movie?.title
 
-
         if (cast != null && crew != null) {
             updateView(cast, crew)
         }
 
         return viewDataBinding.root
-
     }
 
     override fun onResume() {
         super.onResume()
-        rxSubs.add(onCastSelectObservable
+        rxSubs.add(
+            onCastSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPersonSelectedSuccess, this::onSelectionFail))
+                .subscribe(this::onPersonSelectedSuccess, this::onSelectionFail)
+        )
 
-        rxSubs.add(onCrewSelectObservable
+        rxSubs.add(
+            onCrewSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPersonSelectedSuccess, this::onSelectionFail))
+                .subscribe(this::onPersonSelectedSuccess, this::onSelectionFail)
+        )
     }
-
 
     private fun updateView(cast: List<Cast>, crew: List<Crew>) {
         viewDataBinding.overviewList.adapter = MovieTeamAdapter(cast, crew, onCrewSelectPublisher, onCastSelectPublisher)
@@ -111,5 +109,4 @@ class MovieTeamFragment : BaseFragment() {
         intent.putExtras(params)
         activity?.startActivity(intent)
     }
-
 }

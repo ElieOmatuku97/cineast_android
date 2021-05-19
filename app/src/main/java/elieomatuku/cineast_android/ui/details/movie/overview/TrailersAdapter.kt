@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.ui.details.movie.overview
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 
 class TrailersAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var trailers: List<String> = listOf()

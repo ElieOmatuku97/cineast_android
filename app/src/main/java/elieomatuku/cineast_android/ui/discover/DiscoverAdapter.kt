@@ -1,17 +1,21 @@
 package elieomatuku.cineast_android.ui.discover
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.ui.common_viewholder.*
+import androidx.recyclerview.widget.RecyclerView
+import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.ui.common_viewholder.ContentHolder
+import elieomatuku.cineast_android.ui.common_viewholder.EmptyStateHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
 class DiscoverAdapter(
-        private val onMovieClickPublisher: PublishSubject<Movie>,
-        private val onPersonalityClickPublisher: PublishSubject<Person>,
-        private val loginClickPublisher: PublishSubject<Boolean>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val onMovieClickPublisher: PublishSubject<Movie>,
+    private val onPersonalityClickPublisher: PublishSubject<Person>,
+    private val loginClickPublisher: PublishSubject<Boolean>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_HEADER = 0
@@ -59,9 +63,8 @@ class DiscoverAdapter(
         }
     }
 
-
     override fun getItemCount(): Int {
-        Timber.d("hasEmptyState: ${hasEmptyState},  ${filteredContent.size}")
+        Timber.d("hasEmptyState: $hasEmptyState,  ${filteredContent.size}")
         return if (!hasEmptyState) {
             filteredContent.size + 2
         } else {
@@ -72,16 +75,12 @@ class DiscoverAdapter(
     override fun getItemViewType(position: Int): Int {
         return if (hasEmptyState) {
             Timber.d("empty state update function called")
-
             TYPE_EMPTY_STATE
         } else {
             when (position) {
                 POSITION_HEADER -> TYPE_HEADER
-                POSITION_POPULAR_MOVIE -> TYPE_MOVIES
+                POSITION_POPULAR_MOVIE, POSITION_TOP_RATED_MOVIE, POSITION_UPCOMING_MOVIE, POSITION_NOW_PLAYING_MOVIE -> TYPE_MOVIES
                 POSITION_POPULAR_PEOPLE -> TYPE_POPULAR_PEOPLE
-                POSITION_NOW_PLAYING_MOVIE -> TYPE_MOVIES
-                POSITION_UPCOMING_MOVIE -> TYPE_MOVIES
-                POSITION_TOP_RATED_MOVIE -> TYPE_MOVIES
                 TYPE_LOGIN -> TYPE_LOGIN
                 else -> -1
             }

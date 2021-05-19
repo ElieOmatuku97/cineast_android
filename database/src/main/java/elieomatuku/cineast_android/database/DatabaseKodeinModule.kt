@@ -7,11 +7,9 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
 
-
 /**
  * Created by elieomatuku on 2019-12-16
  */
-
 
 object DatabaseKodeinModule {
     const val moduleName = "Database"
@@ -22,12 +20,12 @@ object DatabaseKodeinModule {
             // Database
 
             bind<ContentDatabase>() with singleton {
-                ContentDatabase.getInstance(context) }
+                ContentDatabase.getInstance(context)
+            }
 
             bind<ContentRepository>() with singleton {
                 ContentRepository(instance())
             }
         }
     }
-
 }

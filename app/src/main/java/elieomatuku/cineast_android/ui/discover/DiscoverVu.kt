@@ -3,36 +3,43 @@ package elieomatuku.cineast_android.ui.discover
 import android.app.Activity
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import androidx.core.content.res.ResourcesCompat
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.*
+import elieomatuku.cineast_android.core.model.AccessToken
+import elieomatuku.cineast_android.core.model.Account
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.ui.common_fragment.WebviewFragment
+import elieomatuku.cineast_android.ui.common_vu.BaseVu
 import elieomatuku.cineast_android.ui.home.MainActivity
 import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
-import elieomatuku.cineast_android.ui.common_fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
-import elieomatuku.cineast_android.ui.common_vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_discover.view.*
 import timber.log.Timber
 
-class DiscoverVu(inflater: LayoutInflater,
-                 activity: Activity,
-                 fragmentWrapper: FragmentWrapper?,
-                 parentView: ViewGroup?) : BaseVu(inflater,
-        activity = activity,
-        fragmentWrapper = fragmentWrapper,
-        parentView = parentView), WebLink<AccessToken?> {
-
+class DiscoverVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : BaseVu(
+    inflater,
+    activity = activity,
+    fragmentWrapper = fragmentWrapper,
+    parentView = parentView
+),
+    WebLink<AccessToken?> {
 
     private val movieSelectPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()
@@ -40,14 +47,12 @@ class DiscoverVu(inflater: LayoutInflater,
     val movieSelectObservable: Observable<Movie>
         get() = movieSelectPublisher.hide()
 
-
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()
     }
 
     val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
-
 
     private val loginClickPublisher: PublishSubject<Boolean> by lazy {
         PublishSubject.create<Boolean>()
@@ -99,7 +104,6 @@ class DiscoverVu(inflater: LayoutInflater,
         listView.addItemDecoration(itemDecoration)
         listView.layoutManager = LinearLayoutManager(activity)
 
-
         refreshLayout.setOnRefreshListener {
             refreshPublisher.onNext(true)
         }
@@ -114,7 +118,6 @@ class DiscoverVu(inflater: LayoutInflater,
         dismissRefreshLayout()
     }
 
-
     fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
@@ -125,10 +128,10 @@ class DiscoverVu(inflater: LayoutInflater,
     override fun gotoWebview(value: AccessToken?) {
         value?.let {
             val authenticateUrl = Uri.parse(activity.getString(R.string.authenticate_url))
-                    .buildUpon()
-                    .appendPath(it.request_token)
-                    .build()
-                    .toString()
+                .buildUpon()
+                .appendPath(it.request_token)
+                .build()
+                .toString()
 
             val webviewFragment: WebviewFragment? = LoginWebviewFragment.newInstance(authenticateUrl)
             val fm = (activity as AppCompatActivity).supportFragmentManager
@@ -144,7 +147,7 @@ class DiscoverVu(inflater: LayoutInflater,
         adapter.notifyDataSetChanged()
     }
 
-    fun dismissRefreshLayout() {
+    private fun dismissRefreshLayout() {
         refreshLayout.setRefreshing(false)
     }
 }

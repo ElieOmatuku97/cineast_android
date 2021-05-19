@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.core.model.Genre
+import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.common_vu.ListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.kodein.di.generic.instance
 import timber.log.Timber
-import java.util.*
 
 abstract class ListPresenter<V> : BasePresenter<V>() where V : ListVu {
     companion object {
@@ -30,30 +30,36 @@ abstract class ListPresenter<V> : BasePresenter<V>() where V : ListVu {
     override fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
-        rxSubs.add(contentService.genres()
+        rxSubs.add(
+            contentService.genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    Timber.d("genres from database: ${it}")
-                    genres = it
-                }, { error ->
-                    Timber.e("Unable to get genres $error")
-
-                })
+                .subscribe(
+                    {
+                        Timber.d("genres from database: $it")
+                        genres = it
+                    },
+                    { error ->
+                        Timber.e("Unable to get genres $error")
+                    }
+                )
         )
 
-
-        rxSubs.add(vu.movieSelectObservable
+        rxSubs.add(
+            vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ movie: Movie ->
-                    val params = Bundle()
-                    params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
-                    params.putParcelable(MOVIE_KEY, movie)
-                    params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
-                    vu.gotoMovie(params)
-
-                }, { t: Throwable ->
-                    Timber.d("movieSelectObservable failed:$t")
-                }))
+                .subscribe(
+                    { movie: Movie ->
+                        val params = Bundle()
+                        params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
+                        params.putParcelable(MOVIE_KEY, movie)
+                        params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
+                        vu.gotoMovie(params)
+                    },
+                    { t: Throwable ->
+                        Timber.d("movieSelectObservable failed:$t")
+                    }
+                )
+        )
     }
 }

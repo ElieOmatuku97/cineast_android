@@ -17,5 +17,4 @@ class ImageResponse {
     @SerializedName("profiles")
     @Expose
     var peoplePosters: List<Poster> = listOf()
-
 }

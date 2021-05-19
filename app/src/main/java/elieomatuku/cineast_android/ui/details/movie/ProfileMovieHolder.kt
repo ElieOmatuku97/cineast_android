@@ -1,26 +1,24 @@
 package elieomatuku.cineast_android.ui.details.movie
 
-
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageView
+import android.text.Html
+import android.text.SpannableString
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.utils.UiUtils
-import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.holder_profile_movie.view.*
-import android.text.Html
-import android.text.util.Linkify
-import android.text.SpannableString
-import android.text.method.LinkMovementMethod
-import android.widget.RatingBar
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.ui.common_fragment.RateDialogFragment
 import elieomatuku.cineast_android.ui.common_viewholder.ProfileHolder
-
+import elieomatuku.cineast_android.utils.UiUtils
+import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.holder_profile_movie.view.*
 
 class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>) : ProfileHolder(itemView) {
     companion object {
@@ -32,7 +30,6 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
             return ProfileMovieHolder(createView(parent), onProfileClickedPicturePublisher)
         }
     }
-
 
     private val genresView: TextView by lazy {
         itemView.item_genre_view
@@ -71,8 +68,8 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
         if (!imageUrl.isNullOrEmpty()) {
             movieProfileImageView.visibility = View.VISIBLE
             Picasso.get()
-                    .load(imageUrl)
-                    .into(movieProfileImageView)
+                .load(imageUrl)
+                .into(movieProfileImageView)
         } else {
             movieProfileImageView.visibility = View.GONE
         }
@@ -134,11 +131,9 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
             Linkify.addLinks(spannable, Linkify.WEB_URLS)
             linkTextView.setMovementMethod(LinkMovementMethod.getInstance())
             linkTextView.setText(linkify(spannable), TextView.BufferType.SPANNABLE)
-
         } else {
             linkTextView.visibility = View.GONE
         }
-
 
         if (movieSummary.isEmpty()) {
             rateBtn.visibility = View.GONE

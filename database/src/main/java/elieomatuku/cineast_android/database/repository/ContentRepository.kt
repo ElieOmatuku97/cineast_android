@@ -1,12 +1,15 @@
 package elieomatuku.cineast_android.database.repository
 
-
 import elieomatuku.cineast_android.core.DiscoverContent
-import elieomatuku.cineast_android.database.ContentDatabase
-import elieomatuku.cineast_android.database.entity.*
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Personality
+import elieomatuku.cineast_android.database.ContentDatabase
+import elieomatuku.cineast_android.database.entity.GenreEntity
+import elieomatuku.cineast_android.database.entity.MovieEntity
+import elieomatuku.cineast_android.database.entity.MovieType
+import elieomatuku.cineast_android.database.entity.MovieTypeJoin
+import elieomatuku.cineast_android.database.entity.PersonalityEntity
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.functions.BiFunction
@@ -15,14 +18,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-
 /**
  * Created by elieomatuku on 2019-12-07
  */
 
-
 class ContentRepository(private val contentDatabase: ContentDatabase) {
-
 
     /**
      * Get the DiscoverContent.
@@ -31,25 +31,26 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
      */
 
     fun discoverContent(): Flowable<DiscoverContent> {
-        val moviesFlowable = Flowable.zip(popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies,
-                Function4<List<Movie>, List<Movie>, List<Movie>, List<Movie>, DiscoverContent>
-                { popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies ->
-                    DiscoverContent(
-                            popularMovies = popularMovies,
-                            upcomingMovies = upcomingMovies,
-                            nowPlayingMovies = nowPlayingMovies,
-                            topRatedMovies = topRatedMovies)
-                })
-
-
-
-        return Flowable.combineLatest(moviesFlowable, personalities,
-                BiFunction { discoverContent, personalities ->
-                    discoverContent.personalities = personalities
-                    discoverContent
-                }
+        val moviesFlowable = Flowable.zip(
+            popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies,
+            Function4<List<Movie>, List<Movie>, List<Movie>, List<Movie>, DiscoverContent>
+            { popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies ->
+                DiscoverContent(
+                    popularMovies = popularMovies,
+                    upcomingMovies = upcomingMovies,
+                    nowPlayingMovies = nowPlayingMovies,
+                    topRatedMovies = topRatedMovies
+                )
+            }
         )
 
+        return Flowable.combineLatest(
+            moviesFlowable, personalities,
+            BiFunction { discoverContent, personalities ->
+                discoverContent.personalities = personalities
+                discoverContent
+            }
+        )
     }
 
     val popularMovies: Flowable<List<Movie>>
@@ -57,38 +58,35 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
             return contentDatabase.movieTypeJoinDao().getMoviesForType(MovieType.POPULAR.id).map { MovieEntity.toMovies(it) }
         }
 
-
     private val upcomingMovies: Flowable<List<Movie>>
         get() {
             return contentDatabase.movieTypeJoinDao().getMoviesForType(MovieType.UPCOMING.id)
-                    .map { MovieEntity.toMovies(it) }
+                .map { MovieEntity.toMovies(it) }
         }
 
     private val nowPlayingMovies: Flowable<List<Movie>>
         get() {
             return contentDatabase.movieTypeJoinDao().getMoviesForType(MovieType.NOW_PLAYING.id)
-                    .map { MovieEntity.toMovies(it) }
+                .map { MovieEntity.toMovies(it) }
         }
 
     private val topRatedMovies: Flowable<List<Movie>>
         get() {
             return contentDatabase.movieTypeJoinDao().getMoviesForType(MovieType.TOP_RATED.id)
-                    .map { MovieEntity.toMovies(it) }
+                .map { MovieEntity.toMovies(it) }
         }
-
 
     val personalities: Flowable<List<Personality>>
         get() {
             return contentDatabase.personalityDao().getAllPersonalities()
-                    .map { PersonalityEntity.toPersonalities(it) }
+                .map { PersonalityEntity.toPersonalities(it) }
         }
 
     val genres: Maybe<List<Genre>>
         get() {
             return contentDatabase.genreDao().getAllGenres()
-                    .map { GenreEntity.toGenres(it) }
+                .map { GenreEntity.toGenres(it) }
         }
-
 
     /**
      * Below methods insert content to the database
@@ -118,7 +116,6 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         }
     }
 
-
     fun updatePersonality(personality: Personality) {
         GlobalScope.launch(Dispatchers.IO) {
             contentDatabase.personalityDao().updatePersonality(PersonalityEntity.fromPersonality(personality))
@@ -147,7 +144,6 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         contentDatabase.movieDao().insertMovie(MovieEntity.fromMovie(movie))
         contentDatabase.movieTypeJoinDao().insert(MovieTypeJoin(movie.id, type.id))
     }
-
 
     fun insertGenres(genres: List<Genre>) {
         contentDatabase.genreDao().insertGenres(GenreEntity.fromGenres(genres))

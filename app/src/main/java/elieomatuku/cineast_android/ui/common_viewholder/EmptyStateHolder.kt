@@ -13,7 +13,6 @@ import elieomatuku.cineast_android.business.service.ConnectionService
 import kotlinx.android.synthetic.main.holder_empty_state.view.*
 import org.kodein.di.generic.instance
 
-
 class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
@@ -26,7 +25,6 @@ class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private val connectionService: ConnectionService by App.kodein.instance()
-
 
     private val msgView: TextView by lazy {
         itemView.empty_msg
@@ -48,5 +46,4 @@ class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             msgIcon.setImageDrawable(ResourcesCompat.getDrawable(itemView.resources, R.drawable.ic_movie_black_24dp, itemView.context.theme))
         }
     }
-
 }

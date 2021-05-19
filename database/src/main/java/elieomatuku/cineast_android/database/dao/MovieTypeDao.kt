@@ -7,13 +7,12 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import elieomatuku.cineast_android.database.entity.MovieTypeEntity
 
-
 /**
  * Created by elieomatuku on 2019-12-08
  */
 
 @Dao
-interface MovieTypeDao  {
+interface MovieTypeDao {
     @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(types: List<MovieTypeEntity>)

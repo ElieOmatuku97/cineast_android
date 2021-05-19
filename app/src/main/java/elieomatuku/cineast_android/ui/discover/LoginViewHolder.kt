@@ -1,13 +1,12 @@
 package elieomatuku.cineast_android.ui.discover
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import kotlinx.android.synthetic.main.holder_login.view.*
-
 
 class LoginViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
@@ -32,7 +31,6 @@ class LoginViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         if (isLoggedIn) {
             notLoggedInView?.visibility = View.GONE
             loginView?.text = itemView.context.getString(R.string.settings_logout)
-
         } else {
             notLoggedInView?.visibility = View.VISIBLE
             loginView?.text = itemView.context.getString(R.string.settings_login)

@@ -5,13 +5,11 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 
-
 /**
  * Created by elieomatuku on 2019-12-08
  */
 
-
-class IntListConverter  {
+class IntListConverter {
 
     companion object {
         val jsonAdapter: JsonAdapter<List<Int>>
@@ -41,10 +39,5 @@ class IntListConverter  {
                 return jsonAdapter.toJson(list)
             }
         }
-
     }
-
-
 }
-
-

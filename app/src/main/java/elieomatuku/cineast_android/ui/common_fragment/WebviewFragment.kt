@@ -1,18 +1,15 @@
 package elieomatuku.cineast_android.ui.common_fragment
 
-
-
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.webkit.WebViewClient
+import androidx.fragment.app.Fragment
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.fragment_webview.view.*
-import android.webkit.WebViewClient
-
 
 open class WebviewFragment() : Fragment() {
     companion object {
@@ -29,7 +26,6 @@ open class WebviewFragment() : Fragment() {
         }
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_webview, container, false)
         val url = arguments?.getString(URL)
@@ -41,7 +37,7 @@ open class WebviewFragment() : Fragment() {
             UiUtils.configureWebView(webv, progressBar)
         }
 
-        webview.setWebViewClient(object: WebViewClient() {
+        webview.setWebViewClient(object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 view?.loadUrl(url)
                 return true
@@ -49,7 +45,7 @@ open class WebviewFragment() : Fragment() {
         })
 
         if (!url.isNullOrEmpty()) {
-             webview.loadUrl(url)
+            webview.loadUrl(url)
         }
 
         view.html_close_icon.setOnClickListener { view ->
@@ -59,7 +55,7 @@ open class WebviewFragment() : Fragment() {
         return view
     }
 
-     open fun closeIconListener() {
+    open fun closeIconListener() {
         val fm = activity?.supportFragmentManager
         if (fm != null) {
             fm.popBackStack()

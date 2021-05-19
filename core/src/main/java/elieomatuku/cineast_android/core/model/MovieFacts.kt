@@ -1,31 +1,30 @@
 package elieomatuku.cineast_android.core.model
 
 import android.os.Parcelable
-import android.util.Log
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MovieFacts(
-        val budget: Int?,
-        val release_date: String?,
-        val runtime: Int?,
-        val revenue: Int?,
-        val homepage: String?) : Parcelable {
-
+    val budget: Int?,
+    val release_date: String?,
+    val runtime: Int?,
+    val revenue: Int?,
+    val homepage: String?
+) : Parcelable {
 
     val runtimeInHoursAndMinutes: String
-       get() {
-           val hour: Int? = runtime?.div(60)
-           val minutes: Int? = runtime?.rem(60)
+        get() {
+            val hour: Int? = runtime?.div(60)
+            val minutes: Int? = runtime?.rem(60)
 
-           return if (hour != null && minutes != null) {
-               val hourString =  getHourString(hour)
-               val minutesString = getMinutesString(minutes)
-               getCombinationOfHourAndMinutes(hourString, minutesString)
-           } else {
-               "N/A"
-           }
-       }
+            return if (hour != null && minutes != null) {
+                val hourString = getHourString(hour)
+                val minutesString = getMinutesString(minutes)
+                getCombinationOfHourAndMinutes(hourString, minutesString)
+            } else {
+                "N/A"
+            }
+        }
 
     private fun getHourString(hour: Int?): String {
         return when (hour) {
@@ -44,12 +43,12 @@ data class MovieFacts(
     }
 
     private fun getCombinationOfHourAndMinutes(hours: String, minutes: String): String {
-       return if (hours.isNotEmpty() && minutes.isNotEmpty()) {
+        return if (hours.isNotEmpty() && minutes.isNotEmpty()) {
             "$hours $minutes"
         } else if (hours.isEmpty() && minutes.isNotEmpty()) {
-           minutes
+            minutes
         } else if (hours.isNotEmpty() && minutes.isEmpty()) {
-           hours
+            hours
         } else {
             "N/A"
         }

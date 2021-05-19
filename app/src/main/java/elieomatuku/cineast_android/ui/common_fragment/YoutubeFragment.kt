@@ -1,12 +1,12 @@
 package elieomatuku.cineast_android.ui.common_fragment
 
-import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import com.pierfrancescosoffritti.youtubeplayer.player.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.youtubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayer
@@ -14,15 +14,14 @@ import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView
 import elieomatuku.cineast_android.R
 import kotlinx.android.synthetic.main.widget_youtube.view.*
 
-
-class YoutubeFragment: Fragment() {
+class YoutubeFragment : Fragment() {
     companion object {
         val LOG_TAG = YoutubeFragment::class.java.simpleName
 
-        fun newInstance(youtubeUrl: String): YoutubeFragment{
-            val fragment =  YoutubeFragment()
+        fun newInstance(youtubeUrl: String): YoutubeFragment {
+            val fragment = YoutubeFragment()
             val args = Bundle()
-            args.putString("youtube_url", youtubeUrl )
+            args.putString("youtube_url", youtubeUrl)
             fragment.arguments = args
             return fragment
         }
@@ -37,14 +36,13 @@ class YoutubeFragment: Fragment() {
 
     private var initComplete = false
 
-    private var listener = object: AbstractYouTubePlayerListener() {
+    private var listener = object : AbstractYouTubePlayerListener() {
 
         override fun onReady() {
             super.onReady()
             Log.d(LOG_TAG, "onReady")
             updateVideo()
         }
-
 
         override fun onVideoDuration(duration: Float) {
             super.onVideoDuration(duration)
@@ -58,7 +56,7 @@ class YoutubeFragment: Fragment() {
         override fun onVideoLoadedFraction(fraction: Float) {
             super.onVideoLoadedFraction(fraction)
             if (initComplete) {
-                lastPosition = fraction*lastDuration
+                lastPosition = fraction * lastDuration
             }
         }
 
@@ -111,25 +109,24 @@ class YoutubeFragment: Fragment() {
             Log.d(LOG_TAG, "updateList: lastVideoId = $lastVideoId")
         }
 
-
         if (player != null) {
             updateVideo()
-
         } else {
-            youTubePlayerView.initialize({ initializedYouTubePlayer: YouTubePlayer ->
-                player = initializedYouTubePlayer
-                initializedYouTubePlayer.addListener(listener)
-
-            }, true)
+            youTubePlayerView.initialize(
+                { initializedYouTubePlayer: YouTubePlayer ->
+                    player = initializedYouTubePlayer
+                    initializedYouTubePlayer.addListener(listener)
+                },
+                true
+            )
         }
-        return  view
+        return view
     }
 
     private fun updateVideo() {
         lastVideoId?.let {
             if (playing) {
                 player?.loadVideo(it, lastPosition)
-
             } else {
                 player?.cueVideo(it, lastPosition)
             }

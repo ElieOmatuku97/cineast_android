@@ -1,43 +1,48 @@
 package elieomatuku.cineast_android.ui.details.movie
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.*
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import elieomatuku.cineast_android.R
-import kotlinx.android.synthetic.main.vu_movie.view.*
-import androidx.recyclerview.widget.RecyclerView
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.idling.CountingIdlingResource
+import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
+import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
-import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
 import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.ui.details.movie.overview.OverviewFragment
 import elieomatuku.cineast_android.utils.DividerItemDecorator
-import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
-import elieomatuku.cineast_android.ui.details.MoviesFragment
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.vu_movie.view.*
 import timber.log.Timber
 import java.util.ArrayList
 
-
-class MovieVu(inflater: LayoutInflater,
-              activity: Activity,
-              fragmentWrapper: FragmentWrapper?,
-              parentView: ViewGroup?) : ToolbarVu(inflater,
-        activity = activity,
-        fragmentWrapper = fragmentWrapper,
-        parentView = parentView) {
+class MovieVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : ToolbarVu(
+    inflater,
+    activity = activity,
+    fragmentWrapper = fragmentWrapper,
+    parentView = parentView
+) {
 
     companion object {
         const val MOVIE_OVERVIEW = "overview"
@@ -62,7 +67,6 @@ class MovieVu(inflater: LayoutInflater,
 
     val onProfileClickedPictureObservable: Observable<Int>
         get() = onProfileClickedPicturePublisher.hide()
-
 
     private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>> by lazy {
         PublishSubject.create<Pair<String, MovieSummary>>()

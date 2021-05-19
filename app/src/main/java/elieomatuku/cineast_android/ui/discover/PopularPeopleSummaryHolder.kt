@@ -1,18 +1,17 @@
 package elieomatuku.cineast_android.ui.discover
 
-
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.content_list.ContentListActivity
-import elieomatuku.cineast_android.ui.common_adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.core.model.Personality
+import elieomatuku.cineast_android.ui.common_adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.ui.common_viewholder.ContentHolder
+import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 

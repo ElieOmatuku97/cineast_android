@@ -1,7 +1,5 @@
 package elieomatuku.cineast_android.ui.details.people
 
-
-import androidx.appcompat.widget.AppCompatImageView
 import android.text.Html
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -10,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.PersonalityDetails
@@ -56,8 +55,8 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
 
         if (!imageUrl.isNullOrEmpty()) {
             Picasso.get()
-                    .load(imageUrl)
-                    .into(profileImageView)
+                .load(imageUrl)
+                .into(profileImageView)
         }
 
         profileImageView.setOnClickListener {
@@ -88,17 +87,14 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
             peoplePlaceofbirthView.visibility = View.GONE
         }
 
-
         if (!peopleDetails?.homepage.isNullOrEmpty()) {
             homepageView.visibility = View.VISIBLE
             val spannable = SpannableString(Html.fromHtml(peopleDetails?.homepage))
             Linkify.addLinks(spannable, Linkify.WEB_URLS)
             homepageView.setMovementMethod(LinkMovementMethod.getInstance())
             homepageView.setText(linkify(spannable), TextView.BufferType.SPANNABLE)
-
         } else {
             homepageView.visibility = View.GONE
         }
-
     }
 }

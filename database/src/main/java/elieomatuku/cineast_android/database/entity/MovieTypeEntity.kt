@@ -3,16 +3,14 @@ package elieomatuku.cineast_android.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 /**
  * Created by elieomatuku on 2019-12-08
  */
 
-
 @Entity(tableName = MovieTypeEntity.MOVIE_TYPE_TABLE)
 data class MovieTypeEntity(
-        @PrimaryKey val id: String,
-        val name: String
+    @PrimaryKey val id: String,
+    val name: String
 ) {
 
     companion object {
@@ -30,16 +28,13 @@ data class MovieTypeEntity(
     }
 }
 
-
 enum class MovieType(val id: String, val type: String) {
     POPULAR("cineast_popular", "popular"),
     NOW_PLAYING("cineast_nowPlaying", "nowPlaying"),
     UPCOMING("cineast_upcoming", "upcoming"),
     TOP_RATED("cineast_topRated", "topRated");
 
-
     fun fromType(type: String): MovieType {
         return values().first { it.type == type }
     }
-
 }

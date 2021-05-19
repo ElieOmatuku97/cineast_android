@@ -2,15 +2,20 @@ package elieomatuku.cineast_android.ui.details.movie
 
 import android.os.Bundle
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.core.model.Cast
+import elieomatuku.cineast_android.core.model.Crew
+import elieomatuku.cineast_android.core.model.Genre
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.MovieFacts
+import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.core.model.Trailer
 import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance
 import timber.log.Timber
-
 
 class MoviePresenter : BasePresenter<MovieVu>() {
     companion object {
@@ -27,14 +32,12 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     private var crew: List<Crew>? = listOf()
     private var similarMovies: List<Movie>? = listOf()
 
-
     override fun onLink(vu: MovieVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         val screenName = args.getString(SCREEN_NAME_KEY)
         val movie: Movie? = args.getParcelable(MOVIE_KEY)
         val genres: List<Genre>? = args.getParcelableArrayList(MOVIE_GENRES_KEY)
-
 
         Timber.d("onLink called")
 
@@ -45,7 +48,8 @@ class MoviePresenter : BasePresenter<MovieVu>() {
             getMovieVideos(movie, screenName, genres)
         }
 
-        rxSubs.add(vu.onProfileClickedPictureObservable
+        rxSubs.add(
+            vu.onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { movieId ->
                     launch {
@@ -54,7 +58,8 @@ class MoviePresenter : BasePresenter<MovieVu>() {
                 }
         )
 
-        rxSubs.add(vu.segmentedButtonsObservable
+        rxSubs.add(
+            vu.segmentedButtonsObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { displayAndMovieSummary ->
                     vu.gotoTab(displayAndMovieSummary)
@@ -67,7 +72,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
         launch {
             trailers = contentService.getMovieVideos(movie)?.results
             getMovieDetails(movie, screenName, genres, trailers)
-
         }
     }
 
@@ -104,9 +108,7 @@ class MoviePresenter : BasePresenter<MovieVu>() {
                 }
             }
         }
-
     }
-
 
     private fun checkIfMovieInWatchList(movieSummary: MovieSummary) {
         launch {
@@ -125,7 +127,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
                 }
 
                 checkIfMovieInFavoriteList(movieSummary)
-
             } else {
                 launch(Dispatchers.Main) {
                     vu?.hideLoading()
@@ -134,7 +135,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
             }
         }
     }
-
 
     private fun checkIfMovieInFavoriteList(movieSummary: MovieSummary) {
         launch {
@@ -151,7 +151,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
                     vu?.showMovie(movieSummary)
                     Timber.d("isInFavoriteList: $isInFavoriteList")
                 }
-
             } else {
                 launch(Dispatchers.Main) {
                     vu?.hideLoading()
@@ -169,7 +168,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
             launch(Dispatchers.Main) {
                 vu?.goToGallery(posters)
             }
-
         } else {
             launch(Dispatchers.Main) {
                 vu?.updateErrorView(imageResponse.exceptionOrNull()?.message)

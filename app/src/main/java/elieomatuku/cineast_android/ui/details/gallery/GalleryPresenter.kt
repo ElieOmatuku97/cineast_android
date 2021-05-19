@@ -4,12 +4,10 @@ import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Poster
 import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
 
-
-class GalleryPresenter: BasePresenter<GalleryVu>() {
+class GalleryPresenter : BasePresenter<GalleryVu>() {
     companion object {
         const val POSTERS = "posters"
         const val MOVIE_POSTER_PATH = "movie_poster_path"
-
     }
 
     override fun onLink(vu: GalleryVu, inState: Bundle?, args: Bundle) {

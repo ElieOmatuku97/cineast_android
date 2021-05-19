@@ -1,11 +1,11 @@
 package elieomatuku.cineast_android.ui.details.gallery
 
 import android.app.Activity
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager.widget.ViewPager
 import com.eftimoff.viewpagertransformers.TabletTransformer
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Poster
@@ -13,14 +13,17 @@ import elieomatuku.cineast_android.ui.common_vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.fragment_gallery.view.*
 
-
-class GalleryVu(inflater: LayoutInflater,
-                activity: Activity,
-                fragmentWrapper: FragmentWrapper?,
-                parentView: ViewGroup?) : BaseVu(inflater,
-        activity = activity,
-        fragmentWrapper = fragmentWrapper,
-        parentView = parentView) {
+class GalleryVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : BaseVu(
+    inflater,
+    activity = activity,
+    fragmentWrapper = fragmentWrapper,
+    parentView = parentView
+) {
 
     private val viewPager: ViewPager by lazy {
         rootView.viewpager_images
@@ -51,9 +54,7 @@ class GalleryVu(inflater: LayoutInflater,
             }
 
             override fun onPageSelected(position: Int) {
-
             }
-
         })
 
         closeIconView.setOnClickListener {

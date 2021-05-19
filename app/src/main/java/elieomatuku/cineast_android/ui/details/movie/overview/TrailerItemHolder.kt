@@ -1,20 +1,18 @@
 package elieomatuku.cineast_android.ui.details.movie.overview
 
-
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import elieomatuku.cineast_android.ui.common_fragment.YoutubeFragment
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.ui.common_fragment.YoutubeFragment
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_trailer_item.view.*
 import timber.log.Timber
-
 
 class TrailerItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
@@ -39,8 +37,8 @@ class TrailerItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         Timber.d("Path: $trailerKey and name: $trailerName")
 
         Picasso.get()
-                .load(UiUtils.getYoutubeThumbnailPath(trailerKey, "default.jpg"))
-                .into(trailerThumbnailView)
+            .load(UiUtils.getYoutubeThumbnailPath(trailerKey, "default.jpg"))
+            .into(trailerThumbnailView)
 
         trailerThumbnailView.setOnClickListener {
             val youtubeFragment = YoutubeFragment.newInstance(trailerKey)

@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 
-
 class PrefsStore(storeKey: String, appContext: Application) : ValueStore {
 
     private val prefs: SharedPreferences by lazy {

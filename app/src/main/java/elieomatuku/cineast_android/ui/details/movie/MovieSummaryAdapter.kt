@@ -1,22 +1,22 @@
 package elieomatuku.cineast_android.ui.details.movie
 
-
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
-import elieomatuku.cineast_android.core.model.*
+import androidx.recyclerview.widget.RecyclerView
+import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.ui.common_viewholder.EmptyStateHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class MovieSummaryAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>,
-                          private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieSummaryAdapter(
+    private val onProfileClickedPicturePublisher: PublishSubject<Int>,
+    private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_MOVIE_PROFILE = 0
         const val TYPE_MENU_MOVIE = 1
         const val TYPE_EMPTY_STATE = -2
     }
-
 
     var movieSummary: MovieSummary by Delegates.observable(MovieSummary()) { prop, oldMovieSummary, nuMovieSummary ->
         Timber.d("summary = $nuMovieSummary")
@@ -28,7 +28,6 @@ class MovieSummaryAdapter(private val onProfileClickedPicturePublisher: PublishS
 
     var hasValidData = false
         private set
-
 
     private var _errorMessage: String? = null
     var errorMessage: String?
@@ -55,7 +54,6 @@ class MovieSummaryAdapter(private val onProfileClickedPicturePublisher: PublishS
     override fun getItemViewType(position: Int): Int {
         return if (hasEmptyState) {
             TYPE_EMPTY_STATE
-
         } else {
             when (position) {
                 TYPE_MOVIE_PROFILE -> TYPE_MOVIE_PROFILE
@@ -64,7 +62,6 @@ class MovieSummaryAdapter(private val onProfileClickedPicturePublisher: PublishS
             }
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {

@@ -1,11 +1,11 @@
 package elieomatuku.cineast_android.ui.details.movie.movie_team
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Crew
@@ -42,8 +42,8 @@ class CrewItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             peopleImageView.visibility = View.VISIBLE
             val imageUrl = UiUtils.getImageUrl(profilePath, itemView.context.getString(R.string.image_small))
             Picasso.get()
-                    .load(imageUrl)
-                    .into(peopleImageView)
+                .load(imageUrl)
+                .into(peopleImageView)
         } else {
             peopleImageView.visibility = View.GONE
         }
@@ -52,7 +52,6 @@ class CrewItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         if (!crewName.isNullOrEmpty()) {
             peopleNameView.visibility = View.VISIBLE
             peopleNameView.text = crewName
-
         } else {
             peopleNameView.visibility = View.GONE
         }

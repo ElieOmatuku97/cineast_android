@@ -6,7 +6,6 @@ import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.Presenter
 
-
 abstract class ToolbarMVPActivity<P, V> : BaseActivity() where P : Presenter<V>, V : ToolbarVu {
     val mvpDispatcher: MVPDispatcher<P, V> by lazy {
         createMVPDispatcher()
@@ -25,10 +24,12 @@ abstract class ToolbarMVPActivity<P, V> : BaseActivity() where P : Presenter<V>,
         setContentView(mvpDispatcher.vu!!.rootView)
 
         if (mvpDispatcher.presenterCache is LoaderManager.LoaderCallbacks<*>) {
-            supportLoaderManager.initLoader(mvpDispatcher.uid,
-                    null,
-                    @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
-                    mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>)
+            supportLoaderManager.initLoader(
+                mvpDispatcher.uid,
+                null,
+                @Suppress("UNCHECKED_CAST") // unable to fully check generics in kotlin
+                mvpDispatcher.presenterCache as LoaderManager.LoaderCallbacks<P>
+            )
         }
 
         val vu: V = mvpDispatcher.vu!!
@@ -37,7 +38,6 @@ abstract class ToolbarMVPActivity<P, V> : BaseActivity() where P : Presenter<V>,
         if (toolbar != null) {
             this.setSupportActionBar(toolbar)
         }
-
     }
 
     override fun onResume() {
@@ -55,10 +55,8 @@ abstract class ToolbarMVPActivity<P, V> : BaseActivity() where P : Presenter<V>,
         super.onDestroy()
     }
 
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mvpDispatcher.savePresenterState(outState)
     }
 }
-

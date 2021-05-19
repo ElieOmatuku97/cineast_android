@@ -1,16 +1,28 @@
 package elieomatuku.cineast_android.business.client
 
-
 import android.content.res.Resources
 import com.google.gson.Gson
-import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.business.api.response.*
 import elieomatuku.cineast_android.business.api.MovieApi
 import elieomatuku.cineast_android.business.api.PeopleApi
+import elieomatuku.cineast_android.business.api.response.GenreResponse
+import elieomatuku.cineast_android.business.api.response.ImageResponse
+import elieomatuku.cineast_android.business.api.response.MovieCreditsResponse
+import elieomatuku.cineast_android.business.api.response.MovieResponse
+import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
+import elieomatuku.cineast_android.business.api.response.PersonalityResponse
+import elieomatuku.cineast_android.business.api.response.PostResponse
+import elieomatuku.cineast_android.business.api.response.TrailerResponse
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.core.ValueStore
+import elieomatuku.cineast_android.core.model.FavoriteListMedia
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.MovieFacts
+import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.core.model.Rate
+import elieomatuku.cineast_android.core.model.WatchListMedia
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
-import elieomatuku.cineast_android.core.ValueStore
 import io.flatcircle.coroutinehelper.ApiResult
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
@@ -20,11 +32,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
-
 class TmdbContentClient(
-        override val resources: Resources,
-        override val persistClient: ValueStore,
-        override val interceptor: Interceptor? = null) : BaseClient {
+    override val resources: Resources,
+    override val persistClient: ValueStore,
+    override val interceptor: Interceptor? = null
+) : BaseClient {
     companion object {
         const val MOVIE = "movieApi"
     }
@@ -37,7 +49,6 @@ class TmdbContentClient(
         retrofit.create(PeopleApi::class.java)
     }
 
-
     suspend fun getPopularMovies(): MovieResponse? {
         return try {
             val results = movieApi.getPopularMovie().await()
@@ -48,7 +59,6 @@ class TmdbContentClient(
             null
         }
     }
-
 
     suspend fun getUpcomingMovies(): MovieResponse? {
         return try {
@@ -80,7 +90,6 @@ class TmdbContentClient(
         } catch (e: Exception) {
             Timber.w("get Upcoming Movies failed with $e")
             null
-
         }
     }
 
@@ -115,19 +124,16 @@ class TmdbContentClient(
         }
     }
 
-
     suspend fun getMovieFacts(movie: Movie): ApiResult<MovieFacts> {
         return try {
             val value = movieApi.getMovieDetails(movie.id).await()
             Timber.i("get Movie Details was succesful: $value")
             ApiResult.success(value)
-
         } catch (e: Exception) {
             Timber.w("get Movie Details failed with $e")
             ApiResult.fail(e)
         }
     }
-
 
     suspend fun getMovieCredits(movie: Movie): ApiResult<MovieCreditsResponse> {
         return try {
@@ -223,7 +229,6 @@ class TmdbContentClient(
         })
     }
 
-
     fun getMovie(movieId: Int, asyncResponse: AsyncResponse<Movie>) {
         movieApi.getMovie(movieId).enqueue(object : Callback<Movie> {
             override fun onResponse(call: Call<Movie>?, response: Response<Movie>?) {
@@ -253,9 +258,8 @@ class TmdbContentClient(
                 }
             }
 
-
             override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                Timber.d("response: ${t}")
+                Timber.d("response: $t")
                 asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
             }
         })
@@ -272,14 +276,12 @@ class TmdbContentClient(
                 }
             }
 
-
             override fun onFailure(call: Call<PersonalityResponse>?, t: Throwable?) {
-                Timber.d("response: ${t}")
+                Timber.d("response: $t")
                 asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
             }
         })
     }
-
 
     suspend fun getWatchList(): ApiResult<MovieResponse> {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
@@ -299,7 +301,6 @@ class TmdbContentClient(
 
     fun addMovieToWatchList(movie: Movie) {
         updateWatchList(movie, true)
-
     }
 
     fun removeMovieFromWatchList(movie: Movie) {
@@ -311,19 +312,18 @@ class TmdbContentClient(
             val media = WatchListMedia(MOVIE, movie.id, watchList)
 
             movieApi.updateWatchList(it, getRequestBody(media)).enqueue(
-                    object : Callback<PostResponse> {
-                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
-                            Timber.d("response: ${response.body()}")
-                        }
-
-                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
-                            Timber.e("error add movieApi to watch list: $t")
-                        }
+                object : Callback<PostResponse> {
+                    override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                        Timber.d("response: ${response.body()}")
                     }
+
+                    override fun onFailure(call: Call<PostResponse>, t: Throwable) {
+                        Timber.e("error add movieApi to watch list: $t")
+                    }
+                }
             )
         }
     }
-
 
     suspend fun getFavoriteList(): ApiResult<MovieResponse> {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
@@ -331,7 +331,6 @@ class TmdbContentClient(
                 val movieResponse = movieApi.getFavoritesList(it).await()
                 Timber.i("getFavoriteList was succesful: $movieResponse")
                 ApiResult.success(movieResponse)
-
             } catch (e: Exception) {
                 Timber.w("getFavoriteList failed with $e")
                 ApiResult.fail(e)
@@ -344,28 +343,26 @@ class TmdbContentClient(
 
     fun addMovieToFavoriteList(movie: Movie) {
         updateFavoriteList(movie, true)
-
     }
 
     fun removeMovieFromFavoriteList(movie: Movie) {
         updateFavoriteList(movie, false)
     }
 
-
     private fun updateFavoriteList(movie: Movie, favorite: Boolean) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             val media = FavoriteListMedia(MOVIE, movie.id, favorite)
 
             movieApi.updateFavoritesList(it, getRequestBody(media)).enqueue(
-                    object : Callback<PostResponse> {
-                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
-                            Timber.d("response: ${response.body()}")
-                        }
-
-                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
-                            Timber.e("error add movieApi to watch list: $t")
-                        }
+                object : Callback<PostResponse> {
+                    override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                        Timber.d("response: ${response.body()}")
                     }
+
+                    override fun onFailure(call: Call<PostResponse>, t: Throwable) {
+                        Timber.e("error add movieApi to watch list: $t")
+                    }
+                }
             )
         }
     }
@@ -374,16 +371,16 @@ class TmdbContentClient(
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             val rate = Rate(value)
 
-            movieApi.postMovieRate(movie.id,  it, getRequestBody(rate)).enqueue(
-                    object : Callback<PostResponse> {
-                        override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
-                            Timber.d("response: ${response.body()}")
-                        }
-
-                        override fun onFailure(call: Call<PostResponse>, t: Throwable) {
-                            Timber.e("error post rate : $t")
-                        }
+            movieApi.postMovieRate(movie.id, it, getRequestBody(rate)).enqueue(
+                object : Callback<PostResponse> {
+                    override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                        Timber.d("response: ${response.body()}")
                     }
+
+                    override fun onFailure(call: Call<PostResponse>, t: Throwable) {
+                        Timber.e("error post rate : $t")
+                    }
+                }
             )
         }
     }
@@ -416,8 +413,7 @@ class TmdbContentClient(
 
     private fun <T> toJson(item: T): String {
         val gson = Gson()
-        val jsonString: String = gson.toJson(item)
 
-        return jsonString
+        return gson.toJson(item)
     }
 }

@@ -3,36 +3,43 @@ package elieomatuku.cineast_android.ui.details.people
 import android.app.Activity
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.fragment.app.FragmentActivity
-import androidx.core.content.res.ResourcesCompat
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.*
+import elieomatuku.cineast_android.core.model.KnownFor
+import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
 import elieomatuku.cineast_android.ui.details.people.knownfor.KnownForFragment
 import elieomatuku.cineast_android.ui.details.people.overview.OverviewPeopleFragment
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_movie.view.*
 import java.util.ArrayList
 
-class PeopleVu(inflater: LayoutInflater,
-               activity: Activity,
-               fragmentWrapper: FragmentWrapper?,
-               parentView: ViewGroup?) : ToolbarVu(inflater,
-        activity = activity,
-        fragmentWrapper = fragmentWrapper,
-        parentView = parentView) {
+class PeopleVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : ToolbarVu(
+    inflater,
+    activity = activity,
+    fragmentWrapper = fragmentWrapper,
+    parentView = parentView
+) {
 
     companion object {
         const val OVERVIEW = "overview"
@@ -88,7 +95,6 @@ class PeopleVu(inflater: LayoutInflater,
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity)
     }
-
 
     fun updateVu(personalityDetails: PersonalityDetails?, screenName: String?, knownFor: List<KnownFor>?) {
         if (personalityDetails != null && screenName != null && knownFor != null) {

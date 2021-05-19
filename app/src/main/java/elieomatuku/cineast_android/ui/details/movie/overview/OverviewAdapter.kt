@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.ui.details.movie.overview
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.MovieSummary
 
 class OverviewAdapter(private val movieSummary: MovieSummary?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -12,7 +12,6 @@ class OverviewAdapter(private val movieSummary: MovieSummary?) : RecyclerView.Ad
         const val TYPE_MOVIE_FACTS = 2
         const val TYPE_BOTTOM = 3
     }
-
 
     override fun getItemCount(): Int {
         return 4
@@ -37,7 +36,6 @@ class OverviewAdapter(private val movieSummary: MovieSummary?) : RecyclerView.Ad
             else -> throw RuntimeException("View Type does not exist.")
         }
     }
-
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewType = getItemViewType(position)

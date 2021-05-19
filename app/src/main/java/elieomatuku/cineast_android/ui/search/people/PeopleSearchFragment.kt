@@ -16,9 +16,11 @@ class PeopleSearchFragment : MVPFragment <PeopleSearchPresenter, PeopleSearchVu>
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<PeopleSearchPresenter, PeopleSearchVu> {
-        return MVPDispatcher(MVP_UID,
-                // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ PeopleSearchPresenter() }),
-                ::PeopleSearchVu)
+        return MVPDispatcher(
+            MVP_UID,
+            // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
+            PresenterCacheLazy({ PeopleSearchPresenter() }),
+            ::PeopleSearchVu
+        )
     }
 }

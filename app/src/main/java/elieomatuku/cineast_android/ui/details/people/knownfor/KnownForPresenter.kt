@@ -6,8 +6,8 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.core.model.Genre
-import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.KnownFor
+import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
 import elieomatuku.cineast_android.ui.details.MoviesFragment.Companion.MOVIE_GENRES_KEY
 import elieomatuku.cineast_android.ui.details.MoviesVu
@@ -35,50 +35,57 @@ class KnownForPresenter : BasePresenter<MoviesVu>() {
             vu.updateVu(knownFor.mapNotNull { it.toMovie() }, R.string.cast)
         }
 
-
-        rxSubs.add(contentService.genres()
+        rxSubs.add(
+            contentService.genres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    Timber.d("genres from database: $it")
-                    genres = it
-                }, { error ->
-                    Timber.e("Unable to get genres $error")
-
-                })
+                .subscribe(
+                    {
+                        Timber.d("genres from database: $it")
+                        genres = it
+                    },
+                    { error ->
+                        Timber.e("Unable to get genres $error")
+                    }
+                )
         )
 
-
-        rxSubs.add(vu.movieSelectObservable
+        rxSubs.add(
+            vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ movie: Movie ->
-                    getMovie(movie.id, peopleName)
-
-                }, { t: Throwable ->
-                    Timber.e("movieSelectObservable failed:$t")
-                }))
+                .subscribe(
+                    { movie: Movie ->
+                        getMovie(movie.id, peopleName)
+                    },
+                    { t: Throwable ->
+                        Timber.e("movieSelectObservable failed:$t")
+                    }
+                )
+        )
     }
 
-
     private fun getMovie(movieId: Int, peopleName: String?) {
-        contentService.getMovie(movieId, object : AsyncResponse<Movie> {
-            override fun onSuccess(response: Movie?) {
-                val movie: Movie = response as Movie
-                handler.post {
-                    val params = Bundle()
-                    peopleName?.let {
-                        params.putString(SCREEN_NAME_KEY, it)
-                    }
+        contentService.getMovie(
+            movieId,
+            object : AsyncResponse<Movie> {
+                override fun onSuccess(response: Movie?) {
+                    val movie: Movie = response as Movie
+                    handler.post {
+                        val params = Bundle()
+                        peopleName?.let {
+                            params.putString(SCREEN_NAME_KEY, it)
+                        }
 
-                    params.putParcelable(MOVIE_KEY, movie)
-                    params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
-                    vu?.gotoMovie(params)
+                        params.putParcelable(MOVIE_KEY, movie)
+                        params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
+                        vu?.gotoMovie(params)
+                    }
+                }
+
+                override fun onFail(error: CineastError) {
+                    Timber.e("error: $error")
                 }
             }
-
-            override fun onFail(error: CineastError) {
-                Timber.e("error: $error")
-            }
-        })
+        )
     }
 }

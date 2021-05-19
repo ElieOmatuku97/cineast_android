@@ -2,10 +2,13 @@ package elieomatuku.cineast_android.ui.details.people
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.core.model.CineastError
+import elieomatuku.cineast_android.core.model.KnownFor
+import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
@@ -18,7 +21,6 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
         const val PEOPLE_MOVIES_KEY = "people_movies"
         const val MOVIE_TEAM_KEY = "movie_team"
     }
-
 
     var personalityDetails: PersonalityDetails? = null
     var peopleMovies: List<KnownFor>? = listOf()
@@ -42,70 +44,80 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
             vu.showLoading()
 
             people?.let {
-                contentService.getPeopleDetails(people, object : AsyncResponse<PersonalityDetails> {
-                    override fun onSuccess(response: PersonalityDetails?) {
-                        personalityDetails = response
-                        if (screenName != null) {
-                            getPeopleMovies(people, personalityDetails, screenName)
-                        }
-                    }
-
-                    override fun onFail(error: CineastError) {
-                        Timber.e("error: $error")
-                        handler.post {
-                            vu.hideLoading()
-                            vu.updateErrorView(error.status_message)
-                        }
-                    }
-                })
-            }
-        }
-
-        rxSubs.add(vu.onProfileClickedPictureObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { peopleId ->
-
-                    contentService.getPeopleImages(peopleId, object : AsyncResponse<ImageResponse> {
-                        override fun onSuccess(response: ImageResponse?) {
-                            val poster = response?.peoplePosters
-                            handler.post {
-                                vu.goToGallery(poster)
+                contentService.getPeopleDetails(
+                    people,
+                    object : AsyncResponse<PersonalityDetails> {
+                        override fun onSuccess(response: PersonalityDetails?) {
+                            personalityDetails = response
+                            if (screenName != null) {
+                                getPeopleMovies(people, personalityDetails, screenName)
                             }
                         }
 
                         override fun onFail(error: CineastError) {
-                            Timber.d("error: $error")
+                            Timber.e("error: $error")
+                            handler.post {
+                                vu.hideLoading()
+                                vu.updateErrorView(error.status_message)
+                            }
                         }
-                    })
-                })
+                    }
+                )
+            }
+        }
 
+        rxSubs.add(
+            vu.onProfileClickedPictureObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe { peopleId ->
 
-        rxSubs.add(vu.onSegmentedButtonsObservable
+                    contentService.getPeopleImages(
+                        peopleId,
+                        object : AsyncResponse<ImageResponse> {
+                            override fun onSuccess(response: ImageResponse?) {
+                                val poster = response?.peoplePosters
+                                handler.post {
+                                    vu.goToGallery(poster)
+                                }
+                            }
+
+                            override fun onFail(error: CineastError) {
+                                Timber.d("error: $error")
+                            }
+                        }
+                    )
+                }
+        )
+
+        rxSubs.add(
+            vu.onSegmentedButtonsObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     vu.gotoTab(it)
-                })
-
-
+                }
+        )
     }
 
     private fun getPeopleMovies(actor: Person, personalityDetails: PersonalityDetails?, screenName: String) {
-        contentService.getPeopleMovies(actor, object : AsyncResponse<PeopleCreditsResponse> {
-            override fun onSuccess(response: PeopleCreditsResponse?) {
-                peopleMovies = response?.cast as List<KnownFor>
-                handler.post {
-                    vu?.hideLoading()
-                    vu?.updateVu(personalityDetails, screenName, peopleMovies)
+        contentService.getPeopleMovies(
+            actor,
+            object : AsyncResponse<PeopleCreditsResponse> {
+                override fun onSuccess(response: PeopleCreditsResponse?) {
+                    peopleMovies = response?.cast as List<KnownFor>
+                    handler.post {
+                        vu?.hideLoading()
+                        vu?.updateVu(personalityDetails, screenName, peopleMovies)
+                    }
                 }
-            }
 
-            override fun onFail(error: CineastError) {
-                handler.post {
-                    vu?.hideLoading()
-                    vu?.updateErrorView(error.status_message)
+                override fun onFail(error: CineastError) {
+                    handler.post {
+                        vu?.hideLoading()
+                        vu?.updateErrorView(error.status_message)
+                    }
                 }
             }
-        })
+        )
     }
 
     override fun onSaveState(outState: Bundle) {

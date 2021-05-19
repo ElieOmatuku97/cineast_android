@@ -13,22 +13,22 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 /**
  * Created by elieomatuku on 2019-12-08
  */
 
 @RunWith(AndroidJUnit4::class)
-class MovieTypeDaoTest  {
+class MovieTypeDaoTest {
 
     private lateinit var contentDatabase: ContentDatabase
     private lateinit var movieTypeDao: MovieTypeDao
 
     @Before
-    fun initDb()  = runBlocking  {
+    fun initDb() = runBlocking {
         val context = ApplicationProvider.getApplicationContext<Context>()
         contentDatabase = Room.inMemoryDatabaseBuilder(
-                context, ContentDatabase::class.java).build()
+            context, ContentDatabase::class.java
+        ).build()
 
         movieTypeDao = contentDatabase.movieTypeDao()
         movieTypeDao.insert(MovieTypeEntity.getPredefinedTypes())
@@ -39,13 +39,14 @@ class MovieTypeDaoTest  {
         contentDatabase.close()
     }
 
-
     @Test
     fun testInsertMovieTypes() = runBlocking {
-        var types = listOf(MovieTypeEntity("cineast_popular", "popular"), MovieTypeEntity( "cineast_nowPlaying", "nowPlaying"),
-                MovieTypeEntity("cineast_upcoming", "upcoming"),
-                MovieTypeEntity("cineast_topRated", "topRated"))
+        var types = listOf(
+            MovieTypeEntity("cineast_popular", "popular"), MovieTypeEntity("cineast_nowPlaying", "nowPlaying"),
+            MovieTypeEntity("cineast_upcoming", "upcoming"),
+            MovieTypeEntity("cineast_topRated", "topRated")
+        )
 
-        Assert.assertEquals(movieTypeDao.getAllTypes(),  types)
+        Assert.assertEquals(movieTypeDao.getAllTypes(), types)
     }
 }

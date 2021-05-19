@@ -1,31 +1,29 @@
 package elieomatuku.cineast_android.ui.settings
 
-
 import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.BuildConfig
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.settings.userlist.UserListActivity
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.core.model.AccessToken
-import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.core.model.AccessToken
+import elieomatuku.cineast_android.core.model.Account
+import elieomatuku.cineast_android.core.model.CineastError
+import elieomatuku.cineast_android.ui.home.MainActivity
+import elieomatuku.cineast_android.ui.settings.userlist.UserListActivity
 import elieomatuku.cineast_android.utils.WebLink
+import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
 import timber.log.Timber
-import android.text.style.ForegroundColorSpan
-import android.text.SpannableString
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import elieomatuku.cineast_android.ui.home.MainActivity
-import elieomatuku.cineast_android.core.model.Account
-import io.reactivex.android.schedulers.AndroidSchedulers
-
 
 class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
     companion object {
@@ -86,13 +84,17 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
             true
         }
 
-        (activity as MainActivity).rxSubs.add((activity as MainActivity).sessionPublisher.hide()
+        (activity as MainActivity).rxSubs.add(
+            (activity as MainActivity).sessionPublisher.hide()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ sessionResponse: Pair<String?, Account> ->
-                    updateState(!sessionResponse.first.isNullOrEmpty(), sessionResponse.second)
-                }, { t: Throwable ->
-                    Timber.e("sessionPublisher failed $t")
-                })
+                .subscribe(
+                    { sessionResponse: Pair<String?, Account> ->
+                        updateState(!sessionResponse.first.isNullOrEmpty(), sessionResponse.second)
+                    },
+                    { t: Throwable ->
+                        Timber.e("sessionPublisher failed $t")
+                    }
+                )
         )
     }
 
@@ -115,10 +117,10 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
     override fun gotoWebview(value: AccessToken?) {
         value?.let {
             val authenticateUrl = Uri.parse(context?.getString(R.string.authenticate_url))
-                    .buildUpon()
-                    .appendPath(it.request_token)
-                    .build()
-                    .toString()
+                .buildUpon()
+                .appendPath(it.request_token)
+                .build()
+                .toString()
 
             val fm = activity?.supportFragmentManager
             fm?.beginTransaction()?.add(android.R.id.content, LoginWebviewFragment.newInstance(authenticateUrl), null)?.addToBackStack(null)?.commit()

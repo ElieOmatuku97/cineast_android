@@ -1,31 +1,31 @@
 package elieomatuku.cineast_android.ui.common_viewholder
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import android.text.Spannable
 import android.text.Spanned
 import android.text.style.URLSpan
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.ui.common_fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
 
-
 abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView), WebLink<String> {
-
 
     fun linkify(spannable: Spannable): Spannable {
         val spans = spannable.getSpans(0, spannable.length, URLSpan::class.java)
         for (urlSpan in spans) {
-            configSpannableLinkify(urlSpan, spannable, object : URLSpan(urlSpan.url) {
-                override fun onClick(view: View) {
-                    gotoWebview(url)
+            configSpannableLinkify(
+                urlSpan, spannable,
+                object : URLSpan(urlSpan.url) {
+                    override fun onClick(view: View) {
+                        gotoWebview(url)
+                    }
                 }
-            })
+            )
         }
 
         return spannable
     }
-
 
     fun configSpannableLinkify(urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {
         val spanStart = spannable.getSpanStart(urlSpan)
@@ -33,7 +33,6 @@ abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         spannable.setSpan(linkSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         spannable.removeSpan(urlSpan)
     }
-
 
     override fun gotoWebview(value: String) {
         val webviewFragment: WebviewFragment? = WebviewFragment.newInstance(value)

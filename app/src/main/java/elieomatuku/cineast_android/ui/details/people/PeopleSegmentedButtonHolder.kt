@@ -1,12 +1,11 @@
 package elieomatuku.cineast_android.ui.details.people
 
-
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.PersonalityDetails
 import kotlinx.android.synthetic.main.holder_menu_people.view.*
@@ -21,7 +20,6 @@ class PeopleSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(item
             return PeopleSegmentedButtonHolder(createView(parent))
         }
     }
-
 
     private val segmentedGroup: RadioGroup by lazy {
         itemView.segmented_group

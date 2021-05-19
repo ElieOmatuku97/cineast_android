@@ -1,18 +1,15 @@
 package elieomatuku.cineast_android.ui.settings.userlist
 
-
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.ItemTouchHelper
 import android.graphics.drawable.ColorDrawable
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.settings.userlist.UserMoviesAdapter
 import timber.log.Timber
 
-
-class SwipeToDeleteCallback(val adapter: UserMoviesAdapter): ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+class SwipeToDeleteCallback(val adapter: UserMoviesAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
     private val background: ColorDrawable? = ColorDrawable(Color.RED)
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -23,7 +20,6 @@ class SwipeToDeleteCallback(val adapter: UserMoviesAdapter): ItemTouchHelper.Sim
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
         return true
     }
-
 
     override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
@@ -38,10 +34,11 @@ class SwipeToDeleteCallback(val adapter: UserMoviesAdapter): ItemTouchHelper.Sim
         val inbox = itemView.context.resources.getString(R.string.delete_label)
 
         if (dX < 0) { // Swiping to the right
-            background?.setBounds(itemView.right + dX.toInt() - backgroundCornerOffset,
-                    itemView.top, itemView.right, itemView.bottom)
+            background?.setBounds(
+                itemView.right + dX.toInt() - backgroundCornerOffset,
+                itemView.top, itemView.right, itemView.bottom
+            )
             Timber.d("x value: ${itemView.right + dX}")
-
         } else { // view is unSwiped
             background?.setBounds(0, 0, 0, 0)
         }
@@ -49,12 +46,9 @@ class SwipeToDeleteCallback(val adapter: UserMoviesAdapter): ItemTouchHelper.Sim
         background?.draw(c)
 
         if (dX < 0) {
-            c.drawText(inbox, itemView.right + dX + (100), (itemView.top+ itemView.height / 2).toFloat(), paint);
-
+            c.drawText(inbox, itemView.right + dX + (100), (itemView.top + itemView.height / 2).toFloat(), paint)
         } else {
-            c.drawText(inbox, 0f, 0f, paint);
+            c.drawText(inbox, 0f, 0f, paint)
         }
     }
 }
-
-

@@ -8,27 +8,30 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.content_list.ContentListActivity
-import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
 import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
 import elieomatuku.cineast_android.ui.common_vu.BaseVu
+import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_movies.view.*
 
-
 /**
  * Created by elieomatuku on 2020-09-13
  */
 
-class MoviesVu(inflater: LayoutInflater,
-               activity: Activity,
-               fragmentWrapper: FragmentWrapper?,
-               parentView: ViewGroup?) : BaseVu(inflater,
-        activity = activity,
-        fragmentWrapper = fragmentWrapper,
-        parentView = parentView) {
+class MoviesVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : BaseVu(
+    inflater,
+    activity = activity,
+    fragmentWrapper = fragmentWrapper,
+    parentView = parentView
+) {
 
     override fun getRootViewLayoutId(): Int {
         return R.layout.fragment_movies
@@ -40,7 +43,6 @@ class MoviesVu(inflater: LayoutInflater,
 
     val movieSelectObservable: Observable<Movie>
         get() = movieSelectPublisher.hide()
-
 
     private val listView: RecyclerView by lazy {
         rootView.recyclerview_movie

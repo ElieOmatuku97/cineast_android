@@ -8,10 +8,10 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
+import elieomatuku.cineast_android.ui.content_list.ContentListActivity
+import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -19,14 +19,17 @@ import kotlinx.android.synthetic.main.vu_main.view.*
 import kotlinx.android.synthetic.main.vu_search.view.*
 import timber.log.Timber
 
-
-class SearchVu(inflater: LayoutInflater,
-               activity: Activity,
-               fragmentWrapper: FragmentWrapper?,
-               parentView: ViewGroup?) : ToolbarVu(inflater,
-        activity = activity,
-        fragmentWrapper = fragmentWrapper,
-        parentView = parentView) {
+class SearchVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : ToolbarVu(
+    inflater,
+    activity = activity,
+    fragmentWrapper = fragmentWrapper,
+    parentView = parentView
+) {
 
     companion object {
         const val GRID_VIEW_NUMBER_OF_COLUMNS = 2
@@ -59,13 +62,11 @@ class SearchVu(inflater: LayoutInflater,
     }
 
     var isMovieSearchScreen: Boolean = true
-    private val onTabSelectedListener: TabLayout.OnTabSelectedListener  = object: TabLayout.OnTabSelectedListener {
+    private val onTabSelectedListener: TabLayout.OnTabSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) {
-
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {
-
         }
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -107,5 +108,3 @@ class SearchVu(inflater: LayoutInflater,
         super.onDestroy()
     }
 }
-
-

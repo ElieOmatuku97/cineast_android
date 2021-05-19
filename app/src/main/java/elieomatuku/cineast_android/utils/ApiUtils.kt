@@ -10,7 +10,6 @@ object ApiUtils {
         MoshiSerializer<CineastError>(CineastError::class.java)
     }
 
-
     fun throwableToCineastError(throwable: Throwable?): CineastError {
         return CineastError(throwable.toString())
     }
@@ -26,5 +25,4 @@ object ApiUtils {
 
         return CineastError()
     }
-
 }

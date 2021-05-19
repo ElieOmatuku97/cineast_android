@@ -4,20 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import java.util.ArrayList
-
 
 class ContentListActivity : ToolbarMVPActivity<ContentListPresenter, ContentListVu>() {
     companion object {
         private val MVP_UID by lazy {
             hashCode()
         }
-
 
         fun startItemListActivity(context: Context, contents: List<Content>, screenNameRes: Int? = null) {
             val intent = Intent(context, ContentListActivity::class.java)
@@ -41,11 +39,12 @@ class ContentListActivity : ToolbarMVPActivity<ContentListPresenter, ContentList
         }
     }
 
-
     override fun createMVPDispatcher(): MVPDispatcher<ContentListPresenter, ContentListVu> {
-        return MVPDispatcher(MVP_UID,
-                PresenterCacheLoaderCallback(this) { ContentListPresenter() },
-                ::ContentListVu)
+        return MVPDispatcher(
+            MVP_UID,
+            PresenterCacheLoaderCallback(this) { ContentListPresenter() },
+            ::ContentListVu
+        )
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -8,7 +8,6 @@ import elieomatuku.cineast_android.ui.details.MoviesVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 
-
 class KnownForFragment : MVPFragment<KnownForPresenter, MoviesVu>() {
     companion object {
         private val MVP_UID by lazy {
@@ -28,9 +27,11 @@ class KnownForFragment : MVPFragment<KnownForPresenter, MoviesVu>() {
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<KnownForPresenter, MoviesVu> {
-        return MVPDispatcher(MVP_UID,
-                // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy { KnownForPresenter() },
-                ::MoviesVu)
+        return MVPDispatcher(
+            MVP_UID,
+            // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
+            PresenterCacheLazy { KnownForPresenter() },
+            ::MoviesVu
+        )
     }
 }

@@ -4,15 +4,13 @@ import elieomatuku.cineast_android.core.model.MovieFacts
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-
-
 /**
  * Created by elieomatuku on 2021-01-30
  */
 
 class MovieFactsTest {
     @Test
-    fun testRuntimeInHoursAndMinutes () {
+    fun testRuntimeInHoursAndMinutes() {
         var facts = MovieFacts(budget = 200000000, release_date = "2020-12-16", runtime = 151, revenue = 131400000, homepage = null)
         assertEquals(facts.runtimeInHoursAndMinutes, "2 hours 31 minutes")
 
@@ -34,5 +32,4 @@ class MovieFactsTest {
         facts = facts.copy(runtime = null)
         assertEquals(facts.runtimeInHoursAndMinutes, "N/A")
     }
-
 }

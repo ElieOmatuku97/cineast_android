@@ -1,11 +1,11 @@
 package elieomatuku.cineast_android.ui.details.movie.overview
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.MovieFacts
 import kotlinx.android.synthetic.main.holder_movie_facts.view.*
@@ -20,7 +20,6 @@ class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             return MovieFactsHolder(createView(parent))
         }
     }
-
 
     private val rootView: ConstraintLayout by lazy {
         itemView.root
@@ -50,7 +49,6 @@ class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             budgetView.text = displayFacts(itemView.context.getString(R.string.budget), String.format("$%,.2f", movieFacts.budget?.toDouble()))
             revenueView.text = displayFacts(itemView.context.getString(R.string.revenue), String.format("$%,.2f", movieFacts.revenue?.toDouble()))
         } ?: hideRootView()
-
     }
 
     private fun displayFacts(factName: String, factValue: String?): String {

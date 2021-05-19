@@ -7,22 +7,24 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.net.http.SslError
 import android.os.Build
-import androidx.fragment.app.FragmentActivity
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
+import android.util.DisplayMetrics
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import android.util.DisplayMetrics
-import android.util.Log
-import android.view.LayoutInflater
-import android.widget.PopupWindow
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.FragmentActivity
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.*
-import android.view.MenuItem
-import android.webkit.*
-
+import elieomatuku.cineast_android.core.model.Genre
+import timber.log.Timber
 
 object UiUtils {
 
@@ -30,12 +32,11 @@ object UiUtils {
     val loadingViewDimRes: Int
         get() = R.dimen.loading_widget_dimen
 
-    val YOUTUBE_URL = "https://img.youtube.com"
-    val PARAM_VIDEO = "vi"
+    private const val YOUTUBE_URL = "https://img.youtube.com"
+    private const val PARAM_VIDEO = "vi"
 
-    val WIDGET_KEY = "content"
-    val SCREEN_NAME_KEY = "screen_name"
-
+    const val WIDGET_KEY = "content"
+    const val SCREEN_NAME_KEY = "screen_name"
 
     fun createLoadingIndicator(activity: Activity): PopupWindow {
         val inflator = LayoutInflater.from(activity)
@@ -45,7 +46,6 @@ object UiUtils {
         popup.contentView = loadingView
         return popup
     }
-
 
     fun getDisplayMetrics(activity: Activity): DisplayMetrics {
         val displayMetrics = DisplayMetrics()
@@ -59,12 +59,11 @@ object UiUtils {
         return displayMetrics
     }
 
-
     fun getImageUrl(path: String?, imageUrl: String?, fallBackImageUrl: String? = null): String {
         return getImageUri(imageUrl, fallBackImageUrl)
-                .buildUpon()
-                .appendEncodedPath(path)
-                .toString()
+            .buildUpon()
+            .appendEncodedPath(path)
+            .toString()
     }
 
     private fun getImageUri(imageUrl: String?, fallBackImageUrl: String?): Uri {
@@ -83,17 +82,16 @@ object UiUtils {
         activity.supportActionBar?.setDisplayShowHomeEnabled(true)
         activity.supportActionBar?.setDisplayShowTitleEnabled(false)
         activity.supportActionBar?.setDisplayUseLogoEnabled(true)
-
     }
 
     fun getYoutubeThumbnailPath(videoKey: String?, paramVideoSize: String?): String {
         return Uri.parse(YOUTUBE_URL)
-                .buildUpon()
-                .appendPath(PARAM_VIDEO)
-                .appendPath(videoKey)
-                .appendPath(paramVideoSize)
-                .build()
-                .toString()
+            .buildUpon()
+            .appendPath(PARAM_VIDEO)
+            .appendPath(videoKey)
+            .appendPath(paramVideoSize)
+            .build()
+            .toString()
     }
 
     fun mapMovieGenreIdsWithGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): String? {
@@ -130,10 +128,10 @@ object UiUtils {
 
     private fun configureShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent {
         return Intent()
-                .setAction(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
-                .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
-                .setType("text/plain")
+            .setAction(Intent.ACTION_SEND)
+            .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
+            .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
+            .setType("text/plain")
     }
 
     private fun getTintedDrawable(icon: Drawable, context: Context, color: Int): Drawable {
@@ -153,7 +151,6 @@ object UiUtils {
         return genresNames
     }
 
-
     fun configureWebView(webView: WebView, progressBar: androidx.core.widget.ContentLoadingProgressBar? = null): WebView {
         val webv = webView
 
@@ -161,7 +158,7 @@ object UiUtils {
 
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
-                Log.d(LOG_TAG, "onProgressChanged: $newProgress")
+                Timber.d("onProgressChanged: $newProgress")
                 progressBar?.progress = newProgress
             }
         }
@@ -170,29 +167,28 @@ object UiUtils {
 
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                Log.d(LOG_TAG, "shouldOverrideUrl: ${request?.url}")
+                Timber.d("shouldOverrideUrl: ${request?.url}")
                 viewUrl(request?.url?.toString(), webv.context)
                 return true
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                Log.d(LOG_TAG, "shouldOverrideUrl: $url")
+                Timber.d("shouldOverrideUrl: $url")
                 viewUrl(url, webv.context)
 
                 return true
             }
 
-
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                Log.d(LOG_TAG, "New Page Started!!")
+                Timber.d("New Page Started!!")
 
                 progressBar?.show()
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                Log.d(LOG_TAG, "Page Finished")
+                Timber.d(LOG_TAG, "Page Finished")
 
                 progressBar?.hide()
             }

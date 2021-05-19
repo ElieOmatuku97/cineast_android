@@ -26,7 +26,6 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.ArrayList
 
-
 /**
  * Created by elieomatuku on 2021-05-05
  */
@@ -56,7 +55,6 @@ class MoviesFragment : BaseFragment() {
             fragment.arguments = args
             return fragment
         }
-
     }
 
     private lateinit var viewDataBinding: FragmentMoviesBinding
@@ -98,32 +96,40 @@ class MoviesFragment : BaseFragment() {
             movies = it
         }
 
-        viewModel.genresLiveData.observe(this.viewLifecycleOwner, Observer {
-            genres = it
-        })
+        viewModel.genresLiveData.observe(
+            this.viewLifecycleOwner,
+            Observer {
+                genres = it
+            }
+        )
 
         updateView()
 
         return viewDataBinding.root
-
     }
 
     override fun onResume() {
         super.onResume()
 
-        rxSubs.add((movieSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ movie: Movie ->
-                    val params = Bundle()
-                    params.putString(SCREEN_NAME_KEY, title)
-                    params.putParcelable(MOVIE_KEY, movie)
-                    params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
-                    gotoMovie(params)
-                }, { t: Throwable ->
-                    Timber.e("movieSelectObservable failed:$t")
-                })))
+        rxSubs.add(
+            (
+                movieSelectObservable
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        { movie: Movie ->
+                            val params = Bundle()
+                            params.putString(SCREEN_NAME_KEY, title)
+                            params.putParcelable(MOVIE_KEY, movie)
+                            params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
+                            gotoMovie(params)
+                        },
+                        { t: Throwable ->
+                            Timber.e("movieSelectObservable failed:$t")
+                        }
+                    )
+                )
+        )
     }
-
 
     private fun updateView() {
         setTitle(arguments?.getString(TITLE))

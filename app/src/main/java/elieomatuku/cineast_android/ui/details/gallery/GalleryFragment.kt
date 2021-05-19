@@ -1,10 +1,8 @@
 package elieomatuku.cineast_android.ui.details.gallery
 
-
 import elieomatuku.cineast_android.ui.common_presenter.PresenterCacheLazy
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
-
 
 class GalleryFragment : MVPFragment<GalleryPresenter, GalleryVu>() {
     companion object {
@@ -17,11 +15,12 @@ class GalleryFragment : MVPFragment<GalleryPresenter, GalleryVu>() {
         }
     }
 
-
     override fun createMVPDispatcher(): MVPDispatcher<GalleryPresenter, GalleryVu> {
-        return MVPDispatcher(MVP_UID,
+        return MVPDispatcher(
+            MVP_UID,
 //                 Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ GalleryPresenter() }),
-                ::GalleryVu)
+            PresenterCacheLazy({ GalleryPresenter() }),
+            ::GalleryVu
+        )
     }
 }

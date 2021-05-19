@@ -2,17 +2,16 @@ package elieomatuku.cineast_android.ui.common_fragment
 
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
-import androidx.core.content.ContextCompat
-import androidx.appcompat.widget.AppCompatRatingBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRatingBar
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.core.model.Movie
 import org.kodein.di.generic.instance
-
 
 class RateDialogFragment : DialogFragment() {
     companion object {
@@ -30,8 +29,8 @@ class RateDialogFragment : DialogFragment() {
         }
     }
 
-    private val tmdbUserClient : TmdbUserClient by App.kodein.instance()
-    private val tmdbContentClient : TmdbContentClient by App.kodein.instance()
+    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
+    private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
     private var movie: Movie? = null
     private var submitBtn: TextView? = null
     private var ratingBar: AppCompatRatingBar? = null
@@ -51,7 +50,6 @@ class RateDialogFragment : DialogFragment() {
         submitBtn = dialogView?.findViewById<TextView>(R.id.dialog_submit)
         movie = arguments?.getParcelable(MOVIE_KEY)
 
-
         val dialog = Dialog(requireContext())
 
         dialogView?.let {
@@ -69,12 +67,11 @@ class RateDialogFragment : DialogFragment() {
         return dialog
     }
 
-
     private fun onSubmitClick() {
         submitBtn?.setOnClickListener {
             val rating = ratingBar?.rating?.toDouble()
 
-            rating?.let {_rating ->
+            rating?.let { _rating ->
                 movie?.let {
                     tmdbContentClient.postMovieRate(it, _rating)
                 }

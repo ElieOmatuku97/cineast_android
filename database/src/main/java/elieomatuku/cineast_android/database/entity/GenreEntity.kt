@@ -4,11 +4,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import elieomatuku.cineast_android.core.model.Genre
 
-
 /**
  * Created by elieomatuku on 2019-12-06
  */
-
 
 @Entity(tableName = GenreEntity.GENRE_TABLE)
 data class GenreEntity(@PrimaryKey val id: Int, val name: String) {

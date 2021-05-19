@@ -12,7 +12,6 @@ import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import timber.log.Timber
 
-
 class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
     companion object {
         private val MVP_UID by lazy {
@@ -35,7 +34,6 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
             return intent
         }
 
-
         fun gotoFavoriteList(context: Context) {
             val intent = gotoUserListActivity(context, R.string.settings_favorites)
             val params = Bundle()
@@ -50,7 +48,6 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
             val params = Bundle()
             params.putBoolean(DISPLAY_WATCH_LIST, true)
             intent.putExtras(params)
-
 
             context.startActivity(intent)
         }
@@ -70,11 +67,12 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<UserListPresenter, UserListVu> {
-        return MVPDispatcher(MVP_UID,
-                PresenterCacheLoaderCallback(this, { UserListPresenter() }),
-                ::UserListVu)
+        return MVPDispatcher(
+            MVP_UID,
+            PresenterCacheLoaderCallback(this, { UserListPresenter() }),
+            ::UserListVu
+        )
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.edit_menu, menu)
@@ -107,5 +105,4 @@ class UserListActivity : ToolbarMVPActivity<UserListPresenter, UserListVu>() {
         }
         return true
     }
-
 }

@@ -1,10 +1,8 @@
 package elieomatuku.cineast_android.ui.common_viewholder
 
-
-import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
-
+import androidx.recyclerview.widget.RecyclerView
 
 abstract class SummaryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

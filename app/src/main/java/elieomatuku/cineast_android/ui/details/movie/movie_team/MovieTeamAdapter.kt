@@ -1,20 +1,22 @@
 package elieomatuku.cineast_android.ui.details.movie.movie_team
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
 import io.reactivex.subjects.PublishSubject
 
-
-class MovieTeamAdapter(private val cast: List<Cast>, private val crew: List<Crew>, private val onCrewClickPublisher: PublishSubject<Crew>,
-                       private val onCastClickPublisher: PublishSubject<Cast>)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieTeamAdapter(
+    private val cast: List<Cast>,
+    private val crew: List<Crew>,
+    private val onCrewClickPublisher: PublishSubject<Crew>,
+    private val onCastClickPublisher: PublishSubject<Cast>
+) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_CAST = 0
         const val TYPE_CREW = 1
     }
-
 
     override fun getItemCount(): Int {
         return 2
@@ -33,7 +35,6 @@ class MovieTeamAdapter(private val cast: List<Cast>, private val crew: List<Crew
             TYPE_CAST -> CastHolder.newInstance(parent)
             TYPE_CREW -> CrewHolder.newInstance(parent)
             else -> throw RuntimeException("View Type does not exist.")
-
         }
     }
 

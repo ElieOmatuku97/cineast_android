@@ -5,15 +5,11 @@ import org.kodein.di.Kodein
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-
-
-
-class App: Application() {
+class App : Application() {
 
     companion object {
         lateinit var kodein: Kodein
             private set
-
     }
 
     override fun onCreate() {
@@ -25,5 +21,4 @@ class App: Application() {
             Timber.plant(DebugTree())
         }
     }
-
 }

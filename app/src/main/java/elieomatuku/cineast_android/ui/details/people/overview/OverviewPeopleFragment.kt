@@ -1,15 +1,14 @@
 package elieomatuku.cineast_android.ui.details.people.overview
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
 import elieomatuku.cineast_android.core.model.PersonalityDetails
 
-
-class OverviewPeopleFragment: Fragment() {
+class OverviewPeopleFragment : Fragment() {
     companion object {
         const val OVERVIEW_PEOPLE_DETAILS = "overview_people_details"
 
@@ -24,7 +23,7 @@ class OverviewPeopleFragment: Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val peopleDetails: PersonalityDetails = arguments?.get(OVERVIEW_PEOPLE_DETAILS)  as PersonalityDetails
+        val peopleDetails: PersonalityDetails = arguments?.get(OVERVIEW_PEOPLE_DETAILS) as PersonalityDetails
         val rootView = FrameLayout(requireContext())
         rootView.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 

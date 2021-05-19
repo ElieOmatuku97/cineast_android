@@ -9,17 +9,16 @@ import org.robolectric.annotation.Config
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest= Config.NONE)
+@Config(manifest = Config.NONE)
 class UiUtilsTest {
     @Test
-    fun testGetImageUrl () {
-        assertNotEquals(UiUtils.getImageUrl( "/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg",null, "elie"), "/blablab/labl")
-        assertNotEquals (UiUtils.getImageUrl("right_path", null, "http://image.tmdb.org/t/p/w1280//"), "http://image.tmdb.org/t/p/w1280//wrong_path")
+    fun testGetImageUrl() {
+        assertNotEquals(UiUtils.getImageUrl("/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg", null, "elie"), "/blablab/labl")
+        assertNotEquals(UiUtils.getImageUrl("right_path", null, "http://image.tmdb.org/t/p/w1280//"), "http://image.tmdb.org/t/p/w1280//wrong_path")
 
         assertEquals(UiUtils.getImageUrl("poster_path", "http://image.tmdb.org/t/p/w342//"), "http://image.tmdb.org/t/p/w342//poster_path")
-        assertEquals(UiUtils.getImageUrl("right_path", null, "http://image.tmdb.org/t/p/w1280//" ), "http://image.tmdb.org/t/p/w1280//right_path")
+        assertEquals(UiUtils.getImageUrl("right_path", null, "http://image.tmdb.org/t/p/w1280//"), "http://image.tmdb.org/t/p/w1280//right_path")
     }
 
     @Test

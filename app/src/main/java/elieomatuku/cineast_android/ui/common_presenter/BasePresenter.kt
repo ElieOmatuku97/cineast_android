@@ -1,21 +1,23 @@
 package elieomatuku.cineast_android.ui.common_presenter
 
 import android.os.Bundle
-import io.chthonic.mythos.mvp.Presenter
-import io.chthonic.mythos.mvp.Vu
 import android.os.Handler
 import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.business.service.ConnectionService
-import kotlinx.coroutines.*
+import elieomatuku.cineast_android.business.service.ContentService
+import io.chthonic.mythos.mvp.Presenter
+import io.chthonic.mythos.mvp.Vu
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
 import org.kodein.di.generic.instance
 import kotlin.coroutines.CoroutineContext
 
-
 abstract class BasePresenter<V> : Presenter<V>(), CoroutineScope where V : Vu {
 
-
-    val job: Job by lazy { SupervisorJob() }
+    private val job: Job by lazy { SupervisorJob() }
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job

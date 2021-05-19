@@ -1,24 +1,25 @@
 package elieomatuku.cineast_android.ui.common_vu
 
 import android.app.Activity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.core.model.Movie
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.vu_item_list.view.*
 
-
-abstract class ListVu(inflater: LayoutInflater,
-                      activity: Activity,
-                      fragmentWrapper: FragmentWrapper?,
-                      parentView: ViewGroup?) : ToolbarVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
+abstract class ListVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : ToolbarVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
     companion object {
         const val FIRST_WIDGET_TYPE_OCCURENCE = 0
@@ -43,7 +44,6 @@ abstract class ListVu(inflater: LayoutInflater,
 
     val movieSelectObservable: Observable<Movie>
         get() = movieSelectPublisher.hide()
-
 
     override fun onCreate() {
         super.onCreate()
@@ -71,7 +71,6 @@ abstract class ListVu(inflater: LayoutInflater,
         toolbar?.title = screenNameRes?.let {
             activity.resources.getString(it)
         } ?: activity.resources.getString(R.string.nav_title_discover)
-
     }
 
     abstract fun setUpListView(contents: List<Content>)

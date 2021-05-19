@@ -1,15 +1,17 @@
 package elieomatuku.cineast_android.ui.details.people
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.ui.common_viewholder.EmptyStateHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class PeopleSummaryAdapter(private val onProfileClickedPicturePublisher: PublishSubject<Int>,
-                           private val segmentedButtonPublisher: PublishSubject<Pair<String, PersonalityDetails>>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PeopleSummaryAdapter(
+    private val onProfileClickedPicturePublisher: PublishSubject<Int>,
+    private val segmentedButtonPublisher: PublishSubject<Pair<String, PersonalityDetails>>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_PEOPLE_PROFILE = 0
         const val TYPE_MENU_PEOPLE = 1
@@ -52,7 +54,6 @@ class PeopleSummaryAdapter(private val onProfileClickedPicturePublisher: Publish
     override fun getItemViewType(position: Int): Int {
         return if (hasEmptyState) {
             TYPE_EMPTY_STATE
-
         } else {
             when (position) {
                 TYPE_PEOPLE_PROFILE -> TYPE_PEOPLE_PROFILE

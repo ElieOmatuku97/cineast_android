@@ -1,15 +1,13 @@
 package elieomatuku.cineast_android.ui.content_list
 
 import android.os.Bundle
-import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
+import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.common_presenter.ListPresenter
+import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 
-
 class ContentListPresenter : ListPresenter<ContentListVu>() {
-
 
     override fun onLink(vu: ContentListVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -17,11 +15,10 @@ class ContentListPresenter : ListPresenter<ContentListVu>() {
         val listOfContents: List<Content>? = args.getParcelableArrayList(WIDGET_KEY)
         val screenNameRes = args.getInt(SCREEN_NAME_KEY)
 
-
         vu.updateVu(listOfContents, screenNameRes)
 
-
-        rxSubs.add(vu.personSelectObservable
+        rxSubs.add(
+            vu.personSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { person: Person ->
                     val params = Bundle()
@@ -31,6 +28,4 @@ class ContentListPresenter : ListPresenter<ContentListVu>() {
                 }
         )
     }
-
-
 }

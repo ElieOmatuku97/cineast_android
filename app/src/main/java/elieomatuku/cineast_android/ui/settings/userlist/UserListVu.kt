@@ -6,21 +6,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
-import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
 import elieomatuku.cineast_android.ui.common_vu.ListVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 
-
-class UserListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?,
-                 parentView: ViewGroup?) : ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
-
+class UserListVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
     override val adapter: MoviesAdapter by lazy {
         UserMoviesAdapter(movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
     }
-
 
     override fun setUpListView(contents: List<Content>) {
         adapter.movies = contents as MutableList<Movie>
@@ -35,5 +36,4 @@ class UserListVu(inflater: LayoutInflater, activity: Activity, fragmentWrapper: 
         listView.layoutManager = LinearLayoutManager(activity)
         adapter.notifyDataSetChanged()
     }
-
 }

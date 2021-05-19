@@ -3,16 +3,16 @@ package elieomatuku.cineast_android.ui.discover
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.fragment.app.FragmentContainerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.common_viewholder.ContentHolder
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import kotlinx.android.synthetic.main.holder_movie.view.*
-import timber.log.Timber
 
 class MovieHolder(itemView: View) : ContentHolder(itemView) {
     companion object {
@@ -25,22 +25,30 @@ class MovieHolder(itemView: View) : ContentHolder(itemView) {
         }
     }
 
-    private val rootLayout: FrameLayout by lazy {
-        val view = itemView.layout_root
-        view
+    private val rootLayout: ConstraintLayout by lazy {
+        itemView.root_layout
+    }
+
+    private val fragmentContainerView: FragmentContainerView by lazy {
+        val fragmentContainerView = FragmentContainerView(itemView.context)
+        fragmentContainerView.id = View.generateViewId()
+        fragmentContainerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        fragmentContainerView
     }
 
     override fun update(content: Pair<Int, List<Content>>) {
         val movies = content.second as List<Movie>
         val titleRes = content.first
 
-        Timber.d("movies from discover: $movies")
-
-        rootLayout.layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
         val fm = (itemView.context as AppCompatActivity).supportFragmentManager
         val fragment = MoviesFragment.newInstance(movies, itemView.context.getString(titleRes))
+        fm.beginTransaction().replace(fragmentContainerView.id, fragment).addToBackStack(null).commit()
 
-        fm.beginTransaction().add(android.R.id.content, fragment, MoviesFragment.TAG).addToBackStack(null).commit()
+        if (fragmentContainerView.parent == null) {
+            rootLayout.addView(fragmentContainerView, 0)
+            val set = ConstraintSet()
+            set.clone(rootLayout)
+            set.applyTo(rootLayout)
+        }
     }
 }

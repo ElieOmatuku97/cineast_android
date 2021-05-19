@@ -1,18 +1,17 @@
 package elieomatuku.cineast_android.ui.search
 
-
 import android.app.SearchManager
 import android.content.Context
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import androidx.appcompat.widget.SearchView
+import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.ui.common_presenter.PresenterCacheLazy
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
-import android.os.Bundle
-import androidx.appcompat.widget.SearchView
-import android.view.*
-import elieomatuku.cineast_android.R
 
-
-class SearchFragment: MVPFragment<SearchPresenter, SearchVu>() {
+class SearchFragment : MVPFragment<SearchPresenter, SearchVu>() {
     companion object {
         private val MVP_UID by lazy {
             SearchFragment.hashCode()
@@ -24,16 +23,17 @@ class SearchFragment: MVPFragment<SearchPresenter, SearchVu>() {
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<SearchPresenter, SearchVu> {
-        return MVPDispatcher(MVP_UID,
-                // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ SearchPresenter() }),
-               ::SearchVu)
+        return MVPDispatcher(
+            MVP_UID,
+            // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
+            PresenterCacheLazy({ SearchPresenter() }),
+            ::SearchVu
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -44,7 +44,7 @@ class SearchFragment: MVPFragment<SearchPresenter, SearchVu>() {
         (menu.findItem(R.id.menu_action_search)?.actionView as SearchView).apply {
             setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
 
-            setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String?): Boolean {
                     return true
                 }
@@ -58,6 +58,4 @@ class SearchFragment: MVPFragment<SearchPresenter, SearchVu>() {
 
         super.onCreateOptionsMenu(menu, inflater)
     }
-
-
 }

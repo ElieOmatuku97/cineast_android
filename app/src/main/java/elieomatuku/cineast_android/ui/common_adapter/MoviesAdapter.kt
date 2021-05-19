@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.ui.common_adapter
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.common_viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.ui.common_viewholder.MovieItemHolder
@@ -9,14 +9,14 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-
-open class MoviesAdapter(private val onItemClickPublisher: PublishSubject<Movie>,
-                         private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class MoviesAdapter(
+    private val onItemClickPublisher: PublishSubject<Movie>,
+    private val itemListLayoutRes: Int? = null
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_EMPTY_STATE = -2
         const val TYPE_MOVIE = 1
-
     }
 
     var movies: MutableList<Movie> by Delegates.observable(mutableListOf()) { prop, oldMovies, nuMovies ->
@@ -25,10 +25,8 @@ open class MoviesAdapter(private val onItemClickPublisher: PublishSubject<Movie>
         errorMessage = null
     }
 
-
     var hasValidData = false
         private set
-
 
     private var _errorMessage: String? = null
     var errorMessage: String?
@@ -74,7 +72,6 @@ open class MoviesAdapter(private val onItemClickPublisher: PublishSubject<Movie>
         }
     }
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
 
@@ -92,7 +89,5 @@ open class MoviesAdapter(private val onItemClickPublisher: PublishSubject<Movie>
                 holder.update(errorMessage)
             }
         }
-
     }
-
 }

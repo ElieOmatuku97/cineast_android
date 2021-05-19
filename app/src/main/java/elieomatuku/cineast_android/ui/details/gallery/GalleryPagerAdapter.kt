@@ -1,14 +1,12 @@
 package elieomatuku.cineast_android.ui.details.gallery
 
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import elieomatuku.cineast_android.ui.details.poster.PosterFragment
 import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.ui.details.poster.PosterFragment
 import timber.log.Timber
-
 
 class GalleryPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
     var posters: List<Poster> = listOf()

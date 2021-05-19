@@ -1,18 +1,16 @@
 package elieomatuku.cineast_android.core
 
-
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Personality
-import elieomatuku.cineast_android.core.model.Content
-
 
 class DiscoverContent(
-        var popularMovies: List<Movie> = listOf(),
-        var nowPlayingMovies: List<Movie> = listOf(),
-        var upcomingMovies: List<Movie> = listOf(),
-        var topRatedMovies: List<Movie> = listOf(),
-        var personalities: List<Personality> = listOf()) {
-
+    var popularMovies: List<Movie> = listOf(),
+    var nowPlayingMovies: List<Movie> = listOf(),
+    var upcomingMovies: List<Movie> = listOf(),
+    var topRatedMovies: List<Movie> = listOf(),
+    var personalities: List<Personality> = listOf()
+) {
 
     companion object {
         const val TYPE_POPULAR_MOVIE = 1
@@ -24,7 +22,6 @@ class DiscoverContent(
         const val TIMESTAMP = "timestamp"
         const val STALE_MS = 3600000 // Data is stale after an 1hour
 
-
         fun emptyDiscoverContent(): DiscoverContent {
             return DiscoverContent()
         }
@@ -33,7 +30,6 @@ class DiscoverContent(
             return System.currentTimeMillis() - timeStamp < STALE_MS
         }
     }
-
 
     fun getFilteredWidgets(): MutableMap<Int, Pair<Int, List<Content>>> {
         val filteredWidgets: MutableMap<Int, Pair<Int, List<Content>>> = mutableMapOf()
@@ -52,6 +48,6 @@ class DiscoverContent(
     }
 
     fun isEmpty(): Boolean {
-        return  popularMovies.isEmpty() && nowPlayingMovies.isEmpty() && upcomingMovies.isEmpty() && topRatedMovies.isEmpty() && personalities.isEmpty()
+        return popularMovies.isEmpty() && nowPlayingMovies.isEmpty() && upcomingMovies.isEmpty() && topRatedMovies.isEmpty() && personalities.isEmpty()
     }
 }

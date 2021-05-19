@@ -1,27 +1,41 @@
 package elieomatuku.cineast_android.business.service
 
-
 import elieomatuku.cineast_android.App
+import elieomatuku.cineast_android.business.api.response.ImageResponse
+import elieomatuku.cineast_android.business.api.response.MovieCreditsResponse
+import elieomatuku.cineast_android.business.api.response.MovieResponse
+import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
+import elieomatuku.cineast_android.business.api.response.PersonalityResponse
+import elieomatuku.cineast_android.business.api.response.TrailerResponse
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.business.api.response.*
-import elieomatuku.cineast_android.database.repository.ContentRepository
 import elieomatuku.cineast_android.core.DiscoverContent
-import elieomatuku.cineast_android.core.model.*
-import elieomatuku.cineast_android.database.entity.MovieType
 import elieomatuku.cineast_android.core.ValueStore
+import elieomatuku.cineast_android.core.model.Genre
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.MovieFacts
+import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.core.model.Personality
+import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.database.entity.MovieType
+import elieomatuku.cineast_android.database.repository.ContentRepository
 import io.flatcircle.coroutinehelper.ApiResult
 import io.flatcircle.coroutinehelper.onFail
 import io.flatcircle.coroutinehelper.onSuccess
-import io.reactivex.*
+import io.reactivex.Flowable
+import io.reactivex.Maybe
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import org.kodein.di.generic.instance
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
-import kotlin.reflect.KSuspendFunction0
 import kotlin.reflect.KFunction1
-import org.kodein.di.generic.instance
-
+import kotlin.reflect.KSuspendFunction0
 
 class ContentService(private val tmdbContentClient: TmdbContentClient, private val contentRepository: ContentRepository) : CoroutineScope {
     private val job: Job by lazy { SupervisorJob() }
@@ -56,9 +70,10 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     fun fetchDiscoverContent() {
-       val disposable =  discoverContent()
-                .observeOn(Schedulers.io())
-                .subscribe({
+        val disposable = discoverContent()
+            .observeOn(Schedulers.io())
+            .subscribe(
+                {
                     Timber.i("has missing content: ${it.isEmpty()} and is up to date: ${isContentUpToDate()}")
                     if (it.isEmpty()) {
                         Timber.i("Empty Content fetch from Client")
@@ -68,9 +83,11 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
                         Timber.i("Needs to be refreshed, fetch from Client: ${!isContentUpToDate()}")
                         updateContent(it)
                     }
-                }, {
+                },
+                {
                     Timber.e("getAllMovies: $it")
-                })
+                }
+            )
     }
 
     private fun isContentUpToDate(): Boolean {
@@ -88,7 +105,7 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
             val topRatedMovies = getMovies(tmdbContentClient::getTopRatedMovies, contentRepository::insertTopRatedMovie)
             val popularPeople = getPopularPeople()
 
-            //calls have been made in parallel and we now wait for all to finish
+            // calls have been made in parallel and we now wait for all to finish
             popularMovies.await()
             upcomingMovies.await()
             nowPlayingMovies.await()
@@ -108,7 +125,7 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
             val topRatedMovies = updateMovies(tmdbContentClient::getTopRatedMovies, oldDiscoverContent.topRatedMovies, MovieType.TOP_RATED)
             val personalities = updatePersonalities(oldDiscoverContent.personalities)
 
-            //calls have been made in parallel and we now wait for all to finish
+            // calls have been made in parallel and we now wait for all to finish
             popularMovies.await()
             upcomingMovies.await()
             nowPlayingMovies.await()
@@ -116,7 +133,6 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
             personalities.await()
         }
     }
-
 
     suspend fun getMovies(clientCall: KSuspendFunction0<MovieResponse?>, repositoryInsert: KFunction1<List<Movie>, Unit>) = async {
         val response = clientCall()
@@ -144,11 +160,10 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
 
             nuMovies.forEach { nuMovie ->
                 if (oldMovies.firstOrNull { it.id == nuMovie.id } != null) {
-                    //update
+                    // update
                     contentRepository.updateMovie(nuMovie)
-
                 } else {
-                    //insert
+                    // insert
                     contentRepository.insertMovie(nuMovie, type)
                 }
             }
@@ -181,23 +196,23 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
 
             nuPersonalities.forEach { nuPersonality ->
                 if (oldPersonalities.firstOrNull { it.id == nuPersonality.id } != null) {
-                    //update
+                    // update
                     contentRepository.updatePersonality(nuPersonality)
                 } else {
-                    //insert
+                    // insert
                     contentRepository.insertPersonality(nuPersonality)
                 }
             }
         }
     }
 
-    fun downloadGenres(){
+    private fun downloadGenres() {
         launch {
             tmdbContentClient.getGenres() onSuccess {
                 Timber.i("genres from client: ${it.genres}")
                 contentRepository.insertGenres(it.genres)
             } onFail {
-                Timber.d("failed to fetch genres from client: ${it}")
+                Timber.d("failed to fetch genres from client: $it")
             }
         }
     }
@@ -207,10 +222,10 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     suspend fun getMovieDetails(movie: Movie): MovieFacts? {
-        return  tmdbContentClient.getMovieFacts(movie).getOrNull()
+        return tmdbContentClient.getMovieFacts(movie).getOrNull()
     }
 
-    suspend fun getMovieCredits(movie: Movie ): MovieCreditsResponse? {
+    suspend fun getMovieCredits(movie: Movie): MovieCreditsResponse? {
         return tmdbContentClient.getMovieCredits(movie).getOrNull()
     }
 
@@ -234,7 +249,6 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
         tmdbContentClient.getPeopleImages(personId, asyncResponse)
     }
 
-
     fun getMovie(movieId: Int, asyncResponse: AsyncResponse<Movie>) {
         tmdbContentClient.getMovie(movieId, asyncResponse)
     }
@@ -246,7 +260,6 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
     fun searchPeople(argQuery: String, asyncResponse: AsyncResponse<PersonalityResponse>) {
         tmdbContentClient.searchPeople(argQuery, asyncResponse)
     }
-
 
     private fun setContentInsertionTimeStamp() {
         persistClient.set(DiscoverContent.TIMESTAMP, System.currentTimeMillis().toString())

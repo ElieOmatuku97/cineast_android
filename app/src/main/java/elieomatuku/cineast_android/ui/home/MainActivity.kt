@@ -1,33 +1,31 @@
 package elieomatuku.cineast_android.ui.home
 
-
-
 import android.os.Bundle
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.core.model.Account
+import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
 import io.reactivex.subjects.PublishSubject
 
-
-class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){
+class MainActivity : ToolbarMVPActivity<MainPresenter, MainVu>() {
     companion object {
         private val MVP_UID by lazy {
-           hashCode()
+            hashCode()
         }
     }
-
 
     val sessionPublisher: PublishSubject<Pair<String, Account>> by lazy {
         PublishSubject.create<Pair<String, Account>>()
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<MainPresenter, MainVu> {
-        return MVPDispatcher(MVP_UID,
-                PresenterCacheLoaderCallback(this, { MainPresenter() }),
-                ::MainVu)
+        return MVPDispatcher(
+            MVP_UID,
+            PresenterCacheLoaderCallback(this, { MainPresenter() }),
+            ::MainVu
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,5 +42,4 @@ class MainActivity: ToolbarMVPActivity<MainPresenter, MainVu>(){
         rxSubs.clear()
         super.onPause()
     }
-
 }

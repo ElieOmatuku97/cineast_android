@@ -1,15 +1,14 @@
 package elieomatuku.cineast_android.ui.details.movie.overview
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.MovieSummary
 import kotlinx.android.synthetic.main.fragment_overview.view.*
-
 
 class OverviewFragment : Fragment() {
     companion object {
@@ -25,7 +24,6 @@ class OverviewFragment : Fragment() {
             return fragment
         }
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

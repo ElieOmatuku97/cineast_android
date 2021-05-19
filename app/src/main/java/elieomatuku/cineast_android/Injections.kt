@@ -4,15 +4,14 @@ import android.app.Application
 import android.content.Context
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.client.TmdbContentClient
+import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.business.service.ConnectionService
 import elieomatuku.cineast_android.business.service.ContentService
-import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.database.DatabaseKodeinModule
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.singleton
-
 
 fun depInjecT(app: Application): Kodein {
 
@@ -33,5 +32,4 @@ fun depInjecT(app: Application): Kodein {
 
         importOnce(DatabaseKodeinModule.getModule(app))
     }
-
 }

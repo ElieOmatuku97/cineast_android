@@ -8,12 +8,13 @@ import elieomatuku.cineast_android.ui.search.movie.MoviesSearchFragment
 import elieomatuku.cineast_android.ui.search.people.PeopleSearchFragment
 import timber.log.Timber
 
-
 class SearchFragmentPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
     companion object {
         val titleResList: List<Int> by lazy {
-            listOf(R.string.movies,
-                    R.string.people)
+            listOf(
+                R.string.movies,
+                R.string.people
+            )
         }
     }
 

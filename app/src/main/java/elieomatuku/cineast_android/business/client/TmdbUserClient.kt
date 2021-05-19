@@ -1,24 +1,25 @@
 package elieomatuku.cineast_android.business.client
 
-
 import android.content.res.Resources
-import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.core.model.*
 import elieomatuku.cineast_android.business.api.AuthenticationApi
+import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.core.ValueStore
+import elieomatuku.cineast_android.core.model.AccessToken
+import elieomatuku.cineast_android.core.model.Account
+import elieomatuku.cineast_android.core.model.Session
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
-import elieomatuku.cineast_android.core.ValueStore
 import okhttp3.Interceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
-
 class TmdbUserClient(
-        override val resources: Resources,
-        override val persistClient: ValueStore,
-        override val interceptor: Interceptor? = null) : BaseClient {
+    override val resources: Resources,
+    override val persistClient: ValueStore,
+    override val interceptor: Interceptor? = null
+) : BaseClient {
 
     private val authenticationApi: AuthenticationApi by lazy {
         retrofit.create(AuthenticationApi::class.java)
@@ -77,7 +78,6 @@ class TmdbUserClient(
                         }
                         asyncResponse.onSuccess(Pair(sessionId, it))
                     }
-
                 }
 
                 override fun onFailure(call: Call<Account>, t: Throwable) {
@@ -86,7 +86,6 @@ class TmdbUserClient(
             })
         }
     }
-
 
     fun getRequestToken(): String? {
         return persistClient.get(RestUtils.REQUEST_TOKEN_KEY, null)
@@ -106,5 +105,4 @@ class TmdbUserClient(
     fun isLoggedIn(): Boolean {
         return !persistClient.get(RestUtils.SESSION_ID_KEY, null).isNullOrEmpty()
     }
-
 }

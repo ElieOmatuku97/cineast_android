@@ -1,33 +1,34 @@
 package elieomatuku.cineast_android.ui.search.people
 
 import android.app.Activity
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_adapter.PeopleLisAdapter
-import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
+import elieomatuku.cineast_android.core.model.Personality
+import elieomatuku.cineast_android.ui.common_adapter.PeopleLisAdapter
 import elieomatuku.cineast_android.ui.common_vu.BaseVu
+import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
-
-
-class PeopleSearchVu(inflater: LayoutInflater,
-                     activity: Activity,
-                     fragmentWrapper: FragmentWrapper?,
-                     parentView: ViewGroup?) : BaseVu(inflater,
-        activity = activity,
-        fragmentWrapper = fragmentWrapper,
-        parentView = parentView) {
+class PeopleSearchVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : BaseVu(
+    inflater,
+    activity = activity,
+    fragmentWrapper = fragmentWrapper,
+    parentView = parentView
+) {
 
     override fun getRootViewLayoutId() = R.layout.fragment_search
-
 
     private val gridView by lazy {
         rootView.grid_view
@@ -45,14 +46,12 @@ class PeopleSearchVu(inflater: LayoutInflater,
     val peopleSelectObservable: Observable<Person>
         get() = peopleSelectPublisher.hide()
 
-
     override fun onCreate() {
         super.onCreate()
 
         gridView.adapter = adapter
         gridLayoutManager = GridLayoutManager(this.fragmentWrapper?.support?.context, GRID_VIEW_NUMBER_OF_COLUMNS)
         gridView.layoutManager = gridLayoutManager
-
     }
 
     fun updateList(people: List<Personality>?) {

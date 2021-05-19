@@ -2,7 +2,6 @@ package elieomatuku.cineast_android.utils
 
 import elieomatuku.cineast_android.BuildConfig
 
-
 object RestUtils {
 
     const val REQUEST_TOKEN_KEY = "request_token_key"
@@ -13,5 +12,4 @@ object RestUtils {
     val API_KEY: String by lazy {
         BuildConfig.api_key
     }
-
 }

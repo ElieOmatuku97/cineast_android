@@ -1,13 +1,21 @@
 package elieomatuku.cineast_android.business.api
 
+import elieomatuku.cineast_android.business.api.response.GenreResponse
+import elieomatuku.cineast_android.business.api.response.ImageResponse
+import elieomatuku.cineast_android.business.api.response.MovieCreditsResponse
+import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.business.api.response.PostResponse
+import elieomatuku.cineast_android.business.api.response.TrailerResponse
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.MovieFacts
-import elieomatuku.cineast_android.business.api.response.*
 import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieApi {
     companion object {
@@ -35,7 +43,6 @@ interface MovieApi {
         const val RATED_MOVIE = "account/{$ACCOUNT_ID}/rated/movies"
         const val POST_MOVIE_RATE = "movie/{$MOVIE_ID}/rating"
     }
-
 
     @GET(TOP_RATED_MOVIE)
     fun getTopRatedMovies(): Deferred<MovieResponse>
@@ -90,5 +97,4 @@ interface MovieApi {
 
     @POST(POST_MOVIE_RATE)
     fun postMovieRate(@Path(MOVIE_ID) movieId: Int, @Query(SESSION_ID) sessionId: String, @Body value: RequestBody): Call<PostResponse>
-
 }

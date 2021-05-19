@@ -4,7 +4,6 @@ import elieomatuku.cineast_android.ui.common_presenter.PresenterCacheLazy
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 
-
 class MoviesSearchFragment : MVPFragment<MoviesSearchPresenter, MoviesSearchVu>() {
     companion object {
         private val MVP_UID by lazy {
@@ -17,9 +16,11 @@ class MoviesSearchFragment : MVPFragment<MoviesSearchPresenter, MoviesSearchVu>(
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<MoviesSearchPresenter, MoviesSearchVu> {
-        return MVPDispatcher(MVP_UID,
-                // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-                PresenterCacheLazy({ MoviesSearchPresenter() }),
-                ::MoviesSearchVu)
+        return MVPDispatcher(
+            MVP_UID,
+            // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
+            PresenterCacheLazy({ MoviesSearchPresenter() }),
+            ::MoviesSearchVu
+        )
     }
 }

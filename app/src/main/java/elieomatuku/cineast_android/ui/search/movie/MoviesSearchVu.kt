@@ -1,32 +1,33 @@
 package elieomatuku.cineast_android.ui.search.movie
 
 import android.app.Activity
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
+import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
 import elieomatuku.cineast_android.ui.common_vu.BaseVu
+import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
-
-class MoviesSearchVu(inflater: LayoutInflater,
-                     activity: Activity,
-                     fragmentWrapper: FragmentWrapper?,
-                     parentView: ViewGroup?) : BaseVu(inflater,
-        activity = activity,
-        fragmentWrapper = fragmentWrapper,
-        parentView = parentView) {
-
+class MoviesSearchVu(
+    inflater: LayoutInflater,
+    activity: Activity,
+    fragmentWrapper: FragmentWrapper?,
+    parentView: ViewGroup?
+) : BaseVu(
+    inflater,
+    activity = activity,
+    fragmentWrapper = fragmentWrapper,
+    parentView = parentView
+) {
 
     override fun getRootViewLayoutId() = R.layout.fragment_search
-
 
     private val movieSelectPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()

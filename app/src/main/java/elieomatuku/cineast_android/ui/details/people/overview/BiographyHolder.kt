@@ -7,7 +7,6 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.ui.common_viewholder.SummaryHolder
 import kotlinx.android.synthetic.main.holder_summary.view.*
 
-
 /**
  * Created by elieomatuku on 2020-01-09
  */

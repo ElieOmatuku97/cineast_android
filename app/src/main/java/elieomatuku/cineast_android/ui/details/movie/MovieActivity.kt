@@ -2,15 +2,15 @@ package elieomatuku.cineast_android.ui.details.movie
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.content.res.ResourcesCompat
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.res.ResourcesCompat
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.MVPDispatcher
@@ -20,7 +20,7 @@ import io.reactivex.subjects.PublishSubject
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
-class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
+class MovieActivity : ToolbarMVPActivity<MoviePresenter, MovieVu>() {
     companion object {
         private val MVP_UID by lazy {
             hashCode()
@@ -30,7 +30,7 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
     private var currentMovie: Movie? = null
     private var isInWatchList: Boolean = false
     private var isInFavoriteList: Boolean = false
-    private val tmdbUserClient : TmdbUserClient by App.kodein.instance()
+    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
     private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
 
     val moviePresentedPublisher: PublishSubject<Movie> by lazy {
@@ -46,9 +46,11 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
     }
 
     override fun createMVPDispatcher(): MVPDispatcher<MoviePresenter, MovieVu> {
-        return MVPDispatcher(MVP_UID,
-                PresenterCacheLoaderCallback(this, { MoviePresenter() }),
-                ::MovieVu)
+        return MVPDispatcher(
+            MVP_UID,
+            PresenterCacheLoaderCallback(this, { MoviePresenter() }),
+            ::MovieVu
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,34 +59,44 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
         mvpDispatcher.vu?.toolbar?.let {
             UiUtils.initToolbar(this, it, true)
         }
-
-
     }
 
     override fun onResume() {
-        rxSubs.add(moviePresentedPublisher.observeOn(AndroidSchedulers.mainThread())
-                .subscribe({event: Movie ->
-                    onPresenterPublishedNext(event)
+        rxSubs.add(
+            moviePresentedPublisher.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { event: Movie ->
+                        onPresenterPublishedNext(event)
+                    },
+                    { t: Throwable ->
+                        Timber.e("moviePresentedPublisher failed")
+                    }
+                )
+        )
 
-                }, {t: Throwable ->
-                    Timber.e( "moviePresentedPublisher failed")
-                }))
+        rxSubs.add(
+            watchListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { event: Boolean ->
+                        onWatchListCheckPublishedNext(event)
+                    },
+                    { t: Throwable ->
+                        Timber.e("userListCheckPublisher failed: $t")
+                    }
+                )
+        )
 
-        rxSubs.add(watchListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
-                .subscribe( {event: Boolean ->
-                    onWatchListCheckPublishedNext(event)
-
-                }, {t: Throwable ->
-                    Timber.e( "userListCheckPublisher failed: $t")
-                }))
-
-        rxSubs.add(favoriteListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
-                .subscribe( {event: Boolean ->
-                    onFavoriteListCheckPublishedNext(event)
-
-                }, {t: Throwable ->
-                    Timber.e("favoriteListCheckPublisher failed: $t")
-                }))
+        rxSubs.add(
+            favoriteListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { event: Boolean ->
+                        onFavoriteListCheckPublishedNext(event)
+                    },
+                    { t: Throwable ->
+                        Timber.e("favoriteListCheckPublisher failed: $t")
+                    }
+                )
+        )
         super.onResume()
     }
 
@@ -109,30 +121,28 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.findItem(R.id.action_share)?.let {
-                it.isVisible = MovieUtils.supportsShare(currentMovie?.id)
-
+            it.isVisible = MovieUtils.supportsShare(currentMovie?.id)
         }
 
         menu?.findItem(R.id.action_watchlist)?.let {
-                val menuItem = it
-                Timber.d("isInWatchList: $isInWatchList")
-                currentMovie?.let {
-                    menuItem.isChecked = isInWatchList
+            val menuItem = it
+            Timber.d("isInWatchList: $isInWatchList")
+            currentMovie?.let {
+                menuItem.isChecked = isInWatchList
+            }
 
-                }
-
-                updateWatchListIcon(it)
-                it.isVisible = tmdbUserClient.isLoggedIn()
+            updateWatchListIcon(it)
+            it.isVisible = tmdbUserClient.isLoggedIn()
         }
 
         menu?.findItem(R.id.action_favorites)?.let {
-                val menuItem  = it
-                Timber.d("isInFavoriteList: $isInFavoriteList")
-                currentMovie?.let {
-                    menuItem.isChecked = isInFavoriteList
-                }
-                updateFavoriteListIcon(it)
-                it.isVisible = tmdbUserClient.isLoggedIn()
+            val menuItem = it
+            Timber.d("isInFavoriteList: $isInFavoriteList")
+            currentMovie?.let {
+                menuItem.isChecked = isInFavoriteList
+            }
+            updateFavoriteListIcon(it)
+            it.isVisible = tmdbUserClient.isLoggedIn()
         }
 
         return true
@@ -160,14 +170,13 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
     }
 
     private fun onPresenterPublishedNext(event: Movie) {
-        Timber.d("onPresenterPublishedNext: activity = ${event}")
+        Timber.d("onPresenterPublishedNext: activity = $event")
         currentMovie = event
         invalidateOptionsMenu()
     }
 
-
     private fun onWatchListCheckPublishedNext(event: Boolean) {
-        Timber.d("onWatchListCheckPublishedNext: activity = ${event}")
+        Timber.d("onWatchListCheckPublishedNext: activity = $event")
         isInWatchList = event
         invalidateOptionsMenu()
     }
@@ -180,7 +189,7 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
     private fun onShareMenuClicked() {
         val shareIntent: Intent? = UiUtils.getShareIntent(currentMovie?.title, currentMovie?.id)
         // Make sure there is an activity that supports the intent
-        if (shareIntent?.resolveActivity(packageManager) != null ){
+        if (shareIntent?.resolveActivity(packageManager) != null) {
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_title)))
         }
     }
@@ -195,7 +204,6 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
             currentMovie?.let {
                 tmdbContentClient.addMovieToWatchList(it)
             }
-
         } else {
             currentMovie?.let {
                 tmdbContentClient.removeMovieFromWatchList(it)
@@ -207,7 +215,6 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
         val colorRes = R.color.color_orange_app
         if (item.isChecked) {
             item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_selected, theme)
-
         } else {
             item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_unselected, theme)
             UiUtils.tintMenuItem(item, this, colorRes)
@@ -223,7 +230,6 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
             currentMovie?.let {
                 tmdbContentClient.addMovieToFavoriteList(it)
             }
-
         } else {
             currentMovie?.let {
                 tmdbContentClient.removeMovieFromFavoriteList(it)
@@ -235,7 +241,6 @@ class MovieActivity: ToolbarMVPActivity<MoviePresenter, MovieVu>(){
         val colorRes = R.color.color_orange_app
         if (item.isChecked) {
             item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_black_selected, theme)
-
         } else {
             item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_border_black_unselected, theme)
             UiUtils.tintMenuItem(item, this, colorRes)

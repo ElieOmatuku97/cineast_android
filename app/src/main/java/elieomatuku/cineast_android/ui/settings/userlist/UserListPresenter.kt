@@ -10,19 +10,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-
 class UserListPresenter : ListPresenter<UserListVu>() {
 
     companion object {
 
         const val DISPLAY_FAVORITE_LIST = "favorite_list_key"
         const val DISPLAY_WATCH_LIST = "watch_list_key"
-
     }
 
     private var isWatchList: Boolean = false
     private var isFavoriteList: Boolean = false
-
 
     override fun onLink(vu: UserListVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
@@ -31,7 +28,6 @@ class UserListPresenter : ListPresenter<UserListVu>() {
         isWatchList = args.getBoolean(DISPLAY_WATCH_LIST)
 
         val screenNameRes = args.getInt(SCREEN_NAME_KEY)
-
 
         if (isFavoriteList) {
             launch {
@@ -58,13 +54,12 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                         }
                     }
                 } else {
-                    launch(Dispatchers.Main){
+                    launch(Dispatchers.Main) {
                         Timber.e("error : ${movieResponse.exceptionOrNull()}")
                         vu.updateErrorView(movieResponse.exceptionOrNull()?.message)
                     }
                 }
             }
-
         } else {
             tmdbContentClient.getUserRatedMovies(object : AsyncResponse<List<Movie>> {
                 override fun onSuccess(result: List<Movie>?) {
@@ -81,24 +76,24 @@ class UserListPresenter : ListPresenter<UserListVu>() {
                     vu.updateErrorView(error?.status_message)
                 }
             })
-
         }
 
-
-        rxSubs.add(vu.onMovieRemovedObservable
+        rxSubs.add(
+            vu.onMovieRemovedObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    if (isWatchList) {
+                .subscribe(
+                    {
+                        if (isWatchList) {
 
-                        tmdbContentClient.removeMovieFromWatchList(it)
-                    } else if (isFavoriteList) {
-                        tmdbContentClient.removeMovieFromFavoriteList(it)
+                            tmdbContentClient.removeMovieFromWatchList(it)
+                        } else if (isFavoriteList) {
+                            tmdbContentClient.removeMovieFromFavoriteList(it)
+                        }
+                    },
+                    { t: Throwable ->
+                        Timber.e("onMovieRemovedObservable failed $t")
                     }
-                }, { t: Throwable ->
-                    Timber.e("onMovieRemovedObservable failed $t")
-
-                }))
+                )
+        )
     }
-
-
 }

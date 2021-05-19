@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.ui.discover
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.Movie
 import io.reactivex.subjects.PublishSubject
 
