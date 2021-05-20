@@ -12,9 +12,9 @@ import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.databinding.FragmentOverviewBinding
-import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.details.people.PeoplePresenter
+import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject

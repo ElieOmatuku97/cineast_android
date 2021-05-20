@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
-import elieomatuku.cineast_android.ui.vu.BaseVu
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
+import elieomatuku.cineast_android.ui.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject

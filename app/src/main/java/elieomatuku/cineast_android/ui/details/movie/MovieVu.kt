@@ -18,12 +18,12 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Poster
-import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
 import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.ui.details.movie.overview.OverviewFragment
+import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable

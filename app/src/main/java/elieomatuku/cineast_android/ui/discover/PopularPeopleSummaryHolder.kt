@@ -10,8 +10,8 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Personality
 import elieomatuku.cineast_android.ui.adapter.PeopleLisAdapter
-import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
+import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 

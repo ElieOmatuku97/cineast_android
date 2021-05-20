@@ -17,9 +17,9 @@ import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
 import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
-import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
+import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -35,16 +35,21 @@ class MoviesFragment : BaseFragment() {
 
         const val MOVIES = "movies"
         const val TITLE = "title"
+        private const val SELECTED_MOVIE_TITLE = "gotomovie_title"
         const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
 
-        fun newInstance(movies: List<Movie>, title: String? = null): MoviesFragment {
+        fun newInstance(movies: List<Movie>, title: String? = null, selectedMovieTitle: String? = null): MoviesFragment {
             val args = Bundle()
             args.putParcelableArrayList(MOVIES, movies as ArrayList<out Parcelable>)
 
             title?.let {
                 args.putString(TITLE, it)
+            }
+
+            selectedMovieTitle?.let {
+                args.putString(SELECTED_MOVIE_TITLE, it)
             }
 
             val fragment = MoviesFragment()
@@ -82,6 +87,7 @@ class MoviesFragment : BaseFragment() {
 
     private lateinit var movies: List<Movie>
     private var title: String? = null
+    private var selectedMovieTitle: String? = null
     private var genres: List<Genre>? = listOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -114,7 +120,7 @@ class MoviesFragment : BaseFragment() {
                     .subscribe(
                         { movie: Movie ->
                             val params = Bundle()
-                            params.putString(SCREEN_NAME_KEY, title)
+                            params.putString(SCREEN_NAME_KEY, selectedMovieTitle)
                             params.putParcelable(MOVIE_KEY, movie)
                             params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                             gotoMovie(params)
@@ -129,6 +135,7 @@ class MoviesFragment : BaseFragment() {
 
     private fun updateView() {
         setTitle(arguments?.getString(TITLE))
+        setSelectedMovieTitle(arguments?.getString(SELECTED_MOVIE_TITLE))
         sectionTitleView.text = title
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -147,6 +154,14 @@ class MoviesFragment : BaseFragment() {
             this.title = title
         } else {
             this.title = getString(R.string.movies)
+        }
+    }
+
+    private fun setSelectedMovieTitle(title: String?) {
+        if (title != null) {
+            this.selectedMovieTitle = title
+        } else {
+            this.selectedMovieTitle = this.title
         }
     }
 

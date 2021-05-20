@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.ui.details.poster
 
 import android.os.Bundle
-import elieomatuku.cineast_android.ui.presenter.BasePresenter
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
+import elieomatuku.cineast_android.ui.presenter.BasePresenter
 
 class PosterPresenter : BasePresenter<PosterVu>() {
     override fun onLink(vu: PosterVu, inState: Bundle?, args: Bundle) {

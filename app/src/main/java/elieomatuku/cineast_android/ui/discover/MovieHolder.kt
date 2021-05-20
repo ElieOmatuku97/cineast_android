@@ -10,8 +10,8 @@ import androidx.fragment.app.FragmentContainerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import elieomatuku.cineast_android.ui.details.MoviesFragment
+import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import kotlinx.android.synthetic.main.holder_movie.view.*
 
 class MovieHolder(itemView: View) : ContentHolder(itemView) {

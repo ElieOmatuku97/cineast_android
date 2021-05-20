@@ -3,8 +3,8 @@ package elieomatuku.cineast_android.ui.content_list
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.presenter.ListPresenter
 import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
+import elieomatuku.cineast_android.ui.presenter.ListPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class ContentListPresenter : ListPresenter<ContentListVu>() {

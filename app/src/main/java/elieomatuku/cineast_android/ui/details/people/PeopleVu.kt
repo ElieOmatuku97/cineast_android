@@ -16,11 +16,11 @@ import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.core.model.Poster
-import elieomatuku.cineast_android.ui.vu.ToolbarVu
+import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
-import elieomatuku.cineast_android.ui.details.people.knownfor.KnownForFragment
 import elieomatuku.cineast_android.ui.details.people.overview.OverviewPeopleFragment
+import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -83,7 +83,7 @@ class PeopleVu(
         PeopleSummaryAdapter(onProfileClickedPicturePublisher, onSegmentedButtonsPublisher)
     }
 
-    private var _knownFor: List<KnownFor> = listOf()
+    private var knownFor: List<KnownFor> = listOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -101,7 +101,7 @@ class PeopleVu(
             toolbar?.title = screenName
 
             adapter.personalityDetails = personalityDetails
-            _knownFor = knownFor.toMutableList()
+            this.knownFor = knownFor.toMutableList()
 
             val dividerItemDecoration = DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
             listView.addItemDecoration(dividerItemDecoration)
@@ -136,7 +136,7 @@ class PeopleVu(
                 OverviewPeopleFragment.newInstance(displayAndPersonalityDetails.second)
             }
             KNOWN_FOR -> {
-                KnownForFragment.newInstance(_knownFor, displayAndPersonalityDetails.second.name)
+                MoviesFragment.newInstance(knownFor.mapNotNull { it.toMovie() }, activity.getString(R.string.cast), displayAndPersonalityDetails.second.name)
             }
             else -> null
         }
