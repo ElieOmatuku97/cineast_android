@@ -16,7 +16,7 @@ import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.core.model.Poster
-import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
+import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
 import elieomatuku.cineast_android.ui.details.people.knownfor.KnownForFragment

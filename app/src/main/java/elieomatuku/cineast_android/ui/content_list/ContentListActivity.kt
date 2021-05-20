@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
+import elieomatuku.cineast_android.ui.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
@@ -41,9 +41,9 @@ class ContentListActivity : ToolbarMVPActivity<ContentListPresenter, ContentList
 
     override fun createMVPDispatcher(): MVPDispatcher<ContentListPresenter, ContentListVu> {
         return MVPDispatcher(
-            MVP_UID,
-            PresenterCacheLoaderCallback(this) { ContentListPresenter() },
-            ::ContentListVu
+                MVP_UID,
+                PresenterCacheLoaderCallback(this) { ContentListPresenter() },
+                ::ContentListVu
         )
     }
 

@@ -1,8 +1,8 @@
-package elieomatuku.cineast_android.ui.common_activity
+package elieomatuku.cineast_android.ui.activity
 
 import android.os.Bundle
 import androidx.loader.app.LoaderManager
-import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
+import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.Presenter
 

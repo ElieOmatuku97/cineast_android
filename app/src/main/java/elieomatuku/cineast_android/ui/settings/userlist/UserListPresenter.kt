@@ -4,7 +4,7 @@ import android.os.Bundle
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_presenter.ListPresenter
+import elieomatuku.cineast_android.ui.presenter.ListPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

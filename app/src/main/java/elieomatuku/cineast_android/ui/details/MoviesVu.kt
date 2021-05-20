@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
-import elieomatuku.cineast_android.ui.common_vu.BaseVu
+import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
+import elieomatuku.cineast_android.ui.vu.BaseVu
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable

@@ -8,7 +8,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
+import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.vu_main.view.*

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
+import elieomatuku.cineast_android.ui.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback

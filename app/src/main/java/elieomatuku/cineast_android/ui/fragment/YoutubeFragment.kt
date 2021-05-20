@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.common_fragment
+package elieomatuku.cineast_android.ui.fragment
 
 import android.os.Bundle
 import android.util.Log

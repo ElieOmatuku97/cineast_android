@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_activity.ToolbarMVPActivity
+import elieomatuku.cineast_android.ui.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.MVPDispatcher

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
+import elieomatuku.cineast_android.ui.presenter.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber

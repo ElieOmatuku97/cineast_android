@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.common_presenter
+package elieomatuku.cineast_android.ui.presenter
 
 import io.chthonic.mythos.mvp.Presenter
 import io.chthonic.mythos.mvp.PresenterCache

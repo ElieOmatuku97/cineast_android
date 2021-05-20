@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.common_vu
+package elieomatuku.cineast_android.ui.vu
 
 import android.app.Activity
 import android.content.Intent
@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
-import elieomatuku.cineast_android.ui.common_activity.BaseActivity
+import elieomatuku.cineast_android.ui.activity.BaseActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.utils.UiUtils

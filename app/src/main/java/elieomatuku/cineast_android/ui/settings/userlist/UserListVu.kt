@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
-import elieomatuku.cineast_android.ui.common_vu.ListVu
+import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
+import elieomatuku.cineast_android.ui.vu.ListVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 
 class UserListVu(

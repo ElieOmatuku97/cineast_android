@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.common_vu
+package elieomatuku.cineast_android.ui.vu
 
 import android.app.Activity
 import android.view.LayoutInflater

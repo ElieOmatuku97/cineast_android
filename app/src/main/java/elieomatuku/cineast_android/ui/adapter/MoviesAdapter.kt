@@ -1,10 +1,10 @@
-package elieomatuku.cineast_android.ui.common_adapter
+package elieomatuku.cineast_android.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_viewholder.EmptyStateHolder
-import elieomatuku.cineast_android.ui.common_viewholder.MovieItemHolder
+import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
+import elieomatuku.cineast_android.ui.viewholder.MovieItemHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates

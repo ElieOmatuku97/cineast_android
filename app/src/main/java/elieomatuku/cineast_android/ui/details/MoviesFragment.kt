@@ -16,8 +16,8 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
-import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
-import elieomatuku.cineast_android.ui.common_fragment.BaseFragment
+import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
+import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import io.reactivex.Observable
@@ -38,10 +38,6 @@ class MoviesFragment : BaseFragment() {
         const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
-
-        val TAG: String by lazy {
-            MoviesFragment::class.java.simpleName
-        }
 
         fun newInstance(movies: List<Movie>, title: String? = null): MoviesFragment {
             val args = Bundle()

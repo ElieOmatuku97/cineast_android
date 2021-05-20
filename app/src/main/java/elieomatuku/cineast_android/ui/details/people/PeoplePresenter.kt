@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.PersonalityDetails
-import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
+import elieomatuku.cineast_android.ui.presenter.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 

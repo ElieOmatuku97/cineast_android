@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.common_presenter
+package elieomatuku.cineast_android.ui.presenter
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -7,7 +7,7 @@ import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_vu.ListVu
+import elieomatuku.cineast_android.ui.vu.ListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.kodein.di.generic.instance

@@ -18,7 +18,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Poster
-import elieomatuku.cineast_android.ui.common_vu.ToolbarVu
+import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter

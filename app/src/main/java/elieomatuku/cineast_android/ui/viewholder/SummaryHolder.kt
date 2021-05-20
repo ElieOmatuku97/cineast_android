@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.common_viewholder
+package elieomatuku.cineast_android.ui.viewholder
 
 import android.view.View
 import android.widget.TextView

@@ -17,8 +17,8 @@ import elieomatuku.cineast_android.core.model.AccessToken
 import elieomatuku.cineast_android.core.model.Account
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.common_fragment.WebviewFragment
-import elieomatuku.cineast_android.ui.common_vu.BaseVu
+import elieomatuku.cineast_android.ui.fragment.WebviewFragment
+import elieomatuku.cineast_android.ui.vu.BaseVu
 import elieomatuku.cineast_android.ui.home.MainActivity
 import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
 import elieomatuku.cineast_android.utils.WebLink

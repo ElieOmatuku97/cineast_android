@@ -8,7 +8,7 @@ import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.KnownFor
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_presenter.BasePresenter
+import elieomatuku.cineast_android.ui.presenter.BasePresenter
 import elieomatuku.cineast_android.ui.details.MoviesFragment.Companion.MOVIE_GENRES_KEY
 import elieomatuku.cineast_android.ui.details.MoviesVu
 import io.reactivex.android.schedulers.AndroidSchedulers

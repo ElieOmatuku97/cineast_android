@@ -1,10 +1,10 @@
-package elieomatuku.cineast_android.ui.common_adapter
+package elieomatuku.cineast_android.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.common_viewholder.EmptyStateHolder
-import elieomatuku.cineast_android.ui.common_viewholder.PopularPeopleItemHolder
+import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
+import elieomatuku.cineast_android.ui.viewholder.PopularPeopleItemHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates

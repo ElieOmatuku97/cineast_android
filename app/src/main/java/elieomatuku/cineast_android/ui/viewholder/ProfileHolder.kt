@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.common_viewholder
+package elieomatuku.cineast_android.ui.viewholder
 
 import android.text.Spannable
 import android.text.Spanned
@@ -6,7 +6,7 @@ import android.text.style.URLSpan
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.ui.common_fragment.WebviewFragment
+import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 import elieomatuku.cineast_android.utils.WebLink
 
 abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView), WebLink<String> {

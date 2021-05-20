@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_vu.BaseVu
+import elieomatuku.cineast_android.ui.vu.BaseVu
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import kotlinx.android.synthetic.main.fragment_poster.view.*

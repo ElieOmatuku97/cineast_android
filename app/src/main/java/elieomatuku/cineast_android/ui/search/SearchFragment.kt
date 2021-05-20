@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import androidx.appcompat.widget.SearchView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.common_presenter.PresenterCacheLazy
+import elieomatuku.cineast_android.ui.presenter.PresenterCacheLazy
 import io.chthonic.mythos.mvp.MVPDispatcher
 import io.chthonic.mythos.mvp.MVPFragment
 

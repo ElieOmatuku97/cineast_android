@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.common_adapter.MoviesAdapter
-import elieomatuku.cineast_android.ui.common_vu.BaseVu
+import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
+import elieomatuku.cineast_android.ui.vu.BaseVu
 import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
