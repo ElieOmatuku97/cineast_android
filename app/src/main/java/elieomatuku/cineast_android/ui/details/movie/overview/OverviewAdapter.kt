@@ -2,7 +2,9 @@ package elieomatuku.cineast_android.ui.details.movie.overview
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.ui.viewholder.SummaryHolder
 
 class OverviewAdapter(private val movieSummary: MovieSummary?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -29,7 +31,7 @@ class OverviewAdapter(private val movieSummary: MovieSummary?) : RecyclerView.Ad
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_PLOT_SUMMARY -> PlotSummaryHolder.newInstance(parent)
+            TYPE_PLOT_SUMMARY -> SummaryHolder.newInstance(parent)
             TYPE_TRAILERS -> TrailersHolder.newInstance(parent)
             TYPE_MOVIE_FACTS -> MovieFactsHolder.newInstance(parent)
             TYPE_BOTTOM -> BottomHolder.newInstance(parent)
@@ -41,9 +43,9 @@ class OverviewAdapter(private val movieSummary: MovieSummary?) : RecyclerView.Ad
         val viewType = getItemViewType(position)
         when (viewType) {
             TYPE_PLOT_SUMMARY -> {
-                val plotSummaryHolder = holder as PlotSummaryHolder
+                val summaryHolder = holder as SummaryHolder
                 val overView = movieSummary?.movie?.overview
-                plotSummaryHolder.update(overView)
+                summaryHolder.update(R.string.plot_summary, overView)
             }
 
             TYPE_TRAILERS -> {

@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
+import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.ui.viewholder.SummaryHolder
 
 class OverviewPeopleFragment : Fragment() {
     companion object {
@@ -27,10 +29,10 @@ class OverviewPeopleFragment : Fragment() {
         val rootView = FrameLayout(requireContext())
         rootView.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-        val holder = BiographyHolder.newInstance(rootView)
-        rootView.addView(holder.itemView)
+        val summaryHolder = SummaryHolder.newInstance(rootView)
+        rootView.addView(summaryHolder.itemView)
         val biography = peopleDetails.biography
-        holder.update(biography)
+        summaryHolder.update(R.string.biography, biography)
         return rootView
     }
 }

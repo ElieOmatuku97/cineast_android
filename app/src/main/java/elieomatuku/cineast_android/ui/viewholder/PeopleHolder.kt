@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.discover
+package elieomatuku.cineast_android.ui.viewholder
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,6 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.adapter.PeopleAdapter
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
-import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 

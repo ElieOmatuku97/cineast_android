@@ -6,7 +6,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.discover.PeopleHolder
+import elieomatuku.cineast_android.ui.viewholder.PeopleHolder
 import io.reactivex.subjects.PublishSubject
 
 class MovieTeamAdapter(

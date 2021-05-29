@@ -27,7 +27,7 @@ abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         return spannable
     }
 
-    fun configSpannableLinkify(urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {
+    private fun configSpannableLinkify(urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {
         val spanStart = spannable.getSpanStart(urlSpan)
         val spanEnd = spannable.getSpanEnd(urlSpan)
         spannable.setSpan(linkSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
