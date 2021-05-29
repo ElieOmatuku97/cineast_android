@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
-import elieomatuku.cineast_android.ui.adapter.PeopleLisAdapter
+import elieomatuku.cineast_android.ui.adapter.PeopleAdapter
 import elieomatuku.cineast_android.ui.vu.ListVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
@@ -32,8 +32,8 @@ class ContentListVu(inflater: LayoutInflater, activity: Activity, fragmentWrappe
         MoviesAdapter(movieSelectPublisher, R.layout.holder_movie_list)
     }
 
-    private val popularPeopleItemAdapter: PeopleLisAdapter by lazy {
-        PeopleLisAdapter(personSelectPublisher, R.layout.holder_people_list)
+    private val popularPeopleItemAdapter: PeopleAdapter by lazy {
+        PeopleAdapter(personSelectPublisher, R.layout.holder_people_list)
     }
 
     override fun setUpListView(contents: List<Content>) {
@@ -42,7 +42,7 @@ class ContentListVu(inflater: LayoutInflater, activity: Activity, fragmentWrappe
             listView.adapter = moviesAdapter
             moviesAdapter.notifyDataSetChanged()
         } else {
-            popularPeopleItemAdapter.popularPersonalities = contents as MutableList<Person>
+            popularPeopleItemAdapter.people = contents as MutableList<Person>
             listView.adapter = popularPeopleItemAdapter
             popularPeopleItemAdapter.notifyDataSetChanged()
         }

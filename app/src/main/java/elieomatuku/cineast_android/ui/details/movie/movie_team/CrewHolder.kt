@@ -23,7 +23,7 @@ class CrewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    val seeAllView: TextView? by lazy {
+    private val seeAllView: TextView? by lazy {
         itemView.see_all_title
     }
 

@@ -9,21 +9,21 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Personality
-import elieomatuku.cineast_android.ui.adapter.PeopleLisAdapter
+import elieomatuku.cineast_android.ui.adapter.PeopleAdapter
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 
-class PopularPeopleSummaryHolder(itemView: View, private val onPersonalityClickPublisher: PublishSubject<Person>) : ContentHolder(itemView) {
+class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSubject<Person>) : ContentHolder(itemView) {
 
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_people, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup, onPersonalityClickPublisher: PublishSubject<Person>): PopularPeopleSummaryHolder {
-            return PopularPeopleSummaryHolder(createView(parent), onPersonalityClickPublisher)
+        fun newInstance(parent: ViewGroup, onPersonalityClickPublisher: PublishSubject<Person>): PeopleHolder {
+            return PeopleHolder(createView(parent), onPersonalityClickPublisher)
         }
     }
 
@@ -31,8 +31,8 @@ class PopularPeopleSummaryHolder(itemView: View, private val onPersonalityClickP
         itemView.see_all
     }
 
-    private val adapter: PeopleLisAdapter by lazy {
-        PeopleLisAdapter(onPersonalityClickPublisher)
+    private val adapter: PeopleAdapter by lazy {
+        PeopleAdapter(onPeopleClickPublisher)
     }
 
     private val listView: RecyclerView by lazy {
@@ -42,7 +42,7 @@ class PopularPeopleSummaryHolder(itemView: View, private val onPersonalityClickP
     override fun update(content: Pair<Int, List<Content>>) {
         val personalities: List<Personality> = content.second as List<Personality>
 
-        adapter.popularPersonalities = personalities.toMutableList()
+        adapter.people = personalities.toMutableList()
         listView.adapter = adapter
         adapter.notifyDataSetChanged()
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)

@@ -39,8 +39,7 @@ class MovieTeamAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val viewType = getItemViewType(position)
-        when (viewType) {
+        when (getItemViewType(position)) {
             TYPE_CAST -> {
                 val castHolder = holder as CastHolder
                 castHolder.update(cast, onCastClickPublisher)

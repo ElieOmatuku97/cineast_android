@@ -9,17 +9,17 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class PeopleLisAdapter(
+class PeopleAdapter(
     private val onItemClickPublisher: PublishSubject<Person>,
     private val itemListLayoutRes: Int? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_EMPTY_STATE = -2
-        const val TYPE_PERSONALITY = 1
+        const val TYPE_PEOPLE = 1
     }
 
-    var popularPersonalities: MutableList<Person> by Delegates.observable(mutableListOf()) { prop, oldEdition, nuEdition ->
+    var people: MutableList<Person> by Delegates.observable(mutableListOf()) { prop, oldEdition, nuEdition ->
         hasValidData = true
         errorMessage = null
     }
@@ -35,9 +35,9 @@ class PeopleLisAdapter(
             hasValidData = true
         }
 
-    val hasEmptyState: Boolean
+    private val hasEmptyState: Boolean
         // only display empty state after valid data is set
-        get() = hasValidData && (popularPersonalities.isEmpty())
+        get() = hasValidData && (people.isEmpty())
 
     override fun getItemCount(): Int {
         Timber.d("hasEmptyState: $hasEmptyState")
@@ -45,7 +45,7 @@ class PeopleLisAdapter(
         return if (hasEmptyState) {
             1
         } else {
-            popularPersonalities.size
+            people.size
         }
     }
 
@@ -53,7 +53,7 @@ class PeopleLisAdapter(
         return if (hasEmptyState) {
             TYPE_EMPTY_STATE
         } else {
-            TYPE_PERSONALITY
+            TYPE_PEOPLE
         }
     }
 
@@ -63,7 +63,7 @@ class PeopleLisAdapter(
                 EmptyStateHolder.newInstance(parent)
             }
 
-            TYPE_PERSONALITY -> {
+            TYPE_PEOPLE -> {
                 PopularPeopleItemHolder.newInstance(parent, itemListLayoutRes)
             }
 
@@ -74,10 +74,10 @@ class PeopleLisAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is PopularPeopleItemHolder -> {
-                holder.update(popularPersonalities[position])
+                holder.update(people[position])
 
                 holder.itemView.setOnClickListener {
-                    onItemClickPublisher.onNext(popularPersonalities[position])
+                    onItemClickPublisher.onNext(people[position])
                 }
             }
 

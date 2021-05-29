@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.core.model.Personality
-import elieomatuku.cineast_android.ui.adapter.PeopleLisAdapter
+import elieomatuku.cineast_android.ui.adapter.PeopleAdapter
 import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import elieomatuku.cineast_android.ui.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -35,8 +35,8 @@ class PeopleSearchVu(
     }
 
     var gridLayoutManager: GridLayoutManager? = null
-    private val adapter: PeopleLisAdapter by lazy {
-        PeopleLisAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
+    private val adapter: PeopleAdapter by lazy {
+        PeopleAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
     }
 
     private val peopleSelectPublisher: PublishSubject<Person> by lazy {
@@ -56,7 +56,7 @@ class PeopleSearchVu(
 
     fun updateList(people: List<Personality>?) {
         if (people != null) {
-            adapter.popularPersonalities = people.toMutableList()
+            adapter.people = people.toMutableList()
             gridView.layoutManager = gridLayoutManager
             adapter.notifyDataSetChanged()
         }

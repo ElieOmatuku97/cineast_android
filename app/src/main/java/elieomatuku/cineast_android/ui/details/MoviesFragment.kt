@@ -66,7 +66,7 @@ class MoviesFragment : BaseFragment() {
         PublishSubject.create<Movie>()
     }
 
-    val movieSelectObservable: Observable<Movie>
+    private val movieSelectObservable: Observable<Movie>
         get() = movieSelectPublisher.hide()
 
     private val listView: RecyclerView by lazy {
