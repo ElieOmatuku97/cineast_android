@@ -36,12 +36,13 @@ class MovieHolder(itemView: View) : ContentHolder(itemView) {
         fragmentContainerView
     }
 
-    override fun update(content: Pair<Int, List<Content>>) {
-        val movies = content.second as List<Movie>
-        val titleRes = content.first
-
+    override fun update(content: List<Content>, titleRes: Int?) {
         val fm = (itemView.context as AppCompatActivity).supportFragmentManager
-        val fragment = MoviesFragment.newInstance(movies, itemView.context.getString(titleRes))
+        val title: String? = titleRes?.let {
+            itemView.context.getString(titleRes)
+        }
+
+        val fragment = MoviesFragment.newInstance(content as List<Movie>, title)
         fm.beginTransaction().replace(fragmentContainerView.id, fragment).addToBackStack(null).commit()
 
         if (fragmentContainerView.parent == null) {

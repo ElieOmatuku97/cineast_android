@@ -24,10 +24,8 @@ class HeaderAdapter(private val movies: List<Movie>, private val onItemClickPubl
     }
 
     fun getArticlePosition(key: Int): Int {
-        val widgetPosition = movies.indexOfFirst {
+        return movies.indexOfFirst {
             it.id == key
         }
-
-        return widgetPosition
     }
 }

@@ -114,10 +114,17 @@ class DiscoverAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
+            is PeopleHolder -> {
+                val content = filteredContent[getDiscoverPosition(position)]
+                content?.let {
+                    holder.update(it.second)
+                }
+            }
+
             is ContentHolder -> {
                 val content = filteredContent[getDiscoverPosition(position)]
                 content?.let {
-                    holder.update(content)
+                    holder.update(content.second, content.first)
                 }
             }
 

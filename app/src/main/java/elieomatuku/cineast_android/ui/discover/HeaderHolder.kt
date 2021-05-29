@@ -38,10 +38,9 @@ class HeaderHolder(itemView: View, private val onItemClickPublisher: PublishSubj
         }
     }
 
-    override fun update(content: Pair<Int, List<Content>>) {
-        val movies = content.second as List<Movie>
+    override fun update(content: List<Content>, titleRes: Int?) {
 
-        val adapter = HeaderAdapter(movies, onItemClickPublisher)
+        val adapter = HeaderAdapter(content as List<Movie>, onItemClickPublisher)
         listView.adapter = adapter
         adapter.notifyDataSetChanged()
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
@@ -51,7 +50,7 @@ class HeaderHolder(itemView: View, private val onItemClickPublisher: PublishSubj
         val position = adapter.getArticlePosition(CURRENT_MOVIE_ID)
 
         if ((position >= 0) && (position < adapter.itemCount)) {
-            smoothScroller.setTargetPosition(position)
+            smoothScroller.targetPosition = position
             listView.post {
                 lm?.startSmoothScroll(smoothScroller)
             }
