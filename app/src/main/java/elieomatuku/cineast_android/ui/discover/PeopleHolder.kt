@@ -45,7 +45,7 @@ class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSu
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            ContentListActivity.startItemListActivity(itemView.context, content, R.string.popular_people)
+            ContentListActivity.startItemListActivity(itemView.context, content, titleRes ?: R.string.popular_people)
         }
     }
 }

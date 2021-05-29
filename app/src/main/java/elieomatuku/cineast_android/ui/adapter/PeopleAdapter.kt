@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
-import elieomatuku.cineast_android.ui.viewholder.PopularPeopleItemHolder
+import elieomatuku.cineast_android.ui.viewholder.PeopleItemHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
@@ -64,7 +64,7 @@ class PeopleAdapter(
             }
 
             TYPE_PEOPLE -> {
-                PopularPeopleItemHolder.newInstance(parent, itemListLayoutRes)
+                PeopleItemHolder.newInstance(parent, itemListLayoutRes)
             }
 
             else -> throw RuntimeException("View Type does not exist.")
@@ -73,7 +73,7 @@ class PeopleAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is PopularPeopleItemHolder -> {
+            is PeopleItemHolder -> {
                 holder.update(people[position])
 
                 holder.itemView.setOnClickListener {

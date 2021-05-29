@@ -12,7 +12,7 @@ import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_item_people.view.*
 
-class PopularPeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class PeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup, layoutRes: Int? = null): View {
             return LayoutInflater.from(parent.context).inflate(
@@ -22,16 +22,16 @@ class PopularPeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView
             )
         }
 
-        fun newInstance(parent: ViewGroup, layoutRes: Int? = null): PopularPeopleItemHolder {
-            return PopularPeopleItemHolder(createView(parent, layoutRes))
+        fun newInstance(parent: ViewGroup, layoutRes: Int? = null): PeopleItemHolder {
+            return PeopleItemHolder(createView(parent, layoutRes))
         }
     }
 
-    val peopleImageView: ImageView? by lazy {
+    private val peopleImageView: ImageView? by lazy {
         itemView.people_image_view
     }
 
-    val peopleNameView: TextView? by lazy {
+    private val peopleNameView: TextView? by lazy {
         itemView.people_name_view
     }
 

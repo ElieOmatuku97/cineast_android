@@ -41,19 +41,12 @@ class MovieTeamFragment : BaseFragment() {
 
     var movieTitle: String? = null
 
-    private val onCrewSelectPublisher: PublishSubject<Crew> by lazy {
-        PublishSubject.create<Crew>()
+    private val onPeopleSelectPublisher: PublishSubject<Person> by lazy {
+        PublishSubject.create<Person>()
     }
 
-    private val onCrewSelectObservable: Observable<Crew>
-        get() = onCrewSelectPublisher.hide()
-
-    private val onCastSelectPublisher: PublishSubject<Cast> by lazy {
-        PublishSubject.create<Cast>()
-    }
-
-    private val onCastSelectObservable: Observable<Cast>
-        get() = onCastSelectPublisher.hide()
+    private val onPeopleSelectObservable: Observable<Person>
+        get() = onPeopleSelectPublisher.hide()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_overview, container, false)
@@ -74,25 +67,20 @@ class MovieTeamFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        rxSubs.add(
-            onCastSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPersonSelectedSuccess, this::onSelectionFail)
-        )
 
         rxSubs.add(
-            onCrewSelectObservable
+            onPeopleSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::onPersonSelectedSuccess, this::onSelectionFail)
+                .subscribe(this::onPeopleSelectedSuccess, this::onSelectionFail)
         )
     }
 
     private fun updateView(cast: List<Cast>, crew: List<Crew>) {
-        viewDataBinding.overviewList.adapter = MovieTeamAdapter(cast, crew, onCrewSelectPublisher, onCastSelectPublisher)
+        viewDataBinding.overviewList.adapter = MovieTeamAdapter(cast, crew, onPeopleSelectPublisher)
         viewDataBinding.overviewList.layoutManager = LinearLayoutManager(activity)
     }
 
-    private fun onPersonSelectedSuccess(person: Person) {
+    private fun onPeopleSelectedSuccess(person: Person) {
         val params = Bundle()
         params.putString(SCREEN_NAME_KEY, movieTitle)
         params.putParcelable(PEOPLE_KEY, person)

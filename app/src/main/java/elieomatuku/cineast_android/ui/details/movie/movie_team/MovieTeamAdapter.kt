@@ -2,17 +2,19 @@ package elieomatuku.cineast_android.ui.details.movie.movie_team
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Crew
+import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.ui.discover.PeopleHolder
 import io.reactivex.subjects.PublishSubject
 
 class MovieTeamAdapter(
     private val cast: List<Cast>,
     private val crew: List<Crew>,
-    private val onCrewClickPublisher: PublishSubject<Crew>,
-    private val onCastClickPublisher: PublishSubject<Cast>
+    private val onPeopleClickPublisher: PublishSubject<Person>
 ) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    RecyclerView.Adapter<PeopleHolder>() {
     companion object {
         const val TYPE_CAST = 0
         const val TYPE_CREW = 1
@@ -30,23 +32,20 @@ class MovieTeamAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeopleHolder {
         return when (viewType) {
-            TYPE_CAST -> CastHolder.newInstance(parent)
-            TYPE_CREW -> CrewHolder.newInstance(parent)
+            TYPE_CAST, TYPE_CREW -> PeopleHolder.newInstance(parent, onPeopleClickPublisher)
             else -> throw RuntimeException("View Type does not exist.")
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PeopleHolder, position: Int) {
         when (getItemViewType(position)) {
             TYPE_CAST -> {
-                val castHolder = holder as CastHolder
-                castHolder.update(cast, onCastClickPublisher)
+                holder.update(cast, R.string.cast)
             }
             TYPE_CREW -> {
-                val crewHolder = holder as CrewHolder
-                crewHolder.update(crew, onCrewClickPublisher)
+                holder.update(crew, R.string.crew)
             }
         }
     }
