@@ -18,7 +18,7 @@ import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.core.model.AccessToken
 import elieomatuku.cineast_android.core.model.Account
 import elieomatuku.cineast_android.core.model.CineastError
-import elieomatuku.cineast_android.ui.home.MainActivity
+import elieomatuku.cineast_android.ui.home.HomeActivity
 import elieomatuku.cineast_android.ui.settings.user_movies.UserMoviesActivity
 import elieomatuku.cineast_android.utils.WebLink
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -84,8 +84,8 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
             true
         }
 
-        (activity as MainActivity).rxSubs.add(
-            (activity as MainActivity).sessionPublisher.hide()
+        (activity as HomeActivity).rxSubs.add(
+            (activity as HomeActivity).sessionPublisher.hide()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { sessionResponse: Pair<String?, Account> ->

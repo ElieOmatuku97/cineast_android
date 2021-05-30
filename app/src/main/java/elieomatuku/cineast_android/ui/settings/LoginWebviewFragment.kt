@@ -8,7 +8,7 @@ import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.core.model.Account
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
-import elieomatuku.cineast_android.ui.home.MainActivity
+import elieomatuku.cineast_android.ui.home.HomeActivity
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
@@ -32,7 +32,7 @@ class LoginWebviewFragment : WebviewFragment() {
     val handler: Handler = Handler()
 
     override fun closeIconListener() {
-        val activity: MainActivity = this.activity as MainActivity
+        val activity: HomeActivity = this.activity as HomeActivity
 
         tmdbUserClient.getSession(
             tmdbUserClient.getRequestToken(),

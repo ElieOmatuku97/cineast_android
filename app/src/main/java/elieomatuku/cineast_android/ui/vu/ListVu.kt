@@ -31,7 +31,7 @@ abstract class ListVu(
         get() = rootView.toolbar
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.vu_item_list
+        return R.layout.activity_item_list
     }
 
     protected val listView: RecyclerView by lazy {

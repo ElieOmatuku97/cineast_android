@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         android:fullBackupContent="@xml/backup_descriptor">
 
-        <activity android:name="elieomatuku.cineast_android.ui.home.MainActivity"
+        <activity android:name="elieomatuku.cineast_android.ui.home.HomeActivity"
             android:theme="@style/AppThemeSplash"
             >
 

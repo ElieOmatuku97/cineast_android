@@ -18,7 +18,7 @@ import elieomatuku.cineast_android.core.model.Account
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
-import elieomatuku.cineast_android.ui.home.MainActivity
+import elieomatuku.cineast_android.ui.home.HomeActivity
 import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
 import elieomatuku.cineast_android.ui.vu.BaseVu
 import elieomatuku.cineast_android.utils.WebLink
@@ -77,7 +77,7 @@ class DiscoverVu(
         get() = refreshPublisher.hide()
 
     private val sessionPublisher: PublishSubject<Pair<String, Account>> by lazy {
-        (activity as MainActivity).sessionPublisher
+        (activity as HomeActivity).sessionPublisher
     }
 
     val sessionObservable: Observable<Pair<String, Account>> by lazy {

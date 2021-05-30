@@ -23,7 +23,7 @@ import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.vu_item_list.*
+import kotlinx.android.synthetic.main.activity_item_list.*
 import timber.log.Timber
 
 class UserMoviesActivity : AppCompatActivity() {
@@ -110,7 +110,7 @@ class UserMoviesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.vu_item_list)
+        setContentView(R.layout.activity_item_list)
 
         isFavoriteList = intent.getBooleanExtra(DISPLAY_FAVORITE_LIST, false)
         isWatchList = intent.getBooleanExtra(DISPLAY_WATCH_LIST, false)

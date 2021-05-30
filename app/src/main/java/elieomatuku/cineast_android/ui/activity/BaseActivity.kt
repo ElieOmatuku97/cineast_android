@@ -28,6 +28,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onPause() {
         unregisterReceiver(networkBroadcastReceiver)
+        rxSubs.clear()
         super.onPause()
     }
 }
