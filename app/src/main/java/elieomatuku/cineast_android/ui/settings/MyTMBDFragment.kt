@@ -19,7 +19,7 @@ import elieomatuku.cineast_android.core.model.AccessToken
 import elieomatuku.cineast_android.core.model.Account
 import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.ui.home.MainActivity
-import elieomatuku.cineast_android.ui.settings.userlist.UserListActivity
+import elieomatuku.cineast_android.ui.settings.user_movies.UserMoviesActivity
 import elieomatuku.cineast_android.utils.WebLink
 import io.reactivex.android.schedulers.AndroidSchedulers
 import org.kodein.di.generic.instance
@@ -67,18 +67,18 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         }
 
         watchListBtn?.setOnPreferenceClickListener {
-            UserListActivity.gotoWatchList(requireContext())
+            UserMoviesActivity.gotoWatchList(requireContext())
             true
         }
 
         favoritesBtn?.setOnPreferenceClickListener {
-            UserListActivity.gotoFavoriteList(requireContext())
+            UserMoviesActivity.gotoFavorites(requireContext())
             true
         }
 
         ratedBtn?.setOnPreferenceClickListener {
             this@MyTMBDFragment.context?.let {
-                UserListActivity.gotoRatedMovies(it)
+                UserMoviesActivity.gotoRatedMovies(it)
             }
 
             true

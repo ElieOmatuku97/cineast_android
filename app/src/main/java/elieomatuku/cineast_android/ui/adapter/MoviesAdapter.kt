@@ -37,7 +37,7 @@ open class MoviesAdapter(
             hasValidData = true
         }
 
-    val hasEmptyState: Boolean
+    private val hasEmptyState: Boolean
         // only display empty state after valid data is set
         get() = hasValidData && (movies.isEmpty())
 

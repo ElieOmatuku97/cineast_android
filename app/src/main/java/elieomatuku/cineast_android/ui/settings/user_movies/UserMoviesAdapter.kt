@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.settings.userlist
+package elieomatuku.cineast_android.ui.settings.user_movies
 
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.adapter.MoviesAdapter

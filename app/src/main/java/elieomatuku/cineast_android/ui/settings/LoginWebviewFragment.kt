@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class LoginWebviewFragment : WebviewFragment() {
     companion object {
-        const val URL = "url"
+        private const val URL = "url"
 
         fun newInstance(url: String?): WebviewFragment {
             val fragment = LoginWebviewFragment()
