@@ -1,19 +1,20 @@
 package elieomatuku.cineast_android.ui.search.people
 
 import android.os.Bundle
-import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.ui.presenter.BasePresenter
+import elieomatuku.cineast_android.ui.search.ContentGridVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class PeopleSearchPresenter : BasePresenter<PeopleSearchVu>() {
+class PeopleSearchPresenter : BasePresenter<ContentGridVu>() {
     companion object {
         const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
-        const val PEOPLE_KEY = "peopleApi"
+        const val CONTENT_KEY = "peopleApi"
     }
 
-    override fun onLink(vu: PeopleSearchVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: ContentGridVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         vu.showLoading()
@@ -25,7 +26,7 @@ class PeopleSearchPresenter : BasePresenter<PeopleSearchVu>() {
                 .subscribe(
                     {
                         vu.hideLoading()
-                        vu.updateList(it)
+                        vu.populateGridView(it)
                     },
                     { error ->
                         vu.updateErrorView(error.message)
@@ -34,14 +35,14 @@ class PeopleSearchPresenter : BasePresenter<PeopleSearchVu>() {
         )
 
         rxSubs.add(
-            vu.peopleSelectObservable
+            vu.contentSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ actor: Person ->
+                .subscribe { content: Content ->
                     val params = Bundle()
                     params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
-                    params.putParcelable(PEOPLE_KEY, actor)
+                    params.putParcelable(CONTENT_KEY, content)
                     vu.gotoPeople(params)
-                })
+                }
         )
     }
 }

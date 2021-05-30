@@ -13,10 +13,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
-import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
+import elieomatuku.cineast_android.ui.adapter.ContentAdapter
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
@@ -62,11 +63,11 @@ class MoviesFragment : BaseFragment() {
 
     private val viewModel: MoviesViewModel by viewModels()
 
-    private val movieSelectPublisher: PublishSubject<Movie> by lazy {
-        PublishSubject.create<Movie>()
+    private val movieSelectPublisher: PublishSubject<Content> by lazy {
+        PublishSubject.create<Content>()
     }
 
-    private val movieSelectObservable: Observable<Movie>
+    private val movieSelectObservable: Observable<Content>
         get() = movieSelectPublisher.hide()
 
     private val listView: RecyclerView by lazy {
@@ -81,8 +82,8 @@ class MoviesFragment : BaseFragment() {
         viewDataBinding.seeAll
     }
 
-    private val adapter: MoviesAdapter by lazy {
-        MoviesAdapter(movieSelectPublisher)
+    private val adapter: ContentAdapter by lazy {
+        ContentAdapter(movieSelectPublisher)
     }
 
     private lateinit var movies: List<Movie>
@@ -118,7 +119,7 @@ class MoviesFragment : BaseFragment() {
                 movieSelectObservable
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .subscribe(
-                        { movie: Movie ->
+                        { movie: Content ->
                             val params = Bundle()
                             params.putString(SCREEN_NAME_KEY, selectedMovieTitle)
                             params.putParcelable(MOVIE_KEY, movie)
@@ -139,7 +140,7 @@ class MoviesFragment : BaseFragment() {
         sectionTitleView.text = title
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        adapter.movies = movies.toMutableList()
+        adapter.contents = movies.toMutableList()
         adapter.notifyDataSetChanged()
 
         seeAllClickView.setOnClickListener {

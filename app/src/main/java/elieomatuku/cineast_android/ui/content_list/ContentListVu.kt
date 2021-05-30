@@ -8,7 +8,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
+import elieomatuku.cineast_android.ui.adapter.ContentAdapter
 import elieomatuku.cineast_android.ui.adapter.PeopleAdapter
 import elieomatuku.cineast_android.ui.vu.ListVu
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -19,7 +19,7 @@ class ContentListVu(inflater: LayoutInflater, activity: Activity, fragmentWrappe
     ListVu(inflater, activity = activity, fragmentWrapper = fragmentWrapper, parentView = parentView) {
 
     override val adapter: RecyclerView.Adapter<*>
-        get() = moviesAdapter
+        get() = contentAdapter
 
     private val personSelectPublisher: PublishSubject<Person> by lazy {
         PublishSubject.create<Person>()
@@ -28,8 +28,8 @@ class ContentListVu(inflater: LayoutInflater, activity: Activity, fragmentWrappe
     val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
 
-    private val moviesAdapter: MoviesAdapter by lazy {
-        MoviesAdapter(movieSelectPublisher, R.layout.holder_movie_list)
+    private val contentAdapter: ContentAdapter by lazy {
+        ContentAdapter(movieSelectPublisher, R.layout.holder_movie_list)
     }
 
     private val popularPeopleItemAdapter: PeopleAdapter by lazy {
@@ -38,9 +38,9 @@ class ContentListVu(inflater: LayoutInflater, activity: Activity, fragmentWrappe
 
     override fun setUpListView(contents: List<Content>) {
         if (areWidgetsMovies(contents)) {
-            moviesAdapter.movies = contents as MutableList<Movie>
-            listView.adapter = moviesAdapter
-            moviesAdapter.notifyDataSetChanged()
+            contentAdapter.contents = contents.toMutableList()
+            listView.adapter = contentAdapter
+            contentAdapter.notifyDataSetChanged()
         } else {
             popularPeopleItemAdapter.people = contents as MutableList<Person>
             listView.adapter = popularPeopleItemAdapter

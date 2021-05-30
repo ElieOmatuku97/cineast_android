@@ -28,7 +28,7 @@ class PeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private val peopleImageView: ImageView? by lazy {
-        itemView.people_image_view
+        itemView.content_image_view
     }
 
     private val peopleNameView: TextView? by lazy {

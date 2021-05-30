@@ -7,7 +7,7 @@
 
 
     <ImageView
-        android:id="@+id/people_image_view"
+        android:id="@+id/content_image_view"
         android:layout_width="@dimen/movie_summary_image_width"
         android:layout_height="@dimen/movie_summary_image_size"
         android:visibility="gone"
@@ -34,7 +34,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/people_image_view" />
+        app:layout_constraintTop_toBottomOf="@+id/content_image_view" />
 
     <TextView
         android:id="@+id/people_job_view"

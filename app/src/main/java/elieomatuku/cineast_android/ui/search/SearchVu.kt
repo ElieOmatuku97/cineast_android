@@ -15,7 +15,7 @@ import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.vu_main.view.*
+import kotlinx.android.synthetic.main.activity_home.view.*
 import kotlinx.android.synthetic.main.vu_search.view.*
 import timber.log.Timber
 

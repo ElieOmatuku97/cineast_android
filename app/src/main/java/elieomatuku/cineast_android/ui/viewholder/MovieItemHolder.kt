@@ -33,7 +33,7 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private val movieImage: ImageView by lazy {
-        itemView.movie_image_view
+        itemView.content_image_view
     }
     private val releaseDate: TextView? by lazy {
         itemView.release_date

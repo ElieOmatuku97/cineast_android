@@ -12,7 +12,7 @@ import elieomatuku.cineast_android.core.model.Movie
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.vu_item_list.view.*
+import kotlinx.android.synthetic.main.activity_item_list.view.*
 
 abstract class ListVu(
     inflater: LayoutInflater,
@@ -38,11 +38,11 @@ abstract class ListVu(
         rootView.list_view_container
     }
 
-    protected val movieSelectPublisher: PublishSubject<Movie> by lazy {
-        PublishSubject.create<Movie>()
+    protected val movieSelectPublisher: PublishSubject<Content> by lazy {
+        PublishSubject.create<Content>()
     }
 
-    val movieSelectObservable: Observable<Movie>
+    val movieSelectObservable: Observable<Content>
         get() = movieSelectPublisher.hide()
 
     override fun onCreate() {

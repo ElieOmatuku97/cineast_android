@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.adapter.MoviesAdapter
+import elieomatuku.cineast_android.ui.adapter.ContentAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.utils.SwipeToDeleteCallback
 import elieomatuku.cineast_android.utils.UiUtils
@@ -75,11 +75,11 @@ class UserMoviesActivity : AppCompatActivity() {
 
     private val viewModel: UserMoviesViewModel by viewModels()
 
-    private val movieSelectPublisher: PublishSubject<Movie> by lazy {
-        PublishSubject.create<Movie>()
+    private val movieSelectPublisher: PublishSubject<Content> by lazy {
+        PublishSubject.create<Content>()
     }
 
-    private val movieSelectObservable: Observable<Movie>
+    private val movieSelectObservable: Observable<Content>
         get() = movieSelectPublisher.hide()
 
     private val rxSubs: io.reactivex.disposables.CompositeDisposable by lazy {
@@ -93,8 +93,8 @@ class UserMoviesActivity : AppCompatActivity() {
     private val onMovieRemovedObservable: Observable<Movie>
         get() = onMovieRemovedPublisher.hide()
 
-    private val adapter: MoviesAdapter by lazy {
-        UserMoviesAdapter(movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
+    private val adapter: ContentAdapter by lazy {
+        UserContentAdapter(movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
     }
 
     private val listView: RecyclerView by lazy {
@@ -139,7 +139,7 @@ class UserMoviesActivity : AppCompatActivity() {
             movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { movie: Movie ->
+                    { movie: Content ->
                         val params = Bundle()
                         params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
                         params.putParcelable(MOVIE_KEY, movie)
@@ -229,8 +229,8 @@ class UserMoviesActivity : AppCompatActivity() {
     }
 
     private fun setUpListView(contents: List<Content>) {
-        adapter.movies = contents as MutableList<Movie>
-        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter as UserMoviesAdapter))
+        adapter.contents = contents.toMutableList()
+        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter as UserContentAdapter))
         itemTouchHelper.attachToRecyclerView(listView)
         listView.layoutManager = LinearLayoutManager(this)
         listView.adapter = adapter

@@ -26,7 +26,7 @@ class SearchFragment : MVPFragment<SearchPresenter, SearchVu>() {
         return MVPDispatcher(
             MVP_UID,
             // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-            PresenterCacheLazy({ SearchPresenter() }),
+            PresenterCacheLazy { SearchPresenter() },
             ::SearchVu
         )
     }

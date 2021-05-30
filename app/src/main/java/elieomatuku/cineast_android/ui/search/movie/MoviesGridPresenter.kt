@@ -2,25 +2,26 @@ package elieomatuku.cineast_android.ui.search.movie
 
 import android.os.Bundle
 import android.os.Parcelable
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
-import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.presenter.BasePresenter
+import elieomatuku.cineast_android.ui.search.ContentGridVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class MoviesSearchPresenter : BasePresenter<MoviesSearchVu>() {
+class MoviesGridPresenter : BasePresenter<ContentGridVu>() {
     companion object {
         const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
 
-        const val MOVIE_KEY = "movieApi"
+        const val CONTENT_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
     }
 
     private var genres: List<Genre>? = listOf()
 
-    override fun onLink(vu: MoviesSearchVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: ContentGridVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         vu.showLoading()
@@ -57,13 +58,13 @@ class MoviesSearchPresenter : BasePresenter<MoviesSearchVu>() {
         )
 
         rxSubs.add(
-            vu.movieSelectObservable
+            vu.contentSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { movie: Movie ->
+                    { movie: Content ->
                         val params = Bundle()
                         params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
-                        params.putParcelable(MOVIE_KEY, movie)
+                        params.putParcelable(CONTENT_KEY, movie)
                         params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                         vu.gotoMovie(params)
                     },

@@ -5,8 +5,8 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
-import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.vu.ListVu
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -49,7 +49,7 @@ abstract class ListPresenter<V> : BasePresenter<V>() where V : ListVu {
             vu.movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    { movie: Movie ->
+                    { movie: Content ->
                         val params = Bundle()
                         params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
                         params.putParcelable(MOVIE_KEY, movie)

@@ -2,25 +2,28 @@ package elieomatuku.cineast_android.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.ui.viewholder.MovieItemHolder
+import elieomatuku.cineast_android.ui.viewholder.PeopleItemHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-open class MoviesAdapter(
-    private val onItemClickPublisher: PublishSubject<Movie>,
+open class ContentAdapter(
+    private val onItemClickPublisher: PublishSubject<Content>,
     private val itemListLayoutRes: Int? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_EMPTY_STATE = -2
-        const val TYPE_MOVIE = 1
+        const val TYPE_CONTENT = 1
     }
 
-    var movies: MutableList<Movie> by Delegates.observable(mutableListOf()) { prop, oldMovies, nuMovies ->
-        Timber.d("widgets = $nuMovies")
+    var contents: MutableList<Content> by Delegates.observable(mutableListOf()) { prop, oldContents, nuContents ->
+        Timber.d("widgets = $nuContents")
         hasValidData = true
         errorMessage = null
     }
@@ -39,14 +42,14 @@ open class MoviesAdapter(
 
     private val hasEmptyState: Boolean
         // only display empty state after valid data is set
-        get() = hasValidData && (movies.isEmpty())
+        get() = hasValidData && (contents.isEmpty())
 
     override fun getItemCount(): Int {
         Timber.d("hasEmptyState: $hasEmptyState")
         return if (hasEmptyState) {
             1
         } else {
-            movies.size
+            contents.size
         }
     }
 
@@ -54,7 +57,7 @@ open class MoviesAdapter(
         return if (hasEmptyState) {
             TYPE_EMPTY_STATE
         } else {
-            TYPE_MOVIE
+            TYPE_CONTENT
         }
     }
 
@@ -64,8 +67,12 @@ open class MoviesAdapter(
                 EmptyStateHolder.newInstance(parent)
             }
 
-            TYPE_MOVIE -> {
-                MovieItemHolder.newInstance(parent, itemListLayoutRes)
+            TYPE_CONTENT -> {
+                if (contents.first() is Movie) {
+                    MovieItemHolder.newInstance(parent, itemListLayoutRes)
+                } else {
+                    PeopleItemHolder.newInstance(parent, itemListLayoutRes)
+                }
             }
 
             else -> throw RuntimeException("View Type does not exist.")
@@ -76,12 +83,24 @@ open class MoviesAdapter(
         when (holder) {
 
             is MovieItemHolder -> {
-                val movie = movies[position]
-                holder.update(movie)
+                val movie = contents[position]
+                holder.update(movie as Movie)
 
                 holder.itemView.setOnClickListener {
-                    Timber.d("CLICKED && movieApi:  ${movies[position]}")
-                    onItemClickPublisher.onNext(movies[position])
+                    Timber.d("CLICKED && movieApi:  ${contents[position]}")
+                    onItemClickPublisher.onNext(contents[position])
+                }
+            }
+
+            is PeopleItemHolder -> {
+                val people = contents[position]
+
+                people.let {
+                    holder.update(people as Person)
+                }
+
+                holder.itemView.setOnClickListener {
+                    onItemClickPublisher.onNext(people)
                 }
             }
 

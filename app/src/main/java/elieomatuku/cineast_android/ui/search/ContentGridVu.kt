@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.search.people
+package elieomatuku.cineast_android.ui.search
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.core.model.Personality
-import elieomatuku.cineast_android.ui.adapter.PeopleAdapter
+import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.ui.adapter.ContentAdapter
 import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import elieomatuku.cineast_android.ui.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -16,7 +15,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
-class PeopleSearchVu(
+class ContentGridVu(
     inflater: LayoutInflater,
     activity: Activity,
     fragmentWrapper: FragmentWrapper?,
@@ -30,48 +29,37 @@ class PeopleSearchVu(
 
     override fun getRootViewLayoutId() = R.layout.fragment_search
 
+    private val contentSelectPublisher: PublishSubject<Content> by lazy {
+        PublishSubject.create<Content>()
+    }
+
+    val contentSelectObservable: Observable<Content>
+        get() = contentSelectPublisher.hide()
+
     private val gridView by lazy {
         rootView.grid_view
     }
 
     var gridLayoutManager: GridLayoutManager? = null
-    private val adapter: PeopleAdapter by lazy {
-        PeopleAdapter(peopleSelectPublisher, R.layout.holder_popular_people)
+    private val adapter: ContentAdapter by lazy {
+        ContentAdapter(contentSelectPublisher, R.layout.holder_grid_content)
     }
-
-    private val peopleSelectPublisher: PublishSubject<Person> by lazy {
-        PublishSubject.create<Person>()
-    }
-
-    val peopleSelectObservable: Observable<Person>
-        get() = peopleSelectPublisher.hide()
 
     override fun onCreate() {
         super.onCreate()
-
-        gridView.adapter = adapter
         gridLayoutManager = GridLayoutManager(this.fragmentWrapper?.support?.context, GRID_VIEW_NUMBER_OF_COLUMNS)
-        gridView.layoutManager = gridLayoutManager
+        gridView.adapter = adapter
     }
 
-    fun updateList(people: List<Personality>?) {
-        if (people != null) {
-            adapter.people = people.toMutableList()
-            gridView.layoutManager = gridLayoutManager
-            adapter.notifyDataSetChanged()
-        }
+    fun populateGridView(content: List<Content>) {
+        adapter.contents = content.toMutableList()
+        gridView.layoutManager = gridLayoutManager
+        adapter.notifyDataSetChanged()
     }
 
     fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         gridView.layoutManager = LinearLayoutManager(activity)
         adapter.notifyDataSetChanged()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        gridView.adapter = null
-        gridView.layoutManager = null
-        gridLayoutManager = null
     }
 }
