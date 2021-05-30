@@ -36,7 +36,6 @@ class UserMoviesActivity : AppCompatActivity() {
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
 
-
         private fun gotoUserPreferencesActivity(context: Context, resources: Int? = null): Intent {
             val intent = Intent(context, UserMoviesActivity::class.java)
             val params = Bundle()
