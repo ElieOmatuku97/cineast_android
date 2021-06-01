@@ -18,7 +18,6 @@ import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.core.model.Poster
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
-import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
 import elieomatuku.cineast_android.ui.details.people.overview.OverviewPeopleFragment
 import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.utils.DividerItemDecorator
@@ -119,7 +118,7 @@ class PeopleVu(
         val galleryFragment = GalleryFragment.newInstance()
 
         val args = Bundle()
-        args.putParcelableArrayList(GalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
+        args.putParcelableArrayList(GalleryFragment.POSTERS, posters as ArrayList<out Parcelable>)
         galleryFragment.arguments = args
 
         (activity as AppCompatActivity).supportFragmentManager.beginTransaction().add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()

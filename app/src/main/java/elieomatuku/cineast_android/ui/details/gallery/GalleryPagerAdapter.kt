@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.core.model.Poster
-import elieomatuku.cineast_android.ui.details.poster.PosterFragment
 import timber.log.Timber
 
 class GalleryPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
@@ -16,12 +15,12 @@ class GalleryPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapt
 
         if (posters.isNotEmpty()) {
             posters[position].file_path.let {
-                args.putString(GalleryPresenter.MOVIE_POSTER_PATH, it)
+                args.putString(GalleryFragment.MOVIE_POSTER_PATH, it)
             }
         }
 
         Timber.d("getItem: Args =  $args")
-        return PosterFragment.newInstance(args)
+        return GalleryPosterFragment.newInstance(args)
     }
 
     override fun getCount(): Int {

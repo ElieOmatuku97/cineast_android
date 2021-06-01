@@ -20,7 +20,6 @@ import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Poster
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
-import elieomatuku.cineast_android.ui.details.gallery.GalleryPresenter
 import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.ui.details.movie.overview.OverviewFragment
 import elieomatuku.cineast_android.ui.vu.ToolbarVu
@@ -141,7 +140,7 @@ class MovieVu(
     fun goToGallery(posters: List<Poster>?) {
         val galleryFragment = GalleryFragment.newInstance()
         val args = Bundle()
-        args.putParcelableArrayList(GalleryPresenter.POSTERS, posters as ArrayList<out Parcelable>)
+        args.putParcelableArrayList(GalleryFragment.POSTERS, posters as ArrayList<out Parcelable>)
         galleryFragment.arguments = args
 
         if (activity is AppCompatActivity) {

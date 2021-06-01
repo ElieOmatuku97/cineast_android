@@ -16,13 +16,11 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.ui.adapter.ContentAdapter
-import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.kodein.di.generic.instance
-
 
 /**
  * Created by elieomatuku on 2021-05-30
@@ -37,7 +35,6 @@ class ContentGridFragment<VM : ContentViewModel>(private val viewModelClass: Cla
 //        fun newPeopleGridFragment(): ContentGridFragment<ContentViewModel> {
 //            return ContentGridFragment(, PeopleActivity::class.java)
 //        }
-
     }
 
     private val contentSelectPublisher: PublishSubject<Content> by lazy {
@@ -85,15 +82,9 @@ class ContentGridFragment<VM : ContentViewModel>(private val viewModelClass: Cla
     }
 }
 
-
-
-
 abstract class ContentViewModel : ViewModel() {
 
     protected val contentService: ContentService by App.kodein.instance()
 
     abstract fun getContent(): LiveData<Content>
-
 }
-
-
