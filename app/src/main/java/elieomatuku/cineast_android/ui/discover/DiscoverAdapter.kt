@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.ui.viewholder.PeopleHolder
@@ -14,7 +13,7 @@ import kotlin.properties.Delegates
 
 class DiscoverAdapter(
     private val onMovieClickPublisher: PublishSubject<Movie>,
-    private val onPersonalityClickPublisher: PublishSubject<Person>,
+    private val onPersonalityClickPublisher: PublishSubject<Content>,
     private val loginClickPublisher: PublishSubject<Boolean>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

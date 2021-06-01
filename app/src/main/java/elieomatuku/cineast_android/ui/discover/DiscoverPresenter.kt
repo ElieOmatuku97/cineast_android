@@ -7,9 +7,9 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.core.model.AccessToken
 import elieomatuku.cineast_android.core.model.CineastError
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.presenter.BasePresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -86,7 +86,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
         rxSubs.add(
             vu.personSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { actor: Person ->
+                .subscribe { actor: Content ->
                     val params = Bundle()
                     params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
                     params.putParcelable(PEOPLE_KEY, actor)

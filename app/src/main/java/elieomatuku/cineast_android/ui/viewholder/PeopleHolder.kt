@@ -7,20 +7,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.adapter.PeopleAdapter
+import elieomatuku.cineast_android.ui.adapter.ContentAdapter
 import elieomatuku.cineast_android.ui.content_list.ContentListActivity
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 
-class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSubject<Person>) : ContentHolder(itemView) {
+class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSubject<Content>) : ContentHolder(itemView) {
 
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_people, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup, onPersonalityClickPublisher: PublishSubject<Person>): PeopleHolder {
+        fun newInstance(parent: ViewGroup, onPersonalityClickPublisher: PublishSubject<Content>): PeopleHolder {
             return PeopleHolder(createView(parent), onPersonalityClickPublisher)
         }
     }
@@ -29,8 +28,8 @@ class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSu
         itemView.see_all
     }
 
-    private val adapter: PeopleAdapter by lazy {
-        PeopleAdapter(onPeopleClickPublisher)
+    private val adapter: ContentAdapter by lazy {
+        ContentAdapter(onPeopleClickPublisher)
     }
 
     private val listView: RecyclerView by lazy {
@@ -38,7 +37,7 @@ class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSu
     }
 
     override fun update(content: List<Content>, titleRes: Int?) {
-        adapter.people = content.toMutableList() as MutableList<Person>
+        adapter.contents = content.toMutableList()
         listView.adapter = adapter
         adapter.notifyDataSetChanged()
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)

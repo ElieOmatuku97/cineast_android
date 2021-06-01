@@ -15,8 +15,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.AccessToken
 import elieomatuku.cineast_android.core.model.Account
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 import elieomatuku.cineast_android.ui.home.HomeActivity
 import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
@@ -47,11 +47,11 @@ class DiscoverVu(
     val movieSelectObservable: Observable<Movie>
         get() = movieSelectPublisher.hide()
 
-    private val personSelectPublisher: PublishSubject<Person> by lazy {
-        PublishSubject.create<Person>()
+    private val personSelectPublisher: PublishSubject<Content> by lazy {
+        PublishSubject.create<Content>()
     }
 
-    val personSelectObservable: Observable<Person>
+    val personSelectObservable: Observable<Content>
         get() = personSelectPublisher.hide()
 
     private val loginClickPublisher: PublishSubject<Boolean> by lazy {

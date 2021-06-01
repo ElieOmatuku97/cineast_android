@@ -2,7 +2,6 @@ package elieomatuku.cineast_android.ui.content_list
 
 import android.os.Bundle
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
 import elieomatuku.cineast_android.ui.presenter.ListPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,10 +19,10 @@ class ContentListPresenter : ListPresenter<ContentListVu>() {
         rxSubs.add(
             vu.personSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { person: Person ->
+                .subscribe { content: Content ->
                     val params = Bundle()
                     params.putString(SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
-                    params.putParcelable(PEOPLE_KEY, person)
+                    params.putParcelable(PEOPLE_KEY, content)
                     vu.gotoPeople(params)
                 }
         )
