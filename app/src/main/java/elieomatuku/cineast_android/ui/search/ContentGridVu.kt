@@ -3,6 +3,9 @@ package elieomatuku.cineast_android.ui.search
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
@@ -63,3 +66,4 @@ class ContentGridVu(
         adapter.notifyDataSetChanged()
     }
 }
+
