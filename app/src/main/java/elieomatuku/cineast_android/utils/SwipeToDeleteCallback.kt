@@ -7,10 +7,10 @@ import android.graphics.drawable.ColorDrawable
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.settings.user_movies.UserContentAdapter
+import elieomatuku.cineast_android.ui.settings.user_movies.UserContentsAdapter
 import timber.log.Timber
 
-class SwipeToDeleteCallback(val adapter: UserContentAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+class SwipeToDeleteCallback(val adapter: UserContentsAdapter) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
     private val background: ColorDrawable? = ColorDrawable(Color.RED)
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

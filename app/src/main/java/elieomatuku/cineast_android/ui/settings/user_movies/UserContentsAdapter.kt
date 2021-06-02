@@ -2,15 +2,15 @@ package elieomatuku.cineast_android.ui.settings.user_movies
 
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.adapter.ContentAdapter
+import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
 import io.reactivex.subjects.PublishSubject
 
-class UserContentAdapter(
+class UserContentsAdapter(
     onItemClickPublisher: PublishSubject<Content>,
     itemListLayoutRes: Int? = null,
     private val onMovieRemovedPublisher: PublishSubject<Movie>? = null
 ) :
-    ContentAdapter(onItemClickPublisher, itemListLayoutRes) {
+    ContentsAdapter(onItemClickPublisher, itemListLayoutRes) {
 
     fun deleteItem(position: Int) {
         val movie = contents[position]

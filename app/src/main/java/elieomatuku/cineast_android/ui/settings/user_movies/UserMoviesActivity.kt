@@ -16,14 +16,14 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.adapter.ContentAdapter
+import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.utils.SwipeToDeleteCallback
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_item_list.*
+import kotlinx.android.synthetic.main.activity_content.*
 import timber.log.Timber
 
 class UserMoviesActivity : AppCompatActivity() {
@@ -93,8 +93,8 @@ class UserMoviesActivity : AppCompatActivity() {
     private val onMovieRemovedObservable: Observable<Movie>
         get() = onMovieRemovedPublisher.hide()
 
-    private val adapter: ContentAdapter by lazy {
-        UserContentAdapter(movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
+    private val adapter: ContentsAdapter by lazy {
+        UserContentsAdapter(movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
     }
 
     private val listView: RecyclerView by lazy {
@@ -110,7 +110,7 @@ class UserMoviesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_list)
+        setContentView(R.layout.activity_content)
 
         isFavoriteList = intent.getBooleanExtra(DISPLAY_FAVORITE_LIST, false)
         isWatchList = intent.getBooleanExtra(DISPLAY_WATCH_LIST, false)
@@ -230,7 +230,7 @@ class UserMoviesActivity : AppCompatActivity() {
 
     private fun setUpListView(contents: List<Content>) {
         adapter.contents = contents.toMutableList()
-        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter as UserContentAdapter))
+        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter as UserContentsAdapter))
         itemTouchHelper.attachToRecyclerView(listView)
         listView.layoutManager = LinearLayoutManager(this)
         listView.adapter = adapter

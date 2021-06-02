@@ -46,7 +46,7 @@ abstract class ListPresenter<V> : BasePresenter<V>() where V : ListVu {
         )
 
         rxSubs.add(
-            vu.movieSelectObservable
+            vu.contentSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { movie: Content ->

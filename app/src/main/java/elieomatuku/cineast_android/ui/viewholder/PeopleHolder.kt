@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.adapter.ContentAdapter
-import elieomatuku.cineast_android.ui.content_list.ContentListActivity
+import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
+import elieomatuku.cineast_android.ui.content_list.ContentsActivity
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 
@@ -28,8 +28,8 @@ class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSu
         itemView.see_all
     }
 
-    private val adapter: ContentAdapter by lazy {
-        ContentAdapter(onPeopleClickPublisher)
+    private val adapter: ContentsAdapter by lazy {
+        ContentsAdapter(onPeopleClickPublisher)
     }
 
     private val listView: RecyclerView by lazy {
@@ -43,7 +43,7 @@ class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSu
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            ContentListActivity.startItemListActivity(itemView.context, content, titleRes ?: R.string.popular_people)
+            ContentsActivity.startActivity(itemView.context, content, titleRes ?: R.string.popular_people)
         }
     }
 }

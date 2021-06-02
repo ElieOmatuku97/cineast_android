@@ -15,7 +15,7 @@ import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.adapter.ContentAdapter
+import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -49,8 +49,8 @@ class ContentGridFragment<VM : ContentViewModel>(private val viewModelClass: Cla
     }
 
     var gridLayoutManager: GridLayoutManager? = null
-    private val adapter: ContentAdapter by lazy {
-        ContentAdapter(contentSelectPublisher, R.layout.holder_grid_content)
+    private val adapter: ContentsAdapter by lazy {
+        ContentsAdapter(contentSelectPublisher, R.layout.holder_grid_content)
     }
 
     private lateinit var viewModel: VM

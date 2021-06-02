@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.adapter.ContentAdapter
+import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
 import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import elieomatuku.cineast_android.ui.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -41,8 +41,8 @@ class ContentGridVu(
     }
 
     var gridLayoutManager: GridLayoutManager? = null
-    private val adapter: ContentAdapter by lazy {
-        ContentAdapter(contentSelectPublisher, R.layout.holder_grid_content)
+    private val adapter: ContentsAdapter by lazy {
+        ContentsAdapter(contentSelectPublisher, R.layout.holder_grid_content)
     }
 
     override fun onCreate() {

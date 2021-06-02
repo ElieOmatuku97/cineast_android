@@ -12,7 +12,7 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-open class ContentAdapter(
+open class ContentsAdapter(
     private val onItemClickPublisher: PublishSubject<Content>,
     private val itemListLayoutRes: Int? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

@@ -17,8 +17,8 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
-import elieomatuku.cineast_android.ui.adapter.ContentAdapter
-import elieomatuku.cineast_android.ui.content_list.ContentListActivity
+import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
+import elieomatuku.cineast_android.ui.content_list.ContentsActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import io.reactivex.Observable
@@ -82,8 +82,8 @@ class MoviesFragment : BaseFragment() {
         viewDataBinding.seeAll
     }
 
-    private val adapter: ContentAdapter by lazy {
-        ContentAdapter(movieSelectPublisher)
+    private val adapter: ContentsAdapter by lazy {
+        ContentsAdapter(movieSelectPublisher)
     }
 
     private lateinit var movies: List<Movie>
@@ -145,7 +145,7 @@ class MoviesFragment : BaseFragment() {
 
         seeAllClickView.setOnClickListener {
             context?.let {
-                ContentListActivity.startItemListActivity(it, movies, R.string.movies)
+                ContentsActivity.startActivity(it, movies, R.string.movies)
             }
         }
     }

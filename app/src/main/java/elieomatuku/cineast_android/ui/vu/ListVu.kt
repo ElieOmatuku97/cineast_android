@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.core.model.Movie
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_item_list.view.*
+import kotlinx.android.synthetic.main.activity_content.view.*
+
 
 abstract class ListVu(
     inflater: LayoutInflater,
@@ -31,19 +31,19 @@ abstract class ListVu(
         get() = rootView.toolbar
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.activity_item_list
+        return R.layout.activity_content
     }
 
     protected val listView: RecyclerView by lazy {
         rootView.list_view_container
     }
 
-    protected val movieSelectPublisher: PublishSubject<Content> by lazy {
+    protected val contentSelectPublisher: PublishSubject<Content> by lazy {
         PublishSubject.create<Content>()
     }
 
-    val movieSelectObservable: Observable<Content>
-        get() = movieSelectPublisher.hide()
+    val contentSelectObservable: Observable<Content>
+        get() = contentSelectPublisher.hide()
 
     override fun onCreate() {
         super.onCreate()
@@ -51,12 +51,6 @@ abstract class ListVu(
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    protected val onMovieRemovedPublisher: PublishSubject<Movie> by lazy {
-        PublishSubject.create<Movie>()
-    }
-
-    val onMovieRemovedObservable: Observable<Movie>
-        get() = onMovieRemovedPublisher.hide()
 
     fun updateVu(contents: List<Content>?, screenNameRes: Int? = null) {
         setToolbarTitle(screenNameRes)
