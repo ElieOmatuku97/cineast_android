@@ -18,6 +18,7 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
+import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.SwipeToDeleteCallback
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.Observable
@@ -31,7 +32,6 @@ class UserMoviesActivity : AppCompatActivity() {
         private const val DISPLAY_FAVORITE_LIST = "favorite_list_key"
         private const val DISPLAY_WATCH_LIST = "watch_list_key"
 
-        const val SCREEN_NAME_KEY = "screen_name"
         const val SCREEN_NAME = "Search"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
@@ -41,7 +41,7 @@ class UserMoviesActivity : AppCompatActivity() {
             val params = Bundle()
 
             if (resources != null) {
-                params.putInt(UiUtils.SCREEN_NAME_KEY, resources)
+                params.putInt(Constants.SCREEN_NAME_KEY, resources)
             }
 
             intent.putExtras(params)
@@ -141,7 +141,7 @@ class UserMoviesActivity : AppCompatActivity() {
                 .subscribe(
                     { movie: Content ->
                         val params = Bundle()
-                        params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
+                        params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
                         params.putParcelable(MOVIE_KEY, movie)
                         params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
                         gotoMovie(params)
@@ -213,7 +213,7 @@ class UserMoviesActivity : AppCompatActivity() {
     }
 
     private fun updateView(contents: List<Content>?) {
-        val screenNameRes = intent.getIntExtra(SCREEN_NAME_KEY, 0)
+        val screenNameRes = intent.getIntExtra(Constants.SCREEN_NAME_KEY, 0)
         setToolbarTitle(screenNameRes)
         contents?.let {
             if (it.isNotEmpty()) {

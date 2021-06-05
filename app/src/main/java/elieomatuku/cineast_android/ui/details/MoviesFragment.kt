@@ -21,6 +21,7 @@ import elieomatuku.cineast_android.ui.contents.ContentsActivity
 import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
+import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -37,7 +38,6 @@ class MoviesFragment : BaseFragment() {
         const val MOVIES = "movies"
         const val TITLE = "title"
         private const val SELECTED_MOVIE_TITLE = "gotomovie_title"
-        const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
 
@@ -121,7 +121,7 @@ class MoviesFragment : BaseFragment() {
                     .subscribe(
                         { movie: Content ->
                             val params = Bundle()
-                            params.putString(SCREEN_NAME_KEY, selectedMovieTitle)
+                            params.putString(Constants.SCREEN_NAME_KEY, selectedMovieTitle)
                             params.putParcelable(MOVIE_KEY, movie)
                             params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                             gotoMovie(params)

@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.fragment.app.FragmentActivity
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Genre
 import timber.log.Timber
@@ -31,12 +30,6 @@ object UiUtils {
     val LOG_TAG = UiUtils::class.java.simpleName
     val loadingViewDimRes: Int
         get() = R.dimen.loading_widget_dimen
-
-    private const val YOUTUBE_URL = "https://img.youtube.com"
-    private const val PARAM_VIDEO = "vi"
-
-    const val WIDGET_KEY = "content"
-    const val SCREEN_NAME_KEY = "screen_name"
 
     fun createLoadingIndicator(activity: Activity): PopupWindow {
         val inflator = LayoutInflater.from(activity)
@@ -53,17 +46,12 @@ object UiUtils {
         return displayMetrics
     }
 
-    fun getDisplayMetrics(activity: FragmentActivity): DisplayMetrics {
-        val displayMetrics = DisplayMetrics()
-        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        return displayMetrics
-    }
 
     fun getImageUrl(path: String?, imageUrl: String?, fallBackImageUrl: String? = null): String {
         return getImageUri(imageUrl, fallBackImageUrl)
-            .buildUpon()
-            .appendEncodedPath(path)
-            .toString()
+                .buildUpon()
+                .appendEncodedPath(path)
+                .toString()
     }
 
     private fun getImageUri(imageUrl: String?, fallBackImageUrl: String?): Uri {
@@ -85,13 +73,13 @@ object UiUtils {
     }
 
     fun getYoutubeThumbnailPath(videoKey: String?, paramVideoSize: String?): String {
-        return Uri.parse(YOUTUBE_URL)
-            .buildUpon()
-            .appendPath(PARAM_VIDEO)
-            .appendPath(videoKey)
-            .appendPath(paramVideoSize)
-            .build()
-            .toString()
+        return Uri.parse(Constants.YOUTUBE_URL)
+                .buildUpon()
+                .appendPath(Constants.PARAM_VIDEO)
+                .appendPath(videoKey)
+                .appendPath(paramVideoSize)
+                .build()
+                .toString()
     }
 
     fun mapMovieGenreIdsWithGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): String? {
@@ -128,10 +116,10 @@ object UiUtils {
 
     private fun configureShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent {
         return Intent()
-            .setAction(Intent.ACTION_SEND)
-            .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
-            .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
-            .setType("text/plain")
+                .setAction(Intent.ACTION_SEND)
+                .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
+                .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
+                .setType("text/plain")
     }
 
     private fun getTintedDrawable(icon: Drawable, context: Context, color: Int): Drawable {

@@ -15,6 +15,7 @@ import elieomatuku.cineast_android.databinding.FragmentOverviewBinding
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.details.people.PeoplePresenter
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
+import elieomatuku.cineast_android.utils.Constants.SCREEN_NAME_KEY
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -23,7 +24,6 @@ import timber.log.Timber
 class MovieTeamFragment : BaseFragment() {
     companion object {
         const val MOVIE_SUMMARY = "movie_summary"
-        const val SCREEN_NAME_KEY = "screen_name"
         const val PEOPLE_KEY = "peopleApi"
 
         fun newInstance(movieSummary: MovieSummary): MovieTeamFragment {

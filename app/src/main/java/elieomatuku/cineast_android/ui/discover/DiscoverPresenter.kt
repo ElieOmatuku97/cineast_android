@@ -11,6 +11,7 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.presenter.BasePresenter
+import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.kodein.di.generic.instance
@@ -20,7 +21,6 @@ import java.util.ArrayList
 class DiscoverPresenter : BasePresenter<DiscoverVu>() {
     companion object {
         const val SCREEN_NAME = "Discover"
-        const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_GENRES_KEY = "genres"
         const val MOVIE_KEY = "movieApi"
         const val PEOPLE_KEY = "peopleApi"
@@ -72,7 +72,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .subscribe(
                     { movie: Movie ->
                         val params = Bundle()
-                        params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
+                        params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
                         params.putParcelable(MOVIE_KEY, movie)
                         params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                         vu.gotoMovie(params)
@@ -88,7 +88,7 @@ class DiscoverPresenter : BasePresenter<DiscoverVu>() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { actor: Content ->
                     val params = Bundle()
-                    params.putString(SCREEN_NAME_KEY, SCREEN_NAME)
+                    params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
                     params.putParcelable(PEOPLE_KEY, actor)
                     vu.gotoPeople(params)
                 }

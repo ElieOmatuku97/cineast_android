@@ -11,6 +11,7 @@ import elieomatuku.cineast_android.core.model.MovieFacts
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Trailer
 import elieomatuku.cineast_android.ui.presenter.BasePresenter
+import elieomatuku.cineast_android.utils.Constants.SCREEN_NAME_KEY
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +22,6 @@ class MoviePresenter : BasePresenter<MovieVu>() {
     companion object {
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
-        const val SCREEN_NAME_KEY = "screen_name"
     }
 
     private val tmdbUserClient: TmdbUserClient by App.kodein.instance()

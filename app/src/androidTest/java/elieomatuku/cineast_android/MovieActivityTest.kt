@@ -17,6 +17,7 @@ import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
+import elieomatuku.cineast_android.utils.Constants
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -52,7 +53,7 @@ class MovieActivityTest {
     fun registerIdlingResource() {
 
         val params = Bundle()
-        params.putString(DiscoverPresenter.SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
+        params.putString(Constants.SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
         params.putParcelable(DiscoverPresenter.MOVIE_KEY, movie)
         params.putParcelableArrayList(DiscoverPresenter.MOVIE_GENRES_KEY, ArrayList(listOf<Genre>(Genre(12, "adventure"))))
 

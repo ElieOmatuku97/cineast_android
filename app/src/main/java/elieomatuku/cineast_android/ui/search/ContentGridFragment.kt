@@ -20,6 +20,7 @@ import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import elieomatuku.cineast_android.ui.search.movie.MoviesGridPresenter
+import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -46,7 +47,7 @@ class ContentGridFragment<VM : ContentViewModel>(private val viewModelClass: Cla
         PublishSubject.create<Content>()
     }
 
-    val contentSelectObservable: Observable<Content>
+    private val contentSelectObservable: Observable<Content>
         get() = contentSelectPublisher.hide()
 
     private val gridView by lazy {
@@ -77,7 +78,7 @@ class ContentGridFragment<VM : ContentViewModel>(private val viewModelClass: Cla
                         .subscribe(
                                 { movie: Content ->
                                     val params = Bundle()
-                                    params.putString(MoviesGridPresenter.SCREEN_NAME_KEY, MoviesGridPresenter.SCREEN_NAME)
+                                    params.putString(Constants.SCREEN_NAME_KEY, MoviesGridPresenter.SCREEN_NAME)
                                     params.putParcelable(MoviesGridPresenter.CONTENT_KEY, movie)
                                     params.putParcelableArrayList(MoviesGridPresenter.MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
                                     gotoContent(params)

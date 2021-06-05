@@ -15,6 +15,7 @@ import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
 import elieomatuku.cineast_android.ui.vu.ListVu
+import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,7 +27,6 @@ class ContentsActivity : BaseActivity() {
     companion object {
         const val FIRST_WIDGET_TYPE_OCCURENCE = 0
         const val WIDGET_KEY = "content"
-        const val SCREEN_NAME_KEY = "screen_name"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
         const val PEOPLE_KEY = "peopleApi"
@@ -34,10 +34,10 @@ class ContentsActivity : BaseActivity() {
         fun startActivity(context: Context, contents: List<Content>, screenNameRes: Int? = null) {
             val intent = Intent(context, ContentsActivity::class.java)
             val params = Bundle()
-            params.putParcelableArrayList(UiUtils.WIDGET_KEY, contents as ArrayList<out Parcelable>)
+            params.putParcelableArrayList(Constants.WIDGET_KEY, contents as ArrayList<out Parcelable>)
 
             if (screenNameRes != null) {
-                params.putInt(UiUtils.SCREEN_NAME_KEY, screenNameRes)
+                params.putInt(Constants.SCREEN_NAME_KEY, screenNameRes)
             }
 
             intent.putExtras(params)
@@ -74,7 +74,7 @@ class ContentsActivity : BaseActivity() {
         setContentView(R.layout.activity_content)
 
         val contents: List<Content>? = intent.getParcelableArrayListExtra(WIDGET_KEY)
-        val screenNameRes = intent.getIntExtra(SCREEN_NAME_KEY, 0)
+        val screenNameRes = intent.getIntExtra(Constants.SCREEN_NAME_KEY, 0)
 
         updateView(contents, screenNameRes)
     }
@@ -83,22 +83,22 @@ class ContentsActivity : BaseActivity() {
         super.onResume()
 
         rxSubs.add(
-            contentSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { content: Content ->
-                    val params = Bundle()
+                contentSelectObservable
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe { content: Content ->
+                            val params = Bundle()
 
-                    params.putString(SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
+                            params.putString(Constants.SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
 
-                    if (content is Person) {
-                        params.putParcelable(PEOPLE_KEY, content)
-                        gotoContent(params, PeopleActivity::class.java)
-                    } else {
-                        params.putParcelable(MOVIE_KEY, content)
-                        params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
-                        gotoContent(params, MovieActivity::class.java)
-                    }
-                }
+                            if (content is Person) {
+                                params.putParcelable(PEOPLE_KEY, content)
+                                gotoContent(params, PeopleActivity::class.java)
+                            } else {
+                                params.putParcelable(MOVIE_KEY, content)
+                                params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
+                                gotoContent(params, MovieActivity::class.java)
+                            }
+                        }
         )
     }
 
