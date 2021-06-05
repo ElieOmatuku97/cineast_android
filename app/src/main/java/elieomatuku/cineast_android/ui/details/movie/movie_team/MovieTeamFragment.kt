@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Cast
+import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.databinding.FragmentOverviewBinding
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.details.people.PeoplePresenter
@@ -41,11 +41,11 @@ class MovieTeamFragment : BaseFragment() {
 
     var movieTitle: String? = null
 
-    private val onPeopleSelectPublisher: PublishSubject<Person> by lazy {
-        PublishSubject.create<Person>()
+    private val onPeopleSelectPublisher: PublishSubject<Content> by lazy {
+        PublishSubject.create<Content>()
     }
 
-    private val onPeopleSelectObservable: Observable<Person>
+    private val onPeopleSelectObservable: Observable<Content>
         get() = onPeopleSelectPublisher.hide()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -80,7 +80,7 @@ class MovieTeamFragment : BaseFragment() {
         viewDataBinding.overviewList.layoutManager = LinearLayoutManager(activity)
     }
 
-    private fun onPeopleSelectedSuccess(person: Person) {
+    private fun onPeopleSelectedSuccess(person: Content) {
         val params = Bundle()
         params.putString(SCREEN_NAME_KEY, movieTitle)
         params.putParcelable(PEOPLE_KEY, person)

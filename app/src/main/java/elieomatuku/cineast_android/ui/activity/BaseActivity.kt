@@ -10,7 +10,7 @@ import org.kodein.di.generic.instance
 
 abstract class BaseActivity : AppCompatActivity() {
 
-    protected val connectionService: ConnectionService by App.kodein.instance()
+    private val connectionService: ConnectionService by App.kodein.instance()
 
     val rxSubs: io.reactivex.disposables.CompositeDisposable by lazy {
         io.reactivex.disposables.CompositeDisposable()
