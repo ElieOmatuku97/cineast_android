@@ -20,7 +20,7 @@ class MoviesGridFragment : MVPFragment<MoviesGridPresenter, ContentGridVu>() {
         return MVPDispatcher(
             MVP_UID,
             // Using PresenterCacheLazy since PresenterCacheLoaderCallback gives issues where presenter is null in onSaveState
-            PresenterCacheLazy({ MoviesGridPresenter() }),
+            PresenterCacheLazy { MoviesGridPresenter() },
             ::ContentGridVu
         )
     }

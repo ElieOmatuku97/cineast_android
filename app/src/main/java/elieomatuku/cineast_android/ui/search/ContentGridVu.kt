@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
+import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import elieomatuku.cineast_android.ui.vu.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper

@@ -34,7 +34,7 @@
         <activity android:name="elieomatuku.cineast_android.ui.details.movie.MovieActivity" />
         <activity android:name="elieomatuku.cineast_android.ui.details.people.PeopleActivity" />
         <activity android:name="elieomatuku.cineast_android.ui.settings.user_movies.UserMoviesActivity" />
-        <activity android:name="elieomatuku.cineast_android.ui.content_list.ContentsActivity" />
+        <activity android:name="elieomatuku.cineast_android.ui.contents.ContentsActivity" />
 
     </application>
 

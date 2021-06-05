@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
-import elieomatuku.cineast_android.ui.content_list.ContentsActivity
+import elieomatuku.cineast_android.ui.contents.ContentsActivity
+import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 

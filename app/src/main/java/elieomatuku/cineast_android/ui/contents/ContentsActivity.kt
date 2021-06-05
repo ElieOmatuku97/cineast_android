@@ -1,16 +1,16 @@
-package elieomatuku.cineast_android.ui.content_list
+package elieomatuku.cineast_android.ui.contents
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
 import elieomatuku.cineast_android.ui.activity.BaseActivity
-import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
@@ -27,11 +27,9 @@ class ContentsActivity : BaseActivity() {
         const val FIRST_WIDGET_TYPE_OCCURENCE = 0
         const val WIDGET_KEY = "content"
         const val SCREEN_NAME_KEY = "screen_name"
-        const val SCREEN_NAME = "Search"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
         const val PEOPLE_KEY = "peopleApi"
-
 
         fun startActivity(context: Context, contents: List<Content>, screenNameRes: Int? = null) {
             val intent = Intent(context, ContentsActivity::class.java)
@@ -46,7 +44,6 @@ class ContentsActivity : BaseActivity() {
             context.startActivity(intent)
         }
     }
-
 
     private val contentSelectPublisher: PublishSubject<Content> by lazy {
         PublishSubject.create<Content>()
@@ -69,6 +66,7 @@ class ContentsActivity : BaseActivity() {
         list_view_container
     }
 
+    private val viewModel: ContentsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,25 +83,24 @@ class ContentsActivity : BaseActivity() {
         super.onResume()
 
         rxSubs.add(
-                contentSelectObservable
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe { content: Content ->
-                            val params = Bundle()
+            contentSelectObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe { content: Content ->
+                    val params = Bundle()
 
-                            params.putString(SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
+                    params.putString(SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
 
-                            if (content is Person) {
-                                params.putParcelable(PEOPLE_KEY, content)
-                                gotoContent(params, PeopleActivity::class.java)
-                            } else {
-                                params.putParcelable(MOVIE_KEY, content)
-                                params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
-                                gotoContent(params, MovieActivity::class.java)
-                            }
-                        }
+                    if (content is Person) {
+                        params.putParcelable(PEOPLE_KEY, content)
+                        gotoContent(params, PeopleActivity::class.java)
+                    } else {
+                        params.putParcelable(MOVIE_KEY, content)
+                        params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
+                        gotoContent(params, MovieActivity::class.java)
+                    }
+                }
         )
     }
-
 
     override fun onSupportNavigateUp(): Boolean {
         if (!super.onSupportNavigateUp()) {
@@ -120,7 +117,6 @@ class ContentsActivity : BaseActivity() {
             }
         }
     }
-
 
     private fun setToolbarTitle(screenNameRes: Int? = null) {
         toolbar?.title = screenNameRes?.let {

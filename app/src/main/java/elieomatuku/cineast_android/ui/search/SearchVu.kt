@@ -9,7 +9,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.content_list.ContentsActivity
+import elieomatuku.cineast_android.ui.contents.ContentsActivity
 import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper

@@ -17,8 +17,8 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
-import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
-import elieomatuku.cineast_android.ui.content_list.ContentsActivity
+import elieomatuku.cineast_android.ui.contents.ContentsActivity
+import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
 import io.reactivex.Observable

@@ -13,7 +13,6 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_content.view.*
 
-
 abstract class ListVu(
     inflater: LayoutInflater,
     activity: Activity,
@@ -50,7 +49,6 @@ abstract class ListVu(
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity)
     }
-
 
     fun updateVu(contents: List<Content>?, screenNameRes: Int? = null) {
         setToolbarTitle(screenNameRes)

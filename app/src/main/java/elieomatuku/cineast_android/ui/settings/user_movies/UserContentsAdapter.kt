@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.ui.settings.user_movies
 
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.adapter.ContentsAdapter
+import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import io.reactivex.subjects.PublishSubject
 
 class UserContentsAdapter(

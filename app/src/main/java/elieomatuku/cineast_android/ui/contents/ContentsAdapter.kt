@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.adapter
+package elieomatuku.cineast_android.ui.contents
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +13,8 @@ import timber.log.Timber
 import kotlin.properties.Delegates
 
 open class ContentsAdapter(
-    private val onItemClickPublisher: PublishSubject<Content>,
-    private val itemListLayoutRes: Int? = null
+        private val onContentClickPublisher: PublishSubject<Content>,
+        private val contentLayoutRes: Int? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -69,9 +69,9 @@ open class ContentsAdapter(
 
             TYPE_CONTENT -> {
                 if (contents.first() is Movie) {
-                    MovieItemHolder.newInstance(parent, itemListLayoutRes)
+                    MovieItemHolder.newInstance(parent, contentLayoutRes)
                 } else {
-                    PeopleItemHolder.newInstance(parent, itemListLayoutRes)
+                    PeopleItemHolder.newInstance(parent, contentLayoutRes)
                 }
             }
 
@@ -88,7 +88,7 @@ open class ContentsAdapter(
 
                 holder.itemView.setOnClickListener {
                     Timber.d("CLICKED && movieApi:  ${contents[position]}")
-                    onItemClickPublisher.onNext(contents[position])
+                    onContentClickPublisher.onNext(contents[position])
                 }
             }
 
@@ -100,7 +100,7 @@ open class ContentsAdapter(
                 }
 
                 holder.itemView.setOnClickListener {
-                    onItemClickPublisher.onNext(people)
+                    onContentClickPublisher.onNext(people)
                 }
             }
 
