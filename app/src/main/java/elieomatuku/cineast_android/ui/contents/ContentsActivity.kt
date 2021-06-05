@@ -16,7 +16,6 @@ import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
 import elieomatuku.cineast_android.ui.vu.ListVu
 import elieomatuku.cineast_android.utils.Constants
-import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -83,22 +82,22 @@ class ContentsActivity : BaseActivity() {
         super.onResume()
 
         rxSubs.add(
-                contentSelectObservable
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe { content: Content ->
-                            val params = Bundle()
+            contentSelectObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe { content: Content ->
+                    val params = Bundle()
 
-                            params.putString(Constants.SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
+                    params.putString(Constants.SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
 
-                            if (content is Person) {
-                                params.putParcelable(PEOPLE_KEY, content)
-                                gotoContent(params, PeopleActivity::class.java)
-                            } else {
-                                params.putParcelable(MOVIE_KEY, content)
-                                params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
-                                gotoContent(params, MovieActivity::class.java)
-                            }
-                        }
+                    if (content is Person) {
+                        params.putParcelable(PEOPLE_KEY, content)
+                        gotoContent(params, PeopleActivity::class.java)
+                    } else {
+                        params.putParcelable(MOVIE_KEY, content)
+                        params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
+                        gotoContent(params, MovieActivity::class.java)
+                    }
+                }
         )
     }
 

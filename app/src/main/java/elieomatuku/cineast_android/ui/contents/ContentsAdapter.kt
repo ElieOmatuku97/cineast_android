@@ -13,8 +13,8 @@ import timber.log.Timber
 import kotlin.properties.Delegates
 
 open class ContentsAdapter(
-        private val onContentClickPublisher: PublishSubject<Content>,
-        private val contentLayoutRes: Int? = null
+    private val onContentClickPublisher: PublishSubject<Content>,
+    private val contentLayoutRes: Int? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {

@@ -4,8 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.search.movie.MoviesGridFragment
-import elieomatuku.cineast_android.ui.search.people.PeopleSearchFragment
 import timber.log.Timber
 
 class SearchFragmentPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
@@ -27,7 +25,7 @@ class SearchFragmentPagerAdapter(fragment: Fragment) : FragmentStateAdapter(frag
         Timber.d("SearchFragmentPagerAdapter position: $position")
         return when (titleResList[position]) {
             R.string.movies -> MoviesGridFragment.newInstance()
-            R.string.people -> PeopleSearchFragment.newInstance()
+            R.string.people -> PeopleGridFragment.newInstance()
             else -> MoviesGridFragment.newInstance()
         }
     }
