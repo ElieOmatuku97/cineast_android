@@ -8,6 +8,9 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.text.Spannable
+import android.text.Spanned
+import android.text.style.URLSpan
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -48,9 +51,9 @@ object UiUtils {
 
     fun getImageUrl(path: String?, imageUrl: String?, fallBackImageUrl: String? = null): String {
         return getImageUri(imageUrl, fallBackImageUrl)
-            .buildUpon()
-            .appendEncodedPath(path)
-            .toString()
+                .buildUpon()
+                .appendEncodedPath(path)
+                .toString()
     }
 
     private fun getImageUri(imageUrl: String?, fallBackImageUrl: String?): Uri {
@@ -73,12 +76,12 @@ object UiUtils {
 
     fun getYoutubeThumbnailPath(videoKey: String?, paramVideoSize: String?): String {
         return Uri.parse(Constants.YOUTUBE_URL)
-            .buildUpon()
-            .appendPath(Constants.PARAM_VIDEO)
-            .appendPath(videoKey)
-            .appendPath(paramVideoSize)
-            .build()
-            .toString()
+                .buildUpon()
+                .appendPath(Constants.PARAM_VIDEO)
+                .appendPath(videoKey)
+                .appendPath(paramVideoSize)
+                .build()
+                .toString()
     }
 
     fun mapMovieGenreIdsWithGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): String? {
@@ -115,10 +118,10 @@ object UiUtils {
 
     private fun configureShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent {
         return Intent()
-            .setAction(Intent.ACTION_SEND)
-            .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
-            .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
-            .setType("text/plain")
+                .setAction(Intent.ACTION_SEND)
+                .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
+                .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
+                .setType("text/plain")
     }
 
     private fun getTintedDrawable(icon: Drawable, context: Context, color: Int): Drawable {
@@ -195,5 +198,12 @@ object UiUtils {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             context.startActivity(browserIntent)
         }
+    }
+
+    fun configSpannableLinkify(urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {
+        val spanStart = spannable.getSpanStart(urlSpan)
+        val spanEnd = spannable.getSpanEnd(urlSpan)
+        spannable.setSpan(linkSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannable.removeSpan(urlSpan)
     }
 }

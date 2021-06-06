@@ -1,6 +1,8 @@
 package elieomatuku.cineast_android.ui.search.people
 
 import elieomatuku.cineast_android.ui.contents.ContentGridViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -17,24 +19,18 @@ class PeopleGridViewModel : ContentGridViewModel() {
 
     override fun getContent() {
         GlobalScope.launch {
-//            contentService.personalities()
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(
-//                            {
-//                                vu.hideLoading()
-//                                vu.populateGridView(it)
-//                            },
-//                            { error ->
-//                                vu.updateErrorView(error.message)
-//                            }
-//                    )
+            contentService.personalities()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            {
+                                contentLiveData.value = it
+                            },
+                            { error ->
+                                errorMsgLiveData.value = error.message
+                            }
+                    )
 
-            contentService.popularMovies().doAfterNext {
-                contentLiveData.value = it
-            }.doOnError {
-                errorMsgLiveData.value = it.message
-            }
         }
     }
 }

@@ -14,7 +14,6 @@ import elieomatuku.cineast_android.ui.activity.BaseActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
-import elieomatuku.cineast_android.ui.vu.ListVu
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -131,7 +130,7 @@ class ContentsActivity : BaseActivity() {
     }
 
     private fun areWidgetsMovies(contents: List<Content?>): Boolean {
-        return (contents[FIRST_WIDGET_TYPE_OCCURENCE] != null) && (contents[ListVu.FIRST_WIDGET_TYPE_OCCURENCE] is Movie)
+        return (contents[FIRST_WIDGET_TYPE_OCCURENCE] != null) && (contents[FIRST_WIDGET_TYPE_OCCURENCE] is Movie)
     }
 
     private fun gotoContent(params: Bundle, contentActivityClass: Class<*>) {

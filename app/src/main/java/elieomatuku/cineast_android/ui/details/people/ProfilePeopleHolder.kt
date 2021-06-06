@@ -91,7 +91,7 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
             homepageView.visibility = View.VISIBLE
             val spannable = SpannableString(Html.fromHtml(peopleDetails?.homepage))
             Linkify.addLinks(spannable, Linkify.WEB_URLS)
-            homepageView.setMovementMethod(LinkMovementMethod.getInstance())
+            homepageView.movementMethod = LinkMovementMethod.getInstance()
             homepageView.setText(linkify(spannable), TextView.BufferType.SPANNABLE)
         } else {
             homepageView.visibility = View.GONE

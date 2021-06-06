@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.ui.fragment.BaseFragment
+import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -47,12 +48,16 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
 
         viewModel = ViewModelProvider(this).get<VM>(viewModelClass)
 
+
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.contentLiveData.observe(viewLifecycleOwner, Observer { res -> updateView(res) })
+        viewModel.contentLiveData.observe(viewLifecycleOwner, Observer { res ->
+
+            updateView(res)
+        })
         viewModel.errorMsgLiveData.observe(this.viewLifecycleOwner, Observer { res -> updateErrorView(res) })
     }
 
@@ -74,9 +79,10 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
     }
 
     private fun updateView(content: List<Content>) {
+        gridView.adapter = adapter
 //        vu.hideLoading()
         adapter.contents = content.toMutableList()
-        gridView.layoutManager = gridLayoutManager
+        gridView.layoutManager = GridLayoutManager(context, GRID_VIEW_NUMBER_OF_COLUMNS)
         adapter.notifyDataSetChanged()
     }
 
