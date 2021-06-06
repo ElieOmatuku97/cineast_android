@@ -7,7 +7,6 @@ import elieomatuku.cineast_android.ui.contents.ContentGridFragment
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.utils.Constants
 
-
 /**
  * Created by elieomatuku on 2021-06-05
  */

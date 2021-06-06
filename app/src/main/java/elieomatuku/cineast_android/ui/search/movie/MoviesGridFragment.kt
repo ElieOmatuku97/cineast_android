@@ -12,8 +12,6 @@ import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.ui.contents.ContentGridFragment
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.utils.Constants
-import timber.log.Timber
-
 
 /**
  * Created by elieomatuku on 2021-06-05
@@ -34,10 +32,10 @@ class MoviesGridFragment : ContentGridFragment<MoviesGridViewModel>(MoviesGridVi
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         viewModel.genresLiveData.observe(
-                this.viewLifecycleOwner,
-                Observer {
-                    genres = it
-                }
+            this.viewLifecycleOwner,
+            Observer {
+                genres = it
+            }
         )
         return super.onCreateView(inflater, container, savedInstanceState)
     }

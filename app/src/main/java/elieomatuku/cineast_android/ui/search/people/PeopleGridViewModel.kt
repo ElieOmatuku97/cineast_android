@@ -20,17 +20,16 @@ class PeopleGridViewModel : ContentGridViewModel() {
     override fun getContent() {
         GlobalScope.launch {
             contentService.personalities()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            {
-                                contentLiveData.value = it
-                            },
-                            { error ->
-                                errorMsgLiveData.value = error.message
-                            }
-                    )
-
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        contentLiveData.value = it
+                    },
+                    { error ->
+                        errorMsgLiveData.value = error.message
+                    }
+                )
         }
     }
 }

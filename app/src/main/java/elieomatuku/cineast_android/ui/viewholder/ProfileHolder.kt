@@ -15,18 +15,17 @@ abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         val spans = spannable.getSpans(0, spannable.length, URLSpan::class.java)
         for (urlSpan in spans) {
             UiUtils.configSpannableLinkify(
-                    urlSpan, spannable,
-                    object : URLSpan(urlSpan.url) {
-                        override fun onClick(view: View) {
-                            gotoWebview(url)
-                        }
+                urlSpan, spannable,
+                object : URLSpan(urlSpan.url) {
+                    override fun onClick(view: View) {
+                        gotoWebview(url)
                     }
+                }
             )
         }
 
         return spannable
     }
-
 
     override fun gotoWebview(value: String) {
         val webViewFragment: WebviewFragment = WebviewFragment.newInstance(value)

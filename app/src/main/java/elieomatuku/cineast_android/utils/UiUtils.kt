@@ -51,9 +51,9 @@ object UiUtils {
 
     fun getImageUrl(path: String?, imageUrl: String?, fallBackImageUrl: String? = null): String {
         return getImageUri(imageUrl, fallBackImageUrl)
-                .buildUpon()
-                .appendEncodedPath(path)
-                .toString()
+            .buildUpon()
+            .appendEncodedPath(path)
+            .toString()
     }
 
     private fun getImageUri(imageUrl: String?, fallBackImageUrl: String?): Uri {
@@ -76,12 +76,12 @@ object UiUtils {
 
     fun getYoutubeThumbnailPath(videoKey: String?, paramVideoSize: String?): String {
         return Uri.parse(Constants.YOUTUBE_URL)
-                .buildUpon()
-                .appendPath(Constants.PARAM_VIDEO)
-                .appendPath(videoKey)
-                .appendPath(paramVideoSize)
-                .build()
-                .toString()
+            .buildUpon()
+            .appendPath(Constants.PARAM_VIDEO)
+            .appendPath(videoKey)
+            .appendPath(paramVideoSize)
+            .build()
+            .toString()
     }
 
     fun mapMovieGenreIdsWithGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): String? {
@@ -118,10 +118,10 @@ object UiUtils {
 
     private fun configureShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent {
         return Intent()
-                .setAction(Intent.ACTION_SEND)
-                .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
-                .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
-                .setType("text/plain")
+            .setAction(Intent.ACTION_SEND)
+            .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
+            .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
+            .setType("text/plain")
     }
 
     private fun getTintedDrawable(icon: Drawable, context: Context, color: Int): Drawable {

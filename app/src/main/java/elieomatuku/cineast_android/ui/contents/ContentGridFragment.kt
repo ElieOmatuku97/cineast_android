@@ -48,16 +48,18 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
 
         viewModel = ViewModelProvider(this).get<VM>(viewModelClass)
 
-
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.contentLiveData.observe(viewLifecycleOwner, Observer { res ->
+        viewModel.contentLiveData.observe(
+            viewLifecycleOwner,
+            Observer { res ->
 
-            updateView(res)
-        })
+                updateView(res)
+            }
+        )
         viewModel.errorMsgLiveData.observe(this.viewLifecycleOwner, Observer { res -> updateErrorView(res) })
     }
 
@@ -65,17 +67,17 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
         super.onResume()
 
         rxSubs.add(
-                contentSelectObservable
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                { content: Content ->
-                                    Timber.d("contentSelectObservable")
-                                    gotoContent(content)
-                                },
-                                { t: Throwable ->
-                                    Timber.d("movieSelectObservable failed:$t")
-                                }
-                        )
+            contentSelectObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { content: Content ->
+                        Timber.d("contentSelectObservable")
+                        gotoContent(content)
+                    },
+                    { t: Throwable ->
+                        Timber.d("movieSelectObservable failed:$t")
+                    }
+                )
         )
     }
 
@@ -96,5 +98,3 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
 
     protected abstract fun gotoContent(content: Content)
 }
-
-
