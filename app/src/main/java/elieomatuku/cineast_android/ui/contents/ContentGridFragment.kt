@@ -69,6 +69,7 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
                         .subscribeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 { content: Content ->
+                                    Timber.d("contentSelectObservable")
                                     gotoContent(content)
                                 },
                                 { t: Throwable ->

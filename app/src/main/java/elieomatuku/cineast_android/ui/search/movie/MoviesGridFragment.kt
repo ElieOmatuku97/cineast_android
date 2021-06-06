@@ -3,10 +3,16 @@ package elieomatuku.cineast_android.ui.search.movie
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.ui.contents.ContentGridFragment
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.utils.Constants
+import timber.log.Timber
 
 
 /**
@@ -24,12 +30,23 @@ class MoviesGridFragment : ContentGridFragment<MoviesGridViewModel>(MoviesGridVi
         }
     }
 
+    private var genres: List<Genre>? = listOf()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        viewModel.genresLiveData.observe(
+                this.viewLifecycleOwner,
+                Observer {
+                    genres = it
+                }
+        )
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun gotoContent(content: Content) {
         val params = Bundle()
         params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
         params.putParcelable(CONTENT_KEY, content)
-        params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
+        params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
         gotoMovie(params)
     }
 
