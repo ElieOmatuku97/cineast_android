@@ -18,7 +18,7 @@ import elieomatuku.cineast_android.core.model.PersonalityDetails
 import elieomatuku.cineast_android.core.model.Poster
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
-import elieomatuku.cineast_android.ui.details.people.overview.OverviewPeopleFragment
+import elieomatuku.cineast_android.ui.details.people.overview.BareOverviewFragment
 import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
@@ -111,7 +111,7 @@ class PeopleVu(
     }
 
     private fun initDetailsFragment(personalityDetails: PersonalityDetails) {
-        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, OverviewPeopleFragment.newInstance(personalityDetails)).commit()
+        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, BareOverviewFragment.newInstance(personalityDetails)).commit()
     }
 
     fun goToGallery(posters: List<Poster>?) {
@@ -132,7 +132,7 @@ class PeopleVu(
     fun gotoTab(displayAndPersonalityDetails: Pair<String, PersonalityDetails>) {
         val fragment = when (displayAndPersonalityDetails.first) {
             OVERVIEW -> {
-                OverviewPeopleFragment.newInstance(displayAndPersonalityDetails.second)
+                BareOverviewFragment.newInstance(displayAndPersonalityDetails.second)
             }
             KNOWN_FOR -> {
                 MoviesFragment.newInstance(knownFor.mapNotNull { it.toMovie() }, activity.getString(R.string.cast), displayAndPersonalityDetails.second.name)
