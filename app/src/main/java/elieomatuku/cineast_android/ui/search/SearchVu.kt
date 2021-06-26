@@ -39,7 +39,7 @@ class SearchVu(
         get() = rootView.toolbar
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.vu_search
+        return R.layout.fragment_search
     }
 
     val searchQueryPublisher: PublishSubject<String> by lazy {

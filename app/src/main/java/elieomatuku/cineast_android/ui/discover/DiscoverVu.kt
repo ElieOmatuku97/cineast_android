@@ -25,7 +25,7 @@ import elieomatuku.cineast_android.utils.WebLink
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.vu_discover.view.*
+import kotlinx.android.synthetic.main.fragment_discover.view.*
 import timber.log.Timber
 
 class DiscoverVu(
@@ -89,7 +89,7 @@ class DiscoverVu(
     }
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.vu_discover
+        return R.layout.fragment_discover
     }
 
     override fun onCreate() {

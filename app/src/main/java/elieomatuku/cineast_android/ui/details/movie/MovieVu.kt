@@ -27,7 +27,7 @@ import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.vu_movie.view.*
+import kotlinx.android.synthetic.main.activity_movie.view.*
 import timber.log.Timber
 import java.util.ArrayList
 
@@ -53,7 +53,7 @@ class MovieVu(
         get() = rootView.toolbar
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.vu_movie
+        return R.layout.activity_movie
     }
 
     private val listView: RecyclerView by lazy {
