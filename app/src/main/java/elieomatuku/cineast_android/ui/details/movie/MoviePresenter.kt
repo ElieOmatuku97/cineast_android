@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.MovieFacts
 import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.core.model.Trailer
-import elieomatuku.cineast_android.ui.presenter.BasePresenter
+import elieomatuku.cineast_android.ui.base.BasePresenter
 import elieomatuku.cineast_android.utils.Constants.SCREEN_NAME_KEY
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.coroutines.Dispatchers

@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.ui.activity.BaseActivity
+import elieomatuku.cineast_android.ui.base.BaseActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.discover.DiscoverPresenter

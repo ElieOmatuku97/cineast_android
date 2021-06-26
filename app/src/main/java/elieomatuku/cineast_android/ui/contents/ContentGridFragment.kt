@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.ui.fragment.BaseFragment
+import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -53,6 +53,7 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.contentLiveData.observe(
             viewLifecycleOwner,
             Observer { res ->

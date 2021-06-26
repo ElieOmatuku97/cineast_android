@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/summary_title_view"
@@ -22,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/holder_item_movie_textview_margin"
-        android:paddingBottom="@dimen/holder_movie_facts_textview_padding_right"
-        android:paddingRight="@dimen/holder_movie_facts_textview_padding_right"
         android:paddingTop="@dimen/holder_movie_imageview_padding_bottom"
+        android:paddingEnd="@dimen/holder_movie_facts_textview_padding_right"
+        android:paddingBottom="@dimen/holder_movie_facts_textview_padding_right"
         android:textColor="@color/color_white"
         android:textSize="@dimen/holder_movie_facts_text_size"
         app:layout_constraintBottom_toBottomOf="parent"

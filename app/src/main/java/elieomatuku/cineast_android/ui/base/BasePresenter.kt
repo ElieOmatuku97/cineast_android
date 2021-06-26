@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.presenter
+package elieomatuku.cineast_android.ui.base
 
 import android.os.Bundle
 import android.os.Handler

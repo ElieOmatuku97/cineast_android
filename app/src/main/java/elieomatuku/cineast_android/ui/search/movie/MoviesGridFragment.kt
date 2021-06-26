@@ -31,13 +31,24 @@ class MoviesGridFragment : ContentGridFragment<MoviesGridViewModel>(MoviesGridVi
     private var genres: List<Genre>? = listOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        viewModel.genresLiveData.observe(
-            this.viewLifecycleOwner,
-            Observer {
-                genres = it
-            }
-        )
+//        viewModel.genresLiveData.observe(
+//            this.viewLifecycleOwner,
+//            Observer {
+//                genres = it
+//            }
+//        )
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.genresLiveData.observe(
+                this.viewLifecycleOwner,
+                Observer {
+                    genres = it
+                }
+        )
+
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun gotoContent(content: Content) {

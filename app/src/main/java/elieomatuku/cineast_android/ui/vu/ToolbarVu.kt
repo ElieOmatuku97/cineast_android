@@ -4,6 +4,7 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import elieomatuku.cineast_android.ui.base.BaseVu
 import io.chthonic.mythos.mvp.FragmentWrapper
 
 abstract class ToolbarVu(layoutInflater: LayoutInflater, activity: Activity, fragmentWrapper: FragmentWrapper?, parentView: ViewGroup?) :

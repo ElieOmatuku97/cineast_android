@@ -20,7 +20,7 @@ import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 import elieomatuku.cineast_android.ui.home.HomeActivity
 import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
-import elieomatuku.cineast_android.ui.vu.BaseVu
+import elieomatuku.cineast_android.ui.base.BaseVu
 import elieomatuku.cineast_android.utils.WebLink
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable

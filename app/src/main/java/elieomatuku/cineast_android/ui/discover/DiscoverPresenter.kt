@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.core.model.CineastError
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.presenter.BasePresenter
+import elieomatuku.cineast_android.ui.base.BasePresenter
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

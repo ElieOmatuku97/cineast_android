@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.activity
+package elieomatuku.cineast_android.ui.base
 
 import android.content.IntentFilter
 import android.net.ConnectivityManager

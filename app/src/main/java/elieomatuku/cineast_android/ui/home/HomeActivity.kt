@@ -5,7 +5,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.core.model.Account
-import elieomatuku.cineast_android.ui.activity.BaseActivity
+import elieomatuku.cineast_android.ui.base.BaseActivity
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_home.*

@@ -115,7 +115,11 @@ class MovieVu(
         listView.adapter = adapter
         listView.layoutManager = LinearLayoutManager(activity)
 
-        val itemDecorationDrawable = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
+        val itemDecorationDrawable = ResourcesCompat.getDrawable(
+            activity.resources,
+            R.drawable.item_decoration,
+            activity.theme
+        )
         val dividerItemDecoration = DividerItemDecorator(itemDecorationDrawable)
 
         listView.addItemDecoration(dividerItemDecoration)
@@ -128,7 +132,10 @@ class MovieVu(
         adapter.movieSummary = movieSummary
         adapter.notifyDataSetChanged()
 
-        val overViewFragment = MetaOverviewFragment.newInstance(movieSummary)
+        val overViewFragment = MetaOverviewFragment.newInstance(
+            activity.getString(R.string.plot_summary),
+            movieSummary
+        )
         updateContainer(overViewFragment)
 
         /**
@@ -144,7 +151,8 @@ class MovieVu(
         galleryFragment.arguments = args
 
         if (activity is AppCompatActivity) {
-            activity.supportFragmentManager.beginTransaction().add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
+            activity.supportFragmentManager.beginTransaction()
+                .add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
         }
     }
 
@@ -165,7 +173,10 @@ class MovieVu(
                 MovieTeamFragment.newInstance(displayAndMovieSummary.second)
             }
             MOVIE_OVERVIEW -> {
-                MetaOverviewFragment.newInstance(displayAndMovieSummary.second)
+                MetaOverviewFragment.newInstance(
+                    activity.getString(R.string.plot_summary),
+                    displayAndMovieSummary.second
+                )
             }
             else -> null
         }
@@ -177,7 +188,8 @@ class MovieVu(
 
     private fun updateContainer(fragment: Fragment) {
         if (activity is FragmentActivity) {
-            activity.supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment).commit()
         }
     }
 }

@@ -95,14 +95,24 @@ class PeopleVu(
         listView.layoutManager = LinearLayoutManager(activity)
     }
 
-    fun updateVu(personalityDetails: PersonalityDetails?, screenName: String?, knownFor: List<KnownFor>?) {
+    fun updateVu(
+        personalityDetails: PersonalityDetails?,
+        screenName: String?,
+        knownFor: List<KnownFor>?
+    ) {
         if (personalityDetails != null && screenName != null && knownFor != null) {
             toolbar?.title = screenName
 
             adapter.personalityDetails = personalityDetails
             this.knownFor = knownFor.toMutableList()
 
-            val dividerItemDecoration = DividerItemDecorator(ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme))
+            val dividerItemDecoration = DividerItemDecorator(
+                ResourcesCompat.getDrawable(
+                    activity.resources,
+                    R.drawable.item_decoration,
+                    activity.theme
+                )
+            )
             listView.addItemDecoration(dividerItemDecoration)
 
             adapter.notifyDataSetChanged()
@@ -111,7 +121,13 @@ class PeopleVu(
     }
 
     private fun initDetailsFragment(personalityDetails: PersonalityDetails) {
-        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, BareOverviewFragment.newInstance(personalityDetails)).commit()
+        (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(
+            R.id.fragment_container,
+            BareOverviewFragment.newInstance(
+                activity.getString(R.string.biography),
+                personalityDetails.biography
+            )
+        ).commit()
     }
 
     fun goToGallery(posters: List<Poster>?) {
@@ -121,7 +137,8 @@ class PeopleVu(
         args.putParcelableArrayList(GalleryFragment.POSTERS, posters as ArrayList<out Parcelable>)
         galleryFragment.arguments = args
 
-        (activity as AppCompatActivity).supportFragmentManager.beginTransaction().add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
+        (activity as AppCompatActivity).supportFragmentManager.beginTransaction()
+            .add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
     }
 
     fun updateErrorView(errorMsg: String?) {
@@ -132,16 +149,24 @@ class PeopleVu(
     fun gotoTab(displayAndPersonalityDetails: Pair<String, PersonalityDetails>) {
         val fragment = when (displayAndPersonalityDetails.first) {
             OVERVIEW -> {
-                BareOverviewFragment.newInstance(displayAndPersonalityDetails.second)
+                BareOverviewFragment.newInstance(
+                    activity.getString(R.string.biography),
+                    displayAndPersonalityDetails.second.biography
+                )
             }
             KNOWN_FOR -> {
-                MoviesFragment.newInstance(knownFor.mapNotNull { it.toMovie() }, activity.getString(R.string.cast), displayAndPersonalityDetails.second.name)
+                MoviesFragment.newInstance(
+                    knownFor.mapNotNull { it.toMovie() },
+                    activity.getString(R.string.cast),
+                    displayAndPersonalityDetails.second.name
+                )
             }
             else -> null
         }
 
         if (fragment != null) {
-            (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+            (activity as FragmentActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment).commit()
         }
     }
 }

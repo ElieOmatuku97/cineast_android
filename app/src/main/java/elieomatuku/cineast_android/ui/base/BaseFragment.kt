@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.fragment
+package elieomatuku.cineast_android.ui.base
 
 import androidx.fragment.app.Fragment
 import elieomatuku.cineast_android.App
