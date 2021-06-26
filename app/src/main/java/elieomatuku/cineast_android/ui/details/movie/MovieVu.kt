@@ -21,7 +21,7 @@ import elieomatuku.cineast_android.core.model.Poster
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
-import elieomatuku.cineast_android.ui.details.movie.overview.MetaOverviewFragment
+import elieomatuku.cineast_android.ui.details.movie.overview.MovieOverviewFragment
 import elieomatuku.cineast_android.ui.vu.ToolbarVu
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import io.chthonic.mythos.mvp.FragmentWrapper
@@ -132,7 +132,7 @@ class MovieVu(
         adapter.movieSummary = movieSummary
         adapter.notifyDataSetChanged()
 
-        val overViewFragment = MetaOverviewFragment.newInstance(
+        val overViewFragment = MovieOverviewFragment.newInstance(
             activity.getString(R.string.plot_summary),
             movieSummary
         )
@@ -173,7 +173,7 @@ class MovieVu(
                 MovieTeamFragment.newInstance(displayAndMovieSummary.second)
             }
             MOVIE_OVERVIEW -> {
-                MetaOverviewFragment.newInstance(
+                MovieOverviewFragment.newInstance(
                     activity.getString(R.string.plot_summary),
                     displayAndMovieSummary.second
                 )

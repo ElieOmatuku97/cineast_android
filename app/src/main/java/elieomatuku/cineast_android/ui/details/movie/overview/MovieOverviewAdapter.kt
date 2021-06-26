@@ -4,24 +4,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.core.model.MovieSummary
 
-class OverviewAdapter(private val movieSummary: MovieSummary?) :
+class MovieOverviewAdapter(private val movieSummary: MovieSummary?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_TRAILERS = 0
         const val TYPE_MOVIE_FACTS = 1
-        const val TYPE_BOTTOM = 2
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return 2
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
             TYPE_TRAILERS -> TYPE_TRAILERS
             TYPE_MOVIE_FACTS -> TYPE_MOVIE_FACTS
-            TYPE_BOTTOM -> TYPE_BOTTOM
             else -> -1
         }
     }
@@ -30,7 +28,6 @@ class OverviewAdapter(private val movieSummary: MovieSummary?) :
         return when (viewType) {
             TYPE_TRAILERS -> TrailersHolder.newInstance(parent)
             TYPE_MOVIE_FACTS -> MovieFactsHolder.newInstance(parent)
-            TYPE_BOTTOM -> BottomHolder.newInstance(parent)
             else -> throw RuntimeException("View Type does not exist.")
         }
     }

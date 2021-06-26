@@ -49,7 +49,7 @@ class MovieTeamFragment : BaseFragment() {
         get() = onPeopleSelectPublisher.hide()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_overview, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_movie_overview, container, false)
         viewDataBinding = FragmentOverviewBinding.bind(rootView)
 
         val movieSummary: MovieSummary? = arguments?.getParcelable<MovieSummary>(MOVIE_SUMMARY)
