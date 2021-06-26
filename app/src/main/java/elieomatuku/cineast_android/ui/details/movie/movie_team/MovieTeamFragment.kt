@@ -11,7 +11,7 @@ import elieomatuku.cineast_android.core.model.Cast
 import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Crew
 import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.databinding.FragmentOverviewBinding
+import elieomatuku.cineast_android.databinding.FragmentMovieteamBinding
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.details.people.PeoplePresenter
 import elieomatuku.cineast_android.ui.base.BaseFragment
@@ -37,7 +37,7 @@ class MovieTeamFragment : BaseFragment() {
         }
     }
 
-    private lateinit var viewDataBinding: FragmentOverviewBinding
+    private lateinit var viewDataBinding: FragmentMovieteamBinding
 
     var movieTitle: String? = null
 
@@ -48,9 +48,13 @@ class MovieTeamFragment : BaseFragment() {
     private val onPeopleSelectObservable: Observable<Content>
         get() = onPeopleSelectPublisher.hide()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_movie_overview, container, false)
-        viewDataBinding = FragmentOverviewBinding.bind(rootView)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val rootView = inflater.inflate(R.layout.fragment_movieteam, container, false)
+        viewDataBinding = FragmentMovieteamBinding.bind(rootView)
 
         val movieSummary: MovieSummary? = arguments?.getParcelable<MovieSummary>(MOVIE_SUMMARY)
 

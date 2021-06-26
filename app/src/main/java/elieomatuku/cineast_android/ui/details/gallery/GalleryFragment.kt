@@ -37,7 +37,11 @@ class GalleryFragment : BaseFragment() {
 
     private var posters: List<Poster> = listOf()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         arguments?.getParcelableArrayList<Poster>(POSTERS)?.let {
             posters = it
         }
@@ -54,7 +58,11 @@ class GalleryFragment : BaseFragment() {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
             }
 
             override fun onPageSelected(position: Int) {

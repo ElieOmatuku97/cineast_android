@@ -7,7 +7,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.core.model.Poster
 import timber.log.Timber
 
-class GalleryPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+class GalleryPagerAdapter(fragmentManager: FragmentManager) :
+    FragmentPagerAdapter(fragmentManager) {
     var posters: List<Poster> = listOf()
 
     override fun getItem(position: Int): Fragment {

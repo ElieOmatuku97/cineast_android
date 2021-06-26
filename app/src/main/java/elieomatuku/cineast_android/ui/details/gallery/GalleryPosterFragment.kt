@@ -24,7 +24,11 @@ class GalleryPosterFragment : BaseFragment() {
         poster_view
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_poster, container, false)
     }
 
@@ -34,7 +38,8 @@ class GalleryPosterFragment : BaseFragment() {
 
     private fun updateView(moviePosterPath: String?) {
         if (!moviePosterPath.isNullOrEmpty()) {
-            val imageUrl = UiUtils.getImageUrl(moviePosterPath, activity?.getString(R.string.image_header))
+            val imageUrl =
+                UiUtils.getImageUrl(moviePosterPath, activity?.getString(R.string.image_header))
             posterView.visibility = View.VISIBLE
             Picasso.get()
                 .load(imageUrl)
