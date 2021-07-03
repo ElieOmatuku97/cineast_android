@@ -1,3 +1,7 @@
+import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.Personality
+
 interface ContentRepository {
 
     fun discoverContent()
@@ -24,7 +28,9 @@ interface ContentRepository {
 
     fun updateMovie(movie: Movie)
 
-    fun insertPersonality(personality: Personality)
+    fun insertPersonality(
+        personality: Personality
+    )
 
     fun insertPersonalities(personalities: List<Personality>)
 
