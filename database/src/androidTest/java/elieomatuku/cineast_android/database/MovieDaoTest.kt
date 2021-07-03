@@ -5,9 +5,9 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.database.dao.MovieDao
 import elieomatuku.cineast_android.database.entity.MovieEntity
+import elieomatuku.cineast_android.domain.model.Movie
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.databinding.FragmentMovieteamBinding
 import elieomatuku.cineast_android.domain.model.Cast
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Crew
 import elieomatuku.cineast_android.domain.model.MovieSummary
-import elieomatuku.cineast_android.databinding.FragmentMovieteamBinding
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.details.people.PeoplePresenter

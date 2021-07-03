@@ -9,6 +9,8 @@ import elieomatuku.cineast_android.business.api.response.PersonalityResponse
 import elieomatuku.cineast_android.business.api.response.TrailerResponse
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbContentClient
+import elieomatuku.cineast_android.database.entity.MovieType
+import elieomatuku.cineast_android.database.repository.ContentRepository
 import elieomatuku.cineast_android.domain.DiscoverContent
 import elieomatuku.cineast_android.domain.ValueStore
 import elieomatuku.cineast_android.domain.model.Genre
@@ -17,8 +19,6 @@ import elieomatuku.cineast_android.domain.model.MovieFacts
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.Personality
 import elieomatuku.cineast_android.domain.model.PersonalityDetails
-import elieomatuku.cineast_android.database.entity.MovieType
-import elieomatuku.cineast_android.database.repository.ContentRepository
 import io.flatcircle.coroutinehelper.ApiResult
 import io.flatcircle.coroutinehelper.onFail
 import io.flatcircle.coroutinehelper.onSuccess

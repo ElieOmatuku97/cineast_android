@@ -13,10 +13,10 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.contents.ContentsActivity
 import elieomatuku.cineast_android.ui.contents.ContentsAdapter

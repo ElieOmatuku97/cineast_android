@@ -1,15 +1,15 @@
 package elieomatuku.cineast_android.database.repository
 
-import elieomatuku.cineast_android.domain.DiscoverContent
-import elieomatuku.cineast_android.domain.model.Genre
-import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.Personality
 import elieomatuku.cineast_android.database.ContentDatabase
 import elieomatuku.cineast_android.database.entity.GenreEntity
 import elieomatuku.cineast_android.database.entity.MovieEntity
 import elieomatuku.cineast_android.database.entity.MovieType
 import elieomatuku.cineast_android.database.entity.MovieTypeJoin
 import elieomatuku.cineast_android.database.entity.PersonalityEntity
+import elieomatuku.cineast_android.domain.DiscoverContent
+import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.Personality
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.functions.BiFunction

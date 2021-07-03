@@ -20,26 +20,4 @@ data class Movie(
     val video: Boolean? = true,
     val vote_average: Float? = null,
     val rating: Float? = null
-) : Content() {
-
-    override fun equals(other: Any?): Boolean {
-        if (other !is Movie)
-            return false
-
-        val movie: Movie = other
-
-        return movie.id == id
-    }
-
-    override fun hashCode(): Int {
-        var result = 17
-
-        result = if (id != null) {
-            31 * id + result
-        } else {
-            31 * 0 + result
-        }
-
-        return result
-    }
-}
+) : Content()
