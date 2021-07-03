@@ -22,7 +22,8 @@ import timber.log.Timber
  * Created by elieomatuku on 2021-05-30
  */
 
-abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewModelClass: Class<VM>) : BaseFragment() {
+abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewModelClass: Class<VM>) :
+    BaseFragment() {
     private val contentSelectPublisher: PublishSubject<Content> by lazy {
         PublishSubject.create<Content>()
     }
@@ -41,7 +42,11 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
 
     protected lateinit var viewModel: VM
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val rootView = inflater.inflate(R.layout.fragment_search, container, false)
 
 //        vu.showLoading()
@@ -61,7 +66,10 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
                 updateView(res)
             }
         )
-        viewModel.errorMsgLiveData.observe(this.viewLifecycleOwner, Observer { res -> updateErrorView(res) })
+        viewModel.errorMsgLiveData.observe(
+            this.viewLifecycleOwner,
+            Observer { res -> updateErrorView(res) }
+        )
     }
 
     override fun onResume() {

@@ -2,36 +2,47 @@ package elieomatuku.cineast_android.ui.details.movie
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
-import elieomatuku.cineast_android.App
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.business.client.TmdbUserClient
+import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.ui.activity.ToolbarMVPActivity
+import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.ui.base.BaseActivity
+import elieomatuku.cineast_android.ui.details.MoviesFragment
+import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
+import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
+import elieomatuku.cineast_android.ui.details.movie.overview.MovieOverviewFragment
+import elieomatuku.cineast_android.utils.Constants
+import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils
-import io.chthonic.mythos.mvp.MVPDispatcher
-import io.chthonic.mythos.mvp.PresenterCacheLoaderCallback
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import org.kodein.di.generic.instance
+import kotlinx.android.synthetic.main.activity_movie.*
 import timber.log.Timber
+import java.util.ArrayList
 
-class MovieActivity : ToolbarMVPActivity<MoviePresenter, MovieVu>() {
+class MovieActivity : BaseActivity() {
     companion object {
-        private val MVP_UID by lazy {
-            hashCode()
-        }
+        const val MOVIE_KEY = "movieApi"
+        const val MOVIE_GENRES_KEY = "genres"
+        const val MOVIE_OVERVIEW = "overview"
+        const val MOVIE_CREW = "crew"
+        const val SIMILAR_MOVIES = "similar_movies"
     }
 
-    private var currentMovie: Movie? = null
+    lateinit var movie: Movie
     private var isInWatchList: Boolean = false
     private var isInFavoriteList: Boolean = false
-    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
-    private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
 
     val moviePresentedPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()
@@ -45,40 +56,72 @@ class MovieActivity : ToolbarMVPActivity<MoviePresenter, MovieVu>() {
         PublishSubject.create<Boolean>()
     }
 
-    override fun createMVPDispatcher(): MVPDispatcher<MoviePresenter, MovieVu> {
-        return MVPDispatcher(
-            MVP_UID,
-            PresenterCacheLoaderCallback(this, { MoviePresenter() }),
-            ::MovieVu
-        )
+    private val viewModel: MovieViewModel by viewModels<MovieViewModel>()
+
+    private val listView: RecyclerView by lazy {
+        list_view_container
+    }
+
+    private val onProfileClickedPicturePublisher: PublishSubject<Int> by lazy {
+        PublishSubject.create<Int>()
+    }
+
+    private val onProfileClickedPictureObservable: Observable<Int>
+        get() = onProfileClickedPicturePublisher.hide()
+
+    private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>> by lazy {
+        PublishSubject.create<Pair<String, MovieSummary>>()
+    }
+    private val segmentedButtonsObservable: Observable<Pair<String, MovieSummary>>
+        get() = segmentedButtonsPublisher.hide()
+
+    private val adapter: MovieSummaryAdapter by lazy {
+        MovieSummaryAdapter(onProfileClickedPicturePublisher, segmentedButtonsPublisher)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        mvpDispatcher.vu?.toolbar?.let {
+        setContentView(R.layout.activity_movie)
+        setUpListView()
+        toolbar?.let {
             UiUtils.initToolbar(this, it, true)
+        }
+
+        val screenName = intent.getStringExtra(Constants.SCREEN_NAME_KEY)
+        movie = intent.getParcelableExtra(MOVIE_KEY)
+        val genres: List<Genre>? =
+            intent.getParcelableArrayListExtra(MOVIE_GENRES_KEY)
+        viewModel.getMovieDetails(movie, screenName, genres)
+
+        viewModel.viewState.observe(this) {
+
+            if (it.isLoading) {
+                showLoading(rootView)
+            } else {
+                hideLoading(rootView)
+            }
+
+            val movieSummary = it.movieSummary
+            if (movieSummary != null) {
+                showMovie(movieSummary)
+            }
+
+            updateWatchList(it.isInWatchList)
+            updateFavorite(it.isInFavorites)
+
+            val viewError = it.viewError
+            if (viewError != null) {
+                updateErrorView(viewError.message)
+            }
         }
     }
 
     override fun onResume() {
         rxSubs.add(
-            moviePresentedPublisher.observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { event: Movie ->
-                        onPresenterPublishedNext(event)
-                    },
-                    { t: Throwable ->
-                        Timber.e("moviePresentedPublisher failed")
-                    }
-                )
-        )
-
-        rxSubs.add(
             watchListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { event: Boolean ->
-                        onWatchListCheckPublishedNext(event)
+                        updateWatchList(event)
                     },
                     { t: Throwable ->
                         Timber.e("userListCheckPublisher failed: $t")
@@ -90,13 +133,30 @@ class MovieActivity : ToolbarMVPActivity<MoviePresenter, MovieVu>() {
             favoriteListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { event: Boolean ->
-                        onFavoriteListCheckPublishedNext(event)
+                        updateFavorite(event)
                     },
                     { t: Throwable ->
                         Timber.e("favoriteListCheckPublisher failed: $t")
                     }
                 )
         )
+
+        rxSubs.add(
+            onProfileClickedPictureObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    goToGallery()
+                }
+        )
+
+        rxSubs.add(
+            segmentedButtonsObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe { displayAndMovieSummary ->
+                    gotoTab(displayAndMovieSummary)
+                }
+        )
+
         super.onResume()
     }
 
@@ -121,28 +181,22 @@ class MovieActivity : ToolbarMVPActivity<MoviePresenter, MovieVu>() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.findItem(R.id.action_share)?.let {
-            it.isVisible = MovieUtils.supportsShare(currentMovie?.id)
+            it.isVisible = MovieUtils.supportsShare(movie.id)
         }
 
         menu?.findItem(R.id.action_watchlist)?.let {
             val menuItem = it
-            Timber.d("isInWatchList: $isInWatchList")
-            currentMovie?.let {
-                menuItem.isChecked = isInWatchList
-            }
+            menuItem.isChecked = isInWatchList
 
             updateWatchListIcon(it)
-            it.isVisible = tmdbUserClient.isLoggedIn()
+            it.isVisible = viewModel.isLoggedIn()
         }
 
         menu?.findItem(R.id.action_favorites)?.let {
             val menuItem = it
-            Timber.d("isInFavoriteList: $isInFavoriteList")
-            currentMovie?.let {
-                menuItem.isChecked = isInFavoriteList
-            }
+            menuItem.isChecked = isInFavoriteList
             updateFavoriteListIcon(it)
-            it.isVisible = tmdbUserClient.isLoggedIn()
+            it.isVisible = viewModel.isLoggedIn()
         }
 
         return true
@@ -169,25 +223,18 @@ class MovieActivity : ToolbarMVPActivity<MoviePresenter, MovieVu>() {
         return true
     }
 
-    private fun onPresenterPublishedNext(event: Movie) {
-        Timber.d("onPresenterPublishedNext: activity = $event")
-        currentMovie = event
-        invalidateOptionsMenu()
-    }
-
-    private fun onWatchListCheckPublishedNext(event: Boolean) {
-        Timber.d("onWatchListCheckPublishedNext: activity = $event")
+    private fun updateWatchList(event: Boolean) {
         isInWatchList = event
         invalidateOptionsMenu()
     }
 
-    private fun onFavoriteListCheckPublishedNext(event: Boolean) {
+    private fun updateFavorite(event: Boolean) {
         isInFavoriteList = event
         invalidateOptionsMenu()
     }
 
     private fun onShareMenuClicked() {
-        val shareIntent: Intent? = UiUtils.getShareIntent(currentMovie?.title, currentMovie?.id)
+        val shareIntent: Intent? = UiUtils.getShareIntent(movie.title, movie.id)
         // Make sure there is an activity that supports the intent
         if (shareIntent?.resolveActivity(packageManager) != null) {
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_title)))
@@ -195,28 +242,28 @@ class MovieActivity : ToolbarMVPActivity<MoviePresenter, MovieVu>() {
     }
 
     private fun onWatchListMenuClicked(item: MenuItem) {
-        Timber.d("currentMovie: $currentMovie")
         item.isChecked = !item.isChecked
         val checked = item.isChecked
         updateWatchListIcon(item)
 
         if (checked) {
-            currentMovie?.let {
-                tmdbContentClient.addMovieToWatchList(it)
-            }
+            viewModel.addMovieToWatchList()
         } else {
-            currentMovie?.let {
-                tmdbContentClient.removeMovieFromWatchList(it)
-            }
+            viewModel.removeMovieFromWatchList()
         }
     }
 
     private fun updateWatchListIcon(item: MenuItem) {
         val colorRes = R.color.color_orange_app
         if (item.isChecked) {
-            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_selected, theme)
+            item.icon =
+                ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_selected, theme)
         } else {
-            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_unselected, theme)
+            item.icon = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.ic_nav_watch_list_unselected,
+                theme
+            )
             UiUtils.tintMenuItem(item, this, colorRes)
         }
     }
@@ -227,23 +274,98 @@ class MovieActivity : ToolbarMVPActivity<MoviePresenter, MovieVu>() {
         updateFavoriteListIcon(item)
 
         if (checked) {
-            currentMovie?.let {
-                tmdbContentClient.addMovieToFavoriteList(it)
-            }
+            viewModel.addMovieToFavoriteList()
         } else {
-            currentMovie?.let {
-                tmdbContentClient.removeMovieFromFavoriteList(it)
-            }
+            viewModel.removeMovieFromFavoriteList()
         }
     }
 
     private fun updateFavoriteListIcon(item: MenuItem) {
         val colorRes = R.color.color_orange_app
         if (item.isChecked) {
-            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_black_selected, theme)
+            item.icon =
+                ResourcesCompat.getDrawable(resources, R.drawable.ic_star_black_selected, theme)
         } else {
-            item.icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_star_border_black_unselected, theme)
+            item.icon = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.ic_star_border_black_unselected,
+                theme
+            )
             UiUtils.tintMenuItem(item, this, colorRes)
         }
+    }
+
+    private fun setUpListView() {
+        listView.adapter = adapter
+        listView.layoutManager = LinearLayoutManager(this)
+
+        val itemDecorationDrawable = ResourcesCompat.getDrawable(
+            resources,
+            R.drawable.item_decoration,
+            theme
+        )
+        val dividerItemDecoration = DividerItemDecorator(itemDecorationDrawable)
+
+        listView.addItemDecoration(dividerItemDecoration)
+    }
+
+    private fun showMovie(movieSummary: MovieSummary) {
+        toolbar?.title = movieSummary.screenName
+        adapter.movieSummary = movieSummary
+        adapter.notifyDataSetChanged()
+
+        val overViewFragment = MovieOverviewFragment.newInstance(
+            getString(R.string.plot_summary),
+            movieSummary
+        )
+        updateContainer(overViewFragment)
+    }
+
+    private fun goToGallery() {
+        val galleryFragment = GalleryFragment.newInstance()
+        val args = Bundle()
+        args.putParcelableArrayList(
+            GalleryFragment.POSTERS,
+            viewModel.posters() as ArrayList<out Parcelable>
+        )
+        galleryFragment.arguments = args
+
+        supportFragmentManager.beginTransaction()
+            .add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
+    }
+
+    fun updateErrorView(errorMsg: String?) {
+        adapter.errorMessage = errorMsg
+        adapter.notifyDataSetChanged()
+        listView.visibility = View.VISIBLE
+    }
+
+    private fun gotoTab(displayAndMovieSummary: Pair<String, MovieSummary>) {
+        val fragment = when (displayAndMovieSummary.first) {
+            SIMILAR_MOVIES -> {
+                val movieSummary: MovieSummary = displayAndMovieSummary.second
+                val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
+                MoviesFragment.newInstance(similarMovies)
+            }
+            MOVIE_CREW -> {
+                MovieTeamFragment.newInstance(displayAndMovieSummary.second)
+            }
+            MOVIE_OVERVIEW -> {
+                MovieOverviewFragment.newInstance(
+                    getString(R.string.plot_summary),
+                    displayAndMovieSummary.second
+                )
+            }
+            else -> null
+        }
+
+        if (fragment != null) {
+            updateContainer(fragment)
+        }
+    }
+
+    private fun updateContainer(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment).commit()
     }
 }

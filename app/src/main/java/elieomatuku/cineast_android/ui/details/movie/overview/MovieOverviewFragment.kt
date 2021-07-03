@@ -11,7 +11,6 @@ import elieomatuku.cineast_android.core.model.MovieSummary
 import elieomatuku.cineast_android.ui.details.BareOverviewFragment
 import kotlinx.android.synthetic.main.fragment_movie_overview.view.*
 
-
 class MovieOverviewFragment(private val bareOverviewFragment: Fragment) : Fragment() {
     companion object {
         private const val OVERVIEW_SUMMARY = "overview_movie_summary"
@@ -43,14 +42,12 @@ class MovieOverviewFragment(private val bareOverviewFragment: Fragment) : Fragme
                 .inflate(R.layout.fragment_movie_overview, container, false)
         val movieSummary: MovieSummary? = arguments?.get(OVERVIEW_SUMMARY) as MovieSummary?
 
-
         val overviewListView = rootView.overview_list
         overviewListView.adapter = MovieOverviewAdapter(movieSummary)
         overviewListView.layoutManager = LinearLayoutManager(this.context)
 
         childFragmentManager.beginTransaction().add(R.id.bareOverView, bareOverviewFragment)
             .addToBackStack(null).commit()
-
 
         return rootView
     }

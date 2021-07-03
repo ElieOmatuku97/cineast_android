@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import elieomatuku.cineast_android.R
 import kotlinx.android.synthetic.main.fragment_bareoverview.*
 
-
 class BareOverviewFragment : Fragment() {
     companion object {
         private const val OVERVIEW = "overview"
@@ -24,7 +23,6 @@ class BareOverviewFragment : Fragment() {
             return fragment
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,4 +43,3 @@ class BareOverviewFragment : Fragment() {
         summary_view.text = overview
     }
 }
-

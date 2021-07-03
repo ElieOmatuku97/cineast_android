@@ -19,12 +19,11 @@ class MovieSummaryAdapter(
     }
 
     var movieSummary: MovieSummary by Delegates.observable(MovieSummary()) { prop, oldMovieSummary, nuMovieSummary ->
-        Timber.d("summary = $nuMovieSummary")
         hasValidData = true
         errorMessage = null
     }
 
-    private var initialCheckedTab: String = MovieVu.MOVIE_OVERVIEW
+    private var initialCheckedTab: String = MovieActivity.MOVIE_OVERVIEW
 
     var hasValidData = false
         private set
@@ -65,7 +64,10 @@ class MovieSummaryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_MOVIE_PROFILE -> ProfileMovieHolder.newInstance(parent, onProfileClickedPicturePublisher)
+            TYPE_MOVIE_PROFILE -> ProfileMovieHolder.newInstance(
+                parent,
+                onProfileClickedPicturePublisher
+            )
             TYPE_MENU_MOVIE -> MovieSegmentedButtonHolder.newInstance(parent)
             TYPE_EMPTY_STATE -> EmptyStateHolder.newInstance(parent)
             else -> throw RuntimeException("View Type does not exist.")
@@ -81,15 +83,15 @@ class MovieSummaryAdapter(
             holder.update(movieSummary, initialCheckedTab)
 
             holder.overviewSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_OVERVIEW, movieSummary))
+                segmentedButtonsPublisher.onNext(Pair(MovieActivity.MOVIE_OVERVIEW, movieSummary))
             }
 
             holder.peopleSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieVu.MOVIE_CREW, movieSummary))
+                segmentedButtonsPublisher.onNext(Pair(MovieActivity.MOVIE_CREW, movieSummary))
             }
 
             holder.similarSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieVu.SIMILAR_MOVIES, movieSummary))
+                segmentedButtonsPublisher.onNext(Pair(MovieActivity.SIMILAR_MOVIES, movieSummary))
             }
         }
 

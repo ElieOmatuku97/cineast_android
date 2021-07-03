@@ -17,10 +17,10 @@ import elieomatuku.cineast_android.core.model.Content
 import elieomatuku.cineast_android.core.model.Genre
 import elieomatuku.cineast_android.core.model.Movie
 import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
+import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.contents.ContentsActivity
 import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

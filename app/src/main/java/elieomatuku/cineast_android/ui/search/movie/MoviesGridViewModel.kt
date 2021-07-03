@@ -15,7 +15,9 @@ import kotlinx.coroutines.launch
 
 class MoviesGridViewModel : ContentGridViewModel() {
 
-    val genresLiveData: LiveData<List<Genre>> = LiveDataReactiveStreams.fromPublisher(contentService.genres().subscribeOn(Schedulers.io()).toFlowable())
+    val genresLiveData: LiveData<List<Genre>> = LiveDataReactiveStreams.fromPublisher(
+        contentService.genres().subscribeOn(Schedulers.io()).toFlowable()
+    )
 
     init {
         getContent()
