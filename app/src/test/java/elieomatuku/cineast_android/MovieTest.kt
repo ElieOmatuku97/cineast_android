@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android
 
-import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.domain.model.Movie
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -16,13 +16,13 @@ class MovieTest {
     fun reflexivityTest() {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieB: Movie = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1998, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1998, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
@@ -35,13 +35,13 @@ class MovieTest {
     fun symmetryTest() {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieB = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
@@ -53,19 +53,19 @@ class MovieTest {
     fun transivityTest() {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieB = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieC = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
@@ -78,7 +78,7 @@ class MovieTest {
     fun nonNullabilityTest() {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
@@ -90,19 +90,19 @@ class MovieTest {
 
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieB = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieC = Movie(
             "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.core.model.Genre>(), id = 1998, original_title = "original_title", original_language = null,
+            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1998, original_title = "original_title", original_language = null,
             title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 

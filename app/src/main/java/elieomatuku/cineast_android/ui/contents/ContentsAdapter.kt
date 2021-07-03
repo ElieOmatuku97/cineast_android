@@ -2,9 +2,9 @@ package elieomatuku.cineast_android.ui.contents
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.ui.viewholder.MovieItemHolder
 import elieomatuku.cineast_android.ui.viewholder.PeopleItemHolder

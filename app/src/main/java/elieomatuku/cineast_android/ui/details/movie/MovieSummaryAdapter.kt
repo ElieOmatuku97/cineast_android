@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.ui.details.movie
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber

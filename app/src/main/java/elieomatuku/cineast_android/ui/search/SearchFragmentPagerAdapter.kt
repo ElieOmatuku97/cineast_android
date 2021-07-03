@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.ui.search
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.ui.search.movie.MoviesGridFragment
 import elieomatuku.cineast_android.ui.search.people.PeopleGridFragment
 import timber.log.Timber

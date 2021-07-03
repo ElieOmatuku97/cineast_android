@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.AccessToken
-import elieomatuku.cineast_android.core.model.Account
-import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.domain.model.AccessToken
+import elieomatuku.cineast_android.domain.model.Account
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.ui.base.BaseVu
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 import elieomatuku.cineast_android.ui.home.HomeActivity
@@ -109,7 +109,7 @@ class DiscoverVu(
         }
     }
 
-    fun updateView(discoverContent: elieomatuku.cineast_android.core.DiscoverContent, isLoggedIn: Boolean) {
+    fun updateView(discoverContent: elieomatuku.cineast_android.domain.DiscoverContent, isLoggedIn: Boolean) {
         Timber.d("update View is called")
         adapter.filteredContent = discoverContent.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn

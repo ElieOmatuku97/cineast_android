@@ -5,8 +5,8 @@ import android.os.Handler
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbUserClient
-import elieomatuku.cineast_android.core.model.Account
-import elieomatuku.cineast_android.core.model.CineastError
+import elieomatuku.cineast_android.domain.model.Account
+import elieomatuku.cineast_android.domain.model.CineastError
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 import elieomatuku.cineast_android.ui.home.HomeActivity
 import org.kodein.di.generic.instance

@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.ui.details.movie
 
-import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.domain.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.Poster
 import elieomatuku.cineast_android.utils.ViewError
 
 /**

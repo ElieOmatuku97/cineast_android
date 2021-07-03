@@ -22,7 +22,7 @@ fun depInjecT(app: Application): Kodein {
         bind<ContentService>() with singleton { ContentService(instance(), instance()) }
         bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
-        importOnce(elieomatuku.cineast_android.core.CoreKodeinModule.getModule())
+        importOnce(elieomatuku.cineast_android.domain.CoreKodeinModule.getModule())
 
         bind<TmdbUserClient>() with singleton {
             TmdbUserClient(instance(), instance())

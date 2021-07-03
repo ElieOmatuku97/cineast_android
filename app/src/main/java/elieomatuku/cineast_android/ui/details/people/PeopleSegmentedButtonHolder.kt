@@ -7,7 +7,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.PersonalityDetails
 import kotlinx.android.synthetic.main.holder_menu_people.view.*
 
 class PeopleSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

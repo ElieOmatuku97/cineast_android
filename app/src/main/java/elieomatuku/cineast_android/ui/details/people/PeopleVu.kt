@@ -12,10 +12,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.KnownFor
-import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.core.model.PersonalityDetails
-import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.domain.model.KnownFor
+import elieomatuku.cineast_android.domain.model.Person
+import elieomatuku.cineast_android.domain.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.Poster
 import elieomatuku.cineast_android.ui.details.BareOverviewFragment
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment

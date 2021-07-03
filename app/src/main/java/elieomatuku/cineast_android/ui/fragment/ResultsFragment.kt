@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.domain.model.Content
 
 class ResultsFragment() : Fragment() {
     companion object {

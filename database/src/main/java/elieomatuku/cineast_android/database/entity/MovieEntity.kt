@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.domain.model.Movie
 
 /**
  * Created by elieomatuku on 2019-12-06

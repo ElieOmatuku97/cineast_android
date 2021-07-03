@@ -3,10 +3,10 @@ package elieomatuku.cineast_android.business.client
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.api.AuthenticationApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.core.ValueStore
-import elieomatuku.cineast_android.core.model.AccessToken
-import elieomatuku.cineast_android.core.model.Account
-import elieomatuku.cineast_android.core.model.Session
+import elieomatuku.cineast_android.domain.ValueStore
+import elieomatuku.cineast_android.domain.model.AccessToken
+import elieomatuku.cineast_android.domain.model.Account
+import elieomatuku.cineast_android.domain.model.Session
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
 import okhttp3.Interceptor

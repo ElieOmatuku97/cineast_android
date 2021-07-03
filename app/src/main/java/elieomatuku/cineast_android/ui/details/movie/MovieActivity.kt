@@ -12,9 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Genre
-import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.ui.base.BaseActivity
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment

@@ -1,9 +1,9 @@
 package elieomatuku.cineast_android.database.repository
 
-import elieomatuku.cineast_android.core.DiscoverContent
-import elieomatuku.cineast_android.core.model.Genre
-import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.core.model.Personality
+import elieomatuku.cineast_android.domain.DiscoverContent
+import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.Personality
 import elieomatuku.cineast_android.database.ContentDatabase
 import elieomatuku.cineast_android.database.entity.GenreEntity
 import elieomatuku.cineast_android.database.entity.MovieEntity

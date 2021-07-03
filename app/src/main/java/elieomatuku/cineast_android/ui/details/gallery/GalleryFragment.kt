@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.eftimoff.viewpagertransformers.TabletTransformer
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.domain.model.Poster
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_gallery.*
 

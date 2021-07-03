@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.MovieSummary
 import kotlinx.android.synthetic.main.holder_menu_movie.view.*
 
 class MovieSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

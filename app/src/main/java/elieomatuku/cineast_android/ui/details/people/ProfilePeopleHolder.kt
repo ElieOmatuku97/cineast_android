@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.PersonalityDetails
 import elieomatuku.cineast_android.ui.viewholder.ProfileHolder
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject

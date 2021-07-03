@@ -5,11 +5,11 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.App.Companion.kodein
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbUserClient
-import elieomatuku.cineast_android.core.model.AccessToken
-import elieomatuku.cineast_android.core.model.CineastError
-import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.core.model.Genre
-import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.domain.model.AccessToken
+import elieomatuku.cineast_android.domain.model.CineastError
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.ui.base.BasePresenter
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers

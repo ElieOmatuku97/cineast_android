@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Trailer
+import elieomatuku.cineast_android.domain.model.Trailer
 import kotlinx.android.synthetic.main.holder_trailers.view.*
 
 class TrailersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

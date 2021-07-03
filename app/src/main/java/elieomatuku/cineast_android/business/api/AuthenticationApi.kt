@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.business.api
 
-import elieomatuku.cineast_android.core.model.AccessToken
-import elieomatuku.cineast_android.core.model.Account
-import elieomatuku.cineast_android.core.model.Session
+import elieomatuku.cineast_android.domain.model.AccessToken
+import elieomatuku.cineast_android.domain.model.Account
+import elieomatuku.cineast_android.domain.model.Session
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

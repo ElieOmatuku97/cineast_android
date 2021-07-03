@@ -5,10 +5,10 @@ import android.os.Parcelable
 import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.core.model.CineastError
-import elieomatuku.cineast_android.core.model.KnownFor
-import elieomatuku.cineast_android.core.model.Person
-import elieomatuku.cineast_android.core.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.CineastError
+import elieomatuku.cineast_android.domain.model.KnownFor
+import elieomatuku.cineast_android.domain.model.Person
+import elieomatuku.cineast_android.domain.model.PersonalityDetails
 import elieomatuku.cineast_android.ui.base.BasePresenter
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers

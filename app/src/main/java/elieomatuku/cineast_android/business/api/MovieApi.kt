@@ -6,8 +6,8 @@ import elieomatuku.cineast_android.business.api.response.MovieCreditsResponse
 import elieomatuku.cineast_android.business.api.response.MovieResponse
 import elieomatuku.cineast_android.business.api.response.PostResponse
 import elieomatuku.cineast_android.business.api.response.TrailerResponse
-import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.core.model.MovieFacts
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.MovieFacts
 import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody
 import retrofit2.Call

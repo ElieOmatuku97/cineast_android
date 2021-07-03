@@ -5,7 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import elieomatuku.cineast_android.core.model.Personality
+import elieomatuku.cineast_android.domain.model.Personality
 import elieomatuku.cineast_android.database.dao.PersonalityDao
 import elieomatuku.cineast_android.database.entity.PersonalityEntity
 import kotlinx.coroutines.runBlocking

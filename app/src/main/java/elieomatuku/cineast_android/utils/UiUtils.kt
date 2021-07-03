@@ -25,7 +25,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Genre
+import elieomatuku.cineast_android.domain.model.Genre
 import timber.log.Timber
 
 object UiUtils {

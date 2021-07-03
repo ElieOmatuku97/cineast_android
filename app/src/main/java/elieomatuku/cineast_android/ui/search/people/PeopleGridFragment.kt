@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.ui.search.people
 
 import android.content.Intent
 import android.os.Bundle
-import elieomatuku.cineast_android.core.model.Content
+import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.ui.contents.ContentGridFragment
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.utils.Constants

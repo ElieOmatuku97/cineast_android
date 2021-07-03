@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Person
+import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.activity.ToolbarMVPActivity
 import elieomatuku.cineast_android.utils.MovieUtils
 import elieomatuku.cineast_android.utils.UiUtils

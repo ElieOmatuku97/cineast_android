@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.ui.search.movie
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import elieomatuku.cineast_android.core.model.Genre
+import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.ui.contents.ContentGridViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

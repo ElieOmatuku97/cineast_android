@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.MovieFacts
+import elieomatuku.cineast_android.domain.model.MovieFacts
 import kotlinx.android.synthetic.main.holder_movie_facts.view.*
 
 class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

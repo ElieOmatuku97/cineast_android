@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.domain.model.Poster
 import timber.log.Timber
 
 class GalleryPagerAdapter(fragmentManager: FragmentManager) :

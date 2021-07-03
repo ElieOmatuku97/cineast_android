@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.ui.details.BareOverviewFragment
 import kotlinx.android.synthetic.main.fragment_movie_overview.view.*
 

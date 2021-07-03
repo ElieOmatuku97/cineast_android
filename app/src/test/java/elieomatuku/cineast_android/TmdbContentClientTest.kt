@@ -2,7 +2,7 @@ package elieomatuku.cineast_android
 
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.domain.model.Movie
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -21,7 +21,7 @@ class TmdbContentClientTest {
     lateinit var resources: Resources
 
     @MockK
-    lateinit var persistClient: elieomatuku.cineast_android.core.ValueStore
+    lateinit var persistClient: elieomatuku.cineast_android.domain.ValueStore
 
     private lateinit var unauthorizedClient: TmdbContentClient
 

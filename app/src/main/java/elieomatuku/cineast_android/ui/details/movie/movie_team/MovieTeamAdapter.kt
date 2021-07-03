@@ -3,9 +3,9 @@ package elieomatuku.cineast_android.ui.details.movie.movie_team
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.Cast
-import elieomatuku.cineast_android.core.model.Content
-import elieomatuku.cineast_android.core.model.Crew
+import elieomatuku.cineast_android.domain.model.Cast
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Crew
 import elieomatuku.cineast_android.ui.viewholder.PeopleHolder
 import io.reactivex.subjects.PublishSubject
 

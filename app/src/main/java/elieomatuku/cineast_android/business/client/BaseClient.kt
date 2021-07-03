@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.business.client
 import android.content.res.Resources
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.ValueStore
+import elieomatuku.cineast_android.domain.ValueStore
 import elieomatuku.cineast_android.utils.RestUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

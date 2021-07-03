@@ -7,9 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.core.model.CineastError
-import elieomatuku.cineast_android.core.model.Genre
-import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.domain.model.CineastError
+import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.ui.details.BaseViewModel
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers

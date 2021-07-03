@@ -2,8 +2,8 @@ package elieomatuku.cineast_android.business.api.response
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import elieomatuku.cineast_android.core.model.Backdrop
-import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.domain.model.Backdrop
+import elieomatuku.cineast_android.domain.model.Poster
 
 class ImageResponse {
     @SerializedName("backdrops")

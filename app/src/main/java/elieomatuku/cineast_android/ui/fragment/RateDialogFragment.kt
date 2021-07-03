@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.core.model.Movie
+import elieomatuku.cineast_android.domain.model.Movie
 import org.kodein.di.generic.instance
 
 class RateDialogFragment : DialogFragment() {

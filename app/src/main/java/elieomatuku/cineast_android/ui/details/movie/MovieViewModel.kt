@@ -5,10 +5,10 @@ import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.business.service.ContentService
-import elieomatuku.cineast_android.core.model.Genre
-import elieomatuku.cineast_android.core.model.Movie
-import elieomatuku.cineast_android.core.model.MovieSummary
-import elieomatuku.cineast_android.core.model.Poster
+import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.Poster
 import elieomatuku.cineast_android.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance

@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.core.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.ui.fragment.RateDialogFragment
 import elieomatuku.cineast_android.ui.viewholder.ProfileHolder
 import elieomatuku.cineast_android.utils.UiUtils

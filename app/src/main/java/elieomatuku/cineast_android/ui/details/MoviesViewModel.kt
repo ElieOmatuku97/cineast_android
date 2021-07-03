@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.ViewModel
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.service.ContentService
-import elieomatuku.cineast_android.core.model.Genre
+import elieomatuku.cineast_android.domain.model.Genre
 import io.reactivex.schedulers.Schedulers
 import org.kodein.di.generic.instance
 

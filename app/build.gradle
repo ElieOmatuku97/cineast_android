@@ -90,7 +90,7 @@ dependencies {
 
     // Local modules
     implementation project(':database')
-    implementation project(':core')
+    implementation project(':domain')
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
