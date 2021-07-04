@@ -1,20 +1,21 @@
 package elieomatuku.cineast_android.remote
 
+import elieomatuku.cineast_android.data.repository.model.ImagesEntity
+import elieomatuku.cineast_android.data.repository.model.PeopleEntity
+import elieomatuku.cineast_android.data.repository.model.PersonDetailsEntity
+import elieomatuku.cineast_android.data.repository.model.PersonMovieCreditsEntity
+import elieomatuku.cineast_android.data.repository.person.PersonRemote
 import elieomatuku.cineast_android.remote.api.PersonApi
 import elieomatuku.cineast_android.remote.model.RemoteException
-import elieomatuku.cineast_android.remote.model.RemoteImages
-import elieomatuku.cineast_android.remote.model.RemotePeople
-import elieomatuku.cineast_android.remote.model.RemotePerson
-import elieomatuku.cineast_android.remote.model.RemotePersonDetails
-import elieomatuku.cineast_android.remote.model.RemotePersonMovieCredits
+
 
 /**
  * Created by elieomatuku on 2021-07-04
  */
 
-class PersonRemoteImpl(private val personApi: PersonApi) {
+class PersonRemoteImpl(private val personApi: PersonApi) : PersonRemote {
 
-    suspend fun getPopularPeople(): RemotePeople {
+    override suspend fun getPopularPeople(): PeopleEntity {
         val response = personApi.getPopularPeople()
         if (response.isSuccessful) {
             val body = response.body()
@@ -28,8 +29,8 @@ class PersonRemoteImpl(private val personApi: PersonApi) {
         }
     }
 
-    suspend fun getPeopleMovies(person: RemotePerson): RemotePersonMovieCredits {
-        val response = personApi.getPersonMovieCredits(person.id)
+    override suspend fun getPeopleMovies(personId: Int): PersonMovieCreditsEntity {
+        val response = personApi.getPersonMovieCredits(personId)
         if (response.isSuccessful) {
             val body = response.body()
             return body!!
@@ -42,8 +43,8 @@ class PersonRemoteImpl(private val personApi: PersonApi) {
         }
     }
 
-    suspend fun getPersonDetails(person: RemotePerson): RemotePersonDetails {
-        val response = personApi.getPersonDetails(person.id)
+    override suspend fun getPersonDetails(personId: Int): PersonDetailsEntity {
+        val response = personApi.getPersonDetails(personId)
         if (response.isSuccessful) {
             val body = response.body()
             return body!!
@@ -56,7 +57,7 @@ class PersonRemoteImpl(private val personApi: PersonApi) {
         }
     }
 
-    suspend fun getPeopleImages(personId: Int): RemoteImages {
+    override suspend fun getPeopleImages(personId: Int): ImagesEntity {
         val response = personApi.getPersonImages(personId)
         if (response.isSuccessful) {
             val body = response.body()
@@ -70,7 +71,7 @@ class PersonRemoteImpl(private val personApi: PersonApi) {
         }
     }
 
-    suspend fun searchPerson(query: String): RemotePeople {
+    override suspend fun searchPerson(query: String): PeopleEntity {
         val response = personApi.searchPerson(query)
         if (response.isSuccessful) {
             val body = response.body()

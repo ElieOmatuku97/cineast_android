@@ -3,8 +3,6 @@ plugins {
     id 'kotlin'
 }
 
-apply from: "../ktlint.gradle"
-
 java {
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
@@ -12,17 +10,9 @@ java {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
 
-    implementation project(':data')
-
-    implementation "androidx.core:core-ktx:${versions.ktx}"
-    implementation "androidx.preference:preference-ktx:1.1.1"
-    implementation("com.squareup.retrofit2:retrofit:${versions.retrofit}")
-    implementation("com.squareup.retrofit2:converter-gson:${versions.retrofit}") {
-        exclude module: "retrofit:${versions.retrofit}"
-    }
+    implementation project(':domain')
 
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlin}"
