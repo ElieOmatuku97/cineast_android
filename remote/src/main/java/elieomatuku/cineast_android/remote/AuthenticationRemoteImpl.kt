@@ -15,8 +15,8 @@ class AuthenticationRemoteImpl(private val authenticationApi: AuthenticationApi)
     suspend fun getAccessToken(): RemoteAccessToken {
         val response = authenticationApi.getAccessToken()
         if (response.isSuccessful) {
-            val locationResponse = response.body()
-            return locationResponse!!
+            val body = response.body()
+            return body!!
         } else {
             throw RemoteException(
                 response.code(),
@@ -29,8 +29,8 @@ class AuthenticationRemoteImpl(private val authenticationApi: AuthenticationApi)
     suspend fun getSession(requestToken: String?): RemoteSession {
         val response = authenticationApi.getSession(requestToken)
         if (response.isSuccessful) {
-            val locationResponse = response.body()
-            return locationResponse!!
+            val body = response.body()
+            return body!!
         } else {
             throw RemoteException(
                 response.code(),
@@ -43,8 +43,8 @@ class AuthenticationRemoteImpl(private val authenticationApi: AuthenticationApi)
     suspend fun setAccount(sessionId: String?): RemoteAccount {
         val response = authenticationApi.getAccount(sessionId)
         if (response.isSuccessful) {
-            val locationResponse = response.body()
-            return locationResponse!!
+            val body = response.body()
+            return body!!
         } else {
             throw RemoteException(
                 response.code(),

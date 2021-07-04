@@ -6,10 +6,11 @@ import elieomatuku.cineast_android.remote.model.RemoteMovie
 import elieomatuku.cineast_android.remote.model.RemoteMovieCredits
 import elieomatuku.cineast_android.remote.model.RemoteMovieFacts
 import elieomatuku.cineast_android.remote.model.RemoteMovies
-import elieomatuku.cineast_android.remote.model.RemotePost
+import elieomatuku.cineast_android.remote.model.RemotePostResult
 import elieomatuku.cineast_android.remote.model.RemoteTrailers
+import elieomatuku.cineast_android.remote.request.FavouritesMediaRequest
+import elieomatuku.cineast_android.remote.request.WatchListMediaRequest
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -51,10 +52,10 @@ interface MovieApi {
     suspend fun getUpcomingMovies(): Response<RemoteMovies>
 
     @GET(POPULAR_MOVIE)
-    suspend fun getPopularMovie(): Response<RemoteMovies>
+    suspend fun getPopularMovies(): Response<RemoteMovies>
 
     @GET(NOW_PLAYING_MOVIE)
-    suspend fun getNowPlayingMovie(): Response<RemoteMovies>
+    suspend fun getNowPlayingMovies(): Response<RemoteMovies>
 
     @GET(MOVIE_VIDEOS)
     suspend fun getMovieVideos(@Path(MOVIE_ID) movie_id: Int): Response<RemoteTrailers>
@@ -72,7 +73,7 @@ interface MovieApi {
     suspend fun getCredits(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovieCredits>
 
     @GET(SIMILAR_MOVIE)
-    suspend fun getSimilarMovie(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovies>
+    suspend fun getSimilarMovies(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovies>
 
     @GET(MOVIE_IMAGE)
     suspend fun getMovieImages(@Path(MOVIE_ID) movie_id: Int): Response<RemoteImages>
@@ -86,17 +87,17 @@ interface MovieApi {
     @POST(UPDATE_WATCHLIST_MOVIE)
     suspend fun updateWatchList(
         @Query(SESSION_ID) sessionId: String,
-        @Body media: RequestBody
-    ): Response<RemotePost>
+        @Body media: WatchListMediaRequest
+    ): Response<RemotePostResult>
 
     @GET(FAVORITES_MOVIE)
     suspend fun getFavoritesList(@Query(SESSION_ID) sessionId: String): Response<RemoteMovies>
 
     @POST(UPDATE_FAVORITES_MOVIE)
-    suspend fun updateFavoritesList(
+    suspend fun updateFavorites(
         @Query(SESSION_ID) sessionId: String,
-        @Body media: RequestBody
-    ): Call<RemotePost>
+        @Body media: FavouritesMediaRequest
+    ): Response<RemotePostResult>
 
     @GET(RATED_MOVIE)
     suspend fun getUserRatedMovies(@Query(SESSION_ID) sessionId: String): Response<RemoteMovies>
@@ -106,5 +107,5 @@ interface MovieApi {
         @Path(MOVIE_ID) movieId: Int,
         @Query(SESSION_ID) sessionId: String,
         @Body value: RequestBody
-    ): Response<RemotePost>
+    ): Response<RemotePostResult>
 }
