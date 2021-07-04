@@ -1,9 +1,16 @@
 package elieomatuku.cineast_android.remote.api
 
-import elieomatuku.cineast_android.remote.api.model.*
-import kotlinx.coroutines.Deferred
+import elieomatuku.cineast_android.remote.model.RemoteGenres
+import elieomatuku.cineast_android.remote.model.RemoteImages
+import elieomatuku.cineast_android.remote.model.RemoteMovie
+import elieomatuku.cineast_android.remote.model.RemoteMovieCredits
+import elieomatuku.cineast_android.remote.model.RemoteMovieFacts
+import elieomatuku.cineast_android.remote.model.RemoteMovies
+import elieomatuku.cineast_android.remote.model.RemotePost
+import elieomatuku.cineast_android.remote.model.RemoteTrailers
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -38,66 +45,66 @@ interface MovieApi {
     }
 
     @GET(TOP_RATED_MOVIE)
-    fun getTopRatedMovies(): Deferred<RemoteMovies>
+    suspend fun getTopRatedMovies(): Response<RemoteMovies>
 
     @GET(UPCOMING_MOVIE)
-    fun getUpcomingMovies(): Deferred<RemoteMovies>
+    suspend fun getUpcomingMovies(): Response<RemoteMovies>
 
     @GET(POPULAR_MOVIE)
-    fun getPopularMovie(): Deferred<RemoteMovies>
+    suspend fun getPopularMovie(): Response<RemoteMovies>
 
     @GET(NOW_PLAYING_MOVIE)
-    fun getNowPlayingMovie(): Deferred<RemoteMovies>
+    suspend fun getNowPlayingMovie(): Response<RemoteMovies>
 
     @GET(MOVIE_VIDEOS)
-    fun getMovieVideos(@Path(MOVIE_ID) movie_id: Int): Deferred<RemoteTrailers>
+    suspend fun getMovieVideos(@Path(MOVIE_ID) movie_id: Int): Response<RemoteTrailers>
 
     @GET(MOVIE_DETAILS)
-    fun getMovieDetails(@Path(MOVIE_ID) movie_id: Int): Deferred<RemoteMovieFacts>
+    suspend fun getMovieDetails(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovieFacts>
 
     @GET(MOVIE)
-    fun getMovie(@Path(MOVIE_ID) movie_id: Int): Call<RemoteMovie>
+    suspend fun getMovie(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovie>
 
     @GET(GENRE)
-    fun getGenre(): Deferred<RemoteGenres>
+    suspend fun getGenre(): Response<RemoteGenres>
 
     @GET(CREDITS)
-    fun getCredits(@Path(MOVIE_ID) movie_id: Int): Deferred<RemoteMovieCredits>
+    suspend fun getCredits(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovieCredits>
 
     @GET(SIMILAR_MOVIE)
-    fun getSimilarMovie(@Path(MOVIE_ID) movie_id: Int): Deferred<RemoteMovies>
+    suspend fun getSimilarMovie(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovies>
 
     @GET(MOVIE_IMAGE)
-    fun getMovieImages(@Path(MOVIE_ID) movie_id: Int): Deferred<RemoteImages>
+    suspend fun getMovieImages(@Path(MOVIE_ID) movie_id: Int): Response<RemoteImages>
 
     @GET(SEARCH_MOVIE)
-    fun getMoviesWithSearch(@Query(QUERY) query: String): Call<RemoteMovies>
+    suspend fun getMoviesWithSearch(@Query(QUERY) query: String): Response<RemoteMovies>
 
     @GET(WATCHLIST_MOVIE)
-    fun getWatchList(@Query(SESSION_ID) sessionId: String): Deferred<RemoteMovies>
+    suspend fun getWatchList(@Query(SESSION_ID) sessionId: String): Response<RemoteMovies>
 
     @POST(UPDATE_WATCHLIST_MOVIE)
-    fun updateWatchList(
+    suspend fun updateWatchList(
         @Query(SESSION_ID) sessionId: String,
         @Body media: RequestBody
-    ): Call<RemotePost>
+    ): Response<RemotePost>
 
     @GET(FAVORITES_MOVIE)
-    fun getFavoritesList(@Query(SESSION_ID) sessionId: String): Deferred<RemoteMovies>
+    suspend fun getFavoritesList(@Query(SESSION_ID) sessionId: String): Response<RemoteMovies>
 
     @POST(UPDATE_FAVORITES_MOVIE)
-    fun updateFavoritesList(
+    suspend fun updateFavoritesList(
         @Query(SESSION_ID) sessionId: String,
         @Body media: RequestBody
     ): Call<RemotePost>
 
     @GET(RATED_MOVIE)
-    fun getUserRatedMovies(@Query(SESSION_ID) sessionId: String): Call<RemoteMovies>
+    suspend fun getUserRatedMovies(@Query(SESSION_ID) sessionId: String): Response<RemoteMovies>
 
     @POST(POST_MOVIE_RATE)
-    fun postMovieRate(
+    suspend fun postMovieRate(
         @Path(MOVIE_ID) movieId: Int,
         @Query(SESSION_ID) sessionId: String,
         @Body value: RequestBody
-    ): Call<RemotePost>
+    ): Response<RemotePost>
 }

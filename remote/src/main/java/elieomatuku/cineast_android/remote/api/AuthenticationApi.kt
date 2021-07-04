@@ -1,9 +1,9 @@
 package elieomatuku.cineast_android.remote.api
 
-import elieomatuku.cineast_android.remote.api.model.RemoteAccessToken
-import elieomatuku.cineast_android.remote.api.model.RemoteAccount
-import elieomatuku.cineast_android.remote.api.model.RemoteSession
-import retrofit2.Call
+import elieomatuku.cineast_android.remote.model.RemoteAccessToken
+import elieomatuku.cineast_android.remote.model.RemoteAccount
+import elieomatuku.cineast_android.remote.model.RemoteSession
+import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -12,12 +12,12 @@ import retrofit2.http.Query
 
 interface AuthenticationApi {
     @GET("authentication/token/new")
-    fun getAccessToken(): Call<RemoteAccessToken>
+    suspend fun getAccessToken(): Response<RemoteAccessToken>
 
     @FormUrlEncoded
     @POST("authentication/session/new")
-    fun getSession(@Field("request_token") requestToken: String?): Call<RemoteSession>
+    suspend fun getSession(@Field("request_token") requestToken: String?): Response<RemoteSession>
 
     @GET("account")
-    fun getAccount(@Query("session_id") sessionId: String): Call<RemoteAccount>
+    suspend fun getAccount(@Query("session_id") sessionId: String?): Response<RemoteAccount>
 }

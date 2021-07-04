@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.remote.api.model
+package elieomatuku.cineast_android.remote.model
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.Expose
