@@ -3,12 +3,12 @@ package elieomatuku.cineast_android.remote.model
 import androidx.annotation.Keep
 
 @Keep
-data class RemotePersonalities(
-    val results: List<RemotePersonality> = listOf()
+data class RemotePeople(
+    val results: List<RemotePerson> = listOf()
 )
 
 @Keep
-data class RemotePersonality(
+data class RemotePerson(
     val profile_path: String?,
     val adult: Boolean?,
     val id: Int,

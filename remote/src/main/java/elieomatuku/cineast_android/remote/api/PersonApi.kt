@@ -1,9 +1,9 @@
 package elieomatuku.cineast_android.remote.api
 
 import elieomatuku.cineast_android.remote.model.RemoteImages
-import elieomatuku.cineast_android.remote.model.RemotePeopleCredits
-import elieomatuku.cineast_android.remote.model.RemotePersonalities
-import elieomatuku.cineast_android.remote.model.RemotePersonalityDetails
+import elieomatuku.cineast_android.remote.model.RemotePeople
+import elieomatuku.cineast_android.remote.model.RemotePersonDetails
+import elieomatuku.cineast_android.remote.model.RemotePersonMovieCredits
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -22,17 +22,17 @@ interface PersonApi {
     }
 
     @GET(POPULAR_PERSON)
-    suspend fun getPersonalities(): Response<RemotePersonalities>
+    suspend fun getPopularPeople(): Response<RemotePeople>
 
     @GET(GET_PERSON_ID)
-    suspend fun getPeopleDetails(@Path(PERSON_ID) personId: Int): Response<RemotePersonalityDetails>
+    suspend fun getPersonDetails(@Path(PERSON_ID) personId: Int): Response<RemotePersonDetails>
 
     @GET(PERSON_MOVIE_CREDITS)
-    suspend fun getPeopleCredits(@Path(PERSON_ID) personId: Int): Response<RemotePeopleCredits>
+    suspend fun getPersonMovieCredits(@Path(PERSON_ID) personId: Int): Response<RemotePersonMovieCredits>
 
     @GET(GET_PERSON_IMAGES)
-    suspend fun getPeopleImages(@Path(PERSON_ID) movie_id: Int): Response<RemoteImages>
+    suspend fun getPersonImages(@Path(PERSON_ID) movie_id: Int): Response<RemoteImages>
 
     @GET(SEARCH_PERSON)
-    suspend fun getPeopleWithSearch(@Query(QUERY) query: String): Response<RemotePersonalities>
+    suspend fun searchPerson(@Query(QUERY) query: String): Response<RemotePeople>
 }

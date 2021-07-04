@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.remote.request
 
-
 /**
  * Created by elieomatuku on 2021-07-04
  */

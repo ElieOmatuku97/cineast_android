@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 @Keep
-data class RemotePeopleCredits(
+data class RemotePersonMovieCredits(
     @SerializedName("cast")
     @Expose
     val cast: List<RemoteKnownFor> = listOf()

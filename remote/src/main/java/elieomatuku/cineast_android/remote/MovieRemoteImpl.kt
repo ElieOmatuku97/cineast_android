@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.remote
 
 import elieomatuku.cineast_android.remote.api.MovieApi
+import elieomatuku.cineast_android.remote.model.RemoteException
 import elieomatuku.cineast_android.remote.model.RemoteGenres
 import elieomatuku.cineast_android.remote.model.RemoteImages
 import elieomatuku.cineast_android.remote.model.RemoteMovie
@@ -11,9 +12,7 @@ import elieomatuku.cineast_android.remote.model.RemotePostResult
 import elieomatuku.cineast_android.remote.model.RemoteTrailers
 import elieomatuku.cineast_android.remote.request.FavouritesMediaRequest
 import elieomatuku.cineast_android.remote.request.WatchListMediaRequest
-import elieomatuku.cineast_android.remote.model.RemoteException
 import okhttp3.RequestBody
-
 
 /**
  * Created by elieomatuku on 2021-07-04
@@ -104,7 +103,6 @@ class MovieRemoteImpl(private val movieApi: MovieApi) {
             )
         }
     }
-
 
     suspend fun getMovieFacts(movie: RemoteMovie): RemoteMovieFacts {
         val response = movieApi.getMovieDetails(movie.id)

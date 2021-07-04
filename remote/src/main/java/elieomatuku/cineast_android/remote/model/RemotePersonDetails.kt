@@ -7,7 +7,7 @@ import androidx.annotation.Keep
  */
 
 @Keep
-data class RemotePersonalityDetails(
+data class RemotePersonDetails(
     val birthday: String? = null,
     val known_for_department: String? = null,
     val deathday: String? = null,
