@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.data.repository.authentication
 
-import elieomatuku.cineast_android.data.repository.model.AccessTokenEntity
-import elieomatuku.cineast_android.data.repository.model.AccountEntity
-import elieomatuku.cineast_android.data.repository.model.SessionEntity
+import elieomatuku.cineast_android.data.model.AccessTokenEntity
+import elieomatuku.cineast_android.data.model.AccountEntity
+import elieomatuku.cineast_android.data.model.SessionEntity
 
 
 /**

@@ -1,13 +1,11 @@
 package elieomatuku.cineast_android.remote
 
+import elieomatuku.cineast_android.data.model.AccessTokenEntity
+import elieomatuku.cineast_android.data.model.AccountEntity
+import elieomatuku.cineast_android.data.model.SessionEntity
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationRemote
-import elieomatuku.cineast_android.data.repository.model.AccessTokenEntity
-import elieomatuku.cineast_android.data.repository.model.AccountEntity
-import elieomatuku.cineast_android.data.repository.model.SessionEntity
 import elieomatuku.cineast_android.remote.api.AuthenticationApi
 import elieomatuku.cineast_android.remote.model.RemoteException
-
-
 
 /**
  * Created by elieomatuku on 2021-07-04

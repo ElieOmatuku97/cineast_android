@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.data.repository.model
+package elieomatuku.cineast_android.data.model
 
 
 /**

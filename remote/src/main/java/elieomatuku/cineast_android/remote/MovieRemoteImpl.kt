@@ -1,19 +1,12 @@
 package elieomatuku.cineast_android.remote
 
+import elieomatuku.cineast_android.data.model.*
 import elieomatuku.cineast_android.data.repository.movie.MovieRemote
 import elieomatuku.cineast_android.remote.api.MovieApi
 import elieomatuku.cineast_android.remote.model.RemoteException
-import elieomatuku.cineast_android.remote.model.RemoteGenres
-import elieomatuku.cineast_android.remote.model.RemoteImages
-import elieomatuku.cineast_android.remote.model.RemoteMovie
-import elieomatuku.cineast_android.remote.model.RemoteMovieCredits
-import elieomatuku.cineast_android.remote.model.RemoteMovieFacts
-import elieomatuku.cineast_android.remote.model.RemoteMovies
-import elieomatuku.cineast_android.remote.model.RemotePostResult
-import elieomatuku.cineast_android.remote.model.RemoteTrailers
 import elieomatuku.cineast_android.remote.request.FavouritesMediaRequest
+import elieomatuku.cineast_android.remote.request.RateRequest
 import elieomatuku.cineast_android.remote.request.WatchListMediaRequest
-import okhttp3.RequestBody
 
 /**
  * Created by elieomatuku on 2021-07-04
@@ -21,7 +14,7 @@ import okhttp3.RequestBody
 
 class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
 
-    override suspend fun getPopularMovies(): RemoteMovies {
+    override suspend fun getPopularMovies(): List<MovieEntity> {
         val response = movieApi.getPopularMovies()
         if (response.isSuccessful) {
             val body = response.body()
@@ -35,7 +28,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getUpcomingMovies(): RemoteMovies {
+    override suspend fun getUpcomingMovies(): List<MovieEntity> {
         val response = movieApi.getUpcomingMovies()
         if (response.isSuccessful) {
             val body = response.body()
@@ -49,7 +42,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getNowPlayingMovies(): RemoteMovies {
+    override suspend fun getNowPlayingMovies(): List<MovieEntity> {
         val response = movieApi.getNowPlayingMovies()
         if (response.isSuccessful) {
             val body = response.body()
@@ -63,7 +56,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getTopRatedMovies(): RemoteMovies {
+    override suspend fun getTopRatedMovies(): List<MovieEntity> {
         val response = movieApi.getTopRatedMovies()
         if (response.isSuccessful) {
             val body = response.body()
@@ -77,7 +70,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getGenres(): RemoteGenres {
+    override suspend fun getGenres(): List<GenreEntity> {
         val response = movieApi.getGenre()
         if (response.isSuccessful) {
             val body = response.body()
@@ -91,7 +84,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getMovieVideos(movieId: Int): RemoteTrailers {
+    override suspend fun getTrailers(movieId: Int): List<TrailerEntity> {
         val response = movieApi.getMovieVideos(movieId)
         if (response.isSuccessful) {
             val body = response.body()
@@ -105,7 +98,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getMovieFacts(movieId: Int): RemoteMovieFacts {
+    override suspend fun getMovieFacts(movieId: Int): MovieFactsEntity {
         val response = movieApi.getMovieDetails(movieId)
         if (response.isSuccessful) {
             val body = response.body()
@@ -119,7 +112,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getMovieCredits(movieId: Int): RemoteMovieCredits {
+    override suspend fun getMovieCredits(movieId: Int): MovieCreditsEntity {
         val response = movieApi.getCredits(movieId)
         if (response.isSuccessful) {
             val body = response.body()
@@ -133,7 +126,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getSimilarMovie(movieId: Int): RemoteMovies {
+    override suspend fun getSimilarMovie(movieId: Int): List<MovieEntity> {
         val response = movieApi.getSimilarMovies(movieId)
         if (response.isSuccessful) {
             val body = response.body()
@@ -147,7 +140,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getMovieImages(movieId: Int): RemoteImages {
+    override suspend fun getMovieImages(movieId: Int): ImageEntities {
         val response = movieApi.getMovieImages(movieId)
         if (response.isSuccessful) {
             val body = response.body()
@@ -161,7 +154,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getMovie(movieId: Int): RemoteMovie {
+    override suspend fun getMovie(movieId: Int): MovieEntity {
         val response = movieApi.getMovie(movieId)
         if (response.isSuccessful) {
             val body = response.body()
@@ -175,7 +168,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun searchMovies(query: String): RemoteMovies {
+    override suspend fun searchMovies(query: String): List<MovieEntity> {
         val response = movieApi.getMoviesWithSearch(query)
         if (response.isSuccessful) {
             val body = response.body()
@@ -191,8 +184,10 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
 
     override suspend fun updateWatchList(
         sessionId: String,
-        mediaRequest: WatchListMediaRequest
-    ): RemotePostResult {
+        movie: MovieEntity,
+        watchList: Boolean
+    ): PostResultEntity {
+        val mediaRequest = WatchListMediaRequest(media_id = movie.id, watchlist = watchList)
         val response = movieApi.updateWatchList(sessionId, mediaRequest)
         if (response.isSuccessful) {
             val body = response.body()
@@ -206,7 +201,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getFavoriteList(sessionId: String): RemoteMovies {
+    override suspend fun getFavoriteList(sessionId: String): List<MovieEntity> {
         val response = movieApi.getFavoritesList(sessionId)
         if (response.isSuccessful) {
             val body = response.body()
@@ -222,8 +217,10 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
 
     override suspend fun updateFavoriteList(
         sessionId: String,
-        mediaRequest: FavouritesMediaRequest
-    ): RemotePostResult {
+        movie: MovieEntity,
+        favorite: Boolean
+    ): PostResultEntity {
+        val mediaRequest = FavouritesMediaRequest(media_id = movie.id, favorite = favorite)
         val response = movieApi.updateFavorites(sessionId, mediaRequest)
         if (response.isSuccessful) {
             val body = response.body()
@@ -240,8 +237,9 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
     override suspend fun postMovieRate(
         movieId: Int,
         sessionId: String,
-        requestBody: RequestBody
-    ): RemotePostResult {
+        rate: Double
+    ): PostResultEntity {
+        val requestBody = RemoteUtils.getRequestBody(RateRequest(rate))
         val response = movieApi.postMovieRate(movieId, sessionId, requestBody)
         if (response.isSuccessful) {
             val body = response.body()
@@ -255,7 +253,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
-    override suspend fun getUserRatedMovies(sessionId: String): RemoteMovies {
+    override suspend fun getUserRatedMovies(sessionId: String): List<MovieEntity> {
         val response = movieApi.getUserRatedMovies(sessionId)
         if (response.isSuccessful) {
             val body = response.body()

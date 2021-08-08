@@ -1,52 +1,56 @@
 package elieomatuku.cineast_android.data.repository.movie
 
+import elieomatuku.cineast_android.data.model.*
+
 
 /**
  * Created by elieomatuku on 2021-07-04
  */
 
 interface MovieRemote {
-    suspend fun getPopularMovies(): elieomatuku.cineast_android.remote.model.RemoteMovies
+    suspend fun getPopularMovies(): List<MovieEntity>
 
-    suspend fun getUpcomingMovies(): elieomatuku.cineast_android.remote.model.RemoteMovies
+    suspend fun getUpcomingMovies(): List<MovieEntity>
 
-    suspend fun getNowPlayingMovies(): elieomatuku.cineast_android.remote.model.RemoteMovies
+    suspend fun getNowPlayingMovies(): List<MovieEntity>
 
-    suspend fun getTopRatedMovies(): elieomatuku.cineast_android.remote.model.RemoteMovies
+    suspend fun getTopRatedMovies(): List<MovieEntity>
 
-    suspend fun getGenres(): elieomatuku.cineast_android.remote.model.RemoteGenres
+    suspend fun getGenres(): List<GenreEntity>
 
-    suspend fun getMovieVideos(movieId: Int): elieomatuku.cineast_android.remote.model.RemoteTrailers
+    suspend fun getTrailers(movieId: Int): List<TrailerEntity>
 
-    suspend fun getMovieFacts(movieId: Int): elieomatuku.cineast_android.remote.model.RemoteMovieFacts
+    suspend fun getMovieFacts(movieId: Int): MovieFactsEntity
 
-    suspend fun getMovieCredits(movieId: Int): elieomatuku.cineast_android.remote.model.RemoteMovieCredits
+    suspend fun getMovieCredits(movieId: Int): MovieCreditsEntity
 
-    suspend fun getSimilarMovie(movieId: Int): elieomatuku.cineast_android.remote.model.RemoteMovies
+    suspend fun getSimilarMovie(movieId: Int): List<MovieEntity>
 
-    suspend fun getMovieImages(movieId: Int): elieomatuku.cineast_android.remote.model.RemoteImages
+    suspend fun getMovieImages(movieId: Int): ImageEntities
 
-    suspend fun getMovie(movieId: Int): elieomatuku.cineast_android.remote.model.RemoteMovie
+    suspend fun getMovie(movieId: Int): MovieEntity
 
-    suspend fun searchMovies(query: String): elieomatuku.cineast_android.remote.model.RemoteMovies
+    suspend fun searchMovies(query: String): List<MovieEntity>
 
     suspend fun updateWatchList(
         sessionId: String,
-        mediaRequest: elieomatuku.cineast_android.remote.request.WatchListMediaRequest
-    ): elieomatuku.cineast_android.remote.model.RemotePostResult
+        movie: MovieEntity,
+        watchList: Boolean
+    ): PostResultEntity
 
-    suspend fun getFavoriteList(sessionId: String): elieomatuku.cineast_android.remote.model.RemoteMovies
+    suspend fun getFavoriteList(sessionId: String): List<MovieEntity>
 
     suspend fun updateFavoriteList(
         sessionId: String,
-        mediaRequest: elieomatuku.cineast_android.remote.request.FavouritesMediaRequest
-    ): elieomatuku.cineast_android.remote.model.RemotePostResult
+        movie: MovieEntity,
+        favorite: Boolean
+    ): PostResultEntity
 
     suspend fun postMovieRate(
         movieId: Int,
         sessionId: String,
-        requestBody: okhttp3.RequestBody
-    ): elieomatuku.cineast_android.remote.model.RemotePostResult
+        rate: Double
+    ): PostResultEntity
 
-    suspend fun getUserRatedMovies(sessionId: String): elieomatuku.cineast_android.remote.model.RemoteMovies
+    suspend fun getUserRatedMovies(sessionId: String): List<MovieEntity>
 }

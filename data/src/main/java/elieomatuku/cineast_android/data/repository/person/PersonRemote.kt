@@ -1,9 +1,6 @@
 package elieomatuku.cineast_android.data.repository.person
 
-import elieomatuku.cineast_android.data.repository.model.ImagesEntity
-import elieomatuku.cineast_android.data.repository.model.PeopleEntity
-import elieomatuku.cineast_android.data.repository.model.PersonDetailsEntity
-import elieomatuku.cineast_android.data.repository.model.PersonMovieCreditsEntity
+import elieomatuku.cineast_android.data.model.*
 
 
 /**
@@ -11,13 +8,13 @@ import elieomatuku.cineast_android.data.repository.model.PersonMovieCreditsEntit
  */
 
 interface PersonRemote {
-    suspend fun getPopularPeople(): PeopleEntity
+    suspend fun getPopularPeople(): List<PersonEntity>
 
-    suspend fun getPeopleMovies(personId: Int): PersonMovieCreditsEntity
+    suspend fun getPersonMovies(personId: Int): List<MovieEntity>
 
     suspend fun getPersonDetails(personId: Int): PersonDetailsEntity
 
-    suspend fun getPeopleImages(personId: Int): ImagesEntity
+    suspend fun getPersonImages(personId: Int): ImageEntities
 
-    suspend fun searchPerson(query: String): PeopleEntity
+    suspend fun searchPerson(query: String): List<PersonEntity>
 }

@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.data.repository.model
+package elieomatuku.cineast_android.data.model
 
 
 /**
@@ -9,15 +9,15 @@ package elieomatuku.cineast_android.data.repository.model
 data class AccountEntity(
     val avatar: AvatarEntity?,
     val id: Int?,
-    val iso_639_1: String?,
-    val iso_3166_1: String?,
+    val iso6391: String?,
+    val iso31661: String?,
     val name: String?,
     val includeAdult: Boolean?,
     val username: String?
 )
 
 
-data class AvatarEntity(val gravatar: GavatarEntity?)
+data class AvatarEntity(val gravatar: GAvatarEntity?)
 
 
-data class GavatarEntity(val hash: String?)
+data class GAvatarEntity(val hash: String?)
