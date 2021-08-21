@@ -1,10 +1,7 @@
 package elieomatuku.cineast_android.domain.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-data class PersonalityDetails(
+data class PersonDetails(
     val birthday: String? = null,
     val knownForDepartment: String? = null,
     val deathDay: String? = null,
@@ -19,10 +16,10 @@ data class PersonalityDetails(
     val adult: Boolean? = null,
     val imdbId: String? = null,
     val homepage: String? = null
-) : Parcelable {
+) {
 
     fun isEmpty(): Boolean {
-        val emptyPersonalityDetails = PersonalityDetails()
+        val emptyPersonalityDetails = PersonDetails()
 
         return this == emptyPersonalityDetails
     }

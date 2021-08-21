@@ -1,16 +1,13 @@
 package elieomatuku.cineast_android.domain.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class MovieFacts(
     val budget: Int?,
     val releaseDate: String?,
     val runtime: Int?,
     val revenue: Int?,
     val homepage: String?
-) : Parcelable {
+) {
 
     val runtimeInHoursAndMinutes: String
         get() {

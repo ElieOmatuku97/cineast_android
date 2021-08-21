@@ -2,14 +2,14 @@ package elieomatuku.cineast_android.domain
 
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.Personality
+import elieomatuku.cineast_android.domain.model.Person
 
 class DiscoverContent(
     var popularMovies: List<Movie> = listOf(),
     var nowPlayingMovies: List<Movie> = listOf(),
     var upcomingMovies: List<Movie> = listOf(),
     var topRatedMovies: List<Movie> = listOf(),
-    var personalities: List<Personality> = listOf()
+    var people: List<Person> = listOf()
 ) {
 
     companion object {
@@ -37,7 +37,7 @@ class DiscoverContent(
         filteredWidgets[getSummaryPosition(TYPE_POPULAR_MOVIE)] =
             Pair(R.string.popular_movies, popularMovies)
         filteredWidgets[getSummaryPosition(TYPE_PERSONALITIES)] =
-            Pair(R.string.popular_people, personalities)
+            Pair(R.string.popular_people, people)
         filteredWidgets[getSummaryPosition(TYPE_NOW_PLAYING_MOVIE)] =
             Pair(R.string.now_playing, nowPlayingMovies)
         filteredWidgets[getSummaryPosition(TYPE_UPCOMING_MOVIE)] =
@@ -53,6 +53,6 @@ class DiscoverContent(
     }
 
     fun isEmpty(): Boolean {
-        return popularMovies.isEmpty() && nowPlayingMovies.isEmpty() && upcomingMovies.isEmpty() && topRatedMovies.isEmpty() && personalities.isEmpty()
+        return popularMovies.isEmpty() && nowPlayingMovies.isEmpty() && upcomingMovies.isEmpty() && topRatedMovies.isEmpty() && people.isEmpty()
     }
 }

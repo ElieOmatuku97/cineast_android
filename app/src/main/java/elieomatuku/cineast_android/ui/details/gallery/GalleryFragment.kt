@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.eftimoff.viewpagertransformers.TabletTransformer
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Poster
+import elieomatuku.cineast_android.domain.model.Image
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
@@ -35,14 +35,14 @@ class GalleryFragment : BaseFragment() {
         GalleryPagerAdapter(checkNotNull(childFragmentManager))
     }
 
-    private var posters: List<Poster> = listOf()
+    private var posters: List<Image> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        arguments?.getParcelableArrayList<Poster>(POSTERS)?.let {
+        arguments?.getParcelableArrayList<Image>(POSTERS)?.let {
             posters = it
         }
 
@@ -76,7 +76,7 @@ class GalleryFragment : BaseFragment() {
         }
     }
 
-    private fun updateView(posters: List<Poster>) {
+    private fun updateView(posters: List<Image>) {
         galleryPagerAdapter.posters = posters
         galleryPagerAdapter.notifyDataSetChanged()
     }

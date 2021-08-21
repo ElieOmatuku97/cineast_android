@@ -18,7 +18,7 @@ import elieomatuku.cineast_android.domain.model.FavoriteListMedia
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieFacts
 import elieomatuku.cineast_android.domain.model.Person
-import elieomatuku.cineast_android.domain.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.domain.model.Rate
 import elieomatuku.cineast_android.domain.model.WatchListMedia
 import elieomatuku.cineast_android.utils.ApiUtils
@@ -190,11 +190,11 @@ class TmdbContentClient(
         }
     }
 
-    fun getPeopleDetails(person: Person, asyncResponse: AsyncResponse<PersonalityDetails>) {
+    fun getPeopleDetails(person: Person, asyncResponse: AsyncResponse<PersonDetails>) {
         val id = person.id
         if (id != null) {
-            peopleApi.getPeopleDetails(id).enqueue(object : Callback<PersonalityDetails> {
-                override fun onResponse(call: Call<PersonalityDetails>?, response: Response<PersonalityDetails>?) {
+            peopleApi.getPeopleDetails(id).enqueue(object : Callback<PersonDetails> {
+                override fun onResponse(call: Call<PersonDetails>?, response: Response<PersonDetails>?) {
                     val success = response?.isSuccessful ?: false
                     if (success) {
                         asyncResponse.onSuccess(response?.body())
@@ -203,7 +203,7 @@ class TmdbContentClient(
                     }
                 }
 
-                override fun onFailure(call: Call<PersonalityDetails>?, t: Throwable?) {
+                override fun onFailure(call: Call<PersonDetails>?, t: Throwable?) {
                     Timber.e("error: $t")
                     asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
                 }

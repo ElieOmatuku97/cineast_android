@@ -10,5 +10,5 @@ data class DiscoverContent(
     val nowPlayingMovies: List<Movie> = listOf(),
     val upcomingMovies: List<Movie> = listOf(),
     val topRatedMovies: List<Movie> = listOf(),
-    val personalities: List<Personality> = listOf()
+    val people: List<Person> = listOf()
 )

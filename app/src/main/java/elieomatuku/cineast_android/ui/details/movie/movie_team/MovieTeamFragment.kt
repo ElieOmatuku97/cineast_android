@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.databinding.FragmentMovieteamBinding
-import elieomatuku.cineast_android.domain.model.Cast
-import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.domain.model.Crew
 import elieomatuku.cineast_android.domain.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.ui.details.people.PeoplePresenter
@@ -41,11 +39,11 @@ class MovieTeamFragment : BaseFragment() {
 
     var movieTitle: String? = null
 
-    private val onPeopleSelectPublisher: PublishSubject<Content> by lazy {
-        PublishSubject.create<Content>()
+    private val onPeopleSelectPublisher: PublishSubject<Person> by lazy {
+        PublishSubject.create<Person>()
     }
 
-    private val onPeopleSelectObservable: Observable<Content>
+    private val onPeopleSelectObservable: Observable<Person>
         get() = onPeopleSelectPublisher.hide()
 
     override fun onCreateView(
@@ -58,8 +56,8 @@ class MovieTeamFragment : BaseFragment() {
 
         val movieSummary: MovieSummary? = arguments?.getParcelable<MovieSummary>(MOVIE_SUMMARY)
 
-        val cast: List<Cast>? = movieSummary?.cast
-        val crew: List<Crew>? = movieSummary?.crew
+        val cast: List<Person>? = movieSummary?.cast
+        val crew: List<Person>? = movieSummary?.crew
         movieTitle = movieSummary?.movie?.title
 
         if (cast != null && crew != null) {
@@ -79,12 +77,12 @@ class MovieTeamFragment : BaseFragment() {
         )
     }
 
-    private fun updateView(cast: List<Cast>, crew: List<Crew>) {
+    private fun updateView(cast: List<Person>, crew: List<Person>) {
         viewDataBinding.overviewList.adapter = MovieTeamAdapter(cast, crew, onPeopleSelectPublisher)
         viewDataBinding.overviewList.layoutManager = LinearLayoutManager(activity)
     }
 
-    private fun onPeopleSelectedSuccess(person: Content) {
+    private fun onPeopleSelectedSuccess(person: Person) {
         val params = Bundle()
         params.putString(SCREEN_NAME_KEY, movieTitle)
         params.putParcelable(PEOPLE_KEY, person)

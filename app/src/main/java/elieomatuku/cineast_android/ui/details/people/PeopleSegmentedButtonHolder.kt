@@ -7,7 +7,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.PersonDetails
 import kotlinx.android.synthetic.main.holder_menu_people.view.*
 
 class PeopleSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,7 +33,7 @@ class PeopleSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(item
         itemView.known_for_view
     }
 
-    fun update(peopleDetails: PersonalityDetails?, checkedTab: String) {
+    fun update(peopleDetails: PersonDetails?, checkedTab: String) {
         if (peopleDetails != null && !peopleDetails.isEmpty()) {
             segmentedGroup.visibility = View.VISIBLE
         } else {

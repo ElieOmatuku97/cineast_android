@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.business.api
 import elieomatuku.cineast_android.business.api.response.ImageResponse
 import elieomatuku.cineast_android.business.api.response.PeopleCreditsResponse
 import elieomatuku.cineast_android.business.api.response.PersonalityResponse
-import elieomatuku.cineast_android.domain.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.PersonDetails
 import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.http.GET
@@ -26,7 +26,7 @@ interface PeopleApi {
     fun getPersonalities(): Deferred<PersonalityResponse>
 
     @GET(GET_PERSON_ID)
-    fun getPeopleDetails(@Path(PERSON_ID) personId: Int): Call <PersonalityDetails>
+    fun getPeopleDetails(@Path(PERSON_ID) personId: Int): Call <PersonDetails>
 
     @GET(PERSON_MOVIE_CREDITS)
     fun getPeopleCredits(@Path(PERSON_ID) personId: Int): Call <PeopleCreditsResponse>

@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.domain.model
 
-abstract class Person : Content() {
-    abstract val id: Int?
-    abstract val name: String?
-    abstract val profilePath: String?
-}
+data class Person(
+    val profilePath: String?,
+    val id: Int,
+    val name: String?
+)

@@ -1,10 +1,7 @@
 package elieomatuku.cineast_android.domain.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
-data class Poster(
+data class Image(
     val aspectRatio: Number?,
     val filePath: String?,
     val height: Int?,
@@ -12,4 +9,4 @@ data class Poster(
     val voteAverage: Double?,
     val voteCount: Int?,
     val width: Int?
-) : Parcelable
+)

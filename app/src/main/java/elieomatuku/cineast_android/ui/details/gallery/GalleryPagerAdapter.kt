@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import elieomatuku.cineast_android.domain.model.Poster
+import elieomatuku.cineast_android.domain.model.Image
 import timber.log.Timber
 
 class GalleryPagerAdapter(fragmentManager: FragmentManager) :
     FragmentPagerAdapter(fragmentManager) {
-    var posters: List<Poster> = listOf()
+    var posters: List<Image> = listOf()
 
     override fun getItem(position: Int): Fragment {
         val args = Bundle()

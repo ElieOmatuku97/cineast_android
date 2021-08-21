@@ -1,9 +1,6 @@
 package elieomatuku.cineast_android.domain.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class Trailer(
     val id: String?,
     val iso6391: String?,
@@ -13,4 +10,4 @@ data class Trailer(
     val site: String?,
     val size: Int?,
     val type: String?
-) : Parcelable
+)

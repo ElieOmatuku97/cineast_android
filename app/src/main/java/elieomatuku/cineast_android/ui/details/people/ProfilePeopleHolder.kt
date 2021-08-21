@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.ui.viewholder.ProfileHolder
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
@@ -48,7 +48,7 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
         itemView.homepage_view
     }
 
-    fun update(peopleDetails: PersonalityDetails?) {
+    fun update(peopleDetails: PersonDetails?) {
         val imageUrl: String? = if (peopleDetails?.profile_path != null) {
             UiUtils.getImageUrl(peopleDetails.profile_path, itemView.context.getString(R.string.image_small))
         } else null

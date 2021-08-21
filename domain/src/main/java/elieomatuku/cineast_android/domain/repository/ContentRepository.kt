@@ -1,6 +1,6 @@
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.Personality
+import elieomatuku.cineast_android.domain.model.Person
 
 interface ContentRepository {
 
@@ -16,7 +16,7 @@ interface ContentRepository {
 
     fun deleteAllPersonalities()
 
-    fun deletePersonality(personality: Personality)
+    fun deletePersonality(person: Person)
 
     fun deleteAllMovies()
 
@@ -29,10 +29,10 @@ interface ContentRepository {
     fun updateMovie(movie: Movie)
 
     fun insertPersonality(
-        personality: Personality
+        person: Person
     )
 
-    fun insertPersonalities(personalities: List<Personality>)
+    fun insertPersonalities(people: List<Person>)
 
-    fun updatePersonality(personality: Personality)
+    fun updatePersonality(person: Person)
 }

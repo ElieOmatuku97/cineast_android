@@ -1,8 +1,6 @@
 package elieomatuku.cineast_android.domain.model
 
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class Movie(
     val poster_path: String? = null,
     val adult: Boolean = false,
@@ -20,4 +18,4 @@ data class Movie(
     val video: Boolean? = true,
     val vote_average: Float? = null,
     val rating: Float? = null
-) : Content()
+)

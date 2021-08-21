@@ -7,7 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import elieomatuku.cineast_android.database.dao.PersonalityDao
 import elieomatuku.cineast_android.database.entity.PersonalityEntity
-import elieomatuku.cineast_android.domain.model.Personality
+import elieomatuku.cineast_android.domain.model.Person
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -44,7 +44,7 @@ class PersonalityDaoTest {
 
     @Test
     fun insertAndGetPersonalities() {
-        val personality = Personality(id = 1234, adult = true, name = "Eddie Murphy", profilePath = "personality_profile_path")
+        val personality = Person(id = 1234, adult = true, name = "Eddie Murphy", profilePath = "personality_profile_path")
 
         personalityDao.insertPersonality(PersonalityEntity.fromPersonality(personality))
 

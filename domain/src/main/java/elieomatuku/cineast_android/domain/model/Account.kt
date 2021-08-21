@@ -1,9 +1,5 @@
 package elieomatuku.cineast_android.domain.model
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
 data class Account(
     val avatar: Avatar?,
     val id: Int?,
@@ -12,4 +8,8 @@ data class Account(
     val name: String?,
     val includeAdult: Boolean?,
     val username: String?
-) : Parcelable
+)
+
+data class Avatar(val grAvatar: Gavatar?)
+
+data class Gavatar(val hash: String?)

@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.ui.details.people
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.domain.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
@@ -10,7 +10,7 @@ import kotlin.properties.Delegates
 
 class PeopleSummaryAdapter(
     private val onProfileClickedPicturePublisher: PublishSubject<Int>,
-    private val segmentedButtonPublisher: PublishSubject<Pair<String, PersonalityDetails>>
+    private val segmentedButtonPublisher: PublishSubject<Pair<String, PersonDetails>>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_PEOPLE_PROFILE = 0
@@ -18,7 +18,7 @@ class PeopleSummaryAdapter(
         const val TYPE_EMPTY_STATE = -2
     }
 
-    var personalityDetails: PersonalityDetails by Delegates.observable(PersonalityDetails()) { prop, oldPeopleDetails, nuPeopleDetails ->
+    var personDetails: PersonDetails by Delegates.observable(PersonDetails()) { prop, oldPeopleDetails, nuPeopleDetails ->
         Timber.d("peopleApi facts = $nuPeopleDetails")
         hasValidData = true
         errorMessage = null
@@ -40,7 +40,7 @@ class PeopleSummaryAdapter(
 
     private val hasEmptyState: Boolean
         // only display empty state after valid data is set
-        get() = hasValidData && (personalityDetails.isEmpty())
+        get() = hasValidData && (personDetails.isEmpty())
 
     override fun getItemCount(): Int {
         Timber.d("hasEmptyState: $hasEmptyState")
@@ -77,16 +77,16 @@ class PeopleSummaryAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EmptyStateHolder -> holder.update(errorMessage)
-            is ProfilePeopleHolder -> holder.update(personalityDetails)
+            is ProfilePeopleHolder -> holder.update(personDetails)
             is PeopleSegmentedButtonHolder -> {
-                holder.update(personalityDetails, initialCheckedTab)
+                holder.update(personDetails, initialCheckedTab)
 
                 holder.overviewSegmentBtn.setOnClickListener {
-                    segmentedButtonPublisher.onNext(Pair(PeopleVu.OVERVIEW, personalityDetails))
+                    segmentedButtonPublisher.onNext(Pair(PeopleVu.OVERVIEW, personDetails))
                 }
 
                 holder.knownForSegmentBtn.setOnClickListener {
-                    segmentedButtonPublisher.onNext(Pair(PeopleVu.KNOWN_FOR, personalityDetails))
+                    segmentedButtonPublisher.onNext(Pair(PeopleVu.KNOWN_FOR, personDetails))
                 }
             }
         }

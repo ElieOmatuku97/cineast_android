@@ -2,7 +2,7 @@ package elieomatuku.cineast_android.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import elieomatuku.cineast_android.domain.model.Personality
+import elieomatuku.cineast_android.domain.model.Person
 
 /**
  * Created by elieomatuku on 2019-12-20
@@ -19,26 +19,26 @@ data class PersonalityEntity(
     companion object {
         const val PERSONALITY_TABLE = "personality_table"
 
-        fun fromPersonalities(personalities: List<Personality>): List<PersonalityEntity> {
-            return personalities.map { fromPersonality(it) }
+        fun fromPersonalities(people: List<Person>): List<PersonalityEntity> {
+            return people.map { fromPersonality(it) }
         }
 
-        fun fromPersonality(personality: Personality): PersonalityEntity {
+        fun fromPersonality(person: Person): PersonalityEntity {
             return PersonalityEntity(
-                id = personality.id,
-                profile_path = personality.profilePath,
-                adult = personality.adult,
-                name = personality.name
+                id = person.id,
+                profile_path = person.profilePath,
+                adult = person.adult,
+                name = person.name
             )
         }
 
-        fun toPersonalities(personalityEntities: List<PersonalityEntity>): List<Personality> {
+        fun toPersonalities(personalityEntities: List<PersonalityEntity>): List<Person> {
             return personalityEntities.map { it.toPersonality() }
         }
     }
 
-    fun toPersonality(): Personality {
-        return Personality(
+    fun toPersonality(): Person {
+        return Person(
             id = id,
             profilePath = profile_path,
             adult = adult,

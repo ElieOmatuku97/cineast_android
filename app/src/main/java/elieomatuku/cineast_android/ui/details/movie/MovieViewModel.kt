@@ -8,7 +8,6 @@ import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieSummary
-import elieomatuku.cineast_android.domain.model.Poster
 import elieomatuku.cineast_android.ui.base.BaseViewModel
 import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance

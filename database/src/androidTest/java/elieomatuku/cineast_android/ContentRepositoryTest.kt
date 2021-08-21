@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.database.ContentDatabase
 import elieomatuku.cineast_android.database.entity.MovieTypeEntity
 import elieomatuku.cineast_android.database.repository.ContentRepository
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.Personality
+import elieomatuku.cineast_android.domain.model.Person
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -50,10 +50,10 @@ class ContentRepositoryTest {
     @Test
     fun testInsertContentAndDiscoverContainer() {
         val personalities = listOf(
-            Personality(id = 1234, adult = true, name = "Eddie Murphy", profilePath = "personality_profile_path"),
-            Personality(id = 2234, adult = true, name = "Chris Rock", profilePath = "personality_profile_path"),
-            Personality(id = 3234, adult = true, name = "Louis Ck", profilePath = "personality_profile_path"),
-            Personality(id = 4234, adult = true, name = "Ben Stiller", profilePath = "personality_profile_path")
+            Person(id = 1234, adult = true, name = "Eddie Murphy", profilePath = "personality_profile_path"),
+            Person(id = 2234, adult = true, name = "Chris Rock", profilePath = "personality_profile_path"),
+            Person(id = 3234, adult = true, name = "Louis Ck", profilePath = "personality_profile_path"),
+            Person(id = 4234, adult = true, name = "Ben Stiller", profilePath = "personality_profile_path")
         )
 
         val movies = listOf(
@@ -73,7 +73,7 @@ class ContentRepositoryTest {
             .assertValue { discoverContent ->
                 discoverContent.topRatedMovies == movies && discoverContent.upcomingMovies == movies &&
                     discoverContent.nowPlayingMovies == movies &&
-                    discoverContent.popularMovies == movies && discoverContent.personalities == personalities
+                    discoverContent.popularMovies == movies && discoverContent.people == personalities
             }
     }
 }

@@ -17,8 +17,7 @@ import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieFacts
 import elieomatuku.cineast_android.domain.model.Person
-import elieomatuku.cineast_android.domain.model.Personality
-import elieomatuku.cineast_android.domain.model.PersonalityDetails
+import elieomatuku.cineast_android.domain.model.PersonDetails
 import io.flatcircle.coroutinehelper.ApiResult
 import io.flatcircle.coroutinehelper.onFail
 import io.flatcircle.coroutinehelper.onSuccess
@@ -61,7 +60,7 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
         return contentRepository.popularMovies
     }
 
-    fun personalities(): Flowable<List<Personality>> {
+    fun personalities(): Flowable<List<Person>> {
         return contentRepository.personalities
     }
 
@@ -123,7 +122,7 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
             val upcomingMovies = updateMovies(tmdbContentClient::getUpcomingMovies, oldDiscoverContent.upcomingMovies, MovieType.UPCOMING)
             val nowPlayingMovies = updateMovies(tmdbContentClient::getNowPlayingMovies, oldDiscoverContent.nowPlayingMovies, MovieType.NOW_PLAYING)
             val topRatedMovies = updateMovies(tmdbContentClient::getTopRatedMovies, oldDiscoverContent.topRatedMovies, MovieType.TOP_RATED)
-            val personalities = updatePersonalities(oldDiscoverContent.personalities)
+            val personalities = updatePersonalities(oldDiscoverContent.people)
 
             // calls have been made in parallel and we now wait for all to finish
             popularMovies.await()
@@ -177,25 +176,25 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
         }
     }
 
-    suspend fun updatePersonalities(oldPersonalities: List<Personality>) = async {
+    suspend fun updatePersonalities(oldPeople: List<Person>) = async {
         val response = tmdbContentClient.getPersonalities()
         response?.results?.let { nuPersonalities ->
-            updatePersonalitiesDatabase(nuPersonalities, oldPersonalities)
+            updatePersonalitiesDatabase(nuPersonalities, oldPeople)
         }
     }
 
-    private fun updatePersonalitiesDatabase(nuPersonalities: List<Personality>, oldPersonalities: List<Personality>) {
-        if (nuPersonalities.isEmpty()) {
+    private fun updatePersonalitiesDatabase(nuPeople: List<Person>, oldPeople: List<Person>) {
+        if (nuPeople.isEmpty()) {
             contentRepository.deleteAllPersonalities()
         } else {
-            oldPersonalities.forEach { oldPersonalitiy ->
-                if (nuPersonalities.firstOrNull { it.id == oldPersonalitiy.id } == null) {
+            oldPeople.forEach { oldPersonalitiy ->
+                if (nuPeople.firstOrNull { it.id == oldPersonalitiy.id } == null) {
                     contentRepository.deletePersonality(oldPersonalitiy)
                 }
             }
 
-            nuPersonalities.forEach { nuPersonality ->
-                if (oldPersonalities.firstOrNull { it.id == nuPersonality.id } != null) {
+            nuPeople.forEach { nuPersonality ->
+                if (oldPeople.firstOrNull { it.id == nuPersonality.id } != null) {
                     // update
                     contentRepository.updatePersonality(nuPersonality)
                 } else {
@@ -241,7 +240,7 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
         tmdbContentClient.getPeopleMovies(person, asyncResponse)
     }
 
-    fun getPeopleDetails(person: Person, asyncResponse: AsyncResponse<PersonalityDetails>) {
+    fun getPeopleDetails(person: Person, asyncResponse: AsyncResponse<PersonDetails>) {
         tmdbContentClient.getPeopleDetails(person, asyncResponse)
     }
 

@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.database.entity.PersonalityEntity
 import elieomatuku.cineast_android.domain.DiscoverContent
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.Personality
+import elieomatuku.cineast_android.domain.model.Person
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.functions.BiFunction
@@ -47,7 +47,7 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         return Flowable.combineLatest(
             moviesFlowable, personalities,
             BiFunction { discoverContent, personalities ->
-                discoverContent.personalities = personalities
+                discoverContent.people = personalities
                 discoverContent
             }
         )
@@ -76,7 +76,7 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
                 .map { MovieEntity.toMovies(it) }
         }
 
-    val personalities: Flowable<List<Personality>>
+    val personalities: Flowable<List<Person>>
         get() {
             return contentDatabase.personalityDao().getAllPersonalities()
                 .map { PersonalityEntity.toPersonalities(it) }
@@ -116,21 +116,21 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         }
     }
 
-    fun updatePersonality(personality: Personality) {
+    fun updatePersonality(person: Person) {
         GlobalScope.launch(Dispatchers.IO) {
-            contentDatabase.personalityDao().updatePersonality(PersonalityEntity.fromPersonality(personality))
+            contentDatabase.personalityDao().updatePersonality(PersonalityEntity.fromPersonality(person))
         }
     }
 
-    fun insertPersonalities(personalities: List<Personality>) {
-        personalities.forEach { personality ->
+    fun insertPersonalities(people: List<Person>) {
+        people.forEach { personality ->
             insertPersonality(personality)
         }
     }
 
-    fun insertPersonality(personality: Personality) {
+    fun insertPersonality(person: Person) {
         GlobalScope.launch(Dispatchers.IO) {
-            contentDatabase.personalityDao().insertPersonality(PersonalityEntity.fromPersonality(personality))
+            contentDatabase.personalityDao().insertPersonality(PersonalityEntity.fromPersonality(person))
         }
     }
 
@@ -164,9 +164,9 @@ class ContentRepository(private val contentDatabase: ContentDatabase) {
         }
     }
 
-    fun deletePersonality(personality: Personality) {
+    fun deletePersonality(person: Person) {
         GlobalScope.launch(Dispatchers.IO) {
-            contentDatabase.personalityDao().delete(personality.id)
+            contentDatabase.personalityDao().delete(person.id)
         }
     }
 

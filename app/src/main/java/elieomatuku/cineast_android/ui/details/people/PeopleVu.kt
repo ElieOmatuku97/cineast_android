@@ -12,10 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.KnownFor
-import elieomatuku.cineast_android.domain.model.Person
-import elieomatuku.cineast_android.domain.model.PersonalityDetails
-import elieomatuku.cineast_android.domain.model.Poster
+import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.ui.details.BareOverviewFragment
 import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
@@ -71,18 +68,18 @@ class PeopleVu(
         }
     }
 
-    private val onSegmentedButtonsPublisher: PublishSubject<Pair<String, PersonalityDetails>> by lazy {
-        PublishSubject.create<Pair<String, PersonalityDetails>>()
+    private val onSegmentedButtonsPublisher: PublishSubject<Pair<String, PersonDetails>> by lazy {
+        PublishSubject.create<Pair<String, PersonDetails>>()
     }
 
-    val onSegmentedButtonsObservable: Observable<Pair<String, PersonalityDetails>>
+    val onSegmentedButtonsObservable: Observable<Pair<String, PersonDetails>>
         get() = onSegmentedButtonsPublisher.hide()
 
     val adapter: PeopleSummaryAdapter by lazy {
         PeopleSummaryAdapter(onProfileClickedPicturePublisher, onSegmentedButtonsPublisher)
     }
 
-    private var knownFor: List<KnownFor> = listOf()
+    private var knownFor: List<Movie> = listOf()
 
     override fun onCreate() {
         super.onCreate()
@@ -96,14 +93,14 @@ class PeopleVu(
     }
 
     fun updateVu(
-        personalityDetails: PersonalityDetails?,
+        personDetails: PersonDetails?,
         screenName: String?,
-        knownFor: List<KnownFor>?
+        knownFor: List<Movie>?
     ) {
-        if (personalityDetails != null && screenName != null && knownFor != null) {
+        if (personDetails != null && screenName != null && knownFor != null) {
             toolbar?.title = screenName
 
-            adapter.personalityDetails = personalityDetails
+            adapter.personDetails = personDetails
             this.knownFor = knownFor.toMutableList()
 
             val dividerItemDecoration = DividerItemDecorator(
@@ -116,21 +113,21 @@ class PeopleVu(
             listView.addItemDecoration(dividerItemDecoration)
 
             adapter.notifyDataSetChanged()
-            initDetailsFragment(personalityDetails)
+            initDetailsFragment(personDetails)
         }
     }
 
-    private fun initDetailsFragment(personalityDetails: PersonalityDetails) {
+    private fun initDetailsFragment(personDetails: PersonDetails) {
         (activity as FragmentActivity).supportFragmentManager.beginTransaction().replace(
             R.id.fragment_container,
             BareOverviewFragment.newInstance(
                 activity.getString(R.string.biography),
-                personalityDetails.biography
+                personDetails.biography
             )
         ).commit()
     }
 
-    fun goToGallery(posters: List<Poster>?) {
+    fun goToGallery(posters: List<Image>?) {
         val galleryFragment = GalleryFragment.newInstance()
 
         val args = Bundle()
@@ -146,19 +143,19 @@ class PeopleVu(
         adapter.notifyDataSetChanged()
     }
 
-    fun gotoTab(displayAndPersonalityDetails: Pair<String, PersonalityDetails>) {
-        val fragment = when (displayAndPersonalityDetails.first) {
+    fun gotoTab(displayAndPersonDetails: Pair<String, PersonDetails>) {
+        val fragment = when (displayAndPersonDetails.first) {
             OVERVIEW -> {
                 BareOverviewFragment.newInstance(
                     activity.getString(R.string.biography),
-                    displayAndPersonalityDetails.second.biography
+                    displayAndPersonDetails.second.biography
                 )
             }
             KNOWN_FOR -> {
                 MoviesFragment.newInstance(
                     knownFor.mapNotNull { it.toMovie() },
                     activity.getString(R.string.cast),
-                    displayAndPersonalityDetails.second.name
+                    displayAndPersonDetails.second.name
                 )
             }
             else -> null
