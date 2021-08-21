@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.remote
 import elieomatuku.cineast_android.data.model.*
 import elieomatuku.cineast_android.data.repository.movie.MovieRemote
 import elieomatuku.cineast_android.remote.api.MovieApi
-import elieomatuku.cineast_android.remote.model.RemoteException
+import elieomatuku.cineast_android.remote.model.*
 import elieomatuku.cineast_android.remote.request.FavouritesMediaRequest
 import elieomatuku.cineast_android.remote.request.RateRequest
 import elieomatuku.cineast_android.remote.request.WatchListMediaRequest
@@ -18,7 +18,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getPopularMovies()
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
         } else {
             throw RemoteException(
                 response.code(),
@@ -32,7 +32,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getUpcomingMovies()
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
         } else {
             throw RemoteException(
                 response.code(),
@@ -46,7 +46,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getNowPlayingMovies()
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
         } else {
             throw RemoteException(
                 response.code(),
@@ -60,7 +60,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getTopRatedMovies()
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
         } else {
             throw RemoteException(
                 response.code(),
@@ -74,7 +74,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getGenre()
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.let(RemoteGenres::toGenreEntities)
         } else {
             throw RemoteException(
                 response.code(),
@@ -85,10 +85,10 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
     }
 
     override suspend fun getTrailers(movieId: Int): List<TrailerEntity> {
-        val response = movieApi.getMovieVideos(movieId)
+        val response = movieApi.getMovieTrailers(movieId)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteTrailer::toTrailerEntity) }
         } else {
             throw RemoteException(
                 response.code(),
@@ -102,7 +102,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getMovieDetails(movieId)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.let(RemoteMovieFacts::toMovieFactsEntity)
         } else {
             throw RemoteException(
                 response.code(),
@@ -116,7 +116,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getCredits(movieId)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.let(RemoteMovieCredits::toMovieCreditsEntity)
         } else {
             throw RemoteException(
                 response.code(),
@@ -130,7 +130,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getSimilarMovies(movieId)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
         } else {
             throw RemoteException(
                 response.code(),
@@ -144,7 +144,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getMovieImages(movieId)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.let(RemoteImages::toImageEntities)
         } else {
             throw RemoteException(
                 response.code(),
@@ -158,7 +158,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getMovie(movieId)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.let(RemoteMovie::toMovieEntity)
         } else {
             throw RemoteException(
                 response.code(),
@@ -172,7 +172,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getMoviesWithSearch(query)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
         } else {
             throw RemoteException(
                 response.code(),
@@ -191,7 +191,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.updateWatchList(sessionId, mediaRequest)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.let(RemotePostResult::toPostResultEntity)
         } else {
             throw RemoteException(
                 response.code(),
@@ -205,7 +205,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getFavoritesList(sessionId)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
         } else {
             throw RemoteException(
                 response.code(),
@@ -224,7 +224,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.updateFavorites(sessionId, mediaRequest)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.let(RemotePostResult::toPostResultEntity)
         } else {
             throw RemoteException(
                 response.code(),
@@ -243,7 +243,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.postMovieRate(movieId, sessionId, requestBody)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.let(RemotePostResult::toPostResultEntity)
         } else {
             throw RemoteException(
                 response.code(),
@@ -257,7 +257,7 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         val response = movieApi.getUserRatedMovies(sessionId)
         if (response.isSuccessful) {
             val body = response.body()
-            return body!!
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
         } else {
             throw RemoteException(
                 response.code(),

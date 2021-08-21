@@ -1,19 +1,20 @@
 package elieomatuku.cineast_android.remote.model
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import elieomatuku.cineast_android.data.model.TrailerEntity
 
 @Keep
 data class RemoteTrailers(
-    @SerializedName("cast_id")
-    @Expose
-    val id: Int? = null,
-
-    @SerializedName("results")
-    @Expose
     val results: List<RemoteTrailer> = listOf()
-)
+) {
+    companion object {
+        fun toTrailerEntities(remoteTrailers: RemoteTrailers): List<TrailerEntity> {
+            return remoteTrailers.results.map {
+                it.let(RemoteTrailer::toTrailerEntity)
+            }
+        }
+    }
+}
 
 @Keep
 data class RemoteTrailer(
@@ -25,4 +26,19 @@ data class RemoteTrailer(
     val site: String?,
     val size: Int?,
     val type: String?
-)
+) {
+    companion object {
+        fun toTrailerEntity(remoteTrailer: RemoteTrailer): TrailerEntity {
+            return TrailerEntity(
+                remoteTrailer.id,
+                remoteTrailer.iso_639_1,
+                remoteTrailer.iso_3166_1,
+                remoteTrailer.key,
+                remoteTrailer.name,
+                remoteTrailer.site,
+                remoteTrailer.size,
+                remoteTrailer.type
+            )
+        }
+    }
+}

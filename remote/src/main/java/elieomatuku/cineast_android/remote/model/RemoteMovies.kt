@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.remote.model
 
 import androidx.annotation.Keep
+import elieomatuku.cineast_android.data.model.MovieEntity
 
 @Keep
 data class RemoteMovies(val results: List<RemoteMovie> = listOf())
@@ -23,4 +24,28 @@ data class RemoteMovie(
     val video: Boolean? = true,
     val vote_average: Float? = null,
     val rating: Float? = null
-)
+) {
+
+    companion object {
+        fun toMovieEntity(remoteMovie: RemoteMovie): MovieEntity {
+            return MovieEntity(
+                remoteMovie.poster_path,
+                remoteMovie.adult,
+                remoteMovie.overview,
+                remoteMovie.release_date,
+                remoteMovie.genre_ids,
+                remoteMovie.genres?.map {it.let(RemoteGenre::toGenreEntity)},
+                remoteMovie.id,
+                remoteMovie.original_title,
+                remoteMovie.original_language,
+                remoteMovie.title,
+                remoteMovie.backdrop_path,
+                remoteMovie.popularity,
+                remoteMovie.vote_count,
+                remoteMovie.video,
+                remoteMovie.vote_average,
+                remoteMovie.rating
+            )
+        }
+    }
+}

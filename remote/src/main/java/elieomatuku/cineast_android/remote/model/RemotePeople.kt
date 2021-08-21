@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.remote.model
 
 import androidx.annotation.Keep
+import elieomatuku.cineast_android.data.model.PersonEntity
 
 @Keep
 data class RemotePeople(
@@ -9,8 +10,17 @@ data class RemotePeople(
 
 @Keep
 data class RemotePerson(
-    val profile_path: String?,
-    val adult: Boolean?,
     val id: Int,
-    val name: String?
-)
+    val name: String?,
+    val profile_path: String?,
+) {
+    companion object {
+        fun toPersonEntity(remotePerson: RemotePerson): PersonEntity {
+            return PersonEntity(
+                id = remotePerson.id,
+                name = remotePerson.name,
+                profilePath = remotePerson.profile_path
+            )
+        }
+    }
+}

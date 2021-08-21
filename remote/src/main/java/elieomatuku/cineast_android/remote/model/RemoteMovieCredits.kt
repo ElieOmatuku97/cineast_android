@@ -1,30 +1,21 @@
 package elieomatuku.cineast_android.remote.model
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import elieomatuku.cineast_android.data.model.MovieCreditsEntity
 
 @Keep
 data class RemoteMovieCredits(
-    @SerializedName("crew")
-    @Expose
-    val crew: List<RemoteCrew> = listOf(),
+    val crew: List<RemotePerson> = listOf(),
+    val cast: List<RemotePerson> = listOf()
+) {
+    companion object {
+        fun toMovieCreditsEntity(remoteMovieCredits: RemoteMovieCredits): MovieCreditsEntity {
+            return MovieCreditsEntity(
+                remoteMovieCredits.crew.map { it.let(RemotePerson::toPersonEntity) },
+                remoteMovieCredits.cast.map { it.let(RemotePerson::toPersonEntity) }
+            )
+        }
+    }
+}
 
-    @SerializedName("cast")
-    @Expose
-    val cast: List<RemoteCast> = listOf()
-)
 
-@Keep
-data class RemoteCrew(
-    val id: Int?,
-    val name: String?,
-    val profile_path: String?
-)
-
-@Keep
-data class RemoteCast(
-    val id: Int?,
-    val name: String?,
-    val profile_path: String?
-)

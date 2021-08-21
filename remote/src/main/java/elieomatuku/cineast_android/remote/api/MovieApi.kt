@@ -58,7 +58,7 @@ interface MovieApi {
     suspend fun getNowPlayingMovies(): Response<RemoteMovies>
 
     @GET(MOVIE_VIDEOS)
-    suspend fun getMovieVideos(@Path(MOVIE_ID) movie_id: Int): Response<RemoteTrailers>
+    suspend fun getMovieTrailers(@Path(MOVIE_ID) movie_id: Int): Response<RemoteTrailers>
 
     @GET(MOVIE_DETAILS)
     suspend fun getMovieDetails(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovieFacts>
