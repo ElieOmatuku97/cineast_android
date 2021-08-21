@@ -1,13 +1,10 @@
 package elieomatuku.cineast_android.remote.model
 
 import androidx.annotation.Keep
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
+import elieomatuku.cineast_android.data.model.MovieEntity
 
 @Keep
 data class RemotePersonMovieCredits(
-    @SerializedName("cast")
-    @Expose
     val cast: List<RemoteKnownFor> = listOf()
 )
 
@@ -19,4 +16,17 @@ data class RemoteKnownFor(
     val id: Int?,
     val backdrop_path: String?,
     val poster_path: String?
-)
+) {
+    companion object {
+        fun toMovieEntity(remoteKnownFor: RemoteKnownFor): MovieEntity {
+            return MovieEntity(
+                releaseDate = remoteKnownFor.release_date,
+                title = remoteKnownFor.title,
+                originalTitle = remoteKnownFor.original_title,
+                id = remoteKnownFor.id ?: 0,
+                backdropPath = remoteKnownFor.backdrop_path,
+                posterPath = remoteKnownFor.poster_path
+            )
+        }
+    }
+}

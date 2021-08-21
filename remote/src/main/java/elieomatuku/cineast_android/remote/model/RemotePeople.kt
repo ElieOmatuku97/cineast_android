@@ -6,7 +6,13 @@ import elieomatuku.cineast_android.data.model.PersonEntity
 @Keep
 data class RemotePeople(
     val results: List<RemotePerson> = listOf()
-)
+) {
+    companion object {
+        fun toPeopleEntity(remotePeople: RemotePeople): List<PersonEntity> {
+            return remotePeople.results.map { it.let(RemotePerson::toPersonEntity) }
+        }
+    }
+}
 
 @Keep
 data class RemotePerson(

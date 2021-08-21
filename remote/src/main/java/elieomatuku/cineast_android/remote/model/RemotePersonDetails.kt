@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.remote.model
 
 import androidx.annotation.Keep
+import elieomatuku.cineast_android.data.model.PersonDetailsEntity
 
 /**
  * Created by elieomatuku on 2021-07-04
@@ -22,4 +23,25 @@ data class RemotePersonDetails(
     val adult: Boolean? = null,
     val imdb_id: String? = null,
     val homepage: String? = null
-)
+) {
+    companion object {
+        fun toPersonDetailsEntity(remotePersonDetails: RemotePersonDetails): PersonDetailsEntity {
+            return PersonDetailsEntity(
+                remotePersonDetails.birthday,
+                remotePersonDetails.known_for_department,
+                remotePersonDetails.deathday,
+                remotePersonDetails.id,
+                remotePersonDetails.name,
+                remotePersonDetails.also_known_as?.toList(),
+                remotePersonDetails.gender,
+                remotePersonDetails.biography,
+                remotePersonDetails.popularity,
+                remotePersonDetails.place_of_birth,
+                remotePersonDetails.profile_path,
+                remotePersonDetails.adult,
+                remotePersonDetails.imdb_id,
+                remotePersonDetails.homepage
+            )
+        }
+    }
+}

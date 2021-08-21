@@ -34,7 +34,7 @@ data class RemoteMovie(
                 remoteMovie.overview,
                 remoteMovie.release_date,
                 remoteMovie.genre_ids,
-                remoteMovie.genres?.map {it.let(RemoteGenre::toGenreEntity)},
+                remoteMovie.genres?.map { it.let(RemoteGenre::toGenreEntity) },
                 remoteMovie.id,
                 remoteMovie.original_title,
                 remoteMovie.original_language,
