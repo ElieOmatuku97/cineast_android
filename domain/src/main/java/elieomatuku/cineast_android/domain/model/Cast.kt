@@ -11,5 +11,5 @@ data class Cast(
     override val id: Int?,
     override val name: String?,
     val order: Int?,
-    override val profile_path: String?
+    override val profilePath: String?
 ) : Person()

@@ -36,7 +36,7 @@ class TmdbUserClient(
 
                 response?.let {
                     it.body()?.let {
-                        it.request_token?.let {
+                        it.requestToken?.let {
                             persistClient.set(RestUtils.REQUEST_TOKEN_KEY, it)
                         }
                     }
@@ -53,7 +53,7 @@ class TmdbUserClient(
     fun getSession(requestToken: String?, asyncResponse: AsyncResponse<Pair<String, Account>>) {
         authenticationApi.getSession(requestToken).enqueue(object : Callback<Session> {
             override fun onResponse(call: Call<Session>, response: Response<Session>) {
-                response.body()?.session_id?.let {
+                response.body()?.sessionId?.let {
                     persistClient.set(RestUtils.SESSION_ID_KEY, it)
                     setAccount(it, asyncResponse)
                 }

@@ -11,7 +11,7 @@ import org.junit.Test
 class MovieFactsTest {
     @Test
     fun testRuntimeInHoursAndMinutes() {
-        var facts = MovieFacts(budget = 200000000, release_date = "2020-12-16", runtime = 151, revenue = 131400000, homepage = null)
+        var facts = MovieFacts(budget = 200000000, releaseDate = "2020-12-16", runtime = 151, revenue = 131400000, homepage = null)
         assertEquals(facts.runtimeInHoursAndMinutes, "2 hours 31 minutes")
 
         facts = facts.copy(runtime = 50)

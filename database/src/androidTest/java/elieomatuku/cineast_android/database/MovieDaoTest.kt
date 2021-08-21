@@ -44,7 +44,7 @@ class MovieDaoTest {
 
     @Test
     fun testInsertMovie() {
-        var movie = Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+        var movie = Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
 
         movieDao.insertMovie(MovieEntity.fromMovie(movie))
         movieDao.getAllMovies()
@@ -55,8 +55,8 @@ class MovieDaoTest {
     @Test
     fun testInsertMovies() {
         var movies = listOf(
-            Movie(id = 11345, original_title = "Hangover", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+            Movie(id = 11345, originalTitle = "Hangover", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         )
 
         movieDao.insertMovies(MovieEntity.fromMovies(movies))
@@ -66,15 +66,15 @@ class MovieDaoTest {
 
         // duplicates
         val duplicates = listOf(
-            Movie(id = 11345, original_title = "Hangover", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 13345, original_title = "Hangover 2", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+            Movie(id = 11345, originalTitle = "Hangover", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 13345, originalTitle = "Hangover 2", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         )
 
         movies = listOf(
-            Movie(id = 11345, original_title = "Hangover", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 13345, original_title = "Hangover 2", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+            Movie(id = 11345, originalTitle = "Hangover", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 13345, originalTitle = "Hangover 2", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         )
 
         movieDao.insertMovies(MovieEntity.fromMovies(duplicates))
@@ -93,8 +93,8 @@ class MovieDaoTest {
     @Test
     fun testDeleteMovies() {
         var movies = listOf(
-            Movie(id = 11345, original_title = "Hangover", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+            Movie(id = 11345, originalTitle = "Hangover", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         )
 
         movieDao.insertMovies(MovieEntity.fromMovies(movies))
@@ -105,7 +105,7 @@ class MovieDaoTest {
         movieDao.delete(11345)
         movieDao.getAllMovies()
             .test()
-            .assertValue { it == listOf(MovieEntity.fromMovie(Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true))) }
+            .assertValue { it == listOf(MovieEntity.fromMovie(Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true))) }
 
         movieDao.deleteAll()
 

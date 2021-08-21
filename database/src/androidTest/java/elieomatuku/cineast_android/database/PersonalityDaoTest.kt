@@ -44,7 +44,7 @@ class PersonalityDaoTest {
 
     @Test
     fun insertAndGetPersonalities() {
-        val personality = Personality(id = 1234, adult = true, name = "Eddie Murphy", profile_path = "personality_profile_path")
+        val personality = Personality(id = 1234, adult = true, name = "Eddie Murphy", profilePath = "personality_profile_path")
 
         personalityDao.insertPersonality(PersonalityEntity.fromPersonality(personality))
 

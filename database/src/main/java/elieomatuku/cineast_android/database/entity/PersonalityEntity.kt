@@ -26,7 +26,7 @@ data class PersonalityEntity(
         fun fromPersonality(personality: Personality): PersonalityEntity {
             return PersonalityEntity(
                 id = personality.id,
-                profile_path = personality.profile_path,
+                profile_path = personality.profilePath,
                 adult = personality.adult,
                 name = personality.name
             )
@@ -40,7 +40,7 @@ data class PersonalityEntity(
     fun toPersonality(): Personality {
         return Personality(
             id = id,
-            profile_path = profile_path,
+            profilePath = profile_path,
             adult = adult,
             name = name
         )

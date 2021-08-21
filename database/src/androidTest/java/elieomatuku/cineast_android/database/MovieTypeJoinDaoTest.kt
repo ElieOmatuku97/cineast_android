@@ -56,7 +56,7 @@ class MovieTypeJoinDaoTest {
 
     @Test
     fun testInsertMovieWithType() {
-        val movie = Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+        val movie = Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         movieDao.insertMovie(MovieEntity.fromMovie(movie))
         movieTypeJoinDao.insert(MovieTypeJoin(movie.id, MovieType.POPULAR.id))
 
@@ -64,7 +64,7 @@ class MovieTypeJoinDaoTest {
             .test()
             .assertValue { it == listOf(MovieEntity.fromMovie(movie)) }
 
-        val movie2 = Movie(id = 13346, original_title = "Borat", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+        val movie2 = Movie(id = 13346, originalTitle = "Borat", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         movieDao.insertMovie(MovieEntity.fromMovie(movie2))
         movieTypeJoinDao.insert(MovieTypeJoin(movie2.id, MovieType.POPULAR.id))
 
@@ -76,7 +76,7 @@ class MovieTypeJoinDaoTest {
     @Test
     fun testMovieTypeDuplication() {
 
-        val movie = Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+        val movie = Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
 
         movieDao.insertMovie(MovieEntity.fromMovie(movie))
         movieTypeJoinDao.insert(MovieTypeJoin(movie.id, MovieType.POPULAR.id))
@@ -97,8 +97,8 @@ class MovieTypeJoinDaoTest {
     fun testDeleteMovie() {
 
         var movies = listOf(
-            Movie(id = 11345, original_title = "Hangover", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+            Movie(id = 11345, originalTitle = "Hangover", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         )
 
         // insert movie

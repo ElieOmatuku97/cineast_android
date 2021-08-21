@@ -44,7 +44,7 @@ class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun update(movieFacts: MovieFacts?) {
         movieFacts?.let {
             rootView.visibility = View.VISIBLE
-            releaseDateView.text = displayFacts(itemView.context.getString(R.string.release_date), movieFacts.release_date)
+            releaseDateView.text = displayFacts(itemView.context.getString(R.string.release_date), movieFacts.releaseDate)
             runtimeView.text = displayFacts(itemView.context.getString(R.string.runtime), movieFacts.runtimeInHoursAndMinutes)
             budgetView.text = displayFacts(itemView.context.getString(R.string.budget), String.format("$%,.2f", movieFacts.budget?.toDouble()))
             revenueView.text = displayFacts(itemView.context.getString(R.string.revenue), String.format("$%,.2f", movieFacts.revenue?.toDouble()))

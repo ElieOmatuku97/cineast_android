@@ -80,9 +80,9 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
             peopleDateOfBirthView.visibility = View.GONE
         }
 
-        if (!peopleDetails?.place_of_birth.isNullOrEmpty()) {
+        if (!peopleDetails?.placeOfBirth.isNullOrEmpty()) {
             peoplePlaceofbirthView.visibility = View.VISIBLE
-            peoplePlaceofbirthView.text = peopleDetails?.place_of_birth
+            peoplePlaceofbirthView.text = peopleDetails?.placeOfBirth
         } else {
             peoplePlaceofbirthView.visibility = View.GONE
         }

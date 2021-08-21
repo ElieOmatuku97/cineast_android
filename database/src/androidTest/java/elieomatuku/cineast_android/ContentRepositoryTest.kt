@@ -50,16 +50,16 @@ class ContentRepositoryTest {
     @Test
     fun testInsertContentAndDiscoverContainer() {
         val personalities = listOf(
-            Personality(id = 1234, adult = true, name = "Eddie Murphy", profile_path = "personality_profile_path"),
-            Personality(id = 2234, adult = true, name = "Chris Rock", profile_path = "personality_profile_path"),
-            Personality(id = 3234, adult = true, name = "Louis Ck", profile_path = "personality_profile_path"),
-            Personality(id = 4234, adult = true, name = "Ben Stiller", profile_path = "personality_profile_path")
+            Personality(id = 1234, adult = true, name = "Eddie Murphy", profilePath = "personality_profile_path"),
+            Personality(id = 2234, adult = true, name = "Chris Rock", profilePath = "personality_profile_path"),
+            Personality(id = 3234, adult = true, name = "Louis Ck", profilePath = "personality_profile_path"),
+            Personality(id = 4234, adult = true, name = "Ben Stiller", profilePath = "personality_profile_path")
         )
 
         val movies = listOf(
-            Movie(id = 12345, original_title = "Tropic Thunder", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 13346, original_title = "Borat", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true),
-            Movie(id = 11345, original_title = "Hangover", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+            Movie(id = 12345, originalTitle = "Tropic Thunder", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 13346, originalTitle = "Borat", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true),
+            Movie(id = 11345, originalTitle = "Hangover", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         )
 
         contentRepository.insertNowPlayingMovie(movies)

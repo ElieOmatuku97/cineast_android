@@ -58,7 +58,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
                             Timber.e("error: $error")
                             handler.post {
                                 vu.hideLoading()
-                                vu.updateErrorView(error.status_message)
+                                vu.updateErrorView(error.statusMessage)
                             }
                         }
                     }
@@ -113,7 +113,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
                 override fun onFail(error: CineastError) {
                     handler.post {
                         vu?.hideLoading()
-                        vu?.updateErrorView(error.status_message)
+                        vu?.updateErrorView(error.statusMessage)
                     }
                 }
             }

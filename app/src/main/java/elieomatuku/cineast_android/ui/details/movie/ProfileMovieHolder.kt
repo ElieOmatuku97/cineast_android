@@ -87,7 +87,7 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
             titleView.visibility = View.GONE
         }
 
-        val releaseDate = movie?.release_date
+        val releaseDate = movie?.releaseDate
         if (releaseDate != null) {
             releaseDateView.visibility = View.VISIBLE
             releaseDateView.text = releaseDate
@@ -104,7 +104,7 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
         }
 
         val genres = movieSummary.genres
-        val genresIds = movie?.genre_ids
+        val genresIds = movie?.genreIds
         val names = if (genresIds != null && genres != null) {
             UiUtils.mapMovieGenreIdsWithGenreNames(genresIds, genres)
         } else {

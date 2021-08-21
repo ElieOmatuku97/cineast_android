@@ -76,8 +76,8 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .load(imageUrl)
                 .into(movieImage)
 
-            releaseDate?.text = movie.release_date
-            movieTitle?.text = movie.title ?: movie.original_title
+            releaseDate?.text = movie.releaseDate
+            movieTitle?.text = movie.title ?: movie.originalTitle
         } else {
             itemView.visibility = View.GONE
         }

@@ -4,7 +4,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Personality(
-    override val profile_path: String?,
+    override val profilePath: String?,
     val adult: Boolean?,
     override val id: Int,
     override val name: String?

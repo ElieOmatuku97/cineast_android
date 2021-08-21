@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android.domain.model
 
 abstract class Media {
-    abstract val media_type: String
-    abstract val media_id: Int
+    abstract val mediaType: String
+    abstract val mediaId: Int
 }

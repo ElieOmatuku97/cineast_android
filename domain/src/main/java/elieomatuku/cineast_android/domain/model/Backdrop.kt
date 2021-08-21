@@ -5,11 +5,11 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Backdrop(
-    val aspect_ratio: Number?,
-    val file_path: String?,
+    val aspectRatio: Number?,
+    val filePath: String?,
     val height: Int?,
-    val iso_639_1: String?,
-    val vote_average: Double?,
-    val vote_count: Int?,
+    val iso6391: String?,
+    val voteAverage: Double?,
+    val voteCount: Int?,
     val width: Int?
 ) : Parcelable

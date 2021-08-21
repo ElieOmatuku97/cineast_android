@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Avatar(val gravatar: Gavatar?) : Parcelable
+data class Avatar(val grAvatar: Gavatar?) : Parcelable

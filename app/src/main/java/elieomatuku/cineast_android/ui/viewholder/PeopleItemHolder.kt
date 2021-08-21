@@ -36,7 +36,7 @@ class PeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun update(actor: Person) {
-        val profilePath = actor.profile_path
+        val profilePath = actor.profilePath
         if (!profilePath.isNullOrEmpty()) {
             peopleImageView?.visibility = View.VISIBLE
             Picasso.get()

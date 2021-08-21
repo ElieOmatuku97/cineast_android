@@ -7,9 +7,9 @@ import kotlinx.android.parcel.Parcelize
 data class Account(
     val avatar: Avatar?,
     val id: Int?,
-    val iso_639_1: String?,
-    val iso_3166_1: String?,
+    val iso6391: String?,
+    val iso31661: String?,
     val name: String?,
-    val include_adult: Boolean?,
+    val includeAdult: Boolean?,
     val username: String?
 ) : Parcelable

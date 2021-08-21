@@ -15,7 +15,7 @@ class GalleryPagerAdapter(fragmentManager: FragmentManager) :
         val args = Bundle()
 
         if (posters.isNotEmpty()) {
-            posters[position].file_path.let {
+            posters[position].filePath.let {
                 args.putString(GalleryFragment.MOVIE_POSTER_PATH, it)
             }
         }

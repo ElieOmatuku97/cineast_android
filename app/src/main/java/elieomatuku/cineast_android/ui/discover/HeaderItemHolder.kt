@@ -32,7 +32,7 @@ class HeaderItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun update(movie: Movie) {
-        val backdropPath = movie.backdrop_path
+        val backdropPath = movie.backdropPath
 
         if (!backdropPath.isNullOrEmpty()) {
             val imageUrl = UiUtils.getImageUrl(backdropPath, itemView.context.getString(R.string.image_header))

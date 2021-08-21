@@ -129,7 +129,7 @@ class DiscoverVu(
         value?.let {
             val authenticateUrl = Uri.parse(activity.getString(R.string.authenticate_url))
                 .buildUpon()
-                .appendPath(it.request_token)
+                .appendPath(it.requestToken)
                 .build()
                 .toString()
 

@@ -49,7 +49,7 @@ class TmdbContentClientTest {
 
     @Test
     fun testGetMovieFacts() = runBlocking {
-        var movie = Movie(id = 181812, original_title = "Star Wars: The Rise of Skywalker", genre_ids = listOf(1, 2, 3, 4, 5), original_language = "English", adult = true)
+        var movie = Movie(id = 181812, originalTitle = "Star Wars: The Rise of Skywalker", genreIds = listOf(1, 2, 3, 4, 5), originalLanguage = "English", adult = true)
         Assert.assertEquals(true, unauthorizedClient.getMovieFacts(movie).isFailure)
         Assert.assertEquals(true, mockedClient("movie/181812?api_key=490e29e92ea126a6878a02b2779beb24", "getMovieDetails.json").getMovieFacts(movie).isSuccess)
     }

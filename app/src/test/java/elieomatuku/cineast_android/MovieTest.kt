@@ -15,15 +15,15 @@ class MovieTest {
     @Test
     fun reflexivityTest() {
         val movieA = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieB: Movie = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1998, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1998, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         assertEquals(movieA, movieA)
@@ -34,15 +34,15 @@ class MovieTest {
     @Test
     fun symmetryTest() {
         val movieA = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieB = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         assertEquals(movieA.equals(movieA), true)
@@ -52,21 +52,21 @@ class MovieTest {
     @Test
     fun transivityTest() {
         val movieA = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieB = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieC = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         assertEquals(movieA.equals(movieB), true)
@@ -77,9 +77,9 @@ class MovieTest {
     @Test
     fun nonNullabilityTest() {
         val movieA = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         assertEquals(movieA.equals(null), false)
@@ -89,21 +89,21 @@ class MovieTest {
     fun hashCodeTest() {
 
         val movieA = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieB = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         val movieC = Movie(
-            "poster_path", adult = false, overview = "overview", release_date = "release_date",
-            genre_ids = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1998, original_title = "original_title", original_language = null,
-            title = null, backdrop_path = null, popularity = null, vote_count = null, video = true, vote_average = null
+            "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
+            genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1998, originalTitle = "original_title", originalLanguage = null,
+            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
         )
 
         assertEquals(movieA.hashCode(), movieB.hashCode())

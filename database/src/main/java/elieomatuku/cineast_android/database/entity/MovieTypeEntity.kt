@@ -22,7 +22,7 @@ data class MovieTypeEntity(
             }
         }
 
-        fun toMovieTypeEntity(movieType: MovieType): MovieTypeEntity {
+        private fun toMovieTypeEntity(movieType: MovieType): MovieTypeEntity {
             return MovieTypeEntity(movieType.id, movieType.type)
         }
     }
@@ -33,8 +33,4 @@ enum class MovieType(val id: String, val type: String) {
     NOW_PLAYING("cineast_nowPlaying", "nowPlaying"),
     UPCOMING("cineast_upcoming", "upcoming"),
     TOP_RATED("cineast_topRated", "topRated");
-
-    fun fromType(type: String): MovieType {
-        return values().first { it.type == type }
-    }
 }

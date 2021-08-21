@@ -80,7 +80,7 @@ class UserMoviesViewModel : BaseViewModel() {
             override fun onFail(error: CineastError) {
                 Timber.e("error : $error")
                 error.let {
-                    errorMessage.value = it.status_message!!
+                    errorMessage.value = it.statusMessage!!
                 }
             }
         })

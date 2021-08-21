@@ -118,7 +118,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         value?.let {
             val authenticateUrl = Uri.parse(context?.getString(R.string.authenticate_url))
                 .buildUpon()
-                .appendPath(it.request_token)
+                .appendPath(it.requestToken)
                 .build()
                 .toString()
 
