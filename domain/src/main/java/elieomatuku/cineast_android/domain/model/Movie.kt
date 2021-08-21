@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.domain.model
 
-
 data class Movie(
     val poster_path: String? = null,
     val adult: Boolean = false,

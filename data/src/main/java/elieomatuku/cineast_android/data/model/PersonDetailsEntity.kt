@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.data.model
 
-
 /**
  * Created by elieomatuku on 2021-07-04
  */

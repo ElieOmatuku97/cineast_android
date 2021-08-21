@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.domain.model
 
-
 data class MovieSummary(
     val movie: Movie? = null,
     val trailers: List<Trailer>? = listOf(),

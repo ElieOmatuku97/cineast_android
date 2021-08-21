@@ -4,7 +4,6 @@ import elieomatuku.cineast_android.data.model.GenreEntity
 import elieomatuku.cineast_android.data.model.MovieEntity
 import elieomatuku.cineast_android.data.model.MovieType
 
-
 /**
  * Created by elieomatuku on 2021-08-21
  */

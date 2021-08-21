@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.domain.model
 
-
 data class MovieFacts(
     val budget: Int?,
     val releaseDate: String?,

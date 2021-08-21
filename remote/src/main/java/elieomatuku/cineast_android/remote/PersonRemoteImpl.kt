@@ -6,11 +6,11 @@ import elieomatuku.cineast_android.data.model.PersonDetailsEntity
 import elieomatuku.cineast_android.data.model.PersonEntity
 import elieomatuku.cineast_android.data.repository.person.PersonRemote
 import elieomatuku.cineast_android.remote.api.PersonApi
-import elieomatuku.cineast_android.remote.model.RemotePeople
 import elieomatuku.cineast_android.remote.model.RemoteException
-import elieomatuku.cineast_android.remote.model.RemoteKnownFor
-import elieomatuku.cineast_android.remote.model.RemotePersonDetails
 import elieomatuku.cineast_android.remote.model.RemoteImages
+import elieomatuku.cineast_android.remote.model.RemoteKnownFor
+import elieomatuku.cineast_android.remote.model.RemotePeople
+import elieomatuku.cineast_android.remote.model.RemotePersonDetails
 
 /**
  * Created by elieomatuku on 2021-07-04

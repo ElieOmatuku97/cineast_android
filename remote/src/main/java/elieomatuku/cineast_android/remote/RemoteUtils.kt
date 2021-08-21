@@ -1,7 +1,6 @@
 package elieomatuku.cineast_android.remote
 
 import com.google.gson.Gson
-import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 

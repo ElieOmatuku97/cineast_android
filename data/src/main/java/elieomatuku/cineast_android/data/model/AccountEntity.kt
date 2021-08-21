@@ -1,10 +1,8 @@
 package elieomatuku.cineast_android.data.model
 
-
 /**
  * Created by elieomatuku on 2021-07-04
  */
-
 
 data class AccountEntity(
     val avatar: AvatarEntity?,
@@ -16,8 +14,6 @@ data class AccountEntity(
     val username: String?
 )
 
-
 data class AvatarEntity(val gravatar: GAvatarEntity?)
-
 
 data class GAvatarEntity(val hash: String?)

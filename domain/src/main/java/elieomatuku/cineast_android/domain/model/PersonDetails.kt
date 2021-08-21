@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.domain.model
 
-
 data class PersonDetails(
     val birthday: String? = null,
     val knownForDepartment: String? = null,

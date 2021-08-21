@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.domain.model
 
-
 data class Trailer(
     val id: String?,
     val iso6391: String?,
