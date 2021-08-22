@@ -1,8 +1,9 @@
-package elieomatuku.cineast_android.domain
+package elieomatuku.cineast_android
 
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import elieomatuku.cineast_android.domain.ValueStore
 
 class PrefsStore(storeKey: String, appContext: Application) : ValueStore {
 

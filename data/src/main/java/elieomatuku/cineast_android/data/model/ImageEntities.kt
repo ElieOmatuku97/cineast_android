@@ -2,8 +2,8 @@ package elieomatuku.cineast_android.data.model
 
 data class ImageEntities(
     val backdrops: List<ImageEntity> = listOf(),
-    var posters: List<ImageEntity> = listOf(),
-    var peoplePosters: List<ImageEntity> = listOf(),
+    val posters: List<ImageEntity> = listOf(),
+    val peoplePosters: List<ImageEntity> = listOf(),
 )
 
 data class ImageEntity(
