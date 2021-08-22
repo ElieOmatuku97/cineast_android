@@ -39,4 +39,8 @@ interface MovieCache {
     fun insertMovie(movie: MovieEntity, type: MovieType)
 
     fun updateMovie(movie: MovieEntity)
+
+    fun isCached(): Boolean
+
+    fun isExpired(): Boolean
 }
