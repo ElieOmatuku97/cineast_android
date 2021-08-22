@@ -22,7 +22,7 @@ interface MovieRepository {
 
     suspend fun getMovieTrailers(movie: Movie): List<Trailer>
 
-    suspend fun getMovieDetails(movie: Movie): MovieFacts?
+    suspend fun getMovieDetails(movie: Movie): MovieFacts
 
     suspend fun getMovieCredits(movie: Movie): MovieCredits
 
