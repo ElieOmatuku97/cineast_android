@@ -34,9 +34,9 @@ interface MovieDataStore {
 
     suspend fun searchMovies(argQuery: String): List<MovieEntity>
 
-    suspend fun getWatchList(): List<MovieEntity>
+    suspend fun getWatchList(sessionId: String): List<MovieEntity>
 
-    suspend fun getFavorites(): List<MovieEntity>
+    suspend fun getFavorites(sessionId: String): List<MovieEntity>
 
     suspend fun deleteAllMovies()
 
@@ -55,4 +55,26 @@ interface MovieDataStore {
     suspend fun insertMovie(movie: MovieEntity, type: MovieType)
 
     suspend fun updateMovie(movie: MovieEntity)
+
+    suspend fun updateWatchList(
+        sessionId: String,
+        movie: MovieEntity,
+        watchList: Boolean
+    ): PostResultEntity
+
+    suspend fun getFavoriteList(sessionId: String): List<MovieEntity>
+
+    suspend fun updateFavoriteList(
+        sessionId: String,
+        movie: MovieEntity,
+        favorite: Boolean
+    ): PostResultEntity
+
+    suspend fun postMovieRate(
+        movieId: Int,
+        sessionId: String,
+        rate: Double
+    ): PostResultEntity
+
+    suspend fun getUserRatedMovies(sessionId: String): List<MovieEntity>
 }

@@ -8,8 +8,6 @@ import elieomatuku.cineast_android.domain.model.*
  */
 
 interface MovieRepository {
-    suspend fun discoverContent(): DiscoverContent
-
     suspend fun genres(): List<Genre>
 
     suspend fun getPopularMovies(): List<Movie>
@@ -37,4 +35,26 @@ interface MovieRepository {
     suspend fun getWatchList(): List<Movie>
 
     suspend fun getFavorites(): List<Movie>
+
+    suspend fun updateWatchList(
+        sessionId: String,
+        movie: Movie,
+        watchList: Boolean
+    )
+
+    suspend fun getFavoriteList(sessionId: String): List<Movie>
+
+    suspend fun updateFavoriteList(
+        sessionId: String,
+        movie: Movie,
+        favorite: Boolean
+    )
+
+    suspend fun postMovieRate(
+        movieId: Int,
+        sessionId: String,
+        rate: Double
+    )
+
+    suspend fun getUserRatedMovies(sessionId: String): List<Movie>
 }

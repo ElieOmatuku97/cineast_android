@@ -13,7 +13,7 @@ import elieomatuku.cineast_android.domain.repository.PersonRepository
  */
 
 class PersonRepositoryImpl(private val factory: PersonDataStoreFactory): PersonRepository {
-    override suspend fun personalities(): List<Person> {
+    override suspend fun getPopularPeople(): List<Person> {
         TODO("Not yet implemented")
     }
 

@@ -11,7 +11,7 @@ import elieomatuku.cineast_android.domain.model.PersonDetails
  */
 
 interface PersonRepository {
-    suspend fun personalities(): List<Person>
+    suspend fun getPopularPeople(): List<Person>
 
     suspend fun getMovies(person: Person): List<Movie>
 

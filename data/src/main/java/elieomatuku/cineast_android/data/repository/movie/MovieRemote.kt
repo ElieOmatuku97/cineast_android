@@ -31,6 +31,8 @@ interface MovieRemote {
 
     suspend fun searchMovies(query: String): List<MovieEntity>
 
+    suspend fun getWatchList(sessionId: String): List<MovieEntity>
+
     suspend fun updateWatchList(
         sessionId: String,
         movie: MovieEntity,

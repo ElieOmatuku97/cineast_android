@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.data.repository.movie.MovieRemote
  * Created by elieomatuku on 2021-08-22
  */
 
-class MovieRemoteDataStore(private val movieRemote: MovieRemote): MovieDataStore {
+class MovieRemoteDataStore(private val movieRemote: MovieRemote) : MovieDataStore {
     override suspend fun genres(): List<GenreEntity> {
         return movieRemote.getGenres()
     }
@@ -47,7 +47,7 @@ class MovieRemoteDataStore(private val movieRemote: MovieRemote): MovieDataStore
     }
 
     override suspend fun getMovieImages(movieId: Int): ImageEntities {
-       return movieRemote.getMovieImages(movieId)
+        return movieRemote.getMovieImages(movieId)
     }
 
     override suspend fun getMovie(movieId: Int): MovieEntity {
@@ -58,12 +58,12 @@ class MovieRemoteDataStore(private val movieRemote: MovieRemote): MovieDataStore
         return movieRemote.searchMovies(argQuery)
     }
 
-    override suspend fun getWatchList(): List<MovieEntity> {
-        return movieRemote.
+    override suspend fun getWatchList(sessionId: String): List<MovieEntity> {
+        return movieRemote.getWatchList(sessionId)
     }
 
-    override suspend fun getFavorites(): List<MovieEntity> {
-        TODO("Not yet implemented")
+    override suspend fun getFavorites(sessionId: String): List<MovieEntity> {
+        return movieRemote.getFavoriteList(sessionId)
     }
 
     override suspend fun deleteAllMovies() {
@@ -100,5 +100,37 @@ class MovieRemoteDataStore(private val movieRemote: MovieRemote): MovieDataStore
 
     override suspend fun updateMovie(movie: MovieEntity) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun updateWatchList(
+        sessionId: String,
+        movie: MovieEntity,
+        watchList: Boolean
+    ): PostResultEntity {
+        return movieRemote.updateWatchList(sessionId, movie, watchList)
+    }
+
+    override suspend fun getFavoriteList(sessionId: String): List<MovieEntity> {
+        return movieRemote.getFavoriteList(sessionId)
+    }
+
+    override suspend fun updateFavoriteList(
+        sessionId: String,
+        movie: MovieEntity,
+        favorite: Boolean
+    ): PostResultEntity {
+        return movieRemote.updateFavoriteList(sessionId, movie, favorite)
+    }
+
+    override suspend fun postMovieRate(
+        movieId: Int,
+        sessionId: String,
+        rate: Double
+    ): PostResultEntity {
+        return movieRemote.postMovieRate(movieId, sessionId, rate)
+    }
+
+    override suspend fun getUserRatedMovies(sessionId: String): List<MovieEntity> {
+        return movieRemote.getUserRatedMovies(sessionId)
     }
 }

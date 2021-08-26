@@ -17,13 +17,13 @@ class MovieTest {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         val movieB: Movie = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1998, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         assertEquals(movieA, movieA)
@@ -36,13 +36,13 @@ class MovieTest {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         val movieB = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         assertEquals(movieA.equals(movieA), true)
@@ -54,19 +54,19 @@ class MovieTest {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         val movieB = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         val movieC = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         assertEquals(movieA.equals(movieB), true)
@@ -79,7 +79,7 @@ class MovieTest {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         assertEquals(movieA.equals(null), false)
@@ -91,19 +91,19 @@ class MovieTest {
         val movieA = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         val movieB = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1997, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         val movieC = Movie(
             "poster_path", adult = false, overview = "overview", releaseDate = "release_date",
             genreIds = listOf<Int>(), genres = listOf<elieomatuku.cineast_android.domain.model.Genre>(), id = 1998, originalTitle = "original_title", originalLanguage = null,
-            title = null, backdropPath = null, popularity = null, vote_count = null, video = true, vote_average = null
+            title = null, backdropPath = null, popularity = null, voteCount = null, video = true, voteAverage = null
         )
 
         assertEquals(movieA.hashCode(), movieB.hashCode())

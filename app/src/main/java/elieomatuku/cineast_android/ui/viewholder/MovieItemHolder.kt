@@ -67,7 +67,7 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun update(movie: Movie) {
-        val posterPath = movie.poster_path
+        val posterPath = movie.posterPath
 
         if ((posterPath != null) && !(posterPath.isNullOrEmpty())) {
             val imageUrl = UiUtils.getImageUrl(posterPath, itemView.context.getString(R.string.image_small))
@@ -82,11 +82,11 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.visibility = View.GONE
         }
 
-        movie.vote_average?.let {
+        movie.voteAverage?.let {
             starView?.visibility = View.VISIBLE
             starView?.rating = it
 
-            val voteCount = movie.vote_count
+            val voteCount = movie.voteCount
 
             if (voteCount != null) {
                 voteAverageView?.visibility = View.VISIBLE

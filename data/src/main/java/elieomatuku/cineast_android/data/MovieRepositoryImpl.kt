@@ -1,5 +1,6 @@
 package elieomatuku.cineast_android.data
 
+import elieomatuku.cineast_android.data.model.GenreEntity
 import elieomatuku.cineast_android.data.source.movie.MovieDataStoreFactory
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.domain.repository.MovieRepository
@@ -10,12 +11,11 @@ import elieomatuku.cineast_android.domain.repository.MovieRepository
  */
 
 class MovieRepositoryImpl(private val factory: MovieDataStoreFactory): MovieRepository {
-    override suspend fun discoverContent(): DiscoverContent {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun genres(): List<Genre> {
-        TODO("Not yet implemented")
+        val genres = factory.retrieveDataStore().genres()
+        return genres.map {
+            it.let(GenreEntity::toGenre)
+        }
     }
 
     override suspend fun getPopularMovies(): List<Movie> {
@@ -67,6 +67,26 @@ class MovieRepositoryImpl(private val factory: MovieDataStoreFactory): MovieRepo
     }
 
     override suspend fun getFavorites(): List<Movie> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateWatchList(sessionId: String, movie: Movie, watchList: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getFavoriteList(sessionId: String): List<Movie> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateFavoriteList(sessionId: String, movie: Movie, favorite: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postMovieRate(movieId: Int, sessionId: String, rate: Double) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserRatedMovies(sessionId: String): List<Movie> {
         TODO("Not yet implemented")
     }
 }

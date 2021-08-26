@@ -35,7 +35,7 @@ class MovieActivityTest {
     private var idlingResource: IdlingResource? = null
 
     val movie = Movie(
-        poster_path = "/xBHvZcjRiWyobQ9kxBhO6B2dtRI.jpg", adult = false,
+        posterPath = "/xBHvZcjRiWyobQ9kxBhO6B2dtRI.jpg", adult = false,
         overview = "The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown.",
         releaseDate = "2019-09-17",
         genreIds = listOf(12, 18, 9648, 878, 53),
@@ -43,9 +43,9 @@ class MovieActivityTest {
         id = 419704,
         originalTitle = "Ad Astra", originalLanguage = "en", title = "Ad Astra", backdropPath = "/5BwqwxMEjeFtdknRV792Svo0K1v.jpg",
         popularity = 478.246,
-        vote_count = 1895,
+        voteCount = 1895,
         video = false,
-        vote_average = 6.0f,
+        voteAverage = 6.0f,
         rating = null
     )
 

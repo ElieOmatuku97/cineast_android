@@ -61,8 +61,8 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
 
     fun update(movieSummary: MovieSummary) {
         val movie = movieSummary.movie
-        val imageUrl: String? = if (movie?.poster_path != null) {
-            UiUtils.getImageUrl(movie.poster_path, itemView.context.getString(R.string.image_small))
+        val imageUrl: String? = if (movie?.posterPath != null) {
+            UiUtils.getImageUrl(movie.posterPath, itemView.context.getString(R.string.image_small))
         } else null
 
         if (!imageUrl.isNullOrEmpty()) {
@@ -95,7 +95,7 @@ class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePubl
             releaseDateView.visibility = View.GONE
         }
 
-        val voteAverage = movie?.vote_average
+        val voteAverage = movie?.voteAverage
         if (voteAverage != null) {
             ratingBarView.visibility = View.VISIBLE
             ratingBarView.rating = voteAverage

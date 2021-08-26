@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.domain.model
 
 data class Movie(
-    val poster_path: String? = null,
+    val posterPath: String? = null,
     val adult: Boolean = false,
     val overview: String? = null,
     val releaseDate: String? = null,
@@ -13,8 +13,8 @@ data class Movie(
     val title: String? = null,
     val backdropPath: String? = null,
     val popularity: Double? = null,
-    val vote_count: Int? = null,
+    val voteCount: Int? = null,
     val video: Boolean? = true,
-    val vote_average: Float? = null,
+    val voteAverage: Float? = null,
     val rating: Float? = null
 )

@@ -58,11 +58,11 @@ class MovieCacheDataStore(private val movieCache: MovieCache) : MovieDataStore {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getWatchList(): List<MovieEntity> {
+    override suspend fun getWatchList(sessionId: String): List<MovieEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getFavorites(): List<MovieEntity> {
+    override suspend fun getFavorites(sessionId: String): List<MovieEntity> {
         TODO("Not yet implemented")
     }
 
@@ -100,5 +100,37 @@ class MovieCacheDataStore(private val movieCache: MovieCache) : MovieDataStore {
 
     override suspend fun updateMovie(movie: MovieEntity) {
         movieCache.updateMovie(movie)
+    }
+
+    override suspend fun updateWatchList(
+        sessionId: String,
+        movie: MovieEntity,
+        watchList: Boolean
+    ): PostResultEntity {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getFavoriteList(sessionId: String): List<MovieEntity> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateFavoriteList(
+        sessionId: String,
+        movie: MovieEntity,
+        favorite: Boolean
+    ): PostResultEntity {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun postMovieRate(
+        movieId: Int,
+        sessionId: String,
+        rate: Double
+    ): PostResultEntity {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserRatedMovies(sessionId: String): List<MovieEntity> {
+        TODO("Not yet implemented")
     }
 }

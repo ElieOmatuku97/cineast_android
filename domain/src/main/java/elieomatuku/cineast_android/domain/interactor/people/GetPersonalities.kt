@@ -14,7 +14,7 @@ import elieomatuku.cineast_android.domain.repository.PersonRepository
 class GetPersonalities(private val personRepository: PersonRepository): NoInputUseCase<CompleteResult<List<Person>>>  {
     override suspend fun execute(params: Unit): CompleteResult<List<Person>> {
         return safeUseCaseCall {
-            return@safeUseCaseCall personRepository.personalities()
+            return@safeUseCaseCall personRepository.getPopularPeople()
         }
     }
 }

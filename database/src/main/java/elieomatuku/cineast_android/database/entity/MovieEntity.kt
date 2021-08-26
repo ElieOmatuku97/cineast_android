@@ -37,7 +37,7 @@ data class MovieEntity(
         fun fromMovie(movie: Movie): MovieEntity {
             return MovieEntity(
                 id = movie.id,
-                poster_path = movie.poster_path,
+                poster_path = movie.posterPath,
                 adult = movie.adult,
                 overview = movie.overview,
                 release_date = movie.releaseDate,
@@ -47,9 +47,9 @@ data class MovieEntity(
                 title = movie.title,
                 backdrop_path = movie.backdropPath,
                 popularity = movie.popularity,
-                vote_count = movie.vote_count,
+                vote_count = movie.voteCount,
                 video = movie.video,
-                vote_average = movie.vote_average,
+                vote_average = movie.voteAverage,
                 rating = movie.rating
             )
         }
@@ -62,7 +62,7 @@ data class MovieEntity(
     fun toMovie(): Movie {
         return Movie(
             id = id,
-            poster_path = poster_path,
+            posterPath = poster_path,
             adult = adult,
             overview = overview,
             releaseDate = release_date,
@@ -72,9 +72,9 @@ data class MovieEntity(
             title = title,
             backdropPath = backdrop_path,
             popularity = popularity,
-            vote_count = vote_count,
+            voteCount = vote_count,
             video = video,
-            vote_average = vote_average,
+            voteAverage = vote_average,
             rating = rating
         )
     }

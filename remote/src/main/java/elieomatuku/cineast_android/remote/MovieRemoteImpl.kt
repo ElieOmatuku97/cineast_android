@@ -182,6 +182,20 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
         }
     }
 
+    override suspend fun getWatchList(sessionId: String): List<MovieEntity> {
+        val response = movieApi.getWatchList(sessionId)
+        if (response.isSuccessful) {
+            val body = response.body()
+            return body!!.results.map { it.let(RemoteMovie::toMovieEntity) }
+        } else {
+            throw RemoteException(
+                response.code(),
+                response.errorBody()?.toString(),
+                response.message()
+            )
+        }
+    }
+
     override suspend fun updateWatchList(
         sessionId: String,
         movie: MovieEntity,
