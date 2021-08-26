@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.AccessToken
-import elieomatuku.cineast_android.domain.model.Account
-import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.ui.base.BaseVu
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 import elieomatuku.cineast_android.ui.home.HomeActivity
@@ -47,11 +44,11 @@ class DiscoverVu(
     val movieSelectObservable: Observable<Movie>
         get() = movieSelectPublisher.hide()
 
-    private val personSelectPublisher: PublishSubject<Content> by lazy {
-        PublishSubject.create<Content>()
+    private val personSelectPublisher: PublishSubject<Person> by lazy {
+        PublishSubject.create<Person>()
     }
 
-    val personSelectObservable: Observable<Content>
+    val personSelectObservable: Observable<Person>
         get() = personSelectPublisher.hide()
 
     private val loginClickPublisher: PublishSubject<Boolean> by lazy {
@@ -97,7 +94,11 @@ class DiscoverVu(
 
         listView.adapter = adapter
         val itemDecoration = DividerItemDecoration(listView.context, DividerItemDecoration.VERTICAL)
-        val drawable: Drawable? = ResourcesCompat.getDrawable(activity.resources, R.drawable.item_decoration, activity.theme)
+        val drawable: Drawable? = ResourcesCompat.getDrawable(
+            activity.resources,
+            R.drawable.item_decoration,
+            activity.theme
+        )
         if (drawable != null) {
             itemDecoration.setDrawable(drawable)
         }
@@ -109,7 +110,10 @@ class DiscoverVu(
         }
     }
 
-    fun updateView(discoverContent: elieomatuku.cineast_android.domain.DiscoverContent, isLoggedIn: Boolean) {
+    fun updateView(
+        discoverContent: elieomatuku.cineast_android.domain.DiscoverContent,
+        isLoggedIn: Boolean
+    ) {
         Timber.d("update View is called")
         adapter.filteredContent = discoverContent.getFilteredWidgets()
         adapter.isLoggedIn = isLoggedIn
@@ -133,11 +137,13 @@ class DiscoverVu(
                 .build()
                 .toString()
 
-            val webviewFragment: WebviewFragment? = LoginWebviewFragment.newInstance(authenticateUrl)
+            val webviewFragment: WebviewFragment? =
+                LoginWebviewFragment.newInstance(authenticateUrl)
             val fm = (activity as AppCompatActivity).supportFragmentManager
 
             if (webviewFragment != null && fm != null) {
-                fm.beginTransaction().add(android.R.id.content, webviewFragment, null).addToBackStack(null).commit()
+                fm.beginTransaction().add(android.R.id.content, webviewFragment, null)
+                    .addToBackStack(null).commit()
             }
         }
     }

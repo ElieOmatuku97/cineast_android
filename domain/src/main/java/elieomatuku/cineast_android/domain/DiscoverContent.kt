@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.domain
 
-import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 
