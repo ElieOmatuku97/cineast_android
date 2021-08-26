@@ -17,5 +17,12 @@ data class GenreEntity(
                 genreEntity.name
             )
         }
+
+        fun fromGenre(genre: Genre): GenreEntity {
+            return GenreEntity(
+                genre.id,
+                genre.name
+            )
+        }
     }
 }
