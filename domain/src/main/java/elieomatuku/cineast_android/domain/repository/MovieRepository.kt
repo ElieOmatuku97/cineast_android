@@ -32,17 +32,15 @@ interface MovieRepository {
 
     suspend fun searchMovies(argQuery: String): List<Movie>
 
-    suspend fun getWatchList(): List<Movie>
+    suspend fun getWatchList(sessionId: String): List<Movie>
 
-    suspend fun getFavorites(): List<Movie>
+    suspend fun getFavorites(sessionId: String): List<Movie>
 
     suspend fun updateWatchList(
         sessionId: String,
         movie: Movie,
         watchList: Boolean
     )
-
-    suspend fun getFavoriteList(sessionId: String): List<Movie>
 
     suspend fun updateFavoriteList(
         sessionId: String,
