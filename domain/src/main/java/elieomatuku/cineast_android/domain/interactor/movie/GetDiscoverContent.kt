@@ -7,7 +7,6 @@ import elieomatuku.cineast_android.domain.model.DiscoverContent
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 import elieomatuku.cineast_android.domain.repository.PersonRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */

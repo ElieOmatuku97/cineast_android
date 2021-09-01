@@ -6,12 +6,11 @@ import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class GetUpcomingMovies (private val movieRepository: MovieRepository) :
+class GetUpcomingMovies(private val movieRepository: MovieRepository) :
     NoInputUseCase<CompleteResult<List<Movie>>> {
     override suspend fun execute(params: Unit): CompleteResult<List<Movie>> {
         return safeUseCaseCall {

@@ -5,7 +5,6 @@ import elieomatuku.cineast_android.domain.interactor.NoInputUseCase
 import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */
@@ -15,9 +14,7 @@ class GetRequestToken(private val authenticationRepository: AuthenticationReposi
 
     override suspend fun execute(params: Unit): CompleteResult<String?> {
         return safeUseCaseCall {
-            return@safeUseCaseCall authenticationRepository.getRequestToken(
-
-            )
+            return@safeUseCaseCall authenticationRepository.getRequestToken()
         }
     }
 }

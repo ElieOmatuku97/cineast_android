@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.data.source.authentication
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationCache
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationDataStore
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */
@@ -15,7 +14,7 @@ class AuthenticationDataStoreFactory(
 ) {
 
     fun retrieveDataStore(): AuthenticationDataStore {
-        return if (authenticationCache.isCached() && !authenticationCache.isExpired()) {
+        return if (authenticationCache.isLoggedIn()) {
             retrieveCacheDataStore()
         } else {
             retrieveRemoteDataStore()
@@ -28,9 +27,5 @@ class AuthenticationDataStoreFactory(
 
     fun retrieveRemoteDataStore(): AuthenticationDataStore {
         return authenticationCacheDataStore
-    }
-
-    fun isCached(): Boolean {
-        return authenticationCache.isCached()
     }
 }

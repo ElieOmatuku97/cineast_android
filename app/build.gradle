@@ -89,7 +89,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Local modules
-    implementation project(':database')
+    implementation project(':cache')
     implementation project(':domain')
 
     implementation 'androidx.multidex:multidex:2.0.1'

@@ -6,7 +6,6 @@ import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */
@@ -23,5 +22,4 @@ class SetAccount(private val authenticationRepository: AuthenticationRepository)
     }
 
     data class Input(val sessionId: String?)
-
 }

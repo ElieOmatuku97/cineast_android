@@ -11,7 +11,6 @@ import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.domain.repository.PersonRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */

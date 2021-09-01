@@ -9,7 +9,6 @@ import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.domain.model.Session
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */

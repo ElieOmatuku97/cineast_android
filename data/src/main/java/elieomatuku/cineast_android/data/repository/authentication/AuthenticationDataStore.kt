@@ -4,7 +4,6 @@ import elieomatuku.cineast_android.data.model.AccessTokenEntity
 import elieomatuku.cineast_android.data.model.AccountEntity
 import elieomatuku.cineast_android.data.model.SessionEntity
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */

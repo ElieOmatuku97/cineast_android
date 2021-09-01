@@ -4,8 +4,6 @@ import elieomatuku.cineast_android.data.model.ImageEntities
 import elieomatuku.cineast_android.data.model.MovieEntity
 import elieomatuku.cineast_android.data.model.PersonDetailsEntity
 import elieomatuku.cineast_android.data.model.PersonEntity
-import elieomatuku.cineast_android.domain.model.Movie
-
 
 /**
  * Created by elieomatuku on 2021-08-22

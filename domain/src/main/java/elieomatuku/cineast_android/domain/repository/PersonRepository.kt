@@ -5,7 +5,6 @@ import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.PersonDetails
 
-
 /**
  * Created by elieomatuku on 2021-08-21
  */

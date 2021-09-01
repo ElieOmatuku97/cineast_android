@@ -5,7 +5,6 @@ import elieomatuku.cineast_android.domain.interactor.NoInputUseCase
 import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */

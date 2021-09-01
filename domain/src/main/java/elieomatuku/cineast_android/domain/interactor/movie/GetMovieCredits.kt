@@ -7,12 +7,11 @@ import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieCredits
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class GetMovieCredits (private val movieRepository: MovieRepository) :
+class GetMovieCredits(private val movieRepository: MovieRepository) :
     UseCase<GetMovieCredits.Input, CompleteResult<MovieCredits>> {
 
     override suspend fun execute(params: Input): CompleteResult<MovieCredits> {

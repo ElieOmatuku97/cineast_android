@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.extensions
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.DiscoverContent
 
-
 /**
  * Created by elieomatuku on 2021-08-26
  */

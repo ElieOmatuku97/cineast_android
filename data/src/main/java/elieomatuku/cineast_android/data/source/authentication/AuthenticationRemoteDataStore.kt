@@ -6,7 +6,6 @@ import elieomatuku.cineast_android.data.model.SessionEntity
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationDataStore
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationRemote
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */

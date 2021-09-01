@@ -15,9 +15,5 @@ interface AuthenticationCache {
 
     suspend fun logout()
 
-    suspend fun isLoggedIn(): Boolean
-
-    fun isCached(): Boolean
-
-    fun isExpired(): Boolean
+    fun isLoggedIn(): Boolean
 }

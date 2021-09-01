@@ -6,7 +6,6 @@ import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */

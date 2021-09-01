@@ -4,7 +4,6 @@ import elieomatuku.cineast_android.data.model.*
 import elieomatuku.cineast_android.data.repository.movie.MovieDataStore
 import elieomatuku.cineast_android.data.repository.movie.MovieRemote
 
-
 /**
  * Created by elieomatuku on 2021-08-22
  */
