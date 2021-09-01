@@ -12,7 +12,6 @@ import elieomatuku.cineast_android.domain.model.Person
 data class PersonalityEntity(
     @PrimaryKey val id: Int,
     val profile_path: String?,
-    val adult: Boolean?,
     val name: String?
 ) {
 
@@ -27,7 +26,6 @@ data class PersonalityEntity(
             return PersonalityEntity(
                 id = person.id,
                 profile_path = person.profilePath,
-                adult = person.adult,
                 name = person.name
             )
         }
@@ -41,7 +39,6 @@ data class PersonalityEntity(
         return Person(
             id = id,
             profilePath = profile_path,
-            adult = adult,
             name = name
         )
     }
