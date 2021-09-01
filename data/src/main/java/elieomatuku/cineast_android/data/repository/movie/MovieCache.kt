@@ -18,8 +18,6 @@ interface MovieCache {
 
     fun getTopRatedMovies(): List<MovieEntity>
 
-    fun getPersonalities(): List<MovieEntity>
-
     fun getGenres(): List<GenreEntity>
 
     fun deleteAllMovies()

@@ -2,6 +2,7 @@ package elieomatuku.cineast_android.domain.repository
 
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
+import elieomatuku.cineast_android.domain.model.Session
 
 
 /**
@@ -12,9 +13,9 @@ interface AuthenticationRepository {
 
     suspend fun getAccessToken(): AccessToken
 
-    suspend fun getSession(requestToken: String): Pair<String, Account>
+    suspend fun getSession(requestToken: String): Session
 
-    suspend fun setAccount(sessionId: String?): Pair<String, Account>
+    suspend fun setAccount(sessionId: String?): Account
 
     suspend fun getRequestToken(): String?
 
