@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android.cache.dao
 
-import androidx.annotation.WorkerThread
+
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -18,23 +18,18 @@ interface MovieDao {
     @Query("SELECT * from ${CacheMovie.MOVIE_TABLE}")
     fun getAllMovies(): Flowable<List<CacheMovie>>
 
-    @WorkerThread
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMovie(cacheMovie: CacheMovie)
 
-    @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(cacheMovie: List<CacheMovie>)
 
-    @WorkerThread
     @Update
     fun updateMovie(cacheMovie: CacheMovie)
 
-    @WorkerThread
     @Query("DELETE FROM ${CacheMovie.MOVIE_TABLE} WHERE id = :id")
     fun delete(id: Int)
 
-    @WorkerThread
     @Query("DELETE FROM ${CacheMovie.MOVIE_TABLE}")
     fun deleteAll()
 }

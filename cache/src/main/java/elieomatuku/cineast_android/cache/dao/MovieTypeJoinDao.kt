@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.cache.dao
 
-import androidx.annotation.WorkerThread
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -16,7 +15,6 @@ import elieomatuku.cineast_android.cache.entity.MovieTypeEntity
 @Dao
 interface MovieTypeJoinDao {
 
-    @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(cacheMovieTypeJoin: CacheMovieTypeJoin)
 

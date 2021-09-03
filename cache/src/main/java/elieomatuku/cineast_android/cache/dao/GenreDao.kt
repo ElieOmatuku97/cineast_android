@@ -13,8 +13,6 @@ import elieomatuku.cineast_android.cache.entity.CacheGenre
 
 @Dao
 interface GenreDao {
-
-    @WorkerThread
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertGenres(cacheGenres: List<CacheGenre>)
 
