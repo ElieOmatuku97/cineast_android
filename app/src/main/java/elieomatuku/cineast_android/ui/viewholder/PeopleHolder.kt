@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.extensions.Contents
 import elieomatuku.cineast_android.ui.contents.ContentsActivity
 import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import io.reactivex.subjects.PublishSubject
@@ -36,14 +37,14 @@ class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSu
         itemView.recyclerview_people
     }
 
-    override fun update(content: List<Content>, titleRes: Int?) {
-        adapter.contents = content.toMutableList()
+    override fun update(contents: Contents) {
+        adapter.contents = contents.value?.toMutableList() ?: mutableListOf()
         listView.adapter = adapter
         adapter.notifyDataSetChanged()
         listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            ContentsActivity.startActivity(itemView.context, content, titleRes ?: R.string.popular_people)
+            ContentsActivity.startActivity(itemView.context, contents, contents.titleResources)
         }
     }
 }

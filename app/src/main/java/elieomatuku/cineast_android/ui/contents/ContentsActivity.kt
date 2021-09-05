@@ -10,10 +10,10 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
+import elieomatuku.cineast_android.extensions.Contents
 import elieomatuku.cineast_android.ui.base.BaseActivity
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.details.people.PeopleActivity
-import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,16 +23,18 @@ import java.util.ArrayList
 
 class ContentsActivity : BaseActivity() {
     companion object {
-        const val FIRST_WIDGET_TYPE_OCCURENCE = 0
         const val WIDGET_KEY = "content"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
         const val PEOPLE_KEY = "peopleApi"
 
-        fun startActivity(context: Context, contents: List<Content>, screenNameRes: Int? = null) {
+        fun startActivity(context: Context, contents: Contents, screenNameRes: Int? = null) {
             val intent = Intent(context, ContentsActivity::class.java)
             val params = Bundle()
-            params.putParcelableArrayList(Constants.WIDGET_KEY, contents as ArrayList<out Parcelable>)
+            params.putParcelableArrayList(
+                Constants.WIDGET_KEY,
+                contents as ArrayList<out Parcelable>
+            )
 
             if (screenNameRes != null) {
                 params.putInt(Constants.SCREEN_NAME_KEY, screenNameRes)
@@ -71,7 +73,7 @@ class ContentsActivity : BaseActivity() {
 
         setContentView(R.layout.activity_content)
 
-        val contents: List<Content>? = intent.getParcelableArrayListExtra(WIDGET_KEY)
+        val contents: Contents? = intent.getParcelableExtra(WIDGET_KEY)
         val screenNameRes = intent.getIntExtra(Constants.SCREEN_NAME_KEY, 0)
 
         updateView(contents, screenNameRes)
@@ -88,14 +90,17 @@ class ContentsActivity : BaseActivity() {
 
                     params.putString(Constants.SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
 
-                    if (content is Person) {
-                        params.putParcelable(PEOPLE_KEY, content)
-                        gotoContent(params, PeopleActivity::class.java)
-                    } else {
-                        params.putParcelable(MOVIE_KEY, content)
-                        params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
-                        gotoContent(params, MovieActivity::class.java)
-                    }
+//                    if (content is Person) {
+//                        params.putParcelable(PEOPLE_KEY, content)
+//                        gotoContent(params, PeopleActivity::class.java)
+//                    } else {
+//                        params.putParcelable(MOVIE_KEY, content)
+//                        params.putParcelableArrayList(
+//                            MOVIE_GENRES_KEY,
+//                            viewModel.genresLiveData.value as ArrayList<out Parcelable>
+//                        )
+//                        gotoContent(params, MovieActivity::class.java)
+//                    }
                 }
         )
     }
@@ -107,12 +112,10 @@ class ContentsActivity : BaseActivity() {
         return true
     }
 
-    private fun updateView(contents: List<Content>?, screenNameRes: Int? = null) {
+    private fun updateView(contents: Contents?, screenNameRes: Int? = null) {
         setToolbarTitle(screenNameRes)
         contents?.let {
-            if (it.isNotEmpty()) {
-                setUpListView(it)
-            }
+            setContents(contents)
         }
     }
 
@@ -122,15 +125,16 @@ class ContentsActivity : BaseActivity() {
         } ?: resources.getString(R.string.nav_title_discover)
     }
 
-    private fun setUpListView(contents: List<Content>) {
+    private fun setContents(contents: Contents) {
         contentsAdapter = if (areWidgetsMovies(contents)) moviesAdapter else peopleAdapter
-        contentsAdapter.contents = contents.toMutableList()
+        contentsAdapter.contents = contents.value?.toMutableList() ?: mutableListOf()
         listView.adapter = contentsAdapter
         contentsAdapter.notifyDataSetChanged()
     }
 
-    private fun areWidgetsMovies(contents: List<Content?>): Boolean {
-        return (contents[FIRST_WIDGET_TYPE_OCCURENCE] != null) && (contents[FIRST_WIDGET_TYPE_OCCURENCE] is Movie)
+    private fun areWidgetsMovies(contents: Contents): Boolean {
+        val firstElement: Content? = contents.value?.first()
+        return (firstElement != null) && (firstElement is Movie)
     }
 
     private fun gotoContent(params: Bundle, contentActivityClass: Class<*>) {

@@ -1,45 +1,51 @@
 package elieomatuku.cineast_android.extensions
 
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.DiscoverContent
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.DiscoverContents
 
 /**
  * Created by elieomatuku on 2021-08-26
  */
 
-enum class Content(val position: Int) {
-    PopularMovie(1),
-    PopularPeople(2),
-    NowPlayingMovie(3),
-    UpcomingMovie(4),
-    TopRatedMovie(5)
+enum class Contents(val position: Int, val titleResources: Int, var value: List<Content>?) {
+    PopularMovies(1, R.string.popular_movies, null),
+    PopularPeoples(2, R.string.popular_people, null),
+    NowPlayingMovies(3, R.string.now_playing, null),
+    UpcomingMovies(4, R.string.upcoming, null),
+    TopRatedMovies(5, R.string.top_rated, null)
 }
 
-fun DiscoverContent.isEmpty(): Boolean {
+fun DiscoverContents.isEmpty(): Boolean {
     return popularMovies.isEmpty() && nowPlayingMovies.isEmpty() && upcomingMovies.isEmpty() && topRatedMovies.isEmpty() && people.isEmpty()
 }
 
-fun DiscoverContent.emptyDiscoverContent(): DiscoverContent {
-    return DiscoverContent()
+fun DiscoverContents.emptyDiscoverContent(): DiscoverContents {
+    return DiscoverContents()
 }
 
-fun DiscoverContent.getFilteredWidgets(): MutableMap<Int, Pair<Int, List<*>>> {
-    val filteredWidgets: MutableMap<Int, Pair<Int, List<*>>> = mutableMapOf()
+fun DiscoverContents.getFilteredWidgets(): MutableMap<Int, Contents> {
+    val filteredWidgets: MutableMap<Int, Contents> = mutableMapOf()
 
-    filteredWidgets[getContentPosition(Content.PopularMovie)] =
-        Pair(R.string.popular_movies, popularMovies)
-    filteredWidgets[getContentPosition(Content.PopularPeople)] =
-        Pair(R.string.popular_people, people)
-    filteredWidgets[getContentPosition(Content.NowPlayingMovie)] =
-        Pair(R.string.now_playing, nowPlayingMovies)
-    filteredWidgets[getContentPosition(Content.UpcomingMovie)] =
-        Pair(R.string.upcoming, upcomingMovies)
-    filteredWidgets[getContentPosition(Content.TopRatedMovie)] =
-        Pair(R.string.top_rated, topRatedMovies)
+    Contents.PopularMovies.value = popularMovies
+    Contents.PopularPeoples.value = people
+    Contents.NowPlayingMovies.value = nowPlayingMovies
+    Contents.UpcomingMovies.value = upcomingMovies
+    Contents.TopRatedMovies.value = topRatedMovies
+
+    filteredWidgets[getContentPosition(Contents.PopularMovies)] = Contents.PopularMovies
+    filteredWidgets[getContentPosition(Contents.PopularPeoples)] =
+        Contents.PopularPeoples
+    filteredWidgets[getContentPosition(Contents.NowPlayingMovies)] =
+        Contents.NowPlayingMovies
+    filteredWidgets[getContentPosition(Contents.UpcomingMovies)] =
+        Contents.UpcomingMovies
+    filteredWidgets[getContentPosition(Contents.TopRatedMovies)] =
+        Contents.TopRatedMovies
 
     return filteredWidgets
 }
 
-fun DiscoverContent.getContentPosition(content: Content): Int {
-    return (content.position - 1)
+fun DiscoverContents.getContentPosition(contents: Contents): Int {
+    return (contents.position - 1)
 }

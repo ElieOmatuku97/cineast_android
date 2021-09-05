@@ -91,6 +91,7 @@ dependencies {
     // Local modules
     implementation project(':cache')
     implementation project(':domain')
+    implementation project(':data')
 
     implementation 'androidx.multidex:multidex:2.0.1'
 
@@ -132,6 +133,7 @@ dependencies {
 
     //dependency
     implementation 'org.kodein.di:kodein-di-generic-jvm:6.4.0'
+    implementation "org.kodein.di:kodein-di-framework-android-x:6.4.0"
 
     // support
     implementation 'androidx.appcompat:appcompat:1.2.0'

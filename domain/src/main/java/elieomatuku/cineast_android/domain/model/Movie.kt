@@ -7,7 +7,8 @@ data class Movie(
     val releaseDate: String? = null,
     val genreIds: List<Int>? = listOf(),
     val genres: List<Genre>? = listOf(),
-    val id: Int,
+    override val id: Int,
+    override val name: String? = null,
     val originalTitle: String? = null,
     val originalLanguage: String? = null,
     val title: String? = null,
@@ -17,4 +18,4 @@ data class Movie(
     val video: Boolean? = true,
     val voteAverage: Float? = null,
     val rating: Float? = null
-)
+) : Content

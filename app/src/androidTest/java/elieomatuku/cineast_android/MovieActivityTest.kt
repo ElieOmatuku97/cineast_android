@@ -16,7 +16,6 @@ import androidx.test.filters.LargeTest
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.ui.discover.DiscoverPresenter
 import elieomatuku.cineast_android.utils.Constants
 import org.junit.After
 import org.junit.Before
@@ -31,6 +30,13 @@ import kotlin.collections.ArrayList
 @RunWith(AndroidJUnit4::class)
 @LargeTest
 class MovieActivityTest {
+
+    companion object {
+        const val SCREEN_NAME = "Discover"
+        const val MOVIE_GENRES_KEY = "genres"
+        const val MOVIE_KEY = "movieApi"
+        const val PEOPLE_KEY = "peopleApi"
+    }
 
     private var idlingResource: IdlingResource? = null
 
@@ -54,8 +60,8 @@ class MovieActivityTest {
 
         val params = Bundle()
         params.putString(Constants.SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
-        params.putParcelable(DiscoverPresenter.MOVIE_KEY, movie)
-        params.putParcelableArrayList(DiscoverPresenter.MOVIE_GENRES_KEY, ArrayList(listOf<Genre>(Genre(12, "adventure"))))
+        params.putParcelable(MOVIE_KEY, movie)
+        params.putParcelableArrayList(MOVIE_GENRES_KEY, ArrayList(listOf<Genre>(Genre(12, "adventure"))))
 
         val intent = Intent(ApplicationProvider.getApplicationContext(), MovieActivity::class.java)
         intent.putExtras(params)

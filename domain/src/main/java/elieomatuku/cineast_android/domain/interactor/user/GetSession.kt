@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.domain.interactor.user
 import elieomatuku.cineast_android.domain.interactor.CompleteResult
 import elieomatuku.cineast_android.domain.interactor.UseCase
 import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
-import elieomatuku.cineast_android.domain.model.Account
+import elieomatuku.cineast_android.domain.model.Session
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 
 /**
@@ -11,9 +11,9 @@ import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
  */
 
 class GetSession(private val authenticationRepository: AuthenticationRepository) :
-    UseCase<GetSession.Input, CompleteResult<Pair<String, Account>>> {
+    UseCase<GetSession.Input, CompleteResult<Session>> {
 
-    override suspend fun execute(params: Input): CompleteResult<Pair<String, Account>> {
+    override suspend fun execute(params: Input): CompleteResult<Session> {
         return safeUseCaseCall {
             return@safeUseCaseCall authenticationRepository.getSession(
                 params.requestToken

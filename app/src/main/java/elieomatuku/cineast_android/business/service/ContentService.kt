@@ -29,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance
 import timber.log.Timber
@@ -53,40 +54,44 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
      */
 
     fun discoverContent(): Flowable<DiscoverContent> {
-        return contentRepository.discoverContent()
+        return Flowable.empty()
+//        return contentRepository.discoverContent()
     }
 
     fun popularMovies(): Flowable<List<Movie>> {
-        return contentRepository.popularMovies
+        return Flowable.empty()
+//        return contentRepository.popularMovies
     }
 
     fun personalities(): Flowable<List<Person>> {
-        return contentRepository.personalities
+        return Flowable.empty()
+//        return contentRepository.personalities
     }
 
     fun genres(): Maybe<List<Genre>> {
-        return contentRepository.genres
+        return Maybe.empty()
+//        return contentRepository.genres
     }
 
     fun fetchDiscoverContent() {
-        val disposable = discoverContent()
-            .observeOn(Schedulers.io())
-            .subscribe(
-                {
-                    Timber.i("has missing content: ${it.isEmpty()} and is up to date: ${isContentUpToDate()}")
-                    if (it.isEmpty()) {
-                        Timber.i("Empty Content fetch from Client")
-                        downloadContent()
-                        downloadGenres()
-                    } else if (!isContentUpToDate()) {
-                        Timber.i("Needs to be refreshed, fetch from Client: ${!isContentUpToDate()}")
-                        updateContent(it)
-                    }
-                },
-                {
-                    Timber.e("getAllMovies: $it")
-                }
-            )
+//        val disposable = discoverContent()
+//            .observeOn(Schedulers.io())
+//            .subscribe(
+//                {
+//                    Timber.i("has missing content: ${it.isEmpty()} and is up to date: ${isContentUpToDate()}")
+//                    if (it.isEmpty()) {
+//                        Timber.i("Empty Content fetch from Client")
+//                        downloadContent()
+//                        downloadGenres()
+//                    } else if (!isContentUpToDate()) {
+//                        Timber.i("Needs to be refreshed, fetch from Client: ${!isContentUpToDate()}")
+//                        updateContent(it)
+//                    }
+//                },
+//                {
+//                    Timber.e("getAllMovies: $it")
+//                }
+//            )
     }
 
     private fun isContentUpToDate(): Boolean {
@@ -98,18 +103,18 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
         setContentInsertionTimeStamp()
         launch(Dispatchers.IO) {
 
-            val popularMovies = getMovies(tmdbContentClient::getPopularMovies, contentRepository::insertPopularMovie)
-            val upcomingMovies = getMovies(tmdbContentClient::getUpcomingMovies, contentRepository::insertUpcomingMovie)
-            val nowPlayingMovies = getMovies(tmdbContentClient::getNowPlayingMovies, contentRepository::insertNowPlayingMovie)
-            val topRatedMovies = getMovies(tmdbContentClient::getTopRatedMovies, contentRepository::insertTopRatedMovie)
-            val popularPeople = getPopularPeople()
-
-            // calls have been made in parallel and we now wait for all to finish
-            popularMovies.await()
-            upcomingMovies.await()
-            nowPlayingMovies.await()
-            topRatedMovies.await()
-            popularPeople.await()
+//            val popularMovies = getMovies(tmdbContentClient::getPopularMovies, contentRepository::insertPopularMovie)
+//            val upcomingMovies = getMovies(tmdbContentClient::getUpcomingMovies, contentRepository::insertUpcomingMovie)
+//            val nowPlayingMovies = getMovies(tmdbContentClient::getNowPlayingMovies, contentRepository::insertNowPlayingMovie)
+//            val topRatedMovies = getMovies(tmdbContentClient::getTopRatedMovies, contentRepository::insertTopRatedMovie)
+//            val popularPeople = getPopularPeople()
+//
+//            // calls have been made in parallel and we now wait for all to finish
+//            popularMovies.await()
+//            upcomingMovies.await()
+//            nowPlayingMovies.await()
+//            topRatedMovies.await()
+//            popularPeople.await()
         }
     }
 
@@ -148,32 +153,32 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     private fun updateMoviesDatabase(nuMovies: List<Movie>, oldMovies: List<Movie>, type: MovieType) {
-        if (nuMovies.isEmpty()) {
-            contentRepository.deleteAllMovies()
-        } else {
-            oldMovies.forEach { oldMovie ->
-                if (nuMovies.firstOrNull { it.id == oldMovie.id } == null) {
-                    contentRepository.deleteMovie(oldMovie)
-                }
-            }
-
-            nuMovies.forEach { nuMovie ->
-                if (oldMovies.firstOrNull { it.id == nuMovie.id } != null) {
-                    // update
-                    contentRepository.updateMovie(nuMovie)
-                } else {
-                    // insert
-                    contentRepository.insertMovie(nuMovie, type)
-                }
-            }
-        }
+//        if (nuMovies.isEmpty()) {
+//            contentRepository.deleteAllMovies()
+//        } else {
+//            oldMovies.forEach { oldMovie ->
+//                if (nuMovies.firstOrNull { it.id == oldMovie.id } == null) {
+//                    contentRepository.deleteMovie(oldMovie)
+//                }
+//            }
+//
+//            nuMovies.forEach { nuMovie ->
+//                if (oldMovies.firstOrNull { it.id == nuMovie.id } != null) {
+//                    // update
+//                    contentRepository.updateMovie(nuMovie)
+//                } else {
+//                    // insert
+//                    contentRepository.insertMovie(nuMovie, type)
+//                }
+//            }
+//        }
     }
 
     suspend fun getPopularPeople() = async {
-        val response = tmdbContentClient.getPersonalities()
-        response?.results?.let {
-            contentRepository.insertPersonalities(it)
-        }
+//        val response = tmdbContentClient.getPersonalities()
+//        response?.results?.let {
+//            contentRepository.insertPersonalities(it)
+//        }
     }
 
     suspend fun updatePersonalities(oldPeople: List<Person>) = async {
@@ -184,36 +189,36 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
     }
 
     private fun updatePersonalitiesDatabase(nuPeople: List<Person>, oldPeople: List<Person>) {
-        if (nuPeople.isEmpty()) {
-            contentRepository.deleteAllPersonalities()
-        } else {
-            oldPeople.forEach { oldPersonalitiy ->
-                if (nuPeople.firstOrNull { it.id == oldPersonalitiy.id } == null) {
-                    contentRepository.deletePersonality(oldPersonalitiy)
-                }
-            }
-
-            nuPeople.forEach { nuPersonality ->
-                if (oldPeople.firstOrNull { it.id == nuPersonality.id } != null) {
-                    // update
-                    contentRepository.updatePersonality(nuPersonality)
-                } else {
-                    // insert
-                    contentRepository.insertPersonality(nuPersonality)
-                }
-            }
-        }
+//        if (nuPeople.isEmpty()) {
+//            contentRepository.deleteAllPersonalities()
+//        } else {
+//            oldPeople.forEach { oldPersonalitiy ->
+//                if (nuPeople.firstOrNull { it.id == oldPersonalitiy.id } == null) {
+//                    contentRepository.deletePersonality(oldPersonalitiy)
+//                }
+//            }
+//
+//            nuPeople.forEach { nuPersonality ->
+//                if (oldPeople.firstOrNull { it.id == nuPersonality.id } != null) {
+//                    // update
+//                    contentRepository.updatePersonality(nuPersonality)
+//                } else {
+//                    // insert
+//                    contentRepository.insertPersonality(nuPersonality)
+//                }
+//            }
+//        }
     }
 
     private fun downloadGenres() {
-        launch {
-            tmdbContentClient.getGenres() onSuccess {
-                Timber.i("genres from client: ${it.genres}")
-                contentRepository.insertGenres(it.genres)
-            } onFail {
-                Timber.d("failed to fetch genres from client: $it")
-            }
-        }
+//        launch {
+//            tmdbContentClient.getGenres() onSuccess {
+//                Timber.i("genres from client: ${it.genres}")
+//                contentRepository.insertGenres(it.genres)
+//            } onFail {
+//                Timber.d("failed to fetch genres from client: $it")
+//            }
+//        }
     }
 
     suspend fun getMovieVideos(movie: Movie): TrailerResponse? {

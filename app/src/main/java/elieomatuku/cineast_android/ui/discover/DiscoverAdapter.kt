@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.extensions.Contents
 import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.ui.viewholder.PeopleHolder
@@ -37,7 +38,7 @@ class DiscoverAdapter(
     var hasValidData = false
         private set
 
-    var filteredContent: MutableMap<Int, Pair<Int, List<Content>>> by Delegates.observable(mutableMapOf()) { prop, oldDiscoverContent, nuDiscoverContent ->
+    var filteredContents: MutableMap<Int, Contents> by Delegates.observable(mutableMapOf()) { prop, oldDiscoverContent, nuDiscoverContent ->
         Timber.d("content = $nuDiscoverContent")
         hasValidData = true
         errorMessage = null
@@ -53,7 +54,7 @@ class DiscoverAdapter(
 
     private val hasEmptyState: Boolean
         // only display empty state after valid data is set
-        get() = hasValidData && (filteredContent.isEmpty())
+        get() = hasValidData && (filteredContents.isEmpty())
 
     private fun getDiscoverPosition(position: Int): Int {
         return if (position == POSITION_HEADER) {
@@ -64,9 +65,9 @@ class DiscoverAdapter(
     }
 
     override fun getItemCount(): Int {
-        Timber.d("hasEmptyState: $hasEmptyState,  ${filteredContent.size}")
+        Timber.d("hasEmptyState: $hasEmptyState,  ${filteredContents.size}")
         return if (!hasEmptyState) {
-            filteredContent.size + 2
+            filteredContents.size + 2
         } else {
             1
         }
@@ -115,16 +116,16 @@ class DiscoverAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is PeopleHolder -> {
-                val content = filteredContent[getDiscoverPosition(position)]
-                content?.let {
-                    holder.update(it.second)
+                val contents = filteredContents[getDiscoverPosition(position)]
+                contents?.let {
+                    holder.update(it)
                 }
             }
 
             is ContentHolder -> {
-                val content = filteredContent[getDiscoverPosition(position)]
-                content?.let {
-                    holder.update(content.second, content.first)
+                val contents = filteredContents[getDiscoverPosition(position)]
+                contents?.let {
+                    holder.update(contents)
                 }
             }
 

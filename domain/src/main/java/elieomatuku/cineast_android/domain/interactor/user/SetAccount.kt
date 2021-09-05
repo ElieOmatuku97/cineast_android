@@ -11,9 +11,9 @@ import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
  */
 
 class SetAccount(private val authenticationRepository: AuthenticationRepository) :
-    UseCase<SetAccount.Input, CompleteResult<Pair<String, Account>>> {
+    UseCase<SetAccount.Input, CompleteResult<Account>> {
 
-    override suspend fun execute(params: Input): CompleteResult<Pair<String, Account>> {
+    override suspend fun execute(params: Input): CompleteResult<Account> {
         return safeUseCaseCall {
             return@safeUseCaseCall authenticationRepository.setAccount(
                 params.sessionId
