@@ -42,17 +42,20 @@ android {
             applicationIdSuffix = ".dev"
             resValue "string", "app_name", (rootProject.ext.appName + "_dev")
             resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_dev_leaks")
+            buildConfigField "String", "TMDB_BASE_URL", "\"http://api.themoviedb.org/3/\""
         }
 
         beta {
             applicationIdSuffix = ".beta"
             resValue "string", "app_name", (rootProject.ext.appName + "_beta")
             resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_beta_leaks")
+            buildConfigField "String", "TMDB_BASE_URL", "\"http://api.themoviedb.org/3/\""
         }
 
         prod {
             resValue "string", "app_name", rootProject.ext.appName
             resValue "string", "leak_canary_display_activity_label", (rootProject.ext.appName + "_leaks")
+            buildConfigField "String", "TMDB_BASE_URL", "\"http://api.themoviedb.org/3/\""
         }
     }
 
@@ -92,6 +95,7 @@ dependencies {
     implementation project(':cache')
     implementation project(':domain')
     implementation project(':data')
+    implementation project(':remote')
 
     implementation 'androidx.multidex:multidex:2.0.1'
 

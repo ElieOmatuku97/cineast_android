@@ -19,17 +19,13 @@ import elieomatuku.cineast_android.domain.model.MovieFacts
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import io.flatcircle.coroutinehelper.ApiResult
-import io.flatcircle.coroutinehelper.onFail
-import io.flatcircle.coroutinehelper.onSuccess
 import io.reactivex.Flowable
 import io.reactivex.Maybe
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import org.kodein.di.generic.instance
 import timber.log.Timber
@@ -37,7 +33,10 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KFunction1
 import kotlin.reflect.KSuspendFunction0
 
-class ContentService(private val tmdbContentClient: TmdbContentClient, private val contentRepository: ContentRepository) : CoroutineScope {
+class ContentService(
+    private val tmdbContentClient: TmdbContentClient,
+    private val contentRepository: ContentRepository
+) : CoroutineScope {
     private val job: Job by lazy { SupervisorJob() }
 
     override val coroutineContext: CoroutineContext
@@ -123,10 +122,26 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
         setContentInsertionTimeStamp()
         launch(Dispatchers.IO) {
 
-            val popularMovies = updateMovies(tmdbContentClient::getPopularMovies, oldDiscoverContent.popularMovies, MovieType.POPULAR)
-            val upcomingMovies = updateMovies(tmdbContentClient::getUpcomingMovies, oldDiscoverContent.upcomingMovies, MovieType.UPCOMING)
-            val nowPlayingMovies = updateMovies(tmdbContentClient::getNowPlayingMovies, oldDiscoverContent.nowPlayingMovies, MovieType.NOW_PLAYING)
-            val topRatedMovies = updateMovies(tmdbContentClient::getTopRatedMovies, oldDiscoverContent.topRatedMovies, MovieType.TOP_RATED)
+            val popularMovies = updateMovies(
+                tmdbContentClient::getPopularMovies,
+                oldDiscoverContent.popularMovies,
+                MovieType.POPULAR
+            )
+            val upcomingMovies = updateMovies(
+                tmdbContentClient::getUpcomingMovies,
+                oldDiscoverContent.upcomingMovies,
+                MovieType.UPCOMING
+            )
+            val nowPlayingMovies = updateMovies(
+                tmdbContentClient::getNowPlayingMovies,
+                oldDiscoverContent.nowPlayingMovies,
+                MovieType.NOW_PLAYING
+            )
+            val topRatedMovies = updateMovies(
+                tmdbContentClient::getTopRatedMovies,
+                oldDiscoverContent.topRatedMovies,
+                MovieType.TOP_RATED
+            )
             val personalities = updatePersonalities(oldDiscoverContent.people)
 
             // calls have been made in parallel and we now wait for all to finish
@@ -138,21 +153,32 @@ class ContentService(private val tmdbContentClient: TmdbContentClient, private v
         }
     }
 
-    suspend fun getMovies(clientCall: KSuspendFunction0<MovieResponse?>, repositoryInsert: KFunction1<List<Movie>, Unit>) = async {
+    suspend fun getMovies(
+        clientCall: KSuspendFunction0<MovieResponse?>,
+        repositoryInsert: KFunction1<List<Movie>, Unit>
+    ) = async {
         val response = clientCall()
         response?.results?.let {
             repositoryInsert(it)
         }
     }
 
-    suspend fun updateMovies(clientCall: KSuspendFunction0<MovieResponse?>, oldMovies: List<Movie>, type: MovieType) = async {
+    suspend fun updateMovies(
+        clientCall: KSuspendFunction0<MovieResponse?>,
+        oldMovies: List<Movie>,
+        type: MovieType
+    ) = async {
         val response = clientCall()
         response?.results?.let { nuMovies ->
             updateMoviesDatabase(nuMovies, oldMovies, type)
         }
     }
 
-    private fun updateMoviesDatabase(nuMovies: List<Movie>, oldMovies: List<Movie>, type: MovieType) {
+    private fun updateMoviesDatabase(
+        nuMovies: List<Movie>,
+        oldMovies: List<Movie>,
+        type: MovieType
+    ) {
 //        if (nuMovies.isEmpty()) {
 //            contentRepository.deleteAllMovies()
 //        } else {

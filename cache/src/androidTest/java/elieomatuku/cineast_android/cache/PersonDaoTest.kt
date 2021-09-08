@@ -34,7 +34,7 @@ class PersonDaoTest {
             context, ContentDatabase::class.java
         ).build()
 
-        personDao = contentDatabase.personalityDao()
+        personDao = contentDatabase.personDao()
     }
 
     @After

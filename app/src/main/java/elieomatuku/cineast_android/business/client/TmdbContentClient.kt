@@ -14,13 +14,13 @@ import elieomatuku.cineast_android.business.api.response.PostResponse
 import elieomatuku.cineast_android.business.api.response.TrailerResponse
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.domain.ValueStore
-import elieomatuku.cineast_android.domain.model.FavoriteListMedia
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieFacts
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.PersonDetails
-import elieomatuku.cineast_android.domain.model.Rate
-import elieomatuku.cineast_android.domain.model.WatchListMedia
+import elieomatuku.cineast_android.remote.request.FavouritesMediaRequest
+import elieomatuku.cineast_android.remote.request.RateRequest
+import elieomatuku.cineast_android.remote.request.WatchListMediaRequest
 import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
 import io.flatcircle.coroutinehelper.ApiResult
@@ -172,7 +172,10 @@ class TmdbContentClient(
         val id = person.id
         if (id != null) {
             peopleApi.getPeopleCredits(id).enqueue(object : Callback<PeopleCreditsResponse> {
-                override fun onResponse(call: Call<PeopleCreditsResponse>?, response: Response<PeopleCreditsResponse>?) {
+                override fun onResponse(
+                    call: Call<PeopleCreditsResponse>?,
+                    response: Response<PeopleCreditsResponse>?
+                ) {
 
                     val success = response?.isSuccessful ?: false
                     if (success) {
@@ -194,7 +197,10 @@ class TmdbContentClient(
         val id = person.id
         if (id != null) {
             peopleApi.getPeopleDetails(id).enqueue(object : Callback<PersonDetails> {
-                override fun onResponse(call: Call<PersonDetails>?, response: Response<PersonDetails>?) {
+                override fun onResponse(
+                    call: Call<PersonDetails>?,
+                    response: Response<PersonDetails>?
+                ) {
                     val success = response?.isSuccessful ?: false
                     if (success) {
                         asyncResponse.onSuccess(response?.body())
@@ -213,7 +219,10 @@ class TmdbContentClient(
 
     fun getPeopleImages(personId: Int, asyncResponse: AsyncResponse<ImageResponse>) {
         peopleApi.getPeopleImages(personId).enqueue(object : Callback<ImageResponse> {
-            override fun onResponse(call: Call<ImageResponse>?, response: Response<ImageResponse>?) {
+            override fun onResponse(
+                call: Call<ImageResponse>?,
+                response: Response<ImageResponse>?
+            ) {
                 val success = response?.isSuccessful ?: false
                 if (success) {
                     asyncResponse.onSuccess(response?.body())
@@ -249,7 +258,10 @@ class TmdbContentClient(
 
     fun searchMovies(argQuery: String, asyncResponse: AsyncResponse<MovieResponse>) {
         movieApi.getMoviesWithSearch(argQuery).enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(call: Call<MovieResponse>?, response: Response<MovieResponse>?) {
+            override fun onResponse(
+                call: Call<MovieResponse>?,
+                response: Response<MovieResponse>?
+            ) {
                 val success = response?.isSuccessful ?: false
                 if (success) {
                     asyncResponse.onSuccess(response?.body())
@@ -267,7 +279,10 @@ class TmdbContentClient(
 
     fun searchPeople(argQuery: String, asyncResponse: AsyncResponse<PersonalityResponse>) {
         peopleApi.getPeopleWithSearch(argQuery).enqueue(object : Callback<PersonalityResponse> {
-            override fun onResponse(call: Call<PersonalityResponse>?, response: Response<PersonalityResponse>?) {
+            override fun onResponse(
+                call: Call<PersonalityResponse>?,
+                response: Response<PersonalityResponse>?
+            ) {
                 val success = response?.isSuccessful ?: false
                 if (success) {
                     asyncResponse.onSuccess(response?.body())
@@ -309,11 +324,14 @@ class TmdbContentClient(
 
     private fun updateWatchList(movie: Movie, watchList: Boolean) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
-            val media = WatchListMedia(MOVIE, movie.id, watchList)
+            val media = WatchListMediaRequest(MOVIE, movie.id, watchList)
 
             movieApi.updateWatchList(it, getRequestBody(media)).enqueue(
                 object : Callback<PostResponse> {
-                    override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                    override fun onResponse(
+                        call: Call<PostResponse>,
+                        response: Response<PostResponse>
+                    ) {
                         Timber.d("response: ${response.body()}")
                     }
 
@@ -351,11 +369,14 @@ class TmdbContentClient(
 
     private fun updateFavoriteList(movie: Movie, favorite: Boolean) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
-            val media = FavoriteListMedia(MOVIE, movie.id, favorite)
+            val media = FavouritesMediaRequest(MOVIE, movie.id, favorite)
 
             movieApi.updateFavoritesList(it, getRequestBody(media)).enqueue(
                 object : Callback<PostResponse> {
-                    override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                    override fun onResponse(
+                        call: Call<PostResponse>,
+                        response: Response<PostResponse>
+                    ) {
                         Timber.d("response: ${response.body()}")
                     }
 
@@ -369,11 +390,14 @@ class TmdbContentClient(
 
     fun postMovieRate(movie: Movie, value: Double) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
-            val rate = Rate(value)
+            val rate = RateRequest(value)
 
             movieApi.postMovieRate(movie.id, it, getRequestBody(rate)).enqueue(
                 object : Callback<PostResponse> {
-                    override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                    override fun onResponse(
+                        call: Call<PostResponse>,
+                        response: Response<PostResponse>
+                    ) {
                         Timber.d("response: ${response.body()}")
                     }
 
@@ -388,7 +412,10 @@ class TmdbContentClient(
     fun getUserRatedMovies(asyncResponse: AsyncResponse<List<Movie>>) {
         persistClient.get(RestUtils.SESSION_ID_KEY, null)?.let {
             movieApi.getUserRatedMovies(it).enqueue(object : Callback<MovieResponse> {
-                override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                override fun onResponse(
+                    call: Call<MovieResponse>,
+                    response: Response<MovieResponse>
+                ) {
                     val success = response.isSuccessful
                     if (success) {
                         response.body()?.results?.let {

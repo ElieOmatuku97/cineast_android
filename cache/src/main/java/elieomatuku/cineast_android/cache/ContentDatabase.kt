@@ -29,7 +29,7 @@ abstract class ContentDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun movieTypeDao(): MovieTypeDao
     abstract fun movieTypeJoinDao(): MovieTypeJoinDao
-    abstract fun personalityDao(): PersonDao
+    abstract fun personDao(): PersonDao
     abstract fun genreDao(): GenreDao
 
     companion object {
