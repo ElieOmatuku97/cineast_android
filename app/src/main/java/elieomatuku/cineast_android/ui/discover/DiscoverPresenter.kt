@@ -1,22 +1,22 @@
 package elieomatuku.cineast_android.ui.discover
 
-import android.os.Bundle
-import android.os.Parcelable
-import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.client.TmdbUserClient
-import elieomatuku.cineast_android.domain.model.AccessToken
-import elieomatuku.cineast_android.domain.model.CineastError
-import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.domain.model.Genre
-import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.ui.base.BasePresenter
-import elieomatuku.cineast_android.utils.Constants
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.kodein.di.generic.instance
-import timber.log.Timber
-import java.util.ArrayList
-
+//import android.os.Bundle
+//import android.os.Parcelable
+//import elieomatuku.cineast_android.business.callback.AsyncResponse
+//import elieomatuku.cineast_android.business.client.TmdbUserClient
+//import elieomatuku.cineast_android.domain.model.AccessToken
+//import elieomatuku.cineast_android.domain.model.CineastError
+//import elieomatuku.cineast_android.domain.model.Content
+//import elieomatuku.cineast_android.domain.model.Genre
+//import elieomatuku.cineast_android.domain.model.Movie
+//import elieomatuku.cineast_android.ui.base.BasePresenter
+//import elieomatuku.cineast_android.utils.Constants
+//import io.reactivex.android.schedulers.AndroidSchedulers
+//import io.reactivex.schedulers.Schedulers
+//import org.kodein.di.generic.instance
+//import timber.log.Timber
+//import java.util.ArrayList
+//
 //class DiscoverPresenter : BasePresenter<DiscoverVu>() {
 //    companion object {
 //        const val SCREEN_NAME = "Discover"

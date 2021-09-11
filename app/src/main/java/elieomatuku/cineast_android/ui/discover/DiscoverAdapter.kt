@@ -75,7 +75,6 @@ class DiscoverAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if (hasEmptyState) {
-            Timber.d("empty state update function called")
             TYPE_EMPTY_STATE
         } else {
             when (position) {

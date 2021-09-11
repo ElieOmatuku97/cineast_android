@@ -27,7 +27,7 @@ class DiscoverViewModel(
         getDiscoverContent()
     }
 
-    private fun getDiscoverContent() {
+    fun getDiscoverContent() {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             val result =

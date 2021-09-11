@@ -3,6 +3,7 @@ package elieomatuku.cineast_android.business.client
 import android.content.res.Resources
 import elieomatuku.cineast_android.business.api.AuthenticationApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.data.PrefManager
 import elieomatuku.cineast_android.domain.ValueStore
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
@@ -17,7 +18,7 @@ import timber.log.Timber
 
 class TmdbUserClient(
     override val resources: Resources,
-    override val persistClient: ValueStore,
+    override val persistClient: PrefManager,
     override val interceptor: Interceptor? = null
 ) : BaseClient {
 

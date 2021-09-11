@@ -13,6 +13,7 @@ import elieomatuku.cineast_android.business.api.response.PersonalityResponse
 import elieomatuku.cineast_android.business.api.response.PostResponse
 import elieomatuku.cineast_android.business.api.response.TrailerResponse
 import elieomatuku.cineast_android.business.callback.AsyncResponse
+import elieomatuku.cineast_android.data.PrefManager
 import elieomatuku.cineast_android.domain.ValueStore
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieFacts
@@ -34,7 +35,7 @@ import timber.log.Timber
 
 class TmdbContentClient(
     override val resources: Resources,
-    override val persistClient: ValueStore,
+    override val persistClient: PrefManager,
     override val interceptor: Interceptor? = null
 ) : BaseClient {
     companion object {

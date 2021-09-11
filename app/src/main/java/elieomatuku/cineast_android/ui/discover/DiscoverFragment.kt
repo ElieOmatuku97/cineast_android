@@ -3,6 +3,7 @@ package elieomatuku.cineast_android.ui.discover
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
@@ -14,10 +15,14 @@ import elieomatuku.cineast_android.extensions.getFilteredWidgets
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
+import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.consume
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_discover.*
+import timber.log.Timber
+import java.util.ArrayList
 
 
 class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
@@ -46,16 +51,12 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         PublishSubject.create<Boolean>()
     }
 
+    val loginClickObservable: Observable<Boolean>
+        get() = loginClickPublisher.hide()
+
     val adapter: DiscoverAdapter by lazy {
         DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
     }
-
-    private val refreshPublisher: PublishSubject<Boolean> by lazy {
-        PublishSubject.create<Boolean>()
-    }
-
-    val refreshObservable: Observable<Boolean>
-        get() = refreshPublisher.hide()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,19 +75,26 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         recyclerview.addItemDecoration(itemDecoration)
         recyclerview.layoutManager = LinearLayoutManager(activity)
 
-        refreshLayout.setOnRefreshListener {
-            refreshPublisher.onNext(true)
-        }
 
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
+            if (state.isLoading) {
+                showLoading(requireView())
+            } else {
+                dismissRefreshLayout()
+                hideLoading(requireView())
+            }
+
             state.viewError.consume {
                 updateErrorView(it.message)
             }
             updateLoginState(state.isLoggedIn)
             updateView(state.discoverContents, state.isLoggedIn)
         }
-    }
 
+        refreshLayout.setOnRefreshListener {
+            viewModel.getDiscoverContent()
+        }
+    }
 
     private fun updateView(
         discoverContents: DiscoverContents?,
@@ -108,8 +116,8 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         dismissRefreshLayout()
     }
 
-    fun gotoWebView(value: AccessToken?) {
-        value?.let {
+    fun gotoWebView(accessToken: AccessToken?) {
+        accessToken?.let {
             val authenticateUrl = Uri.parse(resources.getString(R.string.authenticate_url))
                 .buildUpon()
                 .appendPath(it.requestToken)

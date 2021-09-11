@@ -31,10 +31,6 @@ class MoviesGridFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
-//            state.viewError?.consume {
-//                updateErrorView(it.message)
-//            }
-
             state.contents?.let {
                 updateView(it)
             }
