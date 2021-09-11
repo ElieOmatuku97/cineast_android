@@ -1,41 +1,47 @@
 package elieomatuku.cineast_android.ui.search.movie
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
-import elieomatuku.cineast_android.domain.model.Genre
+import androidx.lifecycle.viewModelScope
+import elieomatuku.cineast_android.domain.interactor.Fail
+import elieomatuku.cineast_android.domain.interactor.Success
+import elieomatuku.cineast_android.domain.interactor.movie.GetGenres
+import elieomatuku.cineast_android.domain.interactor.movie.GetPopularMovies
+import elieomatuku.cineast_android.domain.interactor.runUseCase
 import elieomatuku.cineast_android.ui.contents.ContentGridViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.GlobalScope
+import elieomatuku.cineast_android.ui.contents.ContentGridViewState
+import elieomatuku.cineast_android.utils.SingleEvent
+import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
 
 /**
  * Created by elieomatuku on 2021-06-05
  */
 
-class MoviesGridViewModel : ContentGridViewModel() {
-
-    val genresLiveData: LiveData<List<Genre>> = LiveDataReactiveStreams.fromPublisher(
-        contentService.genres().subscribeOn(Schedulers.io()).toFlowable()
-    )
+class MoviesGridViewModel(
+    private val getPopularMovies: GetPopularMovies,
+    getGenres: GetGenres
+) : ContentGridViewModel(getGenres) {
 
     init {
         getContent()
     }
 
     override fun getContent() {
-        GlobalScope.launch {
-            contentService.popularMovies()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        contentLiveData.value = it
-                    },
-                    { error ->
-                        errorMsgLiveData.value = error.message
-                    }
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            val result =
+                runUseCase(getPopularMovies, Unit)
+            state = when (result) {
+                is Success -> state.copy(
+                    isLoading = false,
+                    contents = result.data
                 )
+
+                is Fail -> state.copy(
+                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    isLoading = false
+                )
+                else -> ContentGridViewState()
+            }
         }
     }
 }

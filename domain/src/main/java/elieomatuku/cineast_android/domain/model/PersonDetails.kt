@@ -1,5 +1,7 @@
 package elieomatuku.cineast_android.domain.model
 
+import java.io.Serializable
+
 data class PersonDetails(
     val birthday: String? = null,
     val knownForDepartment: String? = null,
@@ -15,7 +17,7 @@ data class PersonDetails(
     val adult: Boolean? = null,
     val imdbId: String? = null,
     val homepage: String? = null
-) {
+): Serializable {
 
     fun isEmpty(): Boolean {
         val emptyPersonalityDetails = PersonDetails()

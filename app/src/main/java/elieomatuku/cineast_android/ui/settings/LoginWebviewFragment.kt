@@ -28,7 +28,7 @@ class LoginWebviewFragment : WebviewFragment() {
         }
     }
 
-    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
+    private val tmdbUserClient: TmdbUserClient by App.getKodein.instance()
     val handler: Handler = Handler()
 
     override fun closeIconListener() {

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.ui.base.BaseActivity
 import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.utils.Constants
@@ -27,7 +28,7 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_content.*
 import timber.log.Timber
 
-class UserMoviesActivity : AppCompatActivity() {
+class UserMoviesActivity : BaseActivity() {
     companion object {
         private const val DISPLAY_FAVORITE_LIST = "favorite_list_key"
         private const val DISPLAY_WATCH_LIST = "watch_list_key"
@@ -81,10 +82,6 @@ class UserMoviesActivity : AppCompatActivity() {
 
     private val movieSelectObservable: Observable<Content>
         get() = movieSelectPublisher.hide()
-
-    private val rxSubs: io.reactivex.disposables.CompositeDisposable by lazy {
-        io.reactivex.disposables.CompositeDisposable()
-    }
 
     private val onMovieRemovedPublisher: PublishSubject<Movie> by lazy {
         PublishSubject.create<Movie>()
@@ -142,7 +139,7 @@ class UserMoviesActivity : AppCompatActivity() {
                     { movie: Content ->
                         val params = Bundle()
                         params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
-                        params.putParcelable(MOVIE_KEY, movie)
+                        params.putSerializable(MOVIE_KEY, movie)
                         params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
                         gotoMovie(params)
                     },

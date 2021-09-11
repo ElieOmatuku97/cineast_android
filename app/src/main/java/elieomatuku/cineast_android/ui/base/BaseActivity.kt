@@ -6,21 +6,26 @@ import android.view.Gravity
 import android.view.View
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
-import elieomatuku.cineast_android.App
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import elieomatuku.cineast_android.extensions.getViewModel
 import elieomatuku.cineast_android.business.broadReceiver.NetworkConnectivityBroadcastReceiver
 import elieomatuku.cineast_android.business.service.ConnectionService
+import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
 import elieomatuku.cineast_android.utils.UiUtils
-import kotlinx.android.synthetic.main.holder_movie_list.*
 import kotlinx.android.synthetic.main.layout_loading.view.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
+
 
 abstract class BaseActivity : AppCompatActivity(), KodeinAware {
 
-    override val kodein: Kodein by App.kodein.instance()
+    override val kodein: Kodein by closestKodein()
+    val viewModelFactory: ViewModelProvider.Factory by instance()
 
-    private val connectionService: ConnectionService by App.kodein.instance()
+    private val connectionService: ConnectionService by instance()
 
     val rxSubs: io.reactivex.disposables.CompositeDisposable by lazy {
         io.reactivex.disposables.CompositeDisposable()
@@ -36,6 +41,14 @@ abstract class BaseActivity : AppCompatActivity(), KodeinAware {
 
     private val loadingViewDim: Int by lazy {
         resources.getDimensionPixelSize(UiUtils.loadingViewDimRes)
+    }
+
+
+    protected inline fun <reified VM : ViewModel> getViewModel(): VM =
+        getViewModel(viewModelFactory)
+
+    protected inline fun <reified VM : ViewModel> viewModel(): Lazy<VM> {
+        return lifecycleAwareLazy(this) { getViewModel<VM>() }
     }
 
     override fun onResume() {

@@ -153,7 +153,7 @@ class PeopleVu(
             }
             KNOWN_FOR -> {
                 MoviesFragment.newInstance(
-                    knownFor.mapNotNull { it.toMovie() },
+                    knownFor,
                     activity.getString(R.string.cast),
                     displayAndPersonDetails.second.name
                 )

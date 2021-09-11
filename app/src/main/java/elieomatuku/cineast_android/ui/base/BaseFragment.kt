@@ -4,7 +4,6 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.service.ConnectionService
 import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
 import elieomatuku.cineast_android.extensions.getSharedViewModel
@@ -29,7 +28,7 @@ abstract class BaseFragment : Fragment, KodeinAware {
         io.reactivex.disposables.CompositeDisposable()
     }
 
-    private val connectionService: ConnectionService by App.kodein.instance()
+    private val connectionService: ConnectionService by instance()
 
     override val kodein: Kodein by kodein()
     val viewModelFactory: ViewModelProvider.Factory by instance()

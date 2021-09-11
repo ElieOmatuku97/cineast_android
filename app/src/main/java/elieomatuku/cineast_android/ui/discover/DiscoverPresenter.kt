@@ -2,7 +2,6 @@ package elieomatuku.cineast_android.ui.discover
 
 import android.os.Bundle
 import android.os.Parcelable
-import elieomatuku.cineast_android.App.Companion.kodein
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.domain.model.AccessToken

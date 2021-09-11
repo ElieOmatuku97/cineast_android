@@ -32,7 +32,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         }
     }
 
-    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
+    private val tmdbUserClient: TmdbUserClient by App.getKodein.instance()
     private var logInBtn: Preference? = null
     private var favoritesBtn: Preference? = null
     private var watchListBtn: Preference? = null
@@ -132,10 +132,10 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         setPreferencesFromResource(R.xml.settings, null)
         setUpPreferenceViews()
 
-        val appVersion = findPreference(getString(R.string.pref_app_version))
+        val appVersion = findPreference<Preference>(getString(R.string.pref_app_version))
         val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
         summary.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_accent)), 0, summary.length, 0)
-        appVersion.summary = summary
+        appVersion?.summary = summary
 
         updateState(tmdbUserClient.isLoggedIn())
 

@@ -1,5 +1,7 @@
 package elieomatuku.cineast_android.domain.model
 
+import java.io.Serializable
+
 data class Image(
     val aspectRatio: Number?,
     val filePath: String?,
@@ -8,4 +10,4 @@ data class Image(
     val voteAverage: Double?,
     val voteCount: Int?,
     val width: Int?
-)
+) : Serializable

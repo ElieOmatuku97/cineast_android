@@ -42,8 +42,8 @@ class GalleryFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        arguments?.getParcelableArrayList<Image>(POSTERS)?.let {
-            posters = it
+        arguments?.getSerializable(POSTERS)?.let {
+            posters = it as List<Image>
         }
 
         return inflater.inflate(R.layout.fragment_gallery, container, false)

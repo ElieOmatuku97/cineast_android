@@ -3,6 +3,7 @@ package elieomatuku.cineast_android
 import android.app.Application
 import android.content.Context
 import android.content.res.Resources
+import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.business.service.ConnectionService
@@ -28,6 +29,10 @@ import elieomatuku.cineast_android.data.source.movie.MovieRemoteDataStore
 import elieomatuku.cineast_android.data.source.person.PersonCacheDataStore
 import elieomatuku.cineast_android.data.source.person.PersonDataStoreFactory
 import elieomatuku.cineast_android.data.source.person.PersonRemoteDataStore
+import elieomatuku.cineast_android.domain.interactor.movie.GetDiscoverContent
+import elieomatuku.cineast_android.domain.interactor.movie.GetGenres
+import elieomatuku.cineast_android.domain.interactor.movie.GetPopularMovies
+import elieomatuku.cineast_android.domain.interactor.people.GetPersonalities
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 import elieomatuku.cineast_android.domain.repository.PersonRepository
@@ -37,12 +42,18 @@ import elieomatuku.cineast_android.remote.PersonRemoteImpl
 import elieomatuku.cineast_android.remote.api.MovieApi
 import elieomatuku.cineast_android.remote.api.PersonApi
 import elieomatuku.cineast_android.remote.api.AuthenticationApi
+import elieomatuku.cineast_android.ui.details.MoviesViewModel
+import elieomatuku.cineast_android.ui.discover.DiscoverViewModel
+import elieomatuku.cineast_android.ui.search.movie.MoviesGridViewModel
+import elieomatuku.cineast_android.ui.search.people.PeopleGridViewModel
 import elieomatuku.cineast_android.utils.RestUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
+import org.kodein.di.android.x.androidXModule
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -51,8 +62,7 @@ import java.util.concurrent.TimeUnit
 fun depInjecT(app: Application): Kodein {
 
     return Kodein.lazy {
-        bind<Application>() with instance(app)
-        bind<Context>() with instance(app.applicationContext)
+        import(androidXModule(app))
         bind<Resources>() with instance(app.applicationContext.resources)
         bind<ContentService>() with singleton { ContentService(instance(), instance()) }
         bind<ConnectionService>() with singleton { ConnectionService(instance()) }
@@ -62,7 +72,7 @@ fun depInjecT(app: Application): Kodein {
             val logLevel = HttpLoggingInterceptor.Level.BODY
             logging.level = logLevel
 
-            val builder =  OkHttpClient.Builder()
+            val builder = OkHttpClient.Builder()
                 .addNetworkInterceptor { chain ->
                     val original = chain.request()
                     val url = original.url.newBuilder()
@@ -127,11 +137,6 @@ fun depInjecT(app: Application): Kodein {
             contentDatabase.movieDao()
         }
 
-        bind<GenreDao>() with singleton {
-            val contentDatabase: ContentDatabase = instance()
-            contentDatabase.genreDao()
-        }
-
         bind<MovieTypeDao>() with singleton {
             val contentDatabase: ContentDatabase = instance()
             contentDatabase.movieTypeDao()
@@ -153,10 +158,9 @@ fun depInjecT(app: Application): Kodein {
 
         bind<TmdbContentClient>() with singleton { TmdbContentClient(instance(), instance()) }
 
-        importOnce(DatabaseKodeinModule.getModule(app))
-
         bind<PrefManager>() with singleton {
-            PrefManagerImpl(instance(), instance())
+            val storeKey = "cineast_prefs"
+            PrefManagerImpl(storeKey, instance())
         }
 
         bind<MovieRepository>() with singleton {
@@ -229,6 +233,40 @@ fun depInjecT(app: Application): Kodein {
 
         bind<MovieDataStoreFactory>() with singleton {
             MovieDataStoreFactory(instance(), instance(), instance())
+        }
+
+        bind<ViewModelProvider.Factory>() with singleton { KodeinViewModelFactory(this.kodein) }
+
+        bind<GetDiscoverContent>() with singleton {
+            GetDiscoverContent(instance(), instance())
+        }
+
+        bind<GetGenres>() with singleton {
+            GetGenres(instance())
+        }
+
+        bind<GetPersonalities>() with singleton {
+            GetPersonalities(instance())
+        }
+
+        bind<GetPopularMovies>() with singleton {
+            GetPopularMovies(instance())
+        }
+
+        bindViewModel<DiscoverViewModel>() with provider {
+            DiscoverViewModel(instance(), instance())
+        }
+
+        bindViewModel<MoviesGridViewModel>() with provider {
+            MoviesGridViewModel(instance(), instance())
+        }
+
+        bindViewModel<PeopleGridViewModel>() with provider {
+            PeopleGridViewModel(instance(), instance())
+        }
+
+        bindViewModel<MoviesViewModel>() with provider {
+            MoviesViewModel(instance())
         }
     }
 }

@@ -6,6 +6,7 @@ import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.model.Image
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.ui.base.BaseViewModel
@@ -18,9 +19,9 @@ import org.kodein.di.generic.instance
 
 class MovieViewModel : BaseViewModel<MovieViewState>(MovieViewState()) {
 
-    val contentService: ContentService by App.kodein.instance()
-    private val tmdbUserClient: TmdbUserClient by App.kodein.instance()
-    private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
+    val contentService: ContentService by App.getKodein.instance()
+    private val tmdbUserClient: TmdbUserClient by App.getKodein.instance()
+    private val tmdbContentClient: TmdbContentClient by App.getKodein.instance()
 
     fun getMovieDetails(movie: Movie, screenName: String?, genres: List<Genre>?) {
         viewModelScope.launch {
@@ -107,7 +108,7 @@ class MovieViewModel : BaseViewModel<MovieViewState>(MovieViewState()) {
         }
     }
 
-    fun posters(): List<Poster> {
+    fun posters(): List<Image> {
         return state.posters ?: emptyList()
     }
 }

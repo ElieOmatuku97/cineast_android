@@ -1,3 +1,5 @@
 package elieomatuku.cineast_android.domain.model
 
-data class Genre(val id: Int, val name: String)
+import java.io.Serializable
+
+data class Genre(val id: Int, val name: String) : Serializable

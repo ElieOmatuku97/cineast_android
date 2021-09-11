@@ -42,7 +42,8 @@ class ContentService(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job
 
-    private val persistClient: ValueStore by App.kodein.instance()
+
+    private val persistClient: ValueStore by App.getKodein.instance()
     private val timeStamp: Long
         get() {
             return persistClient.get(DiscoverContent.TIMESTAMP, null)?.toLong() ?: 0

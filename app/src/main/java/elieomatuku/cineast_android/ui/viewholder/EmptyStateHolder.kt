@@ -24,7 +24,7 @@ class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    private val connectionService: ConnectionService by App.kodein.instance()
+    private val connectionService: ConnectionService by App.getKodein.instance()
 
     private val msgView: TextView by lazy {
         itemView.empty_msg

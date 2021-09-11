@@ -23,12 +23,13 @@ import java.util.ArrayList
 
 class ContentsActivity : BaseActivity() {
     companion object {
+        const val SCREEN_NAME = "Discover"
         const val WIDGET_KEY = "content"
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
         const val PEOPLE_KEY = "peopleApi"
 
-        fun startActivity(context: Context, contents: Contents, screenNameRes: Int? = null) {
+        fun startActivity(context: Context, contents: List<Content>?, screenNameRes: Int? = null) {
             val intent = Intent(context, ContentsActivity::class.java)
             val params = Bundle()
             params.putParcelableArrayList(
@@ -66,7 +67,6 @@ class ContentsActivity : BaseActivity() {
         list_view_container
     }
 
-    private val viewModel: ContentsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +88,7 @@ class ContentsActivity : BaseActivity() {
                 .subscribe { content: Content ->
                     val params = Bundle()
 
-                    params.putString(Constants.SCREEN_NAME_KEY, DiscoverPresenter.SCREEN_NAME)
+                    params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
 
 //                    if (content is Person) {
 //                        params.putParcelable(PEOPLE_KEY, content)

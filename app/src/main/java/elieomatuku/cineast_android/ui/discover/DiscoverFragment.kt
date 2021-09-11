@@ -18,9 +18,14 @@ import elieomatuku.cineast_android.utils.consume
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_discover.*
-import timber.log.Timber
+
 
 class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
+    companion object {
+        fun newInstance(): DiscoverFragment {
+            return DiscoverFragment()
+        }
+    }
 
     private val viewModel: DiscoverViewModel by viewModel<DiscoverViewModel>()
 
@@ -73,7 +78,7 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
             refreshPublisher.onNext(true)
         }
 
-        viewModel.viewState.observe(viewLifecycleOwner) {state ->
+        viewModel.viewState.observe(viewLifecycleOwner) { state ->
             state.viewError.consume {
                 updateErrorView(it.message)
             }
@@ -83,11 +88,10 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
     }
 
 
-    fun updateView(
+    private fun updateView(
         discoverContents: DiscoverContents?,
         isLoggedIn: Boolean
     ) {
-        Timber.d("update View is called")
         discoverContents?.let {
             adapter.filteredContents = discoverContents.getFilteredWidgets()
             adapter.isLoggedIn = isLoggedIn
@@ -97,14 +101,14 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         }
     }
 
-    fun updateErrorView(errorMsg: String?) {
+    private fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
         recyclerview.visibility = View.VISIBLE
         dismissRefreshLayout()
     }
 
-     fun gotoWebview(value: AccessToken?) {
+    fun gotoWebView(value: AccessToken?) {
         value?.let {
             val authenticateUrl = Uri.parse(resources.getString(R.string.authenticate_url))
                 .buildUpon()
@@ -112,18 +116,16 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
                 .build()
                 .toString()
 
-            val webviewFragment: WebviewFragment? =
+            val webviewFragment: WebviewFragment =
                 LoginWebviewFragment.newInstance(authenticateUrl)
             val fm = (activity as AppCompatActivity).supportFragmentManager
 
-            if (webviewFragment != null && fm != null) {
-                fm.beginTransaction().add(android.R.id.content, webviewFragment, null)
-                    .addToBackStack(null).commit()
-            }
+            fm.beginTransaction().add(android.R.id.content, webviewFragment, null)
+                .addToBackStack(null).commit()
         }
     }
 
-    fun updateLoginState(isLoggedIn: Boolean) {
+    private fun updateLoginState(isLoggedIn: Boolean) {
         adapter.isLoggedIn = isLoggedIn
         adapter.notifyDataSetChanged()
     }

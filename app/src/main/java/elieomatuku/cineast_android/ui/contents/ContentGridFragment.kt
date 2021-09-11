@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
@@ -22,7 +20,7 @@ import timber.log.Timber
  * Created by elieomatuku on 2021-05-30
  */
 
-abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewModelClass: Class<VM>) :
+abstract class ContentGridFragment :
     BaseFragment() {
     private val contentSelectPublisher: PublishSubject<Content> by lazy {
         PublishSubject.create<Content>()
@@ -40,36 +38,15 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
         ContentsAdapter(contentSelectPublisher, R.layout.holder_grid_content)
     }
 
-    protected lateinit var viewModel: VM
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val rootView = inflater.inflate(R.layout.fragment_search, container, false)
 
 //        vu.showLoading()
 
-        viewModel = ViewModelProvider(this).get<VM>(viewModelClass)
-
-        return rootView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.contentLiveData.observe(
-            viewLifecycleOwner,
-            Observer { res ->
-
-                updateView(res)
-            }
-        )
-        viewModel.errorMsgLiveData.observe(
-            this.viewLifecycleOwner,
-            Observer { res -> updateErrorView(res) }
-        )
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onResume() {
@@ -90,7 +67,7 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
         )
     }
 
-    private fun updateView(content: List<Content>) {
+    protected fun updateView(content: List<Content>) {
         gridView.adapter = adapter
 //        vu.hideLoading()
         adapter.contents = content.toMutableList()
@@ -98,7 +75,7 @@ abstract class ContentGridFragment<VM : ContentGridViewModel>(private val viewMo
         adapter.notifyDataSetChanged()
     }
 
-    private fun updateErrorView(errorMsg: String?) {
+    protected fun updateErrorView(errorMsg: String?) {
 //        vu.hideLoading()
         adapter.errorMessage = errorMsg
         gridView.layoutManager = LinearLayoutManager(activity)

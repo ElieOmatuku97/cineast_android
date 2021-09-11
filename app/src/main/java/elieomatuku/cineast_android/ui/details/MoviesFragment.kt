@@ -26,6 +26,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
+import java.io.Serializable
 import java.util.ArrayList
 
 /**
@@ -41,9 +42,13 @@ class MoviesFragment : BaseFragment() {
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
 
-        fun newInstance(movies: List<Movie>, title: String? = null, selectedMovieTitle: String? = null): MoviesFragment {
+        fun newInstance(
+            movies: List<Movie>,
+            title: String? = null,
+            selectedMovieTitle: String? = null
+        ): MoviesFragment {
             val args = Bundle()
-            args.putParcelableArrayList(MOVIES, movies as ArrayList<out Parcelable>)
+            args.putSerializable(MOVIES, movies as Serializable)
 
             title?.let {
                 args.putString(TITLE, it)
@@ -61,7 +66,7 @@ class MoviesFragment : BaseFragment() {
 
     private lateinit var viewDataBinding: FragmentMoviesBinding
 
-    private val viewModel: MoviesViewModel by viewModels()
+    private val viewModel: MoviesViewModel by viewModel<MoviesViewModel>()
 
     private val movieSelectPublisher: PublishSubject<Content> by lazy {
         PublishSubject.create<Content>()
@@ -91,18 +96,25 @@ class MoviesFragment : BaseFragment() {
     private var selectedMovieTitle: String? = null
     private var genres: List<Genre>? = listOf()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val rootView = inflater.inflate(R.layout.fragment_movies, container, false)
         viewDataBinding = FragmentMoviesBinding.bind(rootView)
 
-        arguments?.getParcelableArrayList<Movie>(MOVIES)?.let {
-            movies = it
+        arguments?.getSerializable(MOVIES)?.let {
+            movies = it as List<Movie>
         }
 
-        viewModel.genresLiveData.observe(
+        viewModel.viewState.observe(
             this.viewLifecycleOwner,
-            Observer {
-                genres = it
+            { state ->
+
+                state.genres.let {
+                    genres = it
+                }
             }
         )
 
@@ -116,21 +128,21 @@ class MoviesFragment : BaseFragment() {
 
         rxSubs.add(
             (
-                movieSelectObservable
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        { movie: Content ->
-                            val params = Bundle()
-                            params.putString(Constants.SCREEN_NAME_KEY, selectedMovieTitle)
-                            params.putParcelable(MOVIE_KEY, movie)
-                            params.putParcelableArrayList(MOVIE_GENRES_KEY, genres as ArrayList<out Parcelable>)
-                            gotoMovie(params)
-                        },
-                        { t: Throwable ->
-                            Timber.e("movieSelectObservable failed:$t")
-                        }
+                    movieSelectObservable
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                            { movie: Content ->
+                                val params = Bundle()
+                                params.putString(Constants.SCREEN_NAME_KEY, selectedMovieTitle)
+                                params.putSerializable(MOVIE_KEY, movie)
+                                params.putSerializable(MOVIE_GENRES_KEY, genres as Serializable)
+                                gotoMovie(params)
+                            },
+                            { t: Throwable ->
+                                Timber.e("movieSelectObservable failed:$t")
+                            }
+                        )
                     )
-                )
         )
     }
 
@@ -139,7 +151,8 @@ class MoviesFragment : BaseFragment() {
         setSelectedMovieTitle(arguments?.getString(SELECTED_MOVIE_TITLE))
         sectionTitleView.text = title
         listView.adapter = adapter
-        listView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        listView.layoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         adapter.contents = movies.toMutableList()
         adapter.notifyDataSetChanged()
 

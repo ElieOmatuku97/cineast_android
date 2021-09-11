@@ -1,16 +1,23 @@
 package elieomatuku.cineast_android.ui.settings.user_movies
 
 import android.os.Handler
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbContentClient
+import elieomatuku.cineast_android.business.service.ContentService
+import elieomatuku.cineast_android.domain.interactor.movie.GetFavorites
+import elieomatuku.cineast_android.domain.interactor.movie.GetGenres
+import elieomatuku.cineast_android.domain.interactor.movie.GetTopRatedMovies
+import elieomatuku.cineast_android.domain.interactor.movie.GetWatchList
 import elieomatuku.cineast_android.domain.model.CineastError
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.ui.details.BaseViewModel
+import elieomatuku.cineast_android.ui.base.BaseViewModel
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -22,9 +29,14 @@ import timber.log.Timber
  * Created by elieomatuku on 2021-05-29
  */
 
-class UserMoviesViewModel : BaseViewModel() {
+class UserMoviesViewModel(
+    private val getGenres: GetGenres,
+    private val getFavorites: GetFavorites,
+    private val getWatchList: GetWatchList
+) : BaseViewModel<Unit>(Unit) {
 
-    private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
+    private val tmdbContentClient: TmdbContentClient by App.getKodein.instance()
+    private val contentService: ContentService by App.getKodein.instance()
 
     val genresLiveData: LiveData<List<Genre>> = LiveDataReactiveStreams.fromPublisher(contentService.genres().subscribeOn(Schedulers.io()).toFlowable())
     val userMovies = MutableLiveData<List<Movie>>()

@@ -88,9 +88,9 @@ class MovieActivity : BaseActivity() {
         }
 
         val screenName = intent.getStringExtra(Constants.SCREEN_NAME_KEY)
-        movie = intent.getParcelableExtra(MOVIE_KEY)
+        movie = intent.getSerializableExtra(MOVIE_KEY) as Movie
         val genres: List<Genre>? =
-            intent.getParcelableArrayListExtra(MOVIE_GENRES_KEY)
+            intent.getSerializableExtra(MOVIE_GENRES_KEY) as List<Genre>?
         viewModel.getMovieDetails(movie, screenName, genres)
 
         viewModel.viewState.observe(this) {

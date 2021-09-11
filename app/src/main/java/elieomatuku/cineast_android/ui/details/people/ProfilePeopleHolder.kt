@@ -49,8 +49,8 @@ class ProfilePeopleHolder(itemView: View, private val onProfileClickedPicturePub
     }
 
     fun update(peopleDetails: PersonDetails?) {
-        val imageUrl: String? = if (peopleDetails?.profile_path != null) {
-            UiUtils.getImageUrl(peopleDetails.profile_path, itemView.context.getString(R.string.image_small))
+        val imageUrl: String? = if (peopleDetails?.profilePath != null) {
+            UiUtils.getImageUrl(peopleDetails.profilePath, itemView.context.getString(R.string.image_small))
         } else null
 
         if (!imageUrl.isNullOrEmpty()) {

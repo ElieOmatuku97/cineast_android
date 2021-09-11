@@ -13,14 +13,19 @@ import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_people.view.*
 
-class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSubject<Content>) : ContentHolder(itemView) {
+class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSubject<Content>) :
+    ContentHolder, RecyclerView.ViewHolder(itemView) {
 
     companion object {
         fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context).inflate(R.layout.holder_people, parent, false)
+            return LayoutInflater.from(parent.context)
+                .inflate(R.layout.holder_people, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup, onPersonalityClickPublisher: PublishSubject<Content>): PeopleHolder {
+        fun newInstance(
+            parent: ViewGroup,
+            onPersonalityClickPublisher: PublishSubject<Content>
+        ): PeopleHolder {
             return PeopleHolder(createView(parent), onPersonalityClickPublisher)
         }
     }
@@ -41,10 +46,27 @@ class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSu
         adapter.contents = contents.value?.toMutableList() ?: mutableListOf()
         listView.adapter = adapter
         adapter.notifyDataSetChanged()
-        listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+        listView.layoutManager =
+            LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
         seeAllView.setOnClickListener {
-            ContentsActivity.startActivity(itemView.context, contents, contents.titleResources)
+            ContentsActivity.startActivity(
+                itemView.context,
+                contents.value,
+                contents.titleResources
+            )
+        }
+    }
+
+    override fun update(content: List<Content>, titleRes: Int) {
+        adapter.contents = content.toMutableList()
+        listView.adapter = adapter
+        adapter.notifyDataSetChanged()
+        listView.layoutManager =
+            LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+
+        seeAllView.setOnClickListener {
+            ContentsActivity.startActivity(itemView.context, content, titleRes)
         }
     }
 }

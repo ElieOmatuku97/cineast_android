@@ -26,14 +26,14 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
         super.onLink(vu, inState, args)
 
         val screenName = args.getString(Constants.SCREEN_NAME_KEY)
-        val people: Person? = args.getParcelable(PEOPLE_KEY)
+        val people: Person? = args.getSerializable(PEOPLE_KEY) as Person?
 
         people?.let {
             vu.personPresentedPublisher?.onNext(people)
         }
 
-        personDetails = inState?.getParcelable(PEOPLE_DETAILS_KEY)
-        peopleMovies = inState?.getParcelableArrayList(PEOPLE_MOVIES_KEY)
+        personDetails = inState?.getSerializable(PEOPLE_DETAILS_KEY) as PersonDetails?
+        peopleMovies = inState?.getSerializable(PEOPLE_MOVIES_KEY) as List<Movie>?
 
         if (personDetails != null && peopleMovies != null) {
             vu.updateVu(personDetails, screenName, peopleMovies)
@@ -121,11 +121,11 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
         super.onSaveState(outState)
 
         personDetails?.let {
-            outState.putParcelable(PEOPLE_DETAILS_KEY, it)
+            outState.putSerializable(PEOPLE_DETAILS_KEY, it)
         }
 
         peopleMovies?.let {
-            outState.putParcelableArrayList(PEOPLE_MOVIES_KEY, it as ArrayList<out Parcelable>)
+            outState.putSerializable(PEOPLE_MOVIES_KEY, it as ArrayList<out Parcelable>)
         }
     }
 }

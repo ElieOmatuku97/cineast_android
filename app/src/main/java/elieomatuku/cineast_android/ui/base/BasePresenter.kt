@@ -28,9 +28,9 @@ abstract class BasePresenter<V> : Presenter<V>(), CoroutineScope where V : Vu {
         io.reactivex.disposables.CompositeDisposable()
     }
 
-    protected val connectionService: ConnectionService by App.kodein.instance()
+    protected val connectionService: ConnectionService by App.getKodein.instance()
 
-    protected val contentService: ContentService by App.kodein.instance()
+    protected val contentService: ContentService by App.getKodein.instance()
 
     override fun onLink(vu: V, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)

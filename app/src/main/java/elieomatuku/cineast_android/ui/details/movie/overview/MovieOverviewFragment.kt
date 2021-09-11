@@ -17,7 +17,7 @@ class MovieOverviewFragment(private val bareOverviewFragment: Fragment) : Fragme
 
         fun newInstance(overviewTitle: String, movieSummary: MovieSummary): MovieOverviewFragment {
             val args = Bundle()
-            args.putParcelable(OVERVIEW_SUMMARY, movieSummary)
+            args.putSerializable(OVERVIEW_SUMMARY, movieSummary)
 
             val fragment =
                 MovieOverviewFragment(

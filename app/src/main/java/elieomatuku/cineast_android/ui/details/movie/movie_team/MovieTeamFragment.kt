@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.databinding.FragmentMovieteamBinding
+import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.base.BaseFragment
@@ -26,8 +27,7 @@ class MovieTeamFragment : BaseFragment() {
 
         fun newInstance(movieSummary: MovieSummary): MovieTeamFragment {
             val args = Bundle()
-
-            args.putParcelable(MOVIE_SUMMARY, movieSummary)
+            args.putSerializable(MOVIE_SUMMARY, movieSummary)
 
             val fragment = MovieTeamFragment()
             fragment.arguments = args
@@ -39,12 +39,12 @@ class MovieTeamFragment : BaseFragment() {
 
     var movieTitle: String? = null
 
-    private val onPeopleSelectPublisher: PublishSubject<Person> by lazy {
-        PublishSubject.create<Person>()
+    private val onPersonSelectPublisher: PublishSubject<Content> by lazy {
+        PublishSubject.create<Content>()
     }
 
-    private val onPeopleSelectObservable: Observable<Person>
-        get() = onPeopleSelectPublisher.hide()
+    private val onPeopleSelectObservable: Observable<Content>
+        get() = onPersonSelectPublisher.hide()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,7 +54,7 @@ class MovieTeamFragment : BaseFragment() {
         val rootView = inflater.inflate(R.layout.fragment_movieteam, container, false)
         viewDataBinding = FragmentMovieteamBinding.bind(rootView)
 
-        val movieSummary: MovieSummary? = arguments?.getParcelable<MovieSummary>(MOVIE_SUMMARY)
+        val movieSummary: MovieSummary? = arguments?.getSerializable(MOVIE_SUMMARY) as MovieSummary?
 
         val cast: List<Person>? = movieSummary?.cast
         val crew: List<Person>? = movieSummary?.crew
@@ -78,14 +78,14 @@ class MovieTeamFragment : BaseFragment() {
     }
 
     private fun updateView(cast: List<Person>, crew: List<Person>) {
-        viewDataBinding.overviewList.adapter = MovieTeamAdapter(cast, crew, onPeopleSelectPublisher)
+        viewDataBinding.overviewList.adapter = MovieTeamAdapter(cast, crew, onPersonSelectPublisher)
         viewDataBinding.overviewList.layoutManager = LinearLayoutManager(activity)
     }
 
-    private fun onPeopleSelectedSuccess(person: Person) {
+    private fun onPeopleSelectedSuccess(person: Content) {
         val params = Bundle()
         params.putString(SCREEN_NAME_KEY, movieTitle)
-        params.putParcelable(PEOPLE_KEY, person)
+        params.putSerializable(PEOPLE_KEY, person)
         params.putBoolean(PeoplePresenter.MOVIE_TEAM_KEY, true)
         gotoPeople(params)
     }

@@ -19,7 +19,7 @@ class RateDialogFragment : DialogFragment() {
 
         fun newInstance(movie: Movie?): RateDialogFragment {
             val args = Bundle()
-            args.putParcelable(MOVIE_KEY, movie)
+            args.putSerializable(MOVIE_KEY, movie)
 
             val fragment = RateDialogFragment()
             fragment.arguments = args
@@ -28,7 +28,7 @@ class RateDialogFragment : DialogFragment() {
         }
     }
 
-    private val tmdbContentClient: TmdbContentClient by App.kodein.instance()
+    private val tmdbContentClient: TmdbContentClient by App.getKodein.instance()
     private var movie: Movie? = null
     private var submitBtn: TextView? = null
     private var ratingBar: AppCompatRatingBar? = null
@@ -46,7 +46,7 @@ class RateDialogFragment : DialogFragment() {
         }
 
         submitBtn = dialogView?.findViewById<TextView>(R.id.dialog_submit)
-        movie = arguments?.getParcelable(MOVIE_KEY)
+        movie = arguments?.getSerializable(MOVIE_KEY) as Movie
 
         val dialog = Dialog(requireContext())
 
