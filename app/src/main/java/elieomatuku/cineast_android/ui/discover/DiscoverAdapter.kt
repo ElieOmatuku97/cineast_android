@@ -9,12 +9,11 @@ import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.ui.viewholder.PeopleHolder
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 import kotlin.properties.Delegates
 
 class DiscoverAdapter(
     private val onMovieClickPublisher: PublishSubject<Movie>,
-    private val onPersonalityClickPublisher: PublishSubject<Content>,
+    private val onPersonClickPublisher: PublishSubject<Content>,
     private val loginClickPublisher: PublishSubject<Boolean>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -39,7 +38,6 @@ class DiscoverAdapter(
         private set
 
     var filteredContents: MutableMap<Int, Contents> by Delegates.observable(mutableMapOf()) { prop, oldDiscoverContent, nuDiscoverContent ->
-        Timber.d("content = $nuDiscoverContent")
         hasValidData = true
         errorMessage = null
     }
@@ -65,7 +63,6 @@ class DiscoverAdapter(
     }
 
     override fun getItemCount(): Int {
-        Timber.d("hasEmptyState: $hasEmptyState,  ${filteredContents.size}")
         return if (!hasEmptyState) {
             filteredContents.size + 2
         } else {
@@ -94,7 +91,7 @@ class DiscoverAdapter(
             }
 
             TYPE_POPULAR_PEOPLE -> {
-                PeopleHolder.newInstance(parent, onPersonalityClickPublisher)
+                PeopleHolder.newInstance(parent, onPersonClickPublisher)
             }
 
             TYPE_MOVIES -> {

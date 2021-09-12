@@ -1,110 +1,145 @@
 package elieomatuku.cineast_android.ui.details.movie
 
 import androidx.lifecycle.viewModelScope
-import elieomatuku.cineast_android.App
-import elieomatuku.cineast_android.business.client.TmdbContentClient
-import elieomatuku.cineast_android.business.client.TmdbUserClient
-import elieomatuku.cineast_android.business.service.ContentService
-import elieomatuku.cineast_android.domain.model.Genre
+import elieomatuku.cineast_android.domain.interactor.Fail
+import elieomatuku.cineast_android.domain.interactor.Success
+import elieomatuku.cineast_android.domain.interactor.movie.*
+import elieomatuku.cineast_android.domain.interactor.runUseCase
+import elieomatuku.cineast_android.domain.interactor.user.IsLoggedIn
 import elieomatuku.cineast_android.domain.model.Image
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.ui.base.BaseViewModel
+import elieomatuku.cineast_android.utils.SingleEvent
+import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
-import org.kodein.di.generic.instance
+
 
 /**
  * Created by elieomatuku on 2021-07-03
  */
 
-class MovieViewModel : BaseViewModel<MovieViewState>(MovieViewState()) {
+class MovieViewModel(
+    private val getMovieSummary: GetMovieSummary,
+    private val isLoggedIn: IsLoggedIn,
+    private val getWatchList: GetWatchList,
+    private val getFavorites: GetFavorites,
+    private val addMovieToWatchList: AddMovieToWatchList,
+    private val addMovieToFavorites: AddMovieToFavorites,
+    private val removeMovieFromFavorites: RemoveMovieFromFavorites,
+    private val removeMovieFromWatchList: RemoveMovieFromWatchList
+) : BaseViewModel<MovieViewState>(MovieViewState()) {
 
-    val contentService: ContentService by App.getKodein.instance()
-    private val tmdbUserClient: TmdbUserClient by App.getKodein.instance()
-    private val tmdbContentClient: TmdbContentClient by App.getKodein.instance()
+    init {
+        getIsLoggedIn()
+    }
 
-    fun getMovieDetails(movie: Movie, screenName: String?, genres: List<Genre>?) {
+    fun getMovieDetails(movie: Movie, screenName: String?) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
 
-            val trailers = contentService.getMovieVideos(movie)?.results
-            val movieFacts = contentService.getMovieDetails(movie)
-            val movieCredits = contentService.getMovieCredits(movie)
-            val cast = movieCredits?.cast
-            val crew = movieCredits?.crew
-            val response = contentService.getSimilarMovie(movie)
-            val similarMovies = response?.results
+            val result = runUseCase(getMovieSummary, GetMovieSummary.Input(movie))
+            state = when (result) {
+                is Success -> state.copy(
+                    isLoading = false,
+                    movieSummary = result.data,
+                    posters = result.data.posters,
+                    screenName = screenName
+                )
 
-            val movieSummary = MovieSummary(
-                movie,
-                trailers,
-                movieFacts,
-                genres,
-                screenName,
-                cast,
-                crew,
-                similarMovies
-            )
+                is Fail -> state.copy(
+                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    isLoading = false
+                )
+                else -> MovieViewState()
+            }
+        }
+    }
 
-            val imageResponse = contentService.getMovieImages(movie.id)
-            state = state.copy(
-                movieSummary = movieSummary,
-                posters = imageResponse.getOrNull()?.posters,
-                isLoading = false
-            )
+    private fun getIsLoggedIn() {
+        viewModelScope.launch {
+            state = when (val result = runUseCase(isLoggedIn, Unit)) {
+                is Success -> {
+                    state.copy(isLoggedIn = result.data)
+                }
 
-            if (tmdbUserClient.isLoggedIn()) {
-                val watchListResponse = contentService.getWatchList()
+                is Fail -> {
+                    state.copy(
+                        viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    )
+                }
+            }
+        }
+    }
 
-                if (watchListResponse.isSuccess) {
+    fun getFavorites() {
+        viewModelScope.launch {
+            state = when (val result = runUseCase(getFavorites, Unit)) {
+                is Success -> {
+                    val movies = result.data
+                    val isInFavorites = movies.contains(state.movieSummary?.movie)
+                    state.copy(isInFavorites = isInFavorites)
+                }
 
-                    val movies = watchListResponse.getOrNull()?.results
+                is Fail -> {
+                    state.copy(
+                        viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    )
+                }
+            }
+        }
+    }
 
-                    val isInWatchList = movies?.let {
-                        it.contains(movieSummary.movie)
-                    } ?: false
+    fun getWatchLists() {
+        viewModelScope.launch {
+            state = when (val result = runUseCase(getWatchList, Unit)) {
+                is Success -> {
+                    val movies = result.data
+                    val isInWatchList = movies.contains(state.movieSummary?.movie)
+                    state.copy(isInFavorites = isInWatchList)
+                }
 
-                    val favouritesResponse = contentService.getFavoriteList()
-                    if (favouritesResponse.isSuccess) {
-                        val isInFavorites = favouritesResponse.getOrNull()?.results?.let {
-                            it.contains(movieSummary.movie)
-                        } ?: false
-
-                        state = state.copy(
-                            isInFavorites = isInFavorites,
-                            isInWatchList = isInWatchList
-                        )
-                    }
+                is Fail -> {
+                    state.copy(
+                        viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    )
                 }
             }
         }
     }
 
     fun isLoggedIn(): Boolean {
-        return tmdbUserClient.isLoggedIn()
+        return state.isLoggedIn
     }
 
     fun removeMovieFromWatchList() {
         state.movieSummary?.movie?.let {
-            tmdbContentClient.removeMovieFromWatchList(it)
+            viewModelScope.launch {
+                runUseCase(removeMovieFromWatchList, RemoveMovieFromWatchList.Input(it))
+            }
         }
     }
 
     fun addMovieToFavoriteList() {
         state.movieSummary?.movie?.let {
-            tmdbContentClient.addMovieToFavoriteList(it)
+            viewModelScope.launch {
+                runUseCase(addMovieToFavorites, AddMovieToFavorites.Input(it))
+            }
         }
     }
 
     fun addMovieToWatchList() {
         state.movieSummary?.movie?.let {
-            tmdbContentClient.addMovieToWatchList(it)
+            viewModelScope.launch {
+                runUseCase(addMovieToWatchList, AddMovieToWatchList.Input(it))
+            }
         }
     }
 
     fun removeMovieFromFavoriteList() {
         state.movieSummary?.movie?.let {
-            tmdbContentClient.removeMovieFromFavoriteList(it)
+            viewModelScope.launch {
+                runUseCase(removeMovieFromFavorites, RemoveMovieFromFavorites.Input(it))
+            }
         }
     }
 

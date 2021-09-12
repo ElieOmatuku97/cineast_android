@@ -124,11 +124,11 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
                 .build()
                 .toString()
 
-            val webviewFragment: WebviewFragment =
+            val webViewFragment: WebviewFragment =
                 LoginWebviewFragment.newInstance(authenticateUrl)
             val fm = (activity as AppCompatActivity).supportFragmentManager
 
-            fm.beginTransaction().add(android.R.id.content, webviewFragment, null)
+            fm.beginTransaction().add(android.R.id.content, webViewFragment, null)
                 .addToBackStack(null).commit()
         }
     }

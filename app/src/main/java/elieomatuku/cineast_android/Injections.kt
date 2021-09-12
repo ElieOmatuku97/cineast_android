@@ -1,8 +1,6 @@
 package elieomatuku.cineast_android
 
 import android.app.Application
-import android.content.Context
-import android.content.res.Resources
 import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.client.TmdbUserClient
@@ -29,10 +27,9 @@ import elieomatuku.cineast_android.data.source.movie.MovieRemoteDataStore
 import elieomatuku.cineast_android.data.source.person.PersonCacheDataStore
 import elieomatuku.cineast_android.data.source.person.PersonDataStoreFactory
 import elieomatuku.cineast_android.data.source.person.PersonRemoteDataStore
-import elieomatuku.cineast_android.domain.interactor.movie.GetDiscoverContent
-import elieomatuku.cineast_android.domain.interactor.movie.GetGenres
-import elieomatuku.cineast_android.domain.interactor.movie.GetPopularMovies
+import elieomatuku.cineast_android.domain.interactor.movie.*
 import elieomatuku.cineast_android.domain.interactor.people.GetPersonalities
+import elieomatuku.cineast_android.domain.interactor.user.IsLoggedIn
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 import elieomatuku.cineast_android.domain.repository.PersonRepository
@@ -43,6 +40,7 @@ import elieomatuku.cineast_android.remote.api.MovieApi
 import elieomatuku.cineast_android.remote.api.PersonApi
 import elieomatuku.cineast_android.remote.api.AuthenticationApi
 import elieomatuku.cineast_android.ui.details.MoviesViewModel
+import elieomatuku.cineast_android.ui.details.movie.MovieViewModel
 import elieomatuku.cineast_android.ui.discover.DiscoverViewModel
 import elieomatuku.cineast_android.ui.search.movie.MoviesGridViewModel
 import elieomatuku.cineast_android.ui.search.people.PeopleGridViewModel
@@ -252,6 +250,38 @@ fun depInjecT(app: Application): Kodein {
             GetPopularMovies(instance())
         }
 
+        bind<GetMovieSummary>() with singleton {
+            GetMovieSummary(instance())
+        }
+
+        bind<IsLoggedIn>() with singleton {
+            IsLoggedIn(instance())
+        }
+
+        bind<GetWatchList>() with singleton {
+            GetWatchList(instance(), instance())
+        }
+
+        bind<GetFavorites>() with singleton {
+            GetFavorites(instance(), instance())
+        }
+
+        bind<AddMovieToFavorites>() with singleton {
+            AddMovieToFavorites(instance(), instance())
+        }
+
+        bind<AddMovieToWatchList>() with singleton {
+            AddMovieToWatchList(instance(), instance())
+        }
+
+        bind<RemoveMovieFromFavorites>() with singleton {
+            RemoveMovieFromFavorites(instance(), instance())
+        }
+
+        bind<RemoveMovieFromWatchList>() with singleton {
+            RemoveMovieFromWatchList(instance(), instance())
+        }
+
         bindViewModel<DiscoverViewModel>() with provider {
             DiscoverViewModel(instance(), instance())
         }
@@ -266,6 +296,10 @@ fun depInjecT(app: Application): Kodein {
 
         bindViewModel<MoviesViewModel>() with provider {
             MoviesViewModel(instance())
+        }
+
+        bindViewModel<MovieViewModel>() with provider {
+            MovieViewModel(instance(), instance(), instance(), instance(), instance(), instance(), instance(), instance())
         }
     }
 }

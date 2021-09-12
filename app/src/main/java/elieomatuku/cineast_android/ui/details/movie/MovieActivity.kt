@@ -29,6 +29,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_movie.*
 import timber.log.Timber
+import java.io.Serializable
 import java.util.ArrayList
 
 class MovieActivity : BaseActivity() {
@@ -48,15 +49,15 @@ class MovieActivity : BaseActivity() {
         PublishSubject.create<Movie>()
     }
 
-    val watchListCheckPublisher: PublishSubject<Boolean> by lazy {
+    private val watchListCheckPublisher: PublishSubject<Boolean> by lazy {
         PublishSubject.create<Boolean>()
     }
 
-    val favoriteListCheckPublisher: PublishSubject<Boolean> by lazy {
+    private val favoriteListCheckPublisher: PublishSubject<Boolean> by lazy {
         PublishSubject.create<Boolean>()
     }
 
-    private val viewModel: MovieViewModel by viewModels<MovieViewModel>()
+    private val viewModel: MovieViewModel by viewModel<MovieViewModel>()
 
     private val listView: RecyclerView by lazy {
         list_view_container
@@ -89,9 +90,7 @@ class MovieActivity : BaseActivity() {
 
         val screenName = intent.getStringExtra(Constants.SCREEN_NAME_KEY)
         movie = intent.getSerializableExtra(MOVIE_KEY) as Movie
-        val genres: List<Genre>? =
-            intent.getSerializableExtra(MOVIE_GENRES_KEY) as List<Genre>?
-        viewModel.getMovieDetails(movie, screenName, genres)
+        viewModel.getMovieDetails(movie, screenName)
 
         viewModel.viewState.observe(this) {
 
@@ -101,6 +100,8 @@ class MovieActivity : BaseActivity() {
                 hideLoading(rootView)
             }
 
+            toolbar?.title = it.screenName
+
             val movieSummary = it.movieSummary
             if (movieSummary != null) {
                 showMovie(movieSummary)
@@ -109,9 +110,13 @@ class MovieActivity : BaseActivity() {
             updateWatchList(it.isInWatchList)
             updateFavorite(it.isInFavorites)
 
-            val viewError = it.viewError
-            if (viewError != null) {
-                updateErrorView(viewError.message)
+            it.viewError?.consume()?.apply {
+                updateErrorView(this.message)
+            }
+
+            if (it.isLoggedIn) {
+                viewModel.getFavorites()
+                viewModel.getWatchLists()
             }
         }
     }
@@ -310,7 +315,6 @@ class MovieActivity : BaseActivity() {
     }
 
     private fun showMovie(movieSummary: MovieSummary) {
-        toolbar?.title = movieSummary.screenName
         adapter.movieSummary = movieSummary
         adapter.notifyDataSetChanged()
 
@@ -324,9 +328,9 @@ class MovieActivity : BaseActivity() {
     private fun goToGallery() {
         val galleryFragment = GalleryFragment.newInstance()
         val args = Bundle()
-        args.putParcelableArrayList(
+        args.putSerializable(
             GalleryFragment.POSTERS,
-            viewModel.posters() as ArrayList<out Parcelable>
+            viewModel.posters() as Serializable
         )
         galleryFragment.arguments = args
 
