@@ -29,7 +29,9 @@ import elieomatuku.cineast_android.data.source.person.PersonDataStoreFactory
 import elieomatuku.cineast_android.data.source.person.PersonRemoteDataStore
 import elieomatuku.cineast_android.domain.interactor.movie.*
 import elieomatuku.cineast_android.domain.interactor.people.GetPersonalities
+import elieomatuku.cineast_android.domain.interactor.user.GetAccessToken
 import elieomatuku.cineast_android.domain.interactor.user.IsLoggedIn
+import elieomatuku.cineast_android.domain.interactor.user.Logout
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 import elieomatuku.cineast_android.domain.repository.PersonRepository
@@ -282,8 +284,16 @@ fun depInjecT(app: Application): Kodein {
             RemoveMovieFromWatchList(instance(), instance())
         }
 
+        bind<Logout>() with singleton {
+            Logout(instance())
+        }
+
+        bind<GetAccessToken>() with singleton {
+            GetAccessToken(instance())
+        }
+
         bindViewModel<DiscoverViewModel>() with provider {
-            DiscoverViewModel(instance(), instance())
+            DiscoverViewModel(instance(), instance(), instance(), instance(), instance())
         }
 
         bindViewModel<MoviesGridViewModel>() with provider {
@@ -299,7 +309,16 @@ fun depInjecT(app: Application): Kodein {
         }
 
         bindViewModel<MovieViewModel>() with provider {
-            MovieViewModel(instance(), instance(), instance(), instance(), instance(), instance(), instance(), instance())
+            MovieViewModel(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
         }
     }
 }
