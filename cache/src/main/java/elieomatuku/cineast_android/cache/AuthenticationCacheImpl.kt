@@ -1,6 +1,8 @@
 package elieomatuku.cineast_android.cache
 
+import elieomatuku.cineast_android.data.MoshiSerializer
 import elieomatuku.cineast_android.data.PrefManager
+import elieomatuku.cineast_android.data.Serializer
 import elieomatuku.cineast_android.data.model.AccessTokenEntity
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationCache
 
@@ -14,10 +16,21 @@ class AuthenticationCacheImpl(private val prefManager: PrefManager) : Authentica
         const val SESSION_ID_KEY = "session_id_key"
         const val ACCOUNT_ID_KEY = "account_id_key"
         const val ACCOUNT_USERNAME = "account_username_key"
+        const val ACCESS_TOKEN_KEY = "access_token_key"
+    }
+
+    private val accessTokenSerializer: Serializer<AccessTokenEntity> by lazy {
+        MoshiSerializer<AccessTokenEntity>(AccessTokenEntity::class.java)
     }
 
     override suspend fun getAccessToken(): AccessTokenEntity {
-        TODO("Not yet implemented")
+        return prefManager.get(ACCESS_TOKEN_KEY, null)?.let {
+            accessTokenSerializer.fromJson(it)
+        } ?: AccessTokenEntity()
+    }
+
+    override suspend fun setAccessToken(accessTokenEntity: AccessTokenEntity) {
+        prefManager.set(ACCESS_TOKEN_KEY, accessTokenSerializer.toJson(accessTokenEntity))
     }
 
     override suspend fun getRequestToken(): String? {

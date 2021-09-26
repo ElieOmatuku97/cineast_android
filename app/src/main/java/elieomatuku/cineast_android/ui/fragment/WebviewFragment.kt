@@ -56,9 +56,6 @@ open class WebviewFragment() : Fragment() {
     }
 
     open fun closeIconListener() {
-        val fm = activity?.supportFragmentManager
-        if (fm != null) {
-            fm.popBackStack()
-        }
+        activity?.supportFragmentManager?.popBackStack()
     }
 }

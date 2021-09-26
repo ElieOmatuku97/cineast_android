@@ -17,15 +17,15 @@ class AuthenticationDataStoreFactory(
         return if (authenticationCache.isLoggedIn()) {
             retrieveCacheDataStore()
         } else {
-            retrieveRemoteDataStore()
+            return retrieveRemoteDataStore()
         }
     }
 
     fun retrieveCacheDataStore(): AuthenticationDataStore {
-        return authenticationRemoteDataStore
+        return authenticationCacheDataStore
     }
 
     fun retrieveRemoteDataStore(): AuthenticationDataStore {
-        return authenticationCacheDataStore
+        return authenticationRemoteDataStore
     }
 }

@@ -9,6 +9,8 @@ import elieomatuku.cineast_android.data.model.AccessTokenEntity
 interface AuthenticationCache {
     suspend fun getAccessToken(): AccessTokenEntity
 
+    suspend fun setAccessToken(accessTokenEntity: AccessTokenEntity)
+
     suspend fun getRequestToken(): String?
 
     suspend fun getUsername(): String?

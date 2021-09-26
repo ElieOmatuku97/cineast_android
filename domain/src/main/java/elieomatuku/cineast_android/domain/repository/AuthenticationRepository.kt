@@ -23,4 +23,5 @@ interface AuthenticationRepository {
     suspend fun logout()
 
     suspend fun isLoggedIn(): Boolean
+
 }

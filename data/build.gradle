@@ -15,6 +15,10 @@ dependencies {
 
     implementation project(':domain')
 
+    //other
+    implementation "com.squareup.moshi:moshi:${versions.moshi}"
+    implementation "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
+
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlin}"
 }

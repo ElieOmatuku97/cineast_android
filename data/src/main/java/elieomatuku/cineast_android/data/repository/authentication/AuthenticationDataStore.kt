@@ -11,6 +11,8 @@ import elieomatuku.cineast_android.data.model.SessionEntity
 interface AuthenticationDataStore {
     suspend fun getAccessToken(): AccessTokenEntity
 
+    suspend fun setAccessToken(accessTokenEntity: AccessTokenEntity)
+
     suspend fun getSession(requestToken: String): SessionEntity
 
     suspend fun setAccount(sessionId: String?): AccountEntity
