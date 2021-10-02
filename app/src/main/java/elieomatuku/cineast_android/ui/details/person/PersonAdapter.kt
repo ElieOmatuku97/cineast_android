@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.people
+package elieomatuku.cineast_android.ui.details.person
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +8,7 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
 
-class PeopleSummaryAdapter(
+class PersonAdapter(
     private val onProfileClickedPicturePublisher: PublishSubject<Int>,
     private val segmentedButtonPublisher: PublishSubject<Pair<String, PersonDetails>>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -24,7 +24,7 @@ class PeopleSummaryAdapter(
         errorMessage = null
     }
 
-    private var initialCheckedTab: String = PeopleVu.OVERVIEW
+    private var initialCheckedTab: String = PersonVu.OVERVIEW
 
     var hasValidData = false
         private set
@@ -65,8 +65,8 @@ class PeopleSummaryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_PEOPLE_PROFILE -> ProfilePeopleHolder.newInstance(parent, onProfileClickedPicturePublisher)
-            TYPE_MENU_PEOPLE -> PeopleSegmentedButtonHolder.newInstance(parent)
+            TYPE_PEOPLE_PROFILE -> PersonProfileHolder.newInstance(parent, onProfileClickedPicturePublisher)
+            TYPE_MENU_PEOPLE -> PersonSegmentedButtonHolder.newInstance(parent)
             TYPE_EMPTY_STATE -> {
                 EmptyStateHolder.newInstance(parent)
             }
@@ -77,16 +77,16 @@ class PeopleSummaryAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is EmptyStateHolder -> holder.update(errorMessage)
-            is ProfilePeopleHolder -> holder.update(personDetails)
-            is PeopleSegmentedButtonHolder -> {
+            is PersonProfileHolder -> holder.update(personDetails)
+            is PersonSegmentedButtonHolder -> {
                 holder.update(personDetails, initialCheckedTab)
 
                 holder.overviewSegmentBtn.setOnClickListener {
-                    segmentedButtonPublisher.onNext(Pair(PeopleVu.OVERVIEW, personDetails))
+                    segmentedButtonPublisher.onNext(Pair(PersonVu.OVERVIEW, personDetails))
                 }
 
                 holder.knownForSegmentBtn.setOnClickListener {
-                    segmentedButtonPublisher.onNext(Pair(PeopleVu.KNOWN_FOR, personDetails))
+                    segmentedButtonPublisher.onNext(Pair(PersonVu.KNOWN_FOR, personDetails))
                 }
             }
         }

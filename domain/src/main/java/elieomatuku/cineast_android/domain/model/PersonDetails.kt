@@ -17,7 +17,7 @@ data class PersonDetails(
     val adult: Boolean? = null,
     val imdbId: String? = null,
     val homepage: String? = null
-): Serializable {
+) : Serializable {
 
     fun isEmpty(): Boolean {
         val emptyPersonalityDetails = PersonDetails()

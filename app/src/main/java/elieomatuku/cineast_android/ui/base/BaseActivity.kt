@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.view.Gravity
 import android.view.View
 import android.widget.PopupWindow
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +21,10 @@ import org.kodein.di.android.closestKodein
 import org.kodein.di.generic.instance
 
 
-abstract class BaseActivity : AppCompatActivity(), KodeinAware {
+abstract class BaseActivity : AppCompatActivity, KodeinAware {
+
+    constructor() : super()
+    constructor(@LayoutRes resId: Int) : super(resId)
 
     override val kodein: Kodein by closestKodein()
     val viewModelFactory: ViewModelProvider.Factory by instance()

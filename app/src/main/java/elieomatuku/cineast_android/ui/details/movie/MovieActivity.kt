@@ -2,17 +2,14 @@ package elieomatuku.cineast_android.ui.details.movie
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.ui.base.BaseActivity
@@ -22,17 +19,16 @@ import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.ui.details.movie.overview.MovieOverviewFragment
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.DividerItemDecorator
-import elieomatuku.cineast_android.utils.MovieUtils
+import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_movie.*
+import kotlinx.android.synthetic.main.activity_content_details.*
 import timber.log.Timber
 import java.io.Serializable
-import java.util.ArrayList
 
-class MovieActivity : BaseActivity() {
+class MovieActivity : BaseActivity(R.layout.activity_content_details) {
     companion object {
         const val MOVIE_KEY = "movieApi"
         const val MOVIE_GENRES_KEY = "genres"
@@ -82,7 +78,6 @@ class MovieActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie)
         setUpListView()
         toolbar?.let {
             UiUtils.initToolbar(this, it, true)
@@ -186,7 +181,7 @@ class MovieActivity : BaseActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         menu?.findItem(R.id.action_share)?.let {
-            it.isVisible = MovieUtils.supportsShare(movie.id)
+            it.isVisible = ContentUtils.supportsShare(movie.id)
         }
 
         menu?.findItem(R.id.action_watchlist)?.let {
@@ -338,7 +333,7 @@ class MovieActivity : BaseActivity() {
             .add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
     }
 
-    fun updateErrorView(errorMsg: String?) {
+    private fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
         listView.visibility = View.VISIBLE

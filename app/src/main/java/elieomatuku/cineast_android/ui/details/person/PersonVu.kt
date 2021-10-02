@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.people
+package elieomatuku.cineast_android.ui.details.person
 
 import android.app.Activity
 import android.os.Bundle
@@ -22,10 +22,10 @@ import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_movie.view.*
+import kotlinx.android.synthetic.main.activity_content_details.view.*
 import java.util.ArrayList
 
-class PeopleVu(
+class PersonVu(
     inflater: LayoutInflater,
     activity: Activity,
     fragmentWrapper: FragmentWrapper?,
@@ -46,7 +46,7 @@ class PeopleVu(
         get() = rootView.toolbar
 
     override fun getRootViewLayoutId(): Int {
-        return R.layout.activity_movie
+        return R.layout.activity_content_details
     }
 
     private val listView: RecyclerView by lazy {
@@ -61,11 +61,8 @@ class PeopleVu(
         get() = onProfileClickedPicturePublisher.hide()
 
     val personPresentedPublisher: PublishSubject<Person>? by lazy {
-        if (activity is PeopleActivity) {
-            activity.personPresentedPublisher
-        } else {
-            null
-        }
+        null
+
     }
 
     private val onSegmentedButtonsPublisher: PublishSubject<Pair<String, PersonDetails>> by lazy {
@@ -75,8 +72,8 @@ class PeopleVu(
     val onSegmentedButtonsObservable: Observable<Pair<String, PersonDetails>>
         get() = onSegmentedButtonsPublisher.hide()
 
-    val adapter: PeopleSummaryAdapter by lazy {
-        PeopleSummaryAdapter(onProfileClickedPicturePublisher, onSegmentedButtonsPublisher)
+    val adapter: PersonAdapter by lazy {
+        PersonAdapter(onProfileClickedPicturePublisher, onSegmentedButtonsPublisher)
     }
 
     private var knownFor: List<Movie> = listOf()

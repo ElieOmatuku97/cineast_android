@@ -4,16 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.extensions.Contents
 import elieomatuku.cineast_android.ui.base.BaseActivity
-import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.ui.details.people.PeopleActivity
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

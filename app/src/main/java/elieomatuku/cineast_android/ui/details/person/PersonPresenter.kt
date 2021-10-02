@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.people
+package elieomatuku.cineast_android.ui.details.person
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -11,7 +11,7 @@ import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 
-class PeoplePresenter : BasePresenter<PeopleVu>() {
+class PersonPresenter : BasePresenter<PersonVu>() {
     companion object {
         const val PEOPLE_KEY = "peopleApi"
         const val PEOPLE_DETAILS_KEY = "people_details"
@@ -22,7 +22,7 @@ class PeoplePresenter : BasePresenter<PeopleVu>() {
     var personDetails: PersonDetails? = null
     var peopleMovies: List<Movie>? = listOf()
 
-    override fun onLink(vu: PeopleVu, inState: Bundle?, args: Bundle) {
+    override fun onLink(vu: PersonVu, inState: Bundle?, args: Bundle) {
         super.onLink(vu, inState, args)
 
         val screenName = args.getString(Constants.SCREEN_NAME_KEY)

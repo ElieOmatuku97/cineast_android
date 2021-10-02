@@ -12,8 +12,8 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.base.BaseFragment
-import elieomatuku.cineast_android.ui.details.people.PeopleActivity
-import elieomatuku.cineast_android.ui.details.people.PeoplePresenter
+import elieomatuku.cineast_android.ui.details.person.PersonActivity
+import elieomatuku.cineast_android.ui.details.person.PersonPresenter
 import elieomatuku.cineast_android.utils.Constants.SCREEN_NAME_KEY
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -86,7 +86,7 @@ class MovieTeamFragment : BaseFragment() {
         val params = Bundle()
         params.putString(SCREEN_NAME_KEY, movieTitle)
         params.putSerializable(PEOPLE_KEY, person)
-        params.putBoolean(PeoplePresenter.MOVIE_TEAM_KEY, true)
+        params.putBoolean(PersonPresenter.MOVIE_TEAM_KEY, true)
         gotoPeople(params)
     }
 
@@ -95,7 +95,7 @@ class MovieTeamFragment : BaseFragment() {
     }
 
     private fun gotoPeople(params: Bundle) {
-        val intent = Intent(activity, PeopleActivity::class.java)
+        val intent = Intent(activity, PersonActivity::class.java)
         intent.putExtras(params)
         activity?.startActivity(intent)
     }

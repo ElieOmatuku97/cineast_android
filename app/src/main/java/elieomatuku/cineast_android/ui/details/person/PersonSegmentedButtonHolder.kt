@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.ui.details.people
+package elieomatuku.cineast_android.ui.details.person
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +10,14 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import kotlinx.android.synthetic.main.holder_menu_people.view.*
 
-class PeopleSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class PersonSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_menu_people, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup): PeopleSegmentedButtonHolder {
-            return PeopleSegmentedButtonHolder(createView(parent))
+        fun newInstance(parent: ViewGroup): PersonSegmentedButtonHolder {
+            return PersonSegmentedButtonHolder(createView(parent))
         }
     }
 
@@ -41,8 +41,8 @@ class PeopleSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(item
         }
 
         when (checkedTab) {
-            PeopleVu.OVERVIEW -> overviewSegmentBtn.isChecked = true
-            PeopleVu.KNOWN_FOR -> knownForSegmentBtn.isChecked = true
+            PersonVu.OVERVIEW -> overviewSegmentBtn.isChecked = true
+            PersonVu.KNOWN_FOR -> knownForSegmentBtn.isChecked = true
         }
     }
 }

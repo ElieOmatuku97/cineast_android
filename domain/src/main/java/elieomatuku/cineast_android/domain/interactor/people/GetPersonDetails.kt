@@ -11,8 +11,8 @@ import elieomatuku.cineast_android.domain.repository.PersonRepository
  * Created by elieomatuku on 2021-08-22
  */
 
-class GetDetails(private val personRepository: PersonRepository) :
-    UseCase<GetDetails.Input, CompleteResult<PersonDetails>> {
+class GetPersonDetails(private val personRepository: PersonRepository) :
+    UseCase<GetPersonDetails.Input, CompleteResult<PersonDetails>> {
 
     override suspend fun execute(params: Input): CompleteResult<PersonDetails> {
         return safeUseCaseCall {

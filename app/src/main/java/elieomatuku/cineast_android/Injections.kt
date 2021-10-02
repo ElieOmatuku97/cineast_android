@@ -28,6 +28,9 @@ import elieomatuku.cineast_android.data.source.person.PersonCacheDataStore
 import elieomatuku.cineast_android.data.source.person.PersonDataStoreFactory
 import elieomatuku.cineast_android.data.source.person.PersonRemoteDataStore
 import elieomatuku.cineast_android.domain.interactor.movie.*
+import elieomatuku.cineast_android.domain.interactor.people.GetImages
+import elieomatuku.cineast_android.domain.interactor.people.GetKnownForMovies
+import elieomatuku.cineast_android.domain.interactor.people.GetPersonDetails
 import elieomatuku.cineast_android.domain.interactor.people.GetPersonalities
 import elieomatuku.cineast_android.domain.interactor.user.GetAccessToken
 import elieomatuku.cineast_android.domain.interactor.user.IsLoggedIn
@@ -43,6 +46,7 @@ import elieomatuku.cineast_android.remote.api.PersonApi
 import elieomatuku.cineast_android.remote.api.AuthenticationApi
 import elieomatuku.cineast_android.ui.details.MoviesViewModel
 import elieomatuku.cineast_android.ui.details.movie.MovieViewModel
+import elieomatuku.cineast_android.ui.details.person.PersonViewModel
 import elieomatuku.cineast_android.ui.discover.DiscoverViewModel
 import elieomatuku.cineast_android.ui.search.movie.MoviesGridViewModel
 import elieomatuku.cineast_android.ui.search.people.PeopleGridViewModel
@@ -292,6 +296,18 @@ fun depInjecT(app: Application): Kodein {
             GetAccessToken(instance())
         }
 
+        bind<GetPersonDetails>() with singleton {
+            GetPersonDetails(instance())
+        }
+
+        bind<GetKnownForMovies>() with singleton {
+            GetKnownForMovies(instance())
+        }
+
+        bind<GetImages>() with singleton {
+            GetImages(instance())
+        }
+
         bindViewModel<DiscoverViewModel>() with provider {
             DiscoverViewModel(instance(), instance(), instance(), instance(), instance())
         }
@@ -315,6 +331,14 @@ fun depInjecT(app: Application): Kodein {
                 instance(),
                 instance(),
                 instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
+
+        bindViewModel<PersonViewModel>() with provider {
+            PersonViewModel(
                 instance(),
                 instance(),
                 instance()

@@ -20,14 +20,14 @@ import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_movie.view.*
 
-class ProfileMovieHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>) : ProfileHolder(itemView) {
+class MovieProfileHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>) : ProfileHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_profile_movie, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup, onProfileClickedPicturePublisher: PublishSubject<Int>): ProfileMovieHolder {
-            return ProfileMovieHolder(createView(parent), onProfileClickedPicturePublisher)
+        fun newInstance(parent: ViewGroup, onProfileClickedPicturePublisher: PublishSubject<Int>): MovieProfileHolder {
+            return MovieProfileHolder(createView(parent), onProfileClickedPicturePublisher)
         }
     }
 

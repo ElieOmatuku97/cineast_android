@@ -14,7 +14,7 @@ import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.getFilteredWidgets
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.ui.details.people.PeopleActivity
+import elieomatuku.cineast_android.ui.details.person.PersonActivity
 import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
 import elieomatuku.cineast_android.utils.Constants
@@ -199,7 +199,7 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
     }
 
     private fun gotoPeople(params: Bundle) {
-        val intent = Intent(activity, PeopleActivity::class.java)
+        val intent = Intent(activity, PersonActivity::class.java)
         intent.putExtras(params)
         activity?.startActivity(intent)
     }

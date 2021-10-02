@@ -108,19 +108,19 @@ object UiUtils {
             item.icon = getTintedDrawable(icon, context, colorRes)
     }
 
-    fun getShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent? {
+    fun getShareIntent(itemTitleOrName: String?, itemId: Int?, path: String? = null): Intent? {
         return if ((itemTitleOrName != null) && (itemId != null)) {
-            configureShareIntent(itemTitleOrName, itemId, tmdbPath)
+            configureShareIntent(itemTitleOrName, itemId, path)
         } else {
             null
         }
     }
 
-    private fun configureShareIntent(itemTitleOrName: String?, itemId: Int?, tmdbPath: String? = null): Intent {
+    private fun configureShareIntent(itemTitleOrName: String?, itemId: Int?, path: String? = null): Intent {
         return Intent()
             .setAction(Intent.ACTION_SEND)
             .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
-            .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${MovieUtils.getMovieUrl(itemId, tmdbPath)}")
+            .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${ContentUtils.getContentUrl(itemId, path)}")
             .setType("text/plain")
     }
 

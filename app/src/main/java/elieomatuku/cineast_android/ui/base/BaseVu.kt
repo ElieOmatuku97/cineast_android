@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupWindow
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.ui.details.people.PeopleActivity
+import elieomatuku.cineast_android.ui.details.person.PersonActivity
 import elieomatuku.cineast_android.utils.UiUtils
 import io.chthonic.mythos.mvp.FragmentWrapper
 import io.chthonic.mythos.mvp.Vu
@@ -104,7 +104,7 @@ abstract class BaseVu(layoutInflater: LayoutInflater, activity: Activity, fragme
     }
 
     fun gotoPeople(params: Bundle) {
-        val intent = Intent(activity, PeopleActivity::class.java)
+        val intent = Intent(activity, PersonActivity::class.java)
         intent.putExtras(params)
         activity.startActivity(intent)
     }

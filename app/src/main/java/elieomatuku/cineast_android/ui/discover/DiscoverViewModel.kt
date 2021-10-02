@@ -11,7 +11,6 @@ import elieomatuku.cineast_android.domain.interactor.user.IsLoggedIn
 import elieomatuku.cineast_android.domain.interactor.user.Logout
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.ui.base.BaseViewModel
-import elieomatuku.cineast_android.ui.details.MoviesViewState
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch

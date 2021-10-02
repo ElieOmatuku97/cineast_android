@@ -64,7 +64,7 @@ class MovieSummaryAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_MOVIE_PROFILE -> ProfileMovieHolder.newInstance(
+            TYPE_MOVIE_PROFILE -> MovieProfileHolder.newInstance(
                 parent,
                 onProfileClickedPicturePublisher
             )
@@ -75,7 +75,7 @@ class MovieSummaryAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is ProfileMovieHolder) {
+        if (holder is MovieProfileHolder) {
             holder.update(movieSummary)
         }
 
