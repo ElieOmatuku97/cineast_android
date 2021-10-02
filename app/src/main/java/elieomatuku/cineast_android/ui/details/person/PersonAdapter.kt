@@ -24,7 +24,7 @@ class PersonAdapter(
         errorMessage = null
     }
 
-    private var initialCheckedTab: String = PersonVu.OVERVIEW
+    private var initialCheckedTab: String = PersonActivity.OVERVIEW
 
     var hasValidData = false
         private set
@@ -82,11 +82,11 @@ class PersonAdapter(
                 holder.update(personDetails, initialCheckedTab)
 
                 holder.overviewSegmentBtn.setOnClickListener {
-                    segmentedButtonPublisher.onNext(Pair(PersonVu.OVERVIEW, personDetails))
+                    segmentedButtonPublisher.onNext(Pair(PersonActivity.OVERVIEW, personDetails))
                 }
 
                 holder.knownForSegmentBtn.setOnClickListener {
-                    segmentedButtonPublisher.onNext(Pair(PersonVu.KNOWN_FOR, personDetails))
+                    segmentedButtonPublisher.onNext(Pair(PersonActivity.KNOWN_FOR, personDetails))
                 }
             }
         }

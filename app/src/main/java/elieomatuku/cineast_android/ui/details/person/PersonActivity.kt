@@ -31,6 +31,7 @@ class PersonActivity : BaseActivity(R.layout.activity_content_details) {
     companion object {
         const val OVERVIEW = "overview"
         const val KNOWN_FOR = "known_for"
+        const val PEOPLE_KEY = "peopleApi"
     }
 
     private val viewModel: PersonViewModel by viewModel<PersonViewModel>()
@@ -67,7 +68,7 @@ class PersonActivity : BaseActivity(R.layout.activity_content_details) {
 
         val screenName = intent.getStringExtra(Constants.SCREEN_NAME_KEY)
         toolbar?.title = screenName
-        val person: Person? = intent.getSerializableExtra(PersonPresenter.PEOPLE_KEY) as Person?
+        val person: Person? = intent.getSerializableExtra(PEOPLE_KEY) as Person?
 
         person?.let {
             viewModel.getPersonDetails(it)

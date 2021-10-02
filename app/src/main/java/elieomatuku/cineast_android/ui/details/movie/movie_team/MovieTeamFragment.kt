@@ -13,7 +13,6 @@ import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.details.person.PersonActivity
-import elieomatuku.cineast_android.ui.details.person.PersonPresenter
 import elieomatuku.cineast_android.utils.Constants.SCREEN_NAME_KEY
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -24,6 +23,7 @@ class MovieTeamFragment : BaseFragment() {
     companion object {
         const val MOVIE_SUMMARY = "movie_summary"
         const val PEOPLE_KEY = "peopleApi"
+        const val MOVIE_TEAM_KEY = "movie_team"
 
         fun newInstance(movieSummary: MovieSummary): MovieTeamFragment {
             val args = Bundle()
@@ -86,7 +86,7 @@ class MovieTeamFragment : BaseFragment() {
         val params = Bundle()
         params.putString(SCREEN_NAME_KEY, movieTitle)
         params.putSerializable(PEOPLE_KEY, person)
-        params.putBoolean(PersonPresenter.MOVIE_TEAM_KEY, true)
+        params.putBoolean(MOVIE_TEAM_KEY, true)
         gotoPeople(params)
     }
 

@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.holder_menu_people.view.*
 class PersonSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context).inflate(R.layout.holder_menu_people, parent, false)
+            return LayoutInflater.from(parent.context)
+                .inflate(R.layout.holder_menu_people, parent, false)
         }
 
         fun newInstance(parent: ViewGroup): PersonSegmentedButtonHolder {
@@ -41,8 +42,8 @@ class PersonSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(item
         }
 
         when (checkedTab) {
-            PersonVu.OVERVIEW -> overviewSegmentBtn.isChecked = true
-            PersonVu.KNOWN_FOR -> knownForSegmentBtn.isChecked = true
+            PersonActivity.OVERVIEW -> overviewSegmentBtn.isChecked = true
+            PersonActivity.KNOWN_FOR -> knownForSegmentBtn.isChecked = true
         }
     }
 }

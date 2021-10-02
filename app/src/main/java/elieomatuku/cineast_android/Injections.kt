@@ -67,7 +67,7 @@ fun depInjecT(app: Application): Kodein {
 
     return Kodein.lazy {
         import(androidXModule(app))
-        bind<ContentService>() with singleton { ContentService(instance(), instance()) }
+        bind<ContentService>() with singleton { ContentService(instance()) }
         bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
         bind<OkHttpClient>() with singleton {
