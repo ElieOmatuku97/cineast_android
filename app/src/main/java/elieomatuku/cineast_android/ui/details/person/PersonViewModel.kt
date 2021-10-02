@@ -83,7 +83,7 @@ class PersonViewModel(
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
-                    posters = result.data.posters,
+                    posters = result.data.peoplePosters,
                 )
 
                 is Fail -> state.copy(

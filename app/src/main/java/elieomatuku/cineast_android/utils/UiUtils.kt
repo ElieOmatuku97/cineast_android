@@ -35,8 +35,8 @@ object UiUtils {
         get() = R.dimen.loading_widget_dimen
 
     fun createLoadingIndicator(activity: Activity): PopupWindow {
-        val inflator = LayoutInflater.from(activity)
-        val loadingView = inflator.inflate(R.layout.layout_loading, null)
+        val inflater = LayoutInflater.from(activity)
+        val loadingView = inflater.inflate(R.layout.layout_loading, null)
         val dimen = activity.resources.getDimensionPixelSize(loadingViewDimRes)
         val popup = PopupWindow(dimen, dimen)
         popup.contentView = loadingView
@@ -86,7 +86,7 @@ object UiUtils {
 
     fun mapMovieGenreIdsWithGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): String? {
         val genresNames = getGenreNames(movieGenreIds, genres)
-        return if ((genresNames != null) && !genresNames.isEmpty()) {
+        return if ((genresNames != null) && genresNames.isNotEmpty()) {
             genresNames.joinToString(", ")
         } else {
             null
