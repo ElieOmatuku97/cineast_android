@@ -4,7 +4,6 @@ import android.content.res.Resources
 import elieomatuku.cineast_android.business.api.AuthenticationApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.data.PrefManager
-import elieomatuku.cineast_android.domain.ValueStore
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.domain.model.Session

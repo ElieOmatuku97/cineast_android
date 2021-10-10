@@ -5,7 +5,7 @@ import android.text.style.URLSpan
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.ui.fragment.WebviewFragment
+import elieomatuku.cineast_android.ui.fragment.WebViewFragment
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.utils.WebLink
 
@@ -28,7 +28,7 @@ abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     }
 
     override fun gotoWebview(value: String) {
-        val webViewFragment: WebviewFragment = WebviewFragment.newInstance(value)
+        val webViewFragment: WebViewFragment = WebViewFragment.newInstance(value)
         val fm = (itemView.context as AppCompatActivity).supportFragmentManager
         fm.beginTransaction().add(android.R.id.content, webViewFragment, null).addToBackStack(null).commit()
     }

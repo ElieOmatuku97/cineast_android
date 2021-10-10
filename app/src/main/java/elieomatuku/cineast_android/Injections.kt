@@ -2,10 +2,8 @@ package elieomatuku.cineast_android
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.business.service.ConnectionService
-import elieomatuku.cineast_android.business.service.ContentService
 import elieomatuku.cineast_android.cache.*
 import elieomatuku.cineast_android.cache.dao.*
 import elieomatuku.cineast_android.data.AuthenticationRepositoryImpl
@@ -65,7 +63,6 @@ fun depInjecT(app: Application): Kodein {
 
     return Kodein.lazy {
         import(androidXModule(app))
-        bind<ContentService>() with singleton { ContentService() }
         bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
         bind<OkHttpClient>() with singleton {
@@ -156,8 +153,6 @@ fun depInjecT(app: Application): Kodein {
         bind<TmdbUserClient>() with singleton {
             TmdbUserClient(instance(), instance())
         }
-
-        bind<TmdbContentClient>() with singleton { TmdbContentClient(instance(), instance()) }
 
         bind<PrefManager>() with singleton {
             val storeKey = "cineast_prefs"

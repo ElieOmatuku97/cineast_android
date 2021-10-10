@@ -123,7 +123,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
                 .toString()
 
             val fm = activity?.supportFragmentManager
-            fm?.beginTransaction()?.add(android.R.id.content, LoginWebviewFragment.newInstance(authenticateUrl), null)?.addToBackStack(null)?.commit()
+            fm?.beginTransaction()?.add(android.R.id.content, LoginWebViewFragment.newInstance(authenticateUrl), null)?.addToBackStack(null)?.commit()
         }
     }
 

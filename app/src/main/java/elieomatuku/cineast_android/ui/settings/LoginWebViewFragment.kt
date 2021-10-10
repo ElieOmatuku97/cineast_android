@@ -7,17 +7,17 @@ import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.domain.model.CineastError
-import elieomatuku.cineast_android.ui.fragment.WebviewFragment
+import elieomatuku.cineast_android.ui.fragment.WebViewFragment
 import elieomatuku.cineast_android.ui.home.HomeActivity
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
-class LoginWebviewFragment : WebviewFragment() {
+class LoginWebViewFragment : WebViewFragment() {
     companion object {
         private const val URL = "url"
 
-        fun newInstance(url: String?): WebviewFragment {
-            val fragment = LoginWebviewFragment()
+        fun newInstance(url: String?): WebViewFragment {
+            val fragment = LoginWebViewFragment()
             val args = Bundle()
             url?.let {
                 args.putString(URL, it)

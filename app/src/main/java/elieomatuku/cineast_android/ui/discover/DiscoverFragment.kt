@@ -15,8 +15,8 @@ import elieomatuku.cineast_android.extensions.getFilteredWidgets
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.ui.details.person.PersonActivity
-import elieomatuku.cineast_android.ui.fragment.WebviewFragment
-import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
+import elieomatuku.cineast_android.ui.fragment.WebViewFragment
+import elieomatuku.cineast_android.ui.settings.LoginWebViewFragment
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.consume
 import io.reactivex.Observable
@@ -174,8 +174,8 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
                 .build()
                 .toString()
 
-            val webViewFragment: WebviewFragment =
-                LoginWebviewFragment.newInstance(authenticateUrl)
+            val webViewFragment: WebViewFragment =
+                LoginWebViewFragment.newInstance(authenticateUrl)
             val fm = (activity as AppCompatActivity).supportFragmentManager
 
             fm.beginTransaction().add(android.R.id.content, webViewFragment, null)

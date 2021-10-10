@@ -5,14 +5,11 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.client.TmdbContentClient
 import elieomatuku.cineast_android.domain.model.Movie
-import org.kodein.di.generic.instance
+import elieomatuku.cineast_android.ui.base.BaseDialogFragment
 
-class RateDialogFragment : DialogFragment() {
+class RateDialogFragment : BaseDialogFragment() {
     companion object {
         const val TAG = "fragment_rate_dialog"
         const val MOVIE_KEY = "movie_key"
@@ -28,7 +25,8 @@ class RateDialogFragment : DialogFragment() {
         }
     }
 
-    private val tmdbContentClient: TmdbContentClient by App.getKodein.instance()
+    private val viewModel: RateViewModel by viewModel<RateViewModel>()
+
     private var movie: Movie? = null
     private var submitBtn: TextView? = null
     private var ratingBar: AppCompatRatingBar? = null
@@ -55,7 +53,12 @@ class RateDialogFragment : DialogFragment() {
         }
 
         activity?.let {
-            dialog.window?.setBackgroundDrawable(ContextCompat.getDrawable(it, R.drawable.bg_rate_dialog))
+            dialog.window?.setBackgroundDrawable(
+                ContextCompat.getDrawable(
+                    it,
+                    R.drawable.bg_rate_dialog
+                )
+            )
         }
 
         onRatingInput()
@@ -71,7 +74,7 @@ class RateDialogFragment : DialogFragment() {
 
             rating?.let { _rating ->
                 movie?.let {
-                    tmdbContentClient.postMovieRate(it, _rating)
+                    viewModel.rateMovie(it, _rating)
                 }
             }
 
@@ -86,6 +89,7 @@ class RateDialogFragment : DialogFragment() {
     }
 
     private fun displayRating(rating: Float) {
-        dialogTitle?.text = String.format("%s %.1f", activity?.getString(R.string.rate_this_movie), rating)
+        dialogTitle?.text =
+            String.format("%s %.1f", activity?.getString(R.string.rate_this_movie), rating)
     }
 }

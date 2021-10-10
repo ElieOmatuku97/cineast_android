@@ -3,13 +3,9 @@ package elieomatuku.cineast_android.ui.settings.user_movies
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.Menu
 import android.view.MenuItem
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,11 +18,13 @@ import elieomatuku.cineast_android.ui.details.movie.MovieActivity
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.SwipeToDeleteCallback
 import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.utils.consume
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_content.*
 import timber.log.Timber
+import java.io.Serializable
 
 class UserMoviesActivity : BaseActivity() {
     companion object {
@@ -74,7 +72,7 @@ class UserMoviesActivity : BaseActivity() {
         }
     }
 
-    private val viewModel: UserMoviesViewModel by viewModels()
+    private val viewModel: UserMoviesViewModel by viewModel<UserMoviesViewModel>()
 
     private val movieSelectPublisher: PublishSubject<Content> by lazy {
         PublishSubject.create<Content>()
@@ -91,7 +89,11 @@ class UserMoviesActivity : BaseActivity() {
         get() = onMovieRemovedPublisher.hide()
 
     private val adapter: ContentsAdapter by lazy {
-        UserContentsAdapter(movieSelectPublisher, R.layout.holder_movie_list, onMovieRemovedPublisher)
+        UserContentsAdapter(
+            movieSelectPublisher,
+            R.layout.holder_movie_list,
+            onMovieRemovedPublisher
+        )
     }
 
     private val listView: RecyclerView by lazy {
@@ -115,6 +117,16 @@ class UserMoviesActivity : BaseActivity() {
         initData()
 
         UiUtils.initToolbar(this, toolbarView, true)
+
+        viewModel.viewState.observe(this) { state ->
+            if (state.userMovies.isNotEmpty()) {
+                updateView(state.userMovies)
+            }
+
+            state.viewError?.consume {
+                updateErrorView(it.message)
+            }
+        }
     }
 
     override fun onResume() {
@@ -140,7 +152,10 @@ class UserMoviesActivity : BaseActivity() {
                         val params = Bundle()
                         params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
                         params.putSerializable(MOVIE_KEY, movie)
-                        params.putParcelableArrayList(MOVIE_GENRES_KEY, viewModel.genresLiveData.value as ArrayList<out Parcelable>)
+                        params.putSerializable(
+                            MOVIE_GENRES_KEY,
+                            viewModel.genres as Serializable
+                        )
                         gotoMovie(params)
                     },
                     { t: Throwable ->
@@ -162,9 +177,6 @@ class UserMoviesActivity : BaseActivity() {
                 viewModel.getRatedMovies()
             }
         }
-
-        viewModel.userMovies.observe(this, Observer { res -> updateView(res) })
-        viewModel.errorMessage.observe(this, Observer { res -> updateErrorView(res) })
     }
 
     private fun removeMovie(movie: Movie) {

@@ -11,12 +11,12 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.fragment_webview.view.*
 
-open class WebviewFragment() : Fragment() {
+open class WebViewFragment : Fragment() {
     companion object {
         const val URL = "url"
 
-        fun newInstance(url: String?): WebviewFragment {
-            val fragment = WebviewFragment()
+        fun newInstance(url: String?): WebViewFragment {
+            val fragment = WebViewFragment()
             val args = Bundle()
             url?.let {
                 args.putString(URL, it)
@@ -26,7 +26,11 @@ open class WebviewFragment() : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_webview, container, false)
         val url = arguments?.getString(URL)
 
@@ -37,12 +41,12 @@ open class WebviewFragment() : Fragment() {
             UiUtils.configureWebView(webv, progressBar)
         }
 
-        webview.setWebViewClient(object : WebViewClient() {
+        webview.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 view?.loadUrl(url)
                 return true
             }
-        })
+        }
 
         if (!url.isNullOrEmpty()) {
             webview.loadUrl(url)
