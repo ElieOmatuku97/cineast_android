@@ -3,9 +3,7 @@ package elieomatuku.cineast_android.business.client
 import android.content.res.Resources
 import com.google.gson.Gson
 import elieomatuku.cineast_android.business.api.MovieApi
-import elieomatuku.cineast_android.business.api.PeopleApi
 import elieomatuku.cineast_android.business.api.response.MovieResponse
-import elieomatuku.cineast_android.business.api.response.PersonalityResponse
 import elieomatuku.cineast_android.business.api.response.PostResponse
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.data.PrefManager
@@ -35,52 +33,6 @@ class TmdbContentClient(
 
     private val movieApi: MovieApi by lazy {
         retrofit.create(MovieApi::class.java)
-    }
-
-    private val peopleApi: PeopleApi by lazy {
-        retrofit.create(PeopleApi::class.java)
-    }
-
-    fun searchMovies(argQuery: String, asyncResponse: AsyncResponse<MovieResponse>) {
-        movieApi.getMoviesWithSearch(argQuery).enqueue(object : Callback<MovieResponse> {
-            override fun onResponse(
-                call: Call<MovieResponse>?,
-                response: Response<MovieResponse>?
-            ) {
-                val success = response?.isSuccessful ?: false
-                if (success) {
-                    asyncResponse.onSuccess(response?.body())
-                } else {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-                }
-            }
-
-            override fun onFailure(call: Call<MovieResponse>?, t: Throwable?) {
-                Timber.d("response: $t")
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-            }
-        })
-    }
-
-    fun searchPeople(argQuery: String, asyncResponse: AsyncResponse<PersonalityResponse>) {
-        peopleApi.getPeopleWithSearch(argQuery).enqueue(object : Callback<PersonalityResponse> {
-            override fun onResponse(
-                call: Call<PersonalityResponse>?,
-                response: Response<PersonalityResponse>?
-            ) {
-                val success = response?.isSuccessful ?: false
-                if (success) {
-                    asyncResponse.onSuccess(response?.body())
-                } else {
-                    asyncResponse.onFail(ApiUtils.throwableToCineastError(response?.errorBody()))
-                }
-            }
-
-            override fun onFailure(call: Call<PersonalityResponse>?, t: Throwable?) {
-                Timber.d("response: $t")
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(t))
-            }
-        })
     }
 
     suspend fun getWatchList(): ApiResult<MovieResponse> {

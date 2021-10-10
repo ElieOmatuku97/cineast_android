@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.ui.home
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import elieomatuku.cineast_android.R
@@ -45,12 +46,12 @@ class HomeActivity : BaseActivity() {
         initView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
+    }
+
     private fun initView() {
         pager.adapter = adapter
-
-        toolbar?.let {
-            UiUtils.initToolbar(this, it, false)
-        }
 
         bottomNav.setOnNavigationItemSelectedListener {
             toolbar?.title = it.title

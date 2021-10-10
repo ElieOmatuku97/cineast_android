@@ -23,7 +23,6 @@ open class ContentsAdapter(
     }
 
     var contents: MutableList<Content> by Delegates.observable(mutableListOf()) { prop, oldContents, nuContents ->
-        Timber.d("widgets = $nuContents")
         hasValidData = true
         errorMessage = null
     }
@@ -35,7 +34,6 @@ open class ContentsAdapter(
     var errorMessage: String?
         get() = _errorMessage
         set(nuErrorMessage) {
-            Timber.d("from MovieListAdapter: $nuErrorMessage")
             _errorMessage = nuErrorMessage
             hasValidData = true
         }
@@ -87,7 +85,6 @@ open class ContentsAdapter(
                 holder.update(movie as Movie)
 
                 holder.itemView.setOnClickListener {
-                    Timber.d("CLICKED && movieApi:  ${contents[position]}")
                     onContentClickPublisher.onNext(contents[position])
                 }
             }

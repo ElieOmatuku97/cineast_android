@@ -12,13 +12,11 @@ import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
 import elieomatuku.cineast_android.extensions.getSharedViewModel
 import elieomatuku.cineast_android.extensions.getViewModel
 import elieomatuku.cineast_android.utils.UiUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.layout_loading.view.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 import org.kodein.di.android.x.kodein
-import timber.log.Timber
 
 /**
  * Created by elieomatuku on 2021-05-05
@@ -64,23 +62,23 @@ abstract class BaseFragment : Fragment, KodeinAware {
     override fun onResume() {
         super.onResume()
 
-        rxSubs.add(
-            connectionService.connectionChangedObserver
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { hasConnection ->
-
-                        if (hasConnection) {
-                            showLoading(requireView())
-                        }
-                        Timber.d("connectionChangedObserver: hasConnection = $hasConnection, hasEmptyState = ")
-                    },
-                    { t: Throwable ->
-
-                        Timber.e(t, "Connection Change Observer failed")
-                    }
-                )
-        )
+//        rxSubs.add(
+//            connectionService.connectionChangedObserver
+//                .subscribeOn(AndroidSchedulers.mainThread())
+//                .subscribe(
+//                    { hasConnection ->
+//
+//                        if (hasConnection) {
+//                            showLoading(requireView())
+//                        }
+//                        Timber.d("connectionChangedObserver: hasConnection = $hasConnection, hasEmptyState = ")
+//                    },
+//                    { t: Throwable ->
+//
+//                        Timber.e(t, "Connection Change Observer failed")
+//                    }
+//                )
+//        )
     }
 
     fun showLoading(view: View, modal: Boolean = false) {

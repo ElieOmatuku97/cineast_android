@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.ui.base.BaseFragment
-import elieomatuku.cineast_android.ui.search.SearchVu.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
+import elieomatuku.cineast_android.ui.search.SearchFragment.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject

@@ -28,10 +28,7 @@ import elieomatuku.cineast_android.data.source.person.PersonCacheDataStore
 import elieomatuku.cineast_android.data.source.person.PersonDataStoreFactory
 import elieomatuku.cineast_android.data.source.person.PersonRemoteDataStore
 import elieomatuku.cineast_android.domain.interactor.movie.*
-import elieomatuku.cineast_android.domain.interactor.people.GetImages
-import elieomatuku.cineast_android.domain.interactor.people.GetKnownForMovies
-import elieomatuku.cineast_android.domain.interactor.people.GetPersonDetails
-import elieomatuku.cineast_android.domain.interactor.people.GetPersonalities
+import elieomatuku.cineast_android.domain.interactor.people.*
 import elieomatuku.cineast_android.domain.interactor.user.GetAccessToken
 import elieomatuku.cineast_android.domain.interactor.user.IsLoggedIn
 import elieomatuku.cineast_android.domain.interactor.user.Logout
@@ -48,6 +45,7 @@ import elieomatuku.cineast_android.ui.details.MoviesViewModel
 import elieomatuku.cineast_android.ui.details.movie.MovieViewModel
 import elieomatuku.cineast_android.ui.details.person.PersonViewModel
 import elieomatuku.cineast_android.ui.discover.DiscoverViewModel
+import elieomatuku.cineast_android.ui.search.SearchViewModel
 import elieomatuku.cineast_android.ui.search.movie.MoviesGridViewModel
 import elieomatuku.cineast_android.ui.search.people.PeopleGridViewModel
 import elieomatuku.cineast_android.utils.RestUtils
@@ -67,7 +65,7 @@ fun depInjecT(app: Application): Kodein {
 
     return Kodein.lazy {
         import(androidXModule(app))
-        bind<ContentService>() with singleton { ContentService(instance()) }
+        bind<ContentService>() with singleton { ContentService() }
         bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
         bind<OkHttpClient>() with singleton {
@@ -308,6 +306,14 @@ fun depInjecT(app: Application): Kodein {
             GetImages(instance())
         }
 
+        bind<SearchPeople>() with singleton {
+            SearchPeople(instance())
+        }
+
+        bind<SearchMovies>() with singleton {
+            SearchMovies(instance())
+        }
+
         bindViewModel<DiscoverViewModel>() with provider {
             DiscoverViewModel(instance(), instance(), instance(), instance(), instance())
         }
@@ -340,6 +346,13 @@ fun depInjecT(app: Application): Kodein {
         bindViewModel<PersonViewModel>() with provider {
             PersonViewModel(
                 instance(),
+                instance(),
+                instance()
+            )
+        }
+
+        bindViewModel<SearchViewModel>() with provider {
+            SearchViewModel(
                 instance(),
                 instance()
             )

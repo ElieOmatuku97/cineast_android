@@ -16,9 +16,7 @@ interface MovieApi {
         private const val MOVIE_ID = "movie_id"
         private const val SESSION_ID = "session_id"
         private const val ACCOUNT_ID = "account_id"
-        const val QUERY = "query"
 
-        const val SEARCH_MOVIE = "search/movie"
         const val WATCHLIST_MOVIE = "account/{$ACCOUNT_ID}/watchlist/movies"
         const val UPDATE_WATCHLIST_MOVIE = "account/{$ACCOUNT_ID}/watchlist"
         const val FAVORITES_MOVIE = "account/{account_id}/favorite/movies"
@@ -26,9 +24,6 @@ interface MovieApi {
         const val RATED_MOVIE = "account/{$ACCOUNT_ID}/rated/movies"
         const val POST_MOVIE_RATE = "movie/{$MOVIE_ID}/rating"
     }
-
-    @GET(SEARCH_MOVIE)
-    fun getMoviesWithSearch(@Query(QUERY) query: String): Call<MovieResponse>
 
     @GET(WATCHLIST_MOVIE)
     fun getWatchList(@Query(SESSION_ID) sessionId: String): Deferred<MovieResponse>
