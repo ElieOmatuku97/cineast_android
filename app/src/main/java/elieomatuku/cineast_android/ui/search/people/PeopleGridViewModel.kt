@@ -8,8 +8,8 @@ import elieomatuku.cineast_android.domain.interactor.people.GetPersonalities
 import elieomatuku.cineast_android.domain.interactor.runUseCase
 import elieomatuku.cineast_android.ui.contents.ContentGridViewModel
 import elieomatuku.cineast_android.ui.contents.ContentGridViewState
-import elieomatuku.cineast_android.utils.SingleEvent
-import elieomatuku.cineast_android.utils.ViewErrorController
+import elieomatuku.cineast_android.ui.utils.SingleEvent
+import elieomatuku.cineast_android.ui.utils.ViewErrorController
 import kotlinx.coroutines.launch
 
 /**

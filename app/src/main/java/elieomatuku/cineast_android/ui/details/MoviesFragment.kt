@@ -2,14 +2,11 @@ package elieomatuku.cineast_android.ui.details
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
@@ -21,13 +18,12 @@ import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.contents.ContentsActivity
 import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.utils.Constants
+import elieomatuku.cineast_android.ui.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.io.Serializable
-import java.util.ArrayList
 
 /**
  * Created by elieomatuku on 2021-05-05

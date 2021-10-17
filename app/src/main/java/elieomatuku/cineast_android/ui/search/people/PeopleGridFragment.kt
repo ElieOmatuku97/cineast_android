@@ -6,8 +6,8 @@ import android.view.View
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.ui.contents.ContentGridFragment
 import elieomatuku.cineast_android.ui.details.person.PersonActivity
-import elieomatuku.cineast_android.utils.Constants
-import elieomatuku.cineast_android.utils.consume
+import elieomatuku.cineast_android.ui.utils.Constants
+import elieomatuku.cineast_android.ui.utils.consume
 
 /**
  * Created by elieomatuku on 2021-06-05

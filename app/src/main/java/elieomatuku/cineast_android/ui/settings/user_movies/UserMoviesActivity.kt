@@ -15,10 +15,10 @@ import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.ui.base.BaseActivity
 import elieomatuku.cineast_android.ui.contents.ContentsAdapter
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.utils.Constants
-import elieomatuku.cineast_android.utils.SwipeToDeleteCallback
-import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.utils.consume
+import elieomatuku.cineast_android.ui.utils.Constants
+import elieomatuku.cineast_android.ui.utils.SwipeToDeleteCallback
+import elieomatuku.cineast_android.ui.utils.UiUtils
+import elieomatuku.cineast_android.ui.utils.consume
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject

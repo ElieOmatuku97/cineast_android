@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.utils
+package elieomatuku.cineast_android.ui.utils
 
 import android.content.Context
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

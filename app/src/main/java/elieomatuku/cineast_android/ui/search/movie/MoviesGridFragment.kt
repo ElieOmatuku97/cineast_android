@@ -7,7 +7,7 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.ui.contents.ContentGridFragment
 import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.utils.Constants
+import elieomatuku.cineast_android.ui.utils.Constants
 import java.io.Serializable
 
 /**

@@ -3,8 +3,8 @@ package elieomatuku.cineast_android.ui.settings
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.domain.model.Session
-import elieomatuku.cineast_android.utils.SingleEvent
-import elieomatuku.cineast_android.utils.ViewError
+import elieomatuku.cineast_android.ui.utils.SingleEvent
+import elieomatuku.cineast_android.ui.utils.ViewError
 
 
 /**

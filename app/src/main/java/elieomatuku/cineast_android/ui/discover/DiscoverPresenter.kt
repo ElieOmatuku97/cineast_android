@@ -10,7 +10,7 @@ package elieomatuku.cineast_android.ui.discover
 //import elieomatuku.cineast_android.domain.model.Genre
 //import elieomatuku.cineast_android.domain.model.Movie
 //import elieomatuku.cineast_android.ui.base.BasePresenter
-//import elieomatuku.cineast_android.utils.Constants
+//import elieomatuku.cineast_android.ui.utils.Constants
 //import io.reactivex.android.schedulers.AndroidSchedulers
 //import io.reactivex.schedulers.Schedulers
 //import org.kodein.di.generic.instance

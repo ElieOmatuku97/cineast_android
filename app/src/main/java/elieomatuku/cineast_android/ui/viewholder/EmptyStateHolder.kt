@@ -9,7 +9,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.connection.ConnectionService
+import elieomatuku.cineast_android.ui.connection.ConnectionService
 import kotlinx.android.synthetic.main.holder_empty_state.view.*
 import org.kodein.di.generic.instance
 

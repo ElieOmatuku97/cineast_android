@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.extensions
+package elieomatuku.cineast_android.ui.extensions
 
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content

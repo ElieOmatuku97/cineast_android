@@ -7,11 +7,11 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.connection.ConnectionService
-import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
-import elieomatuku.cineast_android.extensions.getSharedViewModel
-import elieomatuku.cineast_android.extensions.getViewModel
-import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.ui.connection.ConnectionService
+import elieomatuku.cineast_android.ui.extensions.lifecycleAwareLazy
+import elieomatuku.cineast_android.ui.extensions.getSharedViewModel
+import elieomatuku.cineast_android.ui.extensions.getViewModel
+import elieomatuku.cineast_android.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.layout_loading.view.*
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware

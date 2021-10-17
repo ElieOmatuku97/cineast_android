@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.ui.viewholder.ProfileHolder
-import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.ui.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_people.view.*
 

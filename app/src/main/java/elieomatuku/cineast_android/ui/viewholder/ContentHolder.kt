@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android.ui.viewholder
 
 import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.extensions.Contents
+import elieomatuku.cineast_android.ui.extensions.Contents
 
 /**
  * Created by elieomatuku on 2019-12-29

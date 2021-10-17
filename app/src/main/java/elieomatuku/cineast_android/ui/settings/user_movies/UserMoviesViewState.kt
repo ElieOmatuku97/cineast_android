@@ -2,8 +2,8 @@ package elieomatuku.cineast_android.ui.settings.user_movies
 
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
-import elieomatuku.cineast_android.utils.SingleEvent
-import elieomatuku.cineast_android.utils.ViewError
+import elieomatuku.cineast_android.ui.utils.SingleEvent
+import elieomatuku.cineast_android.ui.utils.ViewError
 
 /**
  * Created by elieomatuku on 2021-10-10

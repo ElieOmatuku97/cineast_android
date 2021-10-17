@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.utils
+package elieomatuku.cineast_android.ui.utils
 
 /**
  * Created by elieomatuku on 2021-06-05

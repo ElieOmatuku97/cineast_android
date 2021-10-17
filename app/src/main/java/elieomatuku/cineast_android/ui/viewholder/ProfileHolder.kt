@@ -6,8 +6,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.ui.fragment.WebViewFragment
-import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.utils.WebLink
+import elieomatuku.cineast_android.ui.utils.UiUtils
+import elieomatuku.cineast_android.ui.utils.WebLink
 
 abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView), WebLink<String> {
 

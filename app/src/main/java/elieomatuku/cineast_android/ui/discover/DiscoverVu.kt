@@ -18,7 +18,7 @@ package elieomatuku.cineast_android.ui.discover
 //import elieomatuku.cineast_android.ui.fragment.WebviewFragment
 //import elieomatuku.cineast_android.ui.home.HomeActivity
 //import elieomatuku.cineast_android.ui.settings.LoginWebviewFragment
-//import elieomatuku.cineast_android.utils.WebLink
+//import elieomatuku.cineast_android.ui.utils.WebLink
 //import io.chthonic.mythos.mvp.FragmentWrapper
 //import io.reactivex.Observable
 //import io.reactivex.subjects.PublishSubject

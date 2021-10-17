@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Person
-import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_item_people.view.*
 
 class PeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

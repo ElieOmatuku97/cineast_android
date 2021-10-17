@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.utils
+package elieomatuku.cineast_android.ui.utils
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable

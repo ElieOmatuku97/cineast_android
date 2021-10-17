@@ -2,7 +2,7 @@ package elieomatuku.cineast_android
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.connection.ConnectionService
+import elieomatuku.cineast_android.ui.connection.ConnectionService
 import elieomatuku.cineast_android.cache.*
 import elieomatuku.cineast_android.cache.dao.*
 import elieomatuku.cineast_android.data.AuthenticationRepositoryImpl
@@ -45,7 +45,6 @@ import elieomatuku.cineast_android.ui.discover.DiscoverViewModel
 import elieomatuku.cineast_android.ui.search.SearchViewModel
 import elieomatuku.cineast_android.ui.search.movie.MoviesGridViewModel
 import elieomatuku.cineast_android.ui.search.people.PeopleGridViewModel
-import elieomatuku.cineast_android.utils.RestUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
@@ -73,7 +72,7 @@ fun depInjecT(app: Application): Kodein {
                 .addNetworkInterceptor { chain ->
                     val original = chain.request()
                     val url = original.url.newBuilder()
-                        .addQueryParameter("api_key", RestUtils.API_KEY)
+                        .addQueryParameter("api_key", BuildConfig.api_key)
                         .build()
 
                     val request = original.newBuilder()

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.extensions.Contents
+import elieomatuku.cineast_android.ui.extensions.Contents
 import elieomatuku.cineast_android.ui.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_header.view.*

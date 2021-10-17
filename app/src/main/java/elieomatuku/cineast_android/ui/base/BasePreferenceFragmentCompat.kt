@@ -3,9 +3,9 @@ package elieomatuku.cineast_android.ui.base
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceFragmentCompat
-import elieomatuku.cineast_android.extensions.getSharedViewModel
-import elieomatuku.cineast_android.extensions.getViewModel
-import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
+import elieomatuku.cineast_android.ui.extensions.getSharedViewModel
+import elieomatuku.cineast_android.ui.extensions.getViewModel
+import elieomatuku.cineast_android.ui.extensions.lifecycleAwareLazy
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein

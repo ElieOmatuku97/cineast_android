@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.extensions.Contents
+import elieomatuku.cineast_android.ui.extensions.Contents
 import elieomatuku.cineast_android.ui.base.BaseActivity
-import elieomatuku.cineast_android.utils.Constants
+import elieomatuku.cineast_android.ui.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject

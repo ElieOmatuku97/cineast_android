@@ -13,7 +13,7 @@ import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.ui.details.person.PersonActivity
-import elieomatuku.cineast_android.utils.Constants.SCREEN_NAME_KEY
+import elieomatuku.cineast_android.ui.utils.Constants.SCREEN_NAME_KEY
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject

@@ -1,9 +1,9 @@
-package elieomatuku.cineast_android.broadReceiver
+package elieomatuku.cineast_android.ui.broadReceiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import elieomatuku.cineast_android.utils.NetUtils
+import elieomatuku.cineast_android.ui.utils.NetUtils
 
 class NetworkConnectivityBroadcastReceiver(private val connSink: ConnectivitySink) : BroadcastReceiver() {
 

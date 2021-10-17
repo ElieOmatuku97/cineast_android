@@ -14,11 +14,9 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.ui.base.BasePreferenceFragmentCompat
-import elieomatuku.cineast_android.ui.home.HomeActivity
 import elieomatuku.cineast_android.ui.settings.user_movies.UserMoviesActivity
-import elieomatuku.cineast_android.utils.WebLink
-import elieomatuku.cineast_android.utils.consume
-import io.reactivex.android.schedulers.AndroidSchedulers
+import elieomatuku.cineast_android.ui.utils.WebLink
+import elieomatuku.cineast_android.ui.utils.consume
 import timber.log.Timber
 
 class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {

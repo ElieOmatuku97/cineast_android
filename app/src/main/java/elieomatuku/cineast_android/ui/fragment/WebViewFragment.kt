@@ -8,7 +8,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.ui.base.BaseFragment
-import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.ui.utils.UiUtils
 import kotlinx.android.synthetic.main.fragment_webview.view.*
 
 open class WebViewFragment : BaseFragment() {

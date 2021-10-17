@@ -1,8 +1,8 @@
-package elieomatuku.cineast_android.connection
+package elieomatuku.cineast_android.ui.connection
 
 import android.app.Application
-import elieomatuku.cineast_android.broadReceiver.ConnectivitySink
-import elieomatuku.cineast_android.utils.NetUtils
+import elieomatuku.cineast_android.ui.broadReceiver.ConnectivitySink
+import elieomatuku.cineast_android.ui.utils.NetUtils
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 

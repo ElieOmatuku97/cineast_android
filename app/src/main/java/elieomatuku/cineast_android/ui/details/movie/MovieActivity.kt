@@ -17,10 +17,10 @@ import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.ui.details.movie.overview.MovieOverviewFragment
-import elieomatuku.cineast_android.utils.Constants
-import elieomatuku.cineast_android.utils.DividerItemDecorator
-import elieomatuku.cineast_android.utils.ContentUtils
-import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.ui.utils.Constants
+import elieomatuku.cineast_android.ui.utils.DividerItemDecorator
+import elieomatuku.cineast_android.ui.utils.ContentUtils
+import elieomatuku.cineast_android.ui.utils.UiUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
