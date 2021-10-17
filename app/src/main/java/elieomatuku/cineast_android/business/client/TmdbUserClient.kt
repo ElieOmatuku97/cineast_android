@@ -4,10 +4,8 @@ import android.content.res.Resources
 import elieomatuku.cineast_android.business.api.AuthenticationApi
 import elieomatuku.cineast_android.business.callback.AsyncResponse
 import elieomatuku.cineast_android.data.PrefManager
-import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.domain.model.Session
-import elieomatuku.cineast_android.utils.ApiUtils
 import elieomatuku.cineast_android.utils.RestUtils
 import okhttp3.Interceptor
 import retrofit2.Call
@@ -29,27 +27,6 @@ class TmdbUserClient(
         MoshiSerializer<Account>(Account::class.java)
     }
 
-    fun getAccessToken(asyncResponse: AsyncResponse<AccessToken>) {
-        authenticationApi.getAccessToken().enqueue(object : Callback<AccessToken> {
-            override fun onResponse(call: Call<AccessToken>, response: Response<AccessToken>?) {
-                Timber.d("AccessToken: $response")
-
-                response?.let {
-                    it.body()?.let {
-                        it.requestToken?.let {
-                            persistClient.set(RestUtils.REQUEST_TOKEN_KEY, it)
-                        }
-                    }
-                    asyncResponse.onSuccess(it.body())
-                }
-            }
-
-            override fun onFailure(call: Call<AccessToken>, throwable: Throwable) {
-                asyncResponse.onFail(ApiUtils.throwableToCineastError(throwable))
-            }
-        })
-    }
-
     fun getSession(requestToken: String?, asyncResponse: AsyncResponse<Pair<String, Account>>) {
         authenticationApi.getSession(requestToken).enqueue(object : Callback<Session> {
             override fun onResponse(call: Call<Session>, response: Response<Session>) {
@@ -65,7 +42,10 @@ class TmdbUserClient(
         })
     }
 
-    private fun setAccount(sessionId: String?, asyncResponse: AsyncResponse<Pair<String, Account>>) {
+    private fun setAccount(
+        sessionId: String?,
+        asyncResponse: AsyncResponse<Pair<String, Account>>
+    ) {
         sessionId?.let { sessionId ->
             authenticationApi.getAccount(sessionId).enqueue(object : Callback<Account> {
                 override fun onResponse(call: Call<Account>, response: Response<Account>) {
@@ -90,19 +70,5 @@ class TmdbUserClient(
     fun getRequestToken(): String? {
         return persistClient.get(RestUtils.REQUEST_TOKEN_KEY, null)
     }
-
-    fun getUsername(): String? {
-        return persistClient.get(RestUtils.ACCOUNT_USERNAME, null)
-    }
-
-    fun logout() {
-        persistClient.remove(RestUtils.SESSION_ID_KEY)
-        persistClient.remove(RestUtils.REQUEST_TOKEN_KEY)
-        persistClient.remove(RestUtils.ACCOUNT_ID_KEY)
-        persistClient.remove(RestUtils.ACCOUNT_USERNAME)
-    }
-
-    fun isLoggedIn(): Boolean {
-        return !persistClient.get(RestUtils.SESSION_ID_KEY, null).isNullOrEmpty()
-    }
 }
+

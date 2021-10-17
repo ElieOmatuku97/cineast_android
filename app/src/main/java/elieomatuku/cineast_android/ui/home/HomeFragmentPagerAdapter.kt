@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.ui.discover.DiscoverFragment
 import elieomatuku.cineast_android.ui.search.SearchFragment
-import elieomatuku.cineast_android.ui.settings.MyTMBDFragment
+import elieomatuku.cineast_android.ui.settings.SettingsFragment
 
 class HomeFragmentPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
@@ -28,8 +28,8 @@ class HomeFragmentPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         return when (titleResList[position]) {
             R.string.nav_title_discover -> DiscoverFragment.newInstance()
             R.string.nav_title_search -> SearchFragment.newInstance()
-            R.string.nav_title_my_tmdb -> MyTMBDFragment.newInstance()
-            else -> MyTMBDFragment.newInstance()
+            R.string.nav_title_my_tmdb -> SettingsFragment.newInstance()
+            else -> SettingsFragment.newInstance()
         }
     }
 }

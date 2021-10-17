@@ -9,38 +9,70 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.BuildConfig
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.business.callback.AsyncResponse
-import elieomatuku.cineast_android.business.client.TmdbUserClient
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
-import elieomatuku.cineast_android.domain.model.CineastError
+import elieomatuku.cineast_android.ui.base.BasePreferenceFragmentCompat
 import elieomatuku.cineast_android.ui.home.HomeActivity
 import elieomatuku.cineast_android.ui.settings.user_movies.UserMoviesActivity
 import elieomatuku.cineast_android.utils.WebLink
+import elieomatuku.cineast_android.utils.consume
 import io.reactivex.android.schedulers.AndroidSchedulers
-import org.kodein.di.generic.instance
 import timber.log.Timber
 
-class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
+class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
     companion object {
-        fun newInstance(): MyTMBDFragment {
-            return MyTMBDFragment()
+        fun newInstance(): SettingsFragment {
+            return SettingsFragment()
         }
     }
 
-    private val tmdbUserClient: TmdbUserClient by App.getKodein.instance()
     private var logInBtn: Preference? = null
     private var favoritesBtn: Preference? = null
     private var watchListBtn: Preference? = null
     private var ratedBtn: Preference? = null
     private var userName: Preference? = null
 
+    private val viewModel: SettingsViewModel by viewModel<SettingsViewModel>()
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceManager.sharedPreferencesName = getString(R.string.pref_app_settings)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        Timber.d("onCreateView called.")
+        setPreferencesFromResource(R.xml.settings, null)
+        setUpPreferenceViews()
+
+        val appVersion = findPreference<Preference>(getString(R.string.pref_app_version))
+        val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+        summary.setSpan(
+            ForegroundColorSpan(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_accent
+                )
+            ), 0, summary.length, 0
+        )
+        appVersion?.summary = summary
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.viewState.observe(viewLifecycleOwner) { state ->
+            updateState(state.isLoggedIn, state.account)
+            state.accessToken.consume {
+                gotoWebview(it)
+            }
+        }
     }
 
     override fun onResume() {
@@ -48,20 +80,11 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         Timber.d("onResume called.")
 
         logInBtn?.setOnPreferenceClickListener {
-            if (!tmdbUserClient.isLoggedIn()) {
-                tmdbUserClient.getAccessToken(object : AsyncResponse<AccessToken> {
-                    override fun onSuccess(response: AccessToken?) {
-                        Timber.d("token result:  $response")
-                        gotoWebview(response)
-                    }
-
-                    override fun onFail(error: CineastError) {
-                        Timber.d("error : $error")
-                    }
-                })
+            if (!viewModel.isLoggedIn) {
+                viewModel.getAccessToken()
             } else {
                 updateState(false)
-                tmdbUserClient.logout()
+                viewModel.logout()
             }
             true
         }
@@ -77,7 +100,7 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         }
 
         ratedBtn?.setOnPreferenceClickListener {
-            this@MyTMBDFragment.context?.let {
+            this@SettingsFragment.context?.let {
                 UserMoviesActivity.gotoRatedMovies(it)
             }
 
@@ -98,12 +121,25 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
         )
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        clearPreferenceViews()
+    }
+
     private fun updateState(isLoggedIn: Boolean, account: Account? = null) {
-        logInBtn?.title = if (isLoggedIn) activity?.getString(R.string.settings_logout) else activity?.getString(R.string.settings_login)
+        logInBtn?.title =
+            if (isLoggedIn) activity?.getString(R.string.settings_logout) else activity?.getString(R.string.settings_login)
         userName?.isVisible = isLoggedIn
-        if ((account?.username) != null || (tmdbUserClient.getUsername() != null)) {
-            val summary = SpannableString(account?.username ?: tmdbUserClient.getUsername())
-            summary.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_white)), 0, summary.length, 0)
+        if (account?.username != null) {
+            val summary = SpannableString(account.username)
+            summary.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.color_white
+                    )
+                ), 0, summary.length, 0
+            )
             userName?.summary = summary
         } else {
             userName?.isVisible = false
@@ -123,28 +159,10 @@ class MyTMBDFragment : PreferenceFragmentCompat(), WebLink<AccessToken?> {
                 .toString()
 
             val fm = activity?.supportFragmentManager
-            fm?.beginTransaction()?.add(android.R.id.content, LoginWebViewFragment.newInstance(authenticateUrl), null)?.addToBackStack(null)?.commit()
+            fm?.beginTransaction()
+                ?.add(android.R.id.content, LoginWebViewFragment.newInstance(authenticateUrl), null)
+                ?.addToBackStack(null)?.commit()
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Timber.d("onCreateView called.")
-        setPreferencesFromResource(R.xml.settings, null)
-        setUpPreferenceViews()
-
-        val appVersion = findPreference<Preference>(getString(R.string.pref_app_version))
-        val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-        summary.setSpan(ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.color_accent)), 0, summary.length, 0)
-        appVersion?.summary = summary
-
-        updateState(tmdbUserClient.isLoggedIn())
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        clearPreferenceViews()
     }
 
     private fun setUpPreferenceViews() {
