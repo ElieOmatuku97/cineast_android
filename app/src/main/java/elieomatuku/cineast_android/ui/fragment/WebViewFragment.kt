@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.fragment.app.Fragment
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.ui.base.BaseFragment
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.fragment_webview.view.*
 
-open class WebViewFragment : Fragment() {
+open class WebViewFragment : BaseFragment() {
     companion object {
         const val URL = "url"
 

@@ -30,4 +30,9 @@ abstract class BasePreferenceFragmentCompat : PreferenceFragmentCompat(), Kodein
     protected inline fun <reified VM : ViewModel> viewModel(): Lazy<VM> = lifecycleAwareLazy(this) {
         getViewModel<VM>()
     }
+
+    protected inline fun <reified VM : ViewModel> sharedViewModel(): Lazy<VM> =
+        lifecycleAwareLazy(this) {
+            getSharedViewModel<VM>()
+        }
 }

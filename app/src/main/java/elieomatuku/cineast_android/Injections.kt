@@ -2,8 +2,7 @@ package elieomatuku.cineast_android
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.business.client.TmdbUserClient
-import elieomatuku.cineast_android.business.service.ConnectionService
+import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.cache.*
 import elieomatuku.cineast_android.cache.dao.*
 import elieomatuku.cineast_android.data.AuthenticationRepositoryImpl
@@ -148,10 +147,6 @@ fun depInjecT(app: Application): Kodein {
         bind<PersonDao>() with singleton {
             val contentDatabase: ContentDatabase = instance()
             contentDatabase.personDao()
-        }
-
-        bind<TmdbUserClient>() with singleton {
-            TmdbUserClient(instance(), instance())
         }
 
         bind<PrefManager>() with singleton {

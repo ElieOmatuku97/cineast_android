@@ -7,7 +7,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.business.service.ConnectionService
+import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
 import elieomatuku.cineast_android.extensions.getSharedViewModel
 import elieomatuku.cineast_android.extensions.getViewModel

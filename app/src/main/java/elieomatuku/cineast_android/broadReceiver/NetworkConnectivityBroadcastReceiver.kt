@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.business.broadReceiver
+package elieomatuku.cineast_android.broadReceiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

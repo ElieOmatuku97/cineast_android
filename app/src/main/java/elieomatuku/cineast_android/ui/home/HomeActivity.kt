@@ -5,17 +5,11 @@ import android.view.Menu
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.ui.base.BaseActivity
 import elieomatuku.cineast_android.utils.UiUtils
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity() {
-
-    val sessionPublisher: PublishSubject<Pair<String, Account>> by lazy {
-        PublishSubject.create<Pair<String, Account>>()
-    }
 
     private val adapter by lazy {
         HomeFragmentPagerAdapter(supportFragmentManager)
@@ -63,7 +57,11 @@ class HomeActivity : BaseActivity() {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
             }
 
             override fun onPageSelected(position: Int) {

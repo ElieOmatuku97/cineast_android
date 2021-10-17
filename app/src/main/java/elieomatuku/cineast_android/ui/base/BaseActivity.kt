@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.extensions.getViewModel
-import elieomatuku.cineast_android.business.broadReceiver.NetworkConnectivityBroadcastReceiver
-import elieomatuku.cineast_android.business.service.ConnectionService
+import elieomatuku.cineast_android.broadReceiver.NetworkConnectivityBroadcastReceiver
+import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.layout_loading.view.*

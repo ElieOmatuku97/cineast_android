@@ -34,7 +34,7 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
     private var ratedBtn: Preference? = null
     private var userName: Preference? = null
 
-    private val viewModel: SettingsViewModel by viewModel<SettingsViewModel>()
+    private val viewModel: SettingsViewModel by sharedViewModel<SettingsViewModel>()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceManager.sharedPreferencesName = getString(R.string.pref_app_settings)
@@ -107,18 +107,18 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
             true
         }
 
-        (activity as HomeActivity).rxSubs.add(
-            (activity as HomeActivity).sessionPublisher.hide()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { sessionResponse: Pair<String?, Account> ->
-                        updateState(!sessionResponse.first.isNullOrEmpty(), sessionResponse.second)
-                    },
-                    { t: Throwable ->
-                        Timber.e("sessionPublisher failed $t")
-                    }
-                )
-        )
+//        (activity as HomeActivity).rxSubs.add(
+//            (activity as HomeActivity).sessionPublisher.hide()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(
+//                    { sessionResponse: Pair<String?, Account> ->
+//                        updateState(!sessionResponse.first.isNullOrEmpty(), sessionResponse.second)
+//                    },
+//                    { t: Throwable ->
+//                        Timber.e("sessionPublisher failed $t")
+//                    }
+//                )
+//        )
     }
 
     override fun onDestroyView() {
