@@ -26,9 +26,7 @@ import elieomatuku.cineast_android.data.source.person.PersonDataStoreFactory
 import elieomatuku.cineast_android.data.source.person.PersonRemoteDataStore
 import elieomatuku.cineast_android.domain.interactor.movie.*
 import elieomatuku.cineast_android.domain.interactor.people.*
-import elieomatuku.cineast_android.domain.interactor.user.GetAccessToken
-import elieomatuku.cineast_android.domain.interactor.user.IsLoggedIn
-import elieomatuku.cineast_android.domain.interactor.user.Logout
+import elieomatuku.cineast_android.domain.interactor.user.*
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 import elieomatuku.cineast_android.domain.repository.PersonRepository
@@ -42,9 +40,12 @@ import elieomatuku.cineast_android.ui.details.MoviesViewModel
 import elieomatuku.cineast_android.ui.details.movie.MovieViewModel
 import elieomatuku.cineast_android.ui.details.person.PersonViewModel
 import elieomatuku.cineast_android.ui.discover.DiscoverViewModel
+import elieomatuku.cineast_android.ui.fragment.RateViewModel
 import elieomatuku.cineast_android.ui.search.SearchViewModel
 import elieomatuku.cineast_android.ui.search.movie.MoviesGridViewModel
 import elieomatuku.cineast_android.ui.search.people.PeopleGridViewModel
+import elieomatuku.cineast_android.ui.settings.SettingsViewModel
+import elieomatuku.cineast_android.ui.settings.user_movies.UserMoviesViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
@@ -303,6 +304,18 @@ fun depInjecT(app: Application): Kodein {
             SearchMovies(instance())
         }
 
+        bind<GetRequestToken>() with singleton {
+            GetRequestToken(instance())
+        }
+
+        bind<GetSession>() with singleton {
+            GetSession(instance())
+        }
+
+        bind<SetAccount>() with singleton {
+            SetAccount(instance())
+        }
+
         bindViewModel<DiscoverViewModel>() with provider {
             DiscoverViewModel(instance(), instance(), instance(), instance(), instance())
         }
@@ -342,6 +355,33 @@ fun depInjecT(app: Application): Kodein {
 
         bindViewModel<SearchViewModel>() with provider {
             SearchViewModel(
+                instance(),
+                instance()
+            )
+        }
+
+        bindViewModel<RateViewModel>() with provider {
+            RateViewModel(
+                instance()
+            )
+        }
+
+        bindViewModel<UserMoviesViewModel>() with provider {
+            UserMoviesViewModel(
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance(),
+                instance()
+            )
+        }
+
+        bindViewModel<SettingsViewModel>() with provider {
+            SettingsViewModel(
+                instance(),
+                instance(),
+                instance(),
                 instance(),
                 instance()
             )

@@ -2,6 +2,8 @@ package elieomatuku.cineast_android.ui.settings
 
 import android.os.Bundle
 import elieomatuku.cineast_android.ui.fragment.WebViewFragment
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LoginWebViewFragment : WebViewFragment() {
     companion object {
@@ -22,9 +24,9 @@ class LoginWebViewFragment : WebViewFragment() {
     private val viewModel: SettingsViewModel by sharedViewModel<SettingsViewModel>()
 
     override fun closeIconListener() {
-        viewModel.getRequestToken()
         viewModel.getSession()
         viewModel.setAccount()
+
         super.closeIconListener()
     }
 }

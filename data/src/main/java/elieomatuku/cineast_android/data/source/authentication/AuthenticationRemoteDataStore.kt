@@ -20,6 +20,10 @@ class AuthenticationRemoteDataStore(private val authenticationRemote: Authentica
         TODO("Not yet implemented")
     }
 
+    override suspend fun setSession(sessionEntity: SessionEntity) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getSession(requestToken: String): SessionEntity {
         return authenticationRemote.getSession(requestToken)
     }

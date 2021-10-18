@@ -13,6 +13,8 @@ interface AuthenticationDataStore {
 
     suspend fun setAccessToken(accessTokenEntity: AccessTokenEntity)
 
+    suspend fun setSession(sessionEntity: SessionEntity)
+
     suspend fun getSession(requestToken: String): SessionEntity
 
     suspend fun setAccount(sessionId: String?): AccountEntity

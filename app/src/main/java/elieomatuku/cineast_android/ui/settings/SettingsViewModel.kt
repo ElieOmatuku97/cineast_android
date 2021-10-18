@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(
     private val isLoggedInUseCase: IsLoggedIn,
     private val logout: Logout,
-    private val getRequestToken: GetRequestToken,
     private val getSession: GetSession,
     private val setAccount: SetAccount,
     private val getAccessToken: GetAccessToken
@@ -39,7 +38,8 @@ class SettingsViewModel(
             state = when (result) {
                 is Success -> state.copy(
                     accessToken = SingleEvent(result.data),
-                    isLoading = false
+                    isLoading = false,
+                    requestToken = result.data.requestToken!!
                 )
 
                 is Fail -> state.copy(
@@ -55,11 +55,11 @@ class SettingsViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             val result =
-                runUseCase(getSession, GetSession.Input(state.requestToken?.consume() ?: String()))
+                runUseCase(getSession, GetSession.Input(state.requestToken!!))
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
-                    session = result.data
+                    session = result.data,
                 )
 
                 is Fail -> state.copy(
@@ -80,26 +80,6 @@ class SettingsViewModel(
                 is Success -> state.copy(
                     isLoading = false,
                     account = result.data
-                )
-
-                is Fail -> state.copy(
-                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
-                    isLoading = false
-                )
-                else -> SettingsViewState()
-            }
-        }
-    }
-
-    fun getRequestToken() {
-        viewModelScope.launch {
-            state = state.copy(isLoading = true)
-            val result =
-                runUseCase(getRequestToken, Unit)
-            state = when (result) {
-                is Success -> state.copy(
-                    requestToken = SingleEvent(result.data ?: String()),
-                    isLoading = false
                 )
 
                 is Fail -> state.copy(

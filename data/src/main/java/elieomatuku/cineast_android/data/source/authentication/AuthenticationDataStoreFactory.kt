@@ -14,11 +14,11 @@ class AuthenticationDataStoreFactory(
 ) {
 
     fun retrieveDataStore(): AuthenticationDataStore {
-        return if (authenticationCache.isLoggedIn()) {
-            retrieveCacheDataStore()
-        } else {
+//        return if (authenticationCache.isLoggedIn()) {
+//            retrieveCacheDataStore()
+//        } else {
             return retrieveRemoteDataStore()
-        }
+//        }
     }
 
     fun retrieveCacheDataStore(): AuthenticationDataStore {

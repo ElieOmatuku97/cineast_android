@@ -15,7 +15,7 @@ data class SettingsViewState(
     val isLoggedIn: Boolean = false,
     val isLoading: Boolean = true,
     val userName: String? = null,
-    val requestToken: SingleEvent<String>? = null,
+    val requestToken: String? = null,
     val accessToken: SingleEvent<AccessToken>? = null,
     val session: Session? = null,
     val account: Account? = null,
