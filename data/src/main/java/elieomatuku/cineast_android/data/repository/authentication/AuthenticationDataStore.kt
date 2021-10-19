@@ -17,11 +17,11 @@ interface AuthenticationDataStore {
 
     suspend fun getSession(requestToken: String): SessionEntity
 
-    suspend fun setAccount(sessionId: String?): AccountEntity
+    suspend fun setAccount(accountEntity: AccountEntity)
 
-    suspend fun getRequestToken(): String?
+    suspend fun getAccount(sessionId: String?): AccountEntity
 
-    suspend fun getUsername(): String?
+    suspend fun getAccount(): AccountEntity?
 
     suspend fun logout()
 

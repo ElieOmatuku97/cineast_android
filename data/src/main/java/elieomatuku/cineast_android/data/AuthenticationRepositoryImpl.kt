@@ -32,22 +32,16 @@ class AuthenticationRepositoryImpl(private val factory: AuthenticationDataStoreF
 
         if (dataStore is AuthenticationRemoteDataStore) {
             factory.retrieveCacheDataStore().setSession(session)
+            val accountEntity = factory.retrieveRemoteDataStore().getAccount(session.sessionId)
+            factory.retrieveCacheDataStore().setAccount(accountEntity)
         }
 
         return session
             .let(SessionEntity::toSession)
     }
 
-    override suspend fun setAccount(sessionId: String?): Account {
-        return factory.retrieveRemoteDataStore().setAccount(sessionId).let(AccountEntity::toAccount)
-    }
-
-    override suspend fun getRequestToken(): String? {
-        return factory.retrieveCacheDataStore().getRequestToken()
-    }
-
-    override suspend fun getUsername(): String? {
-        return factory.retrieveCacheDataStore().getUsername()
+    override suspend fun getAccount(): Account? {
+        return factory.retrieveCacheDataStore().getAccount()?.let(AccountEntity::toAccount)
     }
 
     override suspend fun logout() {
@@ -57,5 +51,4 @@ class AuthenticationRepositoryImpl(private val factory: AuthenticationDataStoreF
     override suspend fun isLoggedIn(): Boolean {
         return factory.retrieveDataStore().isLoggedIn()
     }
-
 }

@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.data.repository.authentication
 
 import elieomatuku.cineast_android.data.model.AccessTokenEntity
+import elieomatuku.cineast_android.data.model.AccountEntity
 import elieomatuku.cineast_android.data.model.SessionEntity
 
 /**
@@ -8,15 +9,16 @@ import elieomatuku.cineast_android.data.model.SessionEntity
  */
 
 interface AuthenticationCache {
+
     suspend fun getAccessToken(): AccessTokenEntity
 
     suspend fun setAccessToken(accessTokenEntity: AccessTokenEntity)
 
     suspend fun setSession(sessionEntity: SessionEntity)
 
-    suspend fun getRequestToken(): String?
+    suspend fun setAccount(accountEntity: AccountEntity)
 
-    suspend fun getUsername(): String?
+    suspend fun getAccount(): AccountEntity?
 
     suspend fun logout()
 

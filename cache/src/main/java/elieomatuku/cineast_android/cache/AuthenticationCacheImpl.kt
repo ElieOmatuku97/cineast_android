@@ -4,6 +4,7 @@ import elieomatuku.cineast_android.data.MoshiSerializer
 import elieomatuku.cineast_android.data.PrefManager
 import elieomatuku.cineast_android.data.Serializer
 import elieomatuku.cineast_android.data.model.AccessTokenEntity
+import elieomatuku.cineast_android.data.model.AccountEntity
 import elieomatuku.cineast_android.data.model.SessionEntity
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationCache
 
@@ -13,10 +14,8 @@ import elieomatuku.cineast_android.data.repository.authentication.Authentication
 
 class AuthenticationCacheImpl(private val prefManager: PrefManager) : AuthenticationCache {
     companion object {
-        const val REQUEST_TOKEN_KEY = "request_token_key"
         const val SESSION_KEY = "session_key"
-        const val ACCOUNT_ID_KEY = "account_id_key"
-        const val ACCOUNT_USERNAME = "account_username_key"
+        const val ACCOUNT_KEY = "account_key"
         const val ACCESS_TOKEN_KEY = "access_token_key"
     }
 
@@ -26,6 +25,10 @@ class AuthenticationCacheImpl(private val prefManager: PrefManager) : Authentica
 
     private val sessionSerializer: Serializer<SessionEntity> by lazy {
         MoshiSerializer<SessionEntity>(SessionEntity::class.java)
+    }
+
+    private val accountSerializer: Serializer<AccountEntity> by lazy {
+        MoshiSerializer<AccountEntity>(AccountEntity::class.java)
     }
 
     override suspend fun getAccessToken(): AccessTokenEntity {
@@ -42,19 +45,19 @@ class AuthenticationCacheImpl(private val prefManager: PrefManager) : Authentica
         prefManager.set(SESSION_KEY, sessionSerializer.toJson(sessionEntity))
     }
 
-    override suspend fun getRequestToken(): String? {
-        return prefManager.get(REQUEST_TOKEN_KEY, null)
+    override suspend fun setAccount(accountEntity: AccountEntity) {
+        prefManager.set(ACCOUNT_KEY, accountSerializer.toJson(accountEntity))
     }
 
-    override suspend fun getUsername(): String? {
-        return prefManager.get(ACCOUNT_USERNAME, null)
+    override suspend fun getAccount(): AccountEntity? {
+        return prefManager.get(ACCOUNT_KEY, null)?.let {
+            accountSerializer.fromJson(it)
+        }
     }
 
     override suspend fun logout() {
         prefManager.remove(SESSION_KEY)
-        prefManager.remove(REQUEST_TOKEN_KEY)
-        prefManager.remove(ACCOUNT_ID_KEY)
-        prefManager.remove(ACCOUNT_USERNAME)
+        prefManager.remove(ACCOUNT_KEY)
     }
 
     override fun isLoggedIn(): Boolean {

@@ -45,7 +45,7 @@ class AuthenticationRemoteImpl(private val authenticationApi: AuthenticationApi)
         }
     }
 
-    override suspend fun setAccount(sessionId: String?): AccountEntity {
+    override suspend fun getAccount(sessionId: String?): AccountEntity {
         val response = authenticationApi.getAccount(sessionId)
         if (response.isSuccessful) {
             val body = response.body()

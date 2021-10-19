@@ -14,11 +14,7 @@ interface AuthenticationRepository {
 
     suspend fun getSession(requestToken: String): Session
 
-    suspend fun setAccount(sessionId: String?): Account
-
-    suspend fun getRequestToken(): String?
-
-    suspend fun getUsername(): String?
+    suspend fun getAccount(): Account?
 
     suspend fun logout()
 

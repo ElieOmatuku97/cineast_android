@@ -28,16 +28,16 @@ class AuthenticationCacheDataStore(private val authenticationCache: Authenticati
         TODO("Not yet implemented")
     }
 
-    override suspend fun setAccount(sessionId: String?): AccountEntity {
+    override suspend fun setAccount(accountEntity: AccountEntity) {
+        authenticationCache.setAccount(accountEntity)
+    }
+
+    override suspend fun getAccount(sessionId: String?): AccountEntity {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getRequestToken(): String? {
-        return authenticationCache.getRequestToken()
-    }
-
-    override suspend fun getUsername(): String? {
-        return authenticationCache.getUsername()
+    override suspend fun getAccount(): AccountEntity? {
+        return authenticationCache.getAccount()
     }
 
     override suspend fun logout() {

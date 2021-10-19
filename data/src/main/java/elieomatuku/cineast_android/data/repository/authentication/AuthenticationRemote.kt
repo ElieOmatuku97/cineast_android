@@ -13,5 +13,5 @@ interface AuthenticationRemote {
 
     suspend fun getSession(requestToken: String?): SessionEntity
 
-    suspend fun setAccount(sessionId: String?): AccountEntity
+    suspend fun getAccount(sessionId: String?): AccountEntity
 }

@@ -18,7 +18,7 @@ class GetWatchList(
     NoInputUseCase<CompleteResult<List<Movie>>> {
     override suspend fun execute(params: Unit): CompleteResult<List<Movie>> {
         return safeUseCaseCall {
-            val requestToken = authenticationRepository.getRequestToken()
+            val requestToken = authenticationRepository.getAccessToken().requestToken
             val session = requestToken?.let { authenticationRepository.getSession(it) }
             return@safeUseCaseCall session?.sessionId?.let { movieRepository.getWatchList(it) }
                 ?: listOf()

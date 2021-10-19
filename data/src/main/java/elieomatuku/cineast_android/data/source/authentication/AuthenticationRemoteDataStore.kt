@@ -28,15 +28,15 @@ class AuthenticationRemoteDataStore(private val authenticationRemote: Authentica
         return authenticationRemote.getSession(requestToken)
     }
 
-    override suspend fun setAccount(sessionId: String?): AccountEntity {
-        return authenticationRemote.setAccount(sessionId)
-    }
-
-    override suspend fun getRequestToken(): String? {
+    override suspend fun setAccount(accountEntity: AccountEntity) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUsername(): String? {
+    override suspend fun getAccount(sessionId: String?): AccountEntity {
+        return authenticationRemote.getAccount(sessionId)
+    }
+
+    override suspend fun getAccount(): AccountEntity? {
         TODO("Not yet implemented")
     }
 

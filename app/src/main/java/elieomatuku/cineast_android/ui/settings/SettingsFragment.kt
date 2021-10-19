@@ -17,7 +17,7 @@ import elieomatuku.cineast_android.ui.base.BasePreferenceFragmentCompat
 import elieomatuku.cineast_android.ui.settings.user_movies.UserMoviesActivity
 import elieomatuku.cineast_android.ui.utils.WebLink
 import elieomatuku.cineast_android.ui.utils.consume
-import timber.log.Timber
+
 
 class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
     companion object {
@@ -66,7 +66,7 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
 
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
             if (state.isLoggedIn) {
-                viewModel.setAccount()
+                viewModel.getAccount()
             }
             updateState(state.isLoggedIn, state.account)
             state.accessToken.consume {

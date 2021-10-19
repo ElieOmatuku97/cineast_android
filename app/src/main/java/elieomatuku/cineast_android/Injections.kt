@@ -304,16 +304,12 @@ fun depInjecT(app: Application): Kodein {
             SearchMovies(instance())
         }
 
-        bind<GetRequestToken>() with singleton {
-            GetRequestToken(instance())
-        }
-
         bind<GetSession>() with singleton {
             GetSession(instance())
         }
 
-        bind<SetAccount>() with singleton {
-            SetAccount(instance())
+        bind<GetAccount>() with singleton {
+            GetAccount(instance())
         }
 
         bindViewModel<DiscoverViewModel>() with provider {

@@ -19,8 +19,8 @@ class SettingsViewModel(
     private val isLoggedInUseCase: IsLoggedIn,
     private val logout: Logout,
     private val getSession: GetSession,
-    private val setAccount: SetAccount,
-    private val getAccessToken: GetAccessToken
+    private val getAccessToken: GetAccessToken,
+    private val getAccount: GetAccount
 ) : BaseViewModel<SettingsViewState>(SettingsViewState()) {
 
     val isLoggedIn: Boolean
@@ -70,29 +70,10 @@ class SettingsViewModel(
         }
     }
 
-    fun setAccount() {
-        viewModelScope.launch {
-            state = state.copy(isLoading = true)
-            val result =
-                runUseCase(setAccount, SetAccount.Input(state.session?.sessionId))
-            state = when (result) {
-                is Success -> state.copy(
-                    isLoading = false,
-                    account = result.data
-                )
-
-                is Fail -> state.copy(
-                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
-                    isLoading = false
-                )
-                else -> SettingsViewState()
-            }
-        }
-    }
-
     fun logout() {
         viewModelScope.launch {
             runUseCase(logout, Unit)
+            state = SettingsViewState()
         }
     }
 
@@ -114,5 +95,26 @@ class SettingsViewModel(
                 else -> SettingsViewState()
             }
         }
+    }
+
+    fun getAccount() {
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            val result =
+                runUseCase(getAccount, Unit)
+            state = when (result) {
+                is Success -> state.copy(
+                    isLoading = false,
+                    account = result.data,
+                )
+
+                is Fail -> state.copy(
+                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    isLoading = false
+                )
+                else -> SettingsViewState()
+            }
+        }
+
     }
 }
