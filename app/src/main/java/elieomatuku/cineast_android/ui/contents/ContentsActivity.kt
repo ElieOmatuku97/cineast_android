@@ -3,19 +3,20 @@ package elieomatuku.cineast_android.ui.contents
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.ui.extensions.Contents
+import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.base.BaseActivity
 import elieomatuku.cineast_android.ui.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_content.*
-import java.util.ArrayList
+import java.io.Serializable
+
 
 class ContentsActivity : BaseActivity() {
     companion object {
@@ -28,9 +29,9 @@ class ContentsActivity : BaseActivity() {
         fun startActivity(context: Context, contents: List<Content>?, screenNameRes: Int? = null) {
             val intent = Intent(context, ContentsActivity::class.java)
             val params = Bundle()
-            params.putParcelableArrayList(
+            params.putSerializable(
                 Constants.WIDGET_KEY,
-                contents as ArrayList<out Parcelable>
+                contents as Serializable
             )
 
             if (screenNameRes != null) {
@@ -69,7 +70,7 @@ class ContentsActivity : BaseActivity() {
 
         setContentView(R.layout.activity_content)
 
-        val contents: Contents? = intent.getParcelableExtra(WIDGET_KEY)
+        val contents: List<Content> = intent.getSerializableExtra(WIDGET_KEY) as List<Content>
         val screenNameRes = intent.getIntExtra(Constants.SCREEN_NAME_KEY, 0)
 
         updateView(contents, screenNameRes)
@@ -108,11 +109,9 @@ class ContentsActivity : BaseActivity() {
         return true
     }
 
-    private fun updateView(contents: Contents?, screenNameRes: Int? = null) {
+    private fun updateView(contents: List<Content>, screenNameRes: Int? = null) {
         setToolbarTitle(screenNameRes)
-        contents?.let {
-            setContents(contents)
-        }
+        setContents(contents)
     }
 
     private fun setToolbarTitle(screenNameRes: Int? = null) {
@@ -121,15 +120,16 @@ class ContentsActivity : BaseActivity() {
         } ?: resources.getString(R.string.nav_title_discover)
     }
 
-    private fun setContents(contents: Contents) {
+    private fun setContents(contents: List<Content>) {
         contentsAdapter = if (areWidgetsMovies(contents)) moviesAdapter else peopleAdapter
-        contentsAdapter.contents = contents.value?.toMutableList() ?: mutableListOf()
+        contentsAdapter.contents = contents.toMutableList()
+        listView.layoutManager = LinearLayoutManager(this)
         listView.adapter = contentsAdapter
         contentsAdapter.notifyDataSetChanged()
     }
 
-    private fun areWidgetsMovies(contents: Contents): Boolean {
-        val firstElement: Content? = contents.value?.first()
+    private fun areWidgetsMovies(contents: List<Content>): Boolean {
+        val firstElement: Content = contents.first()
         return (firstElement != null) && (firstElement is Movie)
     }
 
