@@ -43,7 +43,6 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Timber.d("onCreateView called.")
         setPreferencesFromResource(R.xml.settings, null)
         setUpPreferenceViews()
 
@@ -66,6 +65,9 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
+            if (state.isLoggedIn) {
+                viewModel.setAccount()
+            }
             updateState(state.isLoggedIn, state.account)
             state.accessToken.consume {
                 gotoWebview(it)
@@ -75,7 +77,8 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
 
     override fun onResume() {
         super.onResume()
-        Timber.d("onResume called.")
+
+        viewModel.isLoggedIn()
 
         logInBtn?.setOnPreferenceClickListener {
             if (!viewModel.isLoggedIn) {
@@ -104,19 +107,6 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
 
             true
         }
-
-//        (activity as HomeActivity).rxSubs.add(
-//            (activity as HomeActivity).sessionPublisher.hide()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(
-//                    { sessionResponse: Pair<String?, Account> ->
-//                        updateState(!sessionResponse.first.isNullOrEmpty(), sessionResponse.second)
-//                    },
-//                    { t: Throwable ->
-//                        Timber.e("sessionPublisher failed $t")
-//                    }
-//                )
-//        )
     }
 
     override fun onDestroyView() {

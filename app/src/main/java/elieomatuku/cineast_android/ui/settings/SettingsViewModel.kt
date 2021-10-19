@@ -26,10 +26,6 @@ class SettingsViewModel(
     val isLoggedIn: Boolean
         get() = state.isLoggedIn
 
-    init {
-        isLoggedIn()
-    }
-
     fun getAccessToken() {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
@@ -38,8 +34,8 @@ class SettingsViewModel(
             state = when (result) {
                 is Success -> state.copy(
                     accessToken = SingleEvent(result.data),
+                    requestToken = SingleEvent(result.data.requestToken),
                     isLoading = false,
-                    requestToken = result.data.requestToken!!
                 )
 
                 is Fail -> state.copy(
@@ -52,21 +48,24 @@ class SettingsViewModel(
     }
 
     fun getSession() {
-        viewModelScope.launch {
-            state = state.copy(isLoading = true)
-            val result =
-                runUseCase(getSession, GetSession.Input(state.requestToken!!))
-            state = when (result) {
-                is Success -> state.copy(
-                    isLoading = false,
-                    session = result.data,
-                )
+        state.requestToken?.consume()?.let { requestToken ->
+            viewModelScope.launch {
+                state = state.copy(isLoading = true)
+                val result =
+                    runUseCase(getSession, GetSession.Input(requestToken))
+                state = when (result) {
+                    is Success -> state.copy(
+                        isLoading = false,
+                        session = result.data,
+                        isLoggedIn = result.data.sessionId != null
+                    )
 
-                is Fail -> state.copy(
-                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
-                    isLoading = false
-                )
-                else -> SettingsViewState()
+                    is Fail -> state.copy(
+                        viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                        isLoading = false
+                    )
+                    else -> SettingsViewState()
+                }
             }
         }
     }
