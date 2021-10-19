@@ -32,7 +32,6 @@ class DiscoverViewModel(
 
     init {
         getDiscoverContent()
-        getIsLoggedIn()
         getGenres()
     }
 
@@ -59,7 +58,7 @@ class DiscoverViewModel(
         }
     }
 
-    private fun getIsLoggedIn() {
+    fun getIsLoggedIn() {
         viewModelScope.launch {
             state = when (val result = runUseCase(isLoggedIn, Unit)) {
                 is Success -> {

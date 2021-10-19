@@ -107,6 +107,8 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
 
     override fun onResume() {
         super.onResume()
+        viewModel.getIsLoggedIn()
+
         rxSubs.add(
             loginClickObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
