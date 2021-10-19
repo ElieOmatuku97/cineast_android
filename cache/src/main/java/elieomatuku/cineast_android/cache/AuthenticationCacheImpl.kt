@@ -41,6 +41,12 @@ class AuthenticationCacheImpl(private val prefManager: PrefManager) : Authentica
         prefManager.set(ACCESS_TOKEN_KEY, accessTokenSerializer.toJson(accessTokenEntity))
     }
 
+    override suspend fun getSession(): SessionEntity {
+        return prefManager.get(SESSION_KEY, null)?.let {
+            sessionSerializer.fromJson(it)
+        } ?: SessionEntity()
+    }
+
     override suspend fun setSession(sessionEntity: SessionEntity) {
         prefManager.set(SESSION_KEY, sessionSerializer.toJson(sessionEntity))
     }

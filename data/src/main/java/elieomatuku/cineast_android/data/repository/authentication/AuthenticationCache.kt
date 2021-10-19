@@ -14,6 +14,8 @@ interface AuthenticationCache {
 
     suspend fun setAccessToken(accessTokenEntity: AccessTokenEntity)
 
+    suspend fun getSession(): SessionEntity
+
     suspend fun setSession(sessionEntity: SessionEntity)
 
     suspend fun setAccount(accountEntity: AccountEntity)

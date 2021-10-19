@@ -260,6 +260,10 @@ fun depInjecT(app: Application): Kodein {
             GetFavorites(instance(), instance())
         }
 
+        bind<GetUserRatedMovies>() with singleton {
+            GetUserRatedMovies(instance(), instance())
+        }
+
         bind<AddMovieToFavorites>() with singleton {
             AddMovieToFavorites(instance(), instance())
         }

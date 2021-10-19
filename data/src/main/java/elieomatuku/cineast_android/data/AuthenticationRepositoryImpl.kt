@@ -27,7 +27,7 @@ class AuthenticationRepositoryImpl(private val factory: AuthenticationDataStoreF
     }
 
     override suspend fun getSession(requestToken: String): Session {
-        val dataStore = factory.retrieveRemoteDataStore()
+        val dataStore = factory.retrieveDataStore()
         val session = dataStore.getSession(requestToken)
 
         if (dataStore is AuthenticationRemoteDataStore) {

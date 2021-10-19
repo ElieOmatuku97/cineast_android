@@ -25,7 +25,7 @@ class AuthenticationCacheDataStore(private val authenticationCache: Authenticati
     }
 
     override suspend fun getSession(requestToken: String): SessionEntity {
-        TODO("Not yet implemented")
+        return authenticationCache.getSession()
     }
 
     override suspend fun setAccount(accountEntity: AccountEntity) {
