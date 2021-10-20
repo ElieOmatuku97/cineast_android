@@ -116,7 +116,7 @@ class MovieRepositoryImpl(private val factory: MovieDataStoreFactory) : MovieRep
         favorite: Boolean
     ) {
         factory.retrieveRemoteDataStore()
-            .updateWatchList(
+            .updateFavoriteList(
                 sessionId,
                 movie.let(MovieEntity::fromMovie),
                 account.let(AccountEntity::fromAccount),
