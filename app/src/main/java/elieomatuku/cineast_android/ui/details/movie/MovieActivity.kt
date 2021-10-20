@@ -31,7 +31,6 @@ import java.io.Serializable
 class MovieActivity : BaseActivity(R.layout.activity_content_details) {
     companion object {
         const val MOVIE_KEY = "movieApi"
-        const val MOVIE_GENRES_KEY = "genres"
         const val MOVIE_OVERVIEW = "overview"
         const val MOVIE_CREW = "crew"
         const val SIMILAR_MOVIES = "similar_movies"

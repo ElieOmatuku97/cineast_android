@@ -10,6 +10,8 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.ui.base.BaseActivity
+import elieomatuku.cineast_android.ui.details.movie.MovieActivity
+import elieomatuku.cineast_android.ui.details.person.PersonActivity
 import elieomatuku.cineast_android.ui.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -23,7 +25,6 @@ class ContentsActivity : BaseActivity() {
         const val SCREEN_NAME = "Discover"
         const val WIDGET_KEY = "content"
         const val MOVIE_KEY = "movieApi"
-        const val MOVIE_GENRES_KEY = "genres"
         const val PEOPLE_KEY = "peopleApi"
 
         fun startActivity(context: Context, contents: List<Content>?, screenNameRes: Int? = null) {
@@ -64,7 +65,6 @@ class ContentsActivity : BaseActivity() {
         list_view_container
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -87,17 +87,13 @@ class ContentsActivity : BaseActivity() {
 
                     params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
 
-//                    if (content is Person) {
-//                        params.putParcelable(PEOPLE_KEY, content)
-//                        gotoContent(params, PeopleActivity::class.java)
-//                    } else {
-//                        params.putParcelable(MOVIE_KEY, content)
-//                        params.putParcelableArrayList(
-//                            MOVIE_GENRES_KEY,
-//                            viewModel.genresLiveData.value as ArrayList<out Parcelable>
-//                        )
-//                        gotoContent(params, MovieActivity::class.java)
-//                    }
+                    if (content is Person) {
+                        params.putSerializable(PEOPLE_KEY, content)
+                        gotoContent(params, PersonActivity::class.java)
+                    } else {
+                        params.putSerializable(MOVIE_KEY, content)
+                        gotoContent(params, MovieActivity::class.java)
+                    }
                 }
         )
     }
@@ -130,7 +126,7 @@ class ContentsActivity : BaseActivity() {
 
     private fun areWidgetsMovies(contents: List<Content>): Boolean {
         val firstElement: Content = contents.first()
-        return (firstElement != null) && (firstElement is Movie)
+        return firstElement is Movie
     }
 
     private fun gotoContent(params: Bundle, contentActivityClass: Class<*>) {
