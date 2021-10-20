@@ -94,14 +94,34 @@ class MovieRepositoryImpl(private val factory: MovieDataStoreFactory) : MovieRep
         }
     }
 
-    override suspend fun updateWatchList(sessionId: String, movie: Movie, watchList: Boolean) {
+    override suspend fun updateWatchList(
+        sessionId: String,
+        movie: Movie,
+        account: Account,
+        watchList: Boolean
+    ) {
         factory.retrieveRemoteDataStore()
-            .updateWatchList(sessionId, movie.let(MovieEntity::fromMovie), watchList)
+            .updateWatchList(
+                sessionId,
+                movie.let(MovieEntity::fromMovie),
+                account.let(AccountEntity::fromAccount),
+                watchList
+            )
     }
 
-    override suspend fun updateFavoriteList(sessionId: String, movie: Movie, favorite: Boolean) {
+    override suspend fun updateFavoriteList(
+        sessionId: String,
+        movie: Movie,
+        account: Account,
+        favorite: Boolean
+    ) {
         factory.retrieveRemoteDataStore()
-            .updateWatchList(sessionId, movie.let(MovieEntity::fromMovie), favorite)
+            .updateWatchList(
+                sessionId,
+                movie.let(MovieEntity::fromMovie),
+                account.let(AccountEntity::fromAccount),
+                favorite
+            )
     }
 
     override suspend fun postMovieRate(movieId: Int, sessionId: String, rate: Double) {

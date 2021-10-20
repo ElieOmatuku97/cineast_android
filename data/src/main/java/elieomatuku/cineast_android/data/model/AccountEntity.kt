@@ -29,6 +29,18 @@ data class AccountEntity(
                 accountEntity.username
             )
         }
+
+        fun fromAccount(account: Account): AccountEntity {
+            return AccountEntity(
+                account.avatar?.let(AvatarEntity::fromAvatar),
+                account.id,
+                account.iso6391,
+                account.iso31661,
+                account.name,
+                account.includeAdult,
+                account.username
+            )
+        }
     }
 }
 
@@ -39,6 +51,12 @@ data class AvatarEntity(val gravatar: GAvatarEntity?) {
                 avatarEntity.gravatar?.let(GAvatarEntity::toGAvatar)
             )
         }
+
+        fun fromAvatar(avatar: Avatar): AvatarEntity {
+            return AvatarEntity(
+                avatar.grAvatar?.let(GAvatarEntity::fromGAvatar)
+            )
+        }
     }
 }
 
@@ -47,6 +65,12 @@ data class GAvatarEntity(val hash: String?) {
         fun toGAvatar(gAvatarEntity: GAvatarEntity): Gavatar {
             return Gavatar(
                 gAvatarEntity.hash
+            )
+        }
+
+        fun fromGAvatar(gAvatar: Gavatar): GAvatarEntity {
+            return GAvatarEntity(
+                gAvatar.hash
             )
         }
     }

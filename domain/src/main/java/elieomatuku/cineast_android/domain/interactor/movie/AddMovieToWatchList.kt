@@ -20,10 +20,13 @@ class AddMovieToWatchList(
     override suspend fun execute(params: Input) {
         safeUseCaseCall {
             val requestToken = authenticationRepository.getAccessToken().requestToken
+            val account = authenticationRepository.getAccount()
             val session = requestToken?.let { authenticationRepository.getSession(it) }
 
             session?.sessionId?.apply {
-                movieRepository.updateWatchList(this, params.movie, true)
+                account?.let { account ->
+                    movieRepository.updateWatchList(this, params.movie, account, true)
+                }
             }
 
         }

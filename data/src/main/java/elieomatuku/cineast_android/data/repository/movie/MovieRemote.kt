@@ -36,6 +36,7 @@ interface MovieRemote {
     suspend fun updateWatchList(
         sessionId: String,
         movie: MovieEntity,
+        accountEntity: AccountEntity,
         watchList: Boolean
     ): PostResultEntity
 
@@ -44,6 +45,7 @@ interface MovieRemote {
     suspend fun updateFavoriteList(
         sessionId: String,
         movie: MovieEntity,
+        accountEntity: AccountEntity,
         favorite: Boolean
     ): PostResultEntity
 

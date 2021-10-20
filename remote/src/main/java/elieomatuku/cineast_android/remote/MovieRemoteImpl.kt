@@ -199,10 +199,11 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
     override suspend fun updateWatchList(
         sessionId: String,
         movie: MovieEntity,
+        accountEntity: AccountEntity,
         watchList: Boolean
     ): PostResultEntity {
         val mediaRequest = WatchListMediaRequest(media_id = movie.id, watchlist = watchList)
-        val response = movieApi.updateWatchList(sessionId, mediaRequest)
+        val response = movieApi.updateWatchList(accountEntity.id, sessionId, mediaRequest)
         if (response.isSuccessful) {
             val body = response.body()
             return body!!.let(RemotePostResult::toPostResultEntity)
@@ -232,10 +233,11 @@ class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
     override suspend fun updateFavoriteList(
         sessionId: String,
         movie: MovieEntity,
+        accountEntity: AccountEntity,
         favorite: Boolean
     ): PostResultEntity {
         val mediaRequest = FavouritesMediaRequest(media_id = movie.id, favorite = favorite)
-        val response = movieApi.updateFavorites(sessionId, mediaRequest)
+        val response = movieApi.updateFavorites(accountEntity.id, sessionId, mediaRequest)
         if (response.isSuccessful) {
             val body = response.body()
             return body!!.let(RemotePostResult::toPostResultEntity)

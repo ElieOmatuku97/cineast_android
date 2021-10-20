@@ -58,34 +58,37 @@ interface MovieApi {
     suspend fun getNowPlayingMovies(): Response<RemoteMovies>
 
     @GET(MOVIE_VIDEOS)
-    suspend fun getMovieTrailers(@Path(MOVIE_ID) movie_id: Int): Response<RemoteTrailers>
+    suspend fun getMovieTrailers(@Path(MOVIE_ID) movieId: Int): Response<RemoteTrailers>
 
     @GET(MOVIE_DETAILS)
-    suspend fun getMovieDetails(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovieFacts>
+    suspend fun getMovieDetails(@Path(MOVIE_ID) movieId: Int): Response<RemoteMovieFacts>
 
     @GET(MOVIE)
-    suspend fun getMovie(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovie>
+    suspend fun getMovie(@Path(MOVIE_ID) movieId: Int): Response<RemoteMovie>
 
     @GET(GENRE)
     suspend fun getGenre(): Response<RemoteGenres>
 
     @GET(CREDITS)
-    suspend fun getCredits(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovieCredits>
+    suspend fun getCredits(@Path(MOVIE_ID) movieId: Int): Response<RemoteMovieCredits>
 
     @GET(SIMILAR_MOVIE)
-    suspend fun getSimilarMovies(@Path(MOVIE_ID) movie_id: Int): Response<RemoteMovies>
+    suspend fun getSimilarMovies(@Path(MOVIE_ID) movieId: Int): Response<RemoteMovies>
 
     @GET(MOVIE_IMAGE)
-    suspend fun getMovieImages(@Path(MOVIE_ID) movie_id: Int): Response<RemoteImages>
+    suspend fun getMovieImages(@Path(MOVIE_ID) movieId: Int): Response<RemoteImages>
 
     @GET(SEARCH_MOVIE)
     suspend fun getMoviesWithSearch(@Query(QUERY) query: String): Response<RemoteMovies>
 
     @GET(WATCHLIST_MOVIE)
-    suspend fun getWatchList(@Query(SESSION_ID) sessionId: String): Response<RemoteMovies>
+    suspend fun getWatchList(
+        @Query(SESSION_ID) sessionId: String
+    ): Response<RemoteMovies>
 
     @POST(UPDATE_WATCHLIST_MOVIE)
     suspend fun updateWatchList(
+        @Path(ACCOUNT_ID) accountId: Int?,
         @Query(SESSION_ID) sessionId: String,
         @Body media: WatchListMediaRequest
     ): Response<RemotePostResult>
@@ -95,6 +98,7 @@ interface MovieApi {
 
     @POST(UPDATE_FAVORITES_MOVIE)
     suspend fun updateFavorites(
+        @Path(ACCOUNT_ID) accountId: Int?,
         @Query(SESSION_ID) sessionId: String,
         @Body media: FavouritesMediaRequest
     ): Response<RemotePostResult>

@@ -20,10 +20,13 @@ class AddMovieToFavorites(
     override suspend fun execute(params: Input) {
         safeUseCaseCall {
             val requestToken = authenticationRepository.getAccessToken().requestToken
+            val account = authenticationRepository.getAccount()
             val session = requestToken?.let { authenticationRepository.getSession(it) }
 
             session?.sessionId?.apply {
-                movieRepository.updateFavoriteList(this, params.movie, true)
+                account?.let { account ->
+                    movieRepository.updateFavoriteList(this, params.movie, account, true)
+                }
             }
         }
     }

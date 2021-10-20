@@ -20,10 +20,13 @@ class RemoveMovieFromWatchList(
     override suspend fun execute(params: Input) {
         safeUseCaseCall {
             val requestToken = authenticationRepository.getAccessToken().requestToken
+            val account = authenticationRepository.getAccount()
             val session = requestToken?.let { authenticationRepository.getSession(it) }
 
             session?.sessionId?.apply {
-                movieRepository.updateWatchList(this, params.movie, false)
+                account?.let { account ->
+                    movieRepository.updateWatchList(this, params.movie, account, false)
+                }
             }
         }
     }

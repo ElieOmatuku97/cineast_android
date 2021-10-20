@@ -104,6 +104,7 @@ class MovieCacheDataStore(private val movieCache: MovieCache) : MovieDataStore {
     override suspend fun updateWatchList(
         sessionId: String,
         movie: MovieEntity,
+        account: AccountEntity,
         watchList: Boolean
     ): PostResultEntity {
         TODO("Not yet implemented")
@@ -116,6 +117,7 @@ class MovieCacheDataStore(private val movieCache: MovieCache) : MovieDataStore {
     override suspend fun updateFavoriteList(
         sessionId: String,
         movie: MovieEntity,
+        account: AccountEntity,
         favorite: Boolean
     ): PostResultEntity {
         TODO("Not yet implemented")

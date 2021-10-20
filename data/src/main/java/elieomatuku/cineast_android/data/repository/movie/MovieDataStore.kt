@@ -57,6 +57,7 @@ interface MovieDataStore {
     suspend fun updateWatchList(
         sessionId: String,
         movie: MovieEntity,
+        account: AccountEntity,
         watchList: Boolean
     ): PostResultEntity
 
@@ -65,6 +66,7 @@ interface MovieDataStore {
     suspend fun updateFavoriteList(
         sessionId: String,
         movie: MovieEntity,
+        account: AccountEntity,
         favorite: Boolean
     ): PostResultEntity
 

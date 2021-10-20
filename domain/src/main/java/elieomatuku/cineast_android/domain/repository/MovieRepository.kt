@@ -38,12 +38,14 @@ interface MovieRepository {
     suspend fun updateWatchList(
         sessionId: String,
         movie: Movie,
+        account: Account,
         watchList: Boolean
     )
 
     suspend fun updateFavoriteList(
         sessionId: String,
         movie: Movie,
+        account: Account,
         favorite: Boolean
     )
 

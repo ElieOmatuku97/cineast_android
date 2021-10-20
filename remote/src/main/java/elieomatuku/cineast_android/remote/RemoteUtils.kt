@@ -10,7 +10,7 @@ import okhttp3.RequestBody
 
 object RemoteUtils {
 
-    const val MOVIE = "movieApi"
+    const val MOVIE = "movie"
 
     fun <T> getRequestBody(item: T): RequestBody {
         val mediaType = "application/json".toMediaType()

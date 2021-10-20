@@ -104,9 +104,10 @@ class MovieRemoteDataStore(private val movieRemote: MovieRemote) : MovieDataStor
     override suspend fun updateWatchList(
         sessionId: String,
         movie: MovieEntity,
+        account: AccountEntity,
         watchList: Boolean
     ): PostResultEntity {
-        return movieRemote.updateWatchList(sessionId, movie, watchList)
+        return movieRemote.updateWatchList(sessionId, movie, account, watchList)
     }
 
     override suspend fun getFavoriteList(sessionId: String): List<MovieEntity> {
@@ -116,9 +117,10 @@ class MovieRemoteDataStore(private val movieRemote: MovieRemote) : MovieDataStor
     override suspend fun updateFavoriteList(
         sessionId: String,
         movie: MovieEntity,
+        account: AccountEntity,
         favorite: Boolean
     ): PostResultEntity {
-        return movieRemote.updateFavoriteList(sessionId, movie, favorite)
+        return movieRemote.updateFavoriteList(sessionId, movie, account, favorite)
     }
 
     override suspend fun postMovieRate(
