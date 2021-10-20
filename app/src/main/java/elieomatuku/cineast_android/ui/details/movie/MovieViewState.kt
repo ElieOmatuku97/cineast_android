@@ -11,7 +11,7 @@ import elieomatuku.cineast_android.ui.utils.ViewError
 
 data class MovieViewState(
     val isLoading: Boolean = false,
-    val isLoggedIn: Boolean = false,
+    val isLoggedIn: SingleEvent<Boolean>? = null,
     val movieSummary: MovieSummary? = null,
     val screenName: String? = null,
     val isInWatchList: Boolean = false,

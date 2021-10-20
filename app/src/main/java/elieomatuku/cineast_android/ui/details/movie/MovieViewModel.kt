@@ -31,6 +31,8 @@ class MovieViewModel(
 
     init {
         getIsLoggedIn()
+        getFavorites()
+        getWatchLists()
     }
 
     fun getMovieDetails(movie: Movie, screenName: String?) {
@@ -59,7 +61,9 @@ class MovieViewModel(
         viewModelScope.launch {
             state = when (val result = runUseCase(isLoggedIn, Unit)) {
                 is Success -> {
-                    state.copy(isLoggedIn = result.data)
+                    state.copy(
+                        isLoggedIn = SingleEvent(result.data)
+                    )
                 }
 
                 is Fail -> {
@@ -108,7 +112,7 @@ class MovieViewModel(
     }
 
     fun isLoggedIn(): Boolean {
-        return state.isLoggedIn
+        return state.isLoggedIn?.peek() ?: false
     }
 
     fun removeMovieFromWatchList() {

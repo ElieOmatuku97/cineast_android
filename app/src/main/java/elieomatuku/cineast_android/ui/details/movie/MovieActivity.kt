@@ -17,10 +17,7 @@ import elieomatuku.cineast_android.ui.details.MoviesFragment
 import elieomatuku.cineast_android.ui.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.ui.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.ui.details.movie.overview.MovieOverviewFragment
-import elieomatuku.cineast_android.ui.utils.Constants
-import elieomatuku.cineast_android.ui.utils.DividerItemDecorator
-import elieomatuku.cineast_android.ui.utils.ContentUtils
-import elieomatuku.cineast_android.ui.utils.UiUtils
+import elieomatuku.cineast_android.ui.utils.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -40,9 +37,6 @@ class MovieActivity : BaseActivity(R.layout.activity_content_details) {
     private var isInWatchList: Boolean = false
     private var isInFavoriteList: Boolean = false
 
-    val moviePresentedPublisher: PublishSubject<Movie> by lazy {
-        PublishSubject.create<Movie>()
-    }
 
     private val watchListCheckPublisher: PublishSubject<Boolean> by lazy {
         PublishSubject.create<Boolean>()
@@ -108,9 +102,11 @@ class MovieActivity : BaseActivity(R.layout.activity_content_details) {
                 updateErrorView(this.message)
             }
 
-            if (it.isLoggedIn) {
-                viewModel.getFavorites()
-                viewModel.getWatchLists()
+            it.isLoggedIn.consume { isLoggedIn ->
+                if (isLoggedIn) {
+                    viewModel.getFavorites()
+                    viewModel.getWatchLists()
+                }
             }
         }
     }
