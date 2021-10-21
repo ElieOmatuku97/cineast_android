@@ -32,7 +32,6 @@ This Application makes use of clean Architecture, hence the project is divided i
 - Domain
 - Remote
 - Presentation
-- UI
 
 For more details on Clean Architecture, check out the following links:
 
