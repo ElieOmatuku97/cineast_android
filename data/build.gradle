@@ -1,0 +1,24 @@
+plugins {
+    id 'java-library'
+    id 'kotlin'
+}
+apply from: "../ktlint.gradle"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
+
+    implementation project(':domain')
+
+    //other
+    implementation "com.squareup.moshi:moshi:${versions.moshi}"
+    implementation "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
+
+    testImplementation "junit:junit:${versions.junit}"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlin}"
+}

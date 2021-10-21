@@ -22,24 +22,36 @@ This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/c
    - then inside the file add a property `api_key = TMDb API KEY`. 
    
  On completion of the above steps, the app will be able to pick up your TMDb API KEY.
+
+
+## Clean Architecture Boilerplate
+This Application makes use of clean Architecture, hence the project is divided into the following packages:
+
+- Cache
+- Data
+- Domain
+- Remote
+- Presentation
+- UI
+
+For more details on Clean Architecture, check out the following links:
+
+https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
+https://github.com/LostInIreland/Flutter-Clean-Architecture
+
+https://github.com/bufferapp/android-clean-architecture-boilerplate
  
-## Project Structure
-  This app is built to be modularized to some degree. The modules are:
-  
-  - app: brings everything together. 
-  - core: contains the data models.
-  - database: contains the database and repository.
-  
-  This [blog post](https://proandroiddev.com/build-a-modular-android-app-architecture-25342d99de82) explains the basics of modularization and its benefits. 
+This [blog post](https://proandroiddev.com/build-a-modular-android-app-architecture-25342d99de82) explains the basics of modularization and its benefits. 
 
 
-## Project Architecture
+## Architecture Pattern
 
-This app uses the Model-View-Presenter architecture, with the help of the [Mythos library](https://github.com/jhavatar/mythos). 
+This app uses the MVVM architecture. 
 
 [Room ORM](https://developer.android.com/topic/libraries/architecture/room) which is part of Android Architecture Components is used. 
 
-A mixture of Callbacks and Coroutines are used for async/background. Future milestones are going to be the sole usage of Coroutines for async/background operations. This [blog post](https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb) explains the basics of Coroutines in kotlin.   
+Coroutines are used for async/background. This [blog post](https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb) explains the basics of Coroutines in kotlin.   
  
 ## Screenshots
 
@@ -51,9 +63,6 @@ A mixture of Callbacks and Coroutines are used for async/background. Future mile
 
 
 ## Libraries Used
-[Mythos](https://github.com/jhavatar/mythos) - A Model-View-Presenter library for Android apps.
-
-[CoroutineHelper](https://github.com/flatcircle/CoroutineHelper) - Various helper functions, delegates and extension functions for use in Coroutines
 
 [Leak Canary](https://github.com/square/leakcanary) - Capture Memory Leaks
 

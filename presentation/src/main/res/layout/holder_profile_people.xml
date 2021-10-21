@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/holder_profile_movie_layout_padding_bottom">
+
+    <TextView
+        android:id="@+id/people_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
+        android:layout_marginLeft="@dimen/holder_movie_facts_textview_padding_right"
+        android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginRight="@dimen/holder_item_movie_textview_margin"
+        android:text="peopleNameView"
+        android:textColor="@color/color_white"
+        app:layout_constraintStart_toEndOf="@+id/profile_image"
+        app:layout_constraintTop_toTopOf="@+id/profile_image" />
+
+    <TextView
+        android:id="@+id/people_dateofbirth_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
+        android:layout_marginLeft="@dimen/holder_movie_facts_textview_padding_right"
+        android:layout_marginTop="@dimen/activity_margin_top"
+        android:text="dateOfBirth"
+        android:textColor="@color/color_grey"
+        android:textSize="@dimen/holder_profile_movie_text_size"
+        app:layout_constraintStart_toEndOf="@id/profile_image"
+        app:layout_constraintTop_toBottomOf="@id/people_name_view" />
+
+    <TextView
+        android:id="@+id/people_placeofbirth_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
+        android:layout_marginTop="@dimen/activity_margin_top"
+        android:maxLines="2"
+        android:text="placeOfBirth"
+        android:textColor="@color/color_grey"
+        android:textSize="@dimen/holder_profile_movie_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/profile_image"
+        app:layout_constraintTop_toBottomOf="@id/people_dateofbirth_view" />
+
+    <TextView
+        android:id="@+id/homepage_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/holder_movie_facts_textview_padding_right"
+        android:layout_marginLeft="@dimen/holder_movie_facts_textview_padding_right"
+        android:layout_marginTop="@dimen/activity_margin_top"
+        android:ellipsize="end"
+        android:maxLength="33"
+        android:text="homePage"
+        android:textColor="@color/color_orange_app"
+        android:textSize="@dimen/holder_profile_movie_text_size"
+        app:layout_constraintStart_toEndOf="@id/profile_image"
+        app:layout_constraintTop_toBottomOf="@id/people_placeofbirth_view" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/profile_image"
+        android:layout_width="@dimen/movie_summary_image_width"
+        android:layout_height="@dimen/movie_summary_image_size"
+        android:layout_marginStart="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginLeft="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginTop="@dimen/holder_item_movie_textview_margin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

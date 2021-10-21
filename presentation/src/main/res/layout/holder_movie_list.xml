@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/activity_margin_top">
+
+
+    <ImageView
+        android:id="@+id/content_image_view"
+        android:layout_width="50dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+
+    <TextView
+        android:id="@+id/movie_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
+        android:layout_marginLeft="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginTop="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
+        android:layout_marginRight="@dimen/holder_item_movie_textview_margin"
+        android:maxLength="29"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/holder_item_movie_title_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/content_image_view"
+        app:layout_constraintTop_toTopOf="@+id/content_image_view" />
+
+
+    <TextView
+        android:id="@+id/release_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
+        android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
+        android:textColor="@color/color_grey"
+        android:textSize="@dimen/holder_item_movie_textview_size"
+        app:layout_constraintStart_toEndOf="@+id/content_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/movie_name_view" />
+
+
+    <TextView
+        android:id="@+id/vote_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
+        android:layout_marginBottom="6dp"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/rating_small_label_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/movie_rating_bar"
+        app:layout_constraintStart_toEndOf="@id/content_image_view"
+        app:layout_constraintTop_toTopOf="@id/movie_rating_bar"
+        tools:text="(7.5, 39)"
+        />
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
+        android:layout_marginTop="@dimen/arrow_list_item_height"
+        android:background="@drawable/item_decoration"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/content_image_view"
+        app:layout_constraintTop_toBottomOf="@id/image_view" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/arrow_list_item_height"
+        android:layout_marginStart="2dp"
+        android:tint="@color/color_white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp" />
+
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/movie_rating_bar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/holder_movie_layout_padding"
+        android:numStars="10"
+        android:rating="2"
+        android:scaleX="0.7"
+        android:scaleY="0.65"
+        android:theme="@style/CineastRatingBarTheme"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        app:layout_constraintStart_toEndOf="@id/vote_average"
+        app:layout_constraintTop_toBottomOf="@id/release_date" />
+
+
+    <TextView
+        android:id="@+id/user_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
+        android:layout_marginBottom="6dp"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/rating_small_label_size"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/user_rating_bar"
+        app:layout_constraintStart_toEndOf="@id/content_image_view"
+        app:layout_constraintTop_toTopOf="@id/user_rating_bar"
+        tools:text="(7.5, me)"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/user_rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:numStars="10"
+        android:scaleX="0.7"
+        android:scaleY="0.65"
+        android:theme="@style/UserRatingBarTheme"
+        android:transformPivotX="0dp"
+        android:transformPivotY="0dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@id/user_rating"
+        app:layout_constraintTop_toBottomOf="@id/movie_rating_bar"
+        app:layout_constraintVertical_bias="0.32999998"
+        style="?android:attr/ratingBarStyleSmall"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
