@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android
+package elieomatuku.cineast_android.injection
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

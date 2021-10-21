@@ -20,7 +20,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
-        def apiKeyPropertiesFile = rootProject.file("apikeys.properties.txt");
+        def apiKeyPropertiesFile = rootProject.file("apikeys.properties.txt")
         if (apiKeyPropertiesFile.exists()) {
             def apiKeyProperties = new Properties()
             apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
@@ -73,7 +73,7 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true
+        dataBinding true
     }
 
 }

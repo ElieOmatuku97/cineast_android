@@ -17,10 +17,10 @@ import elieomatuku.cineast_android.base.BaseActivity
 import elieomatuku.cineast_android.details.BareOverviewFragment
 import elieomatuku.cineast_android.details.MoviesFragment
 import elieomatuku.cineast_android.details.gallery.GalleryFragment
-import elieomatuku.cineast_android.ui.utils.Constants
-import elieomatuku.cineast_android.ui.utils.DividerItemDecorator
-import elieomatuku.cineast_android.ui.utils.ContentUtils
-import elieomatuku.cineast_android.ui.utils.UiUtils
+import elieomatuku.cineast_android.utils.Constants
+import elieomatuku.cineast_android.utils.DividerItemDecorator
+import elieomatuku.cineast_android.utils.ContentUtils
+import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_content_details.*
@@ -138,7 +138,7 @@ class PersonActivity : BaseActivity(R.layout.activity_content_details) {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item?.itemId) {
             android.R.id.home -> onSupportNavigateUp()
 

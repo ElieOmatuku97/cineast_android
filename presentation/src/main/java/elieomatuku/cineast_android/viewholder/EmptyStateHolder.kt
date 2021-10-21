@@ -7,16 +7,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.App
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.connection.ConnectionService
 import kotlinx.android.synthetic.main.holder_empty_state.view.*
+import org.kodein.di.Kodein
+import org.kodein.di.android.closestKodein
+import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
-class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView), KodeinAware {
     companion object {
         fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context).inflate(R.layout.holder_empty_state, parent, false)
+            return LayoutInflater.from(parent.context)
+                .inflate(R.layout.holder_empty_state, parent, false)
         }
 
         fun newInstance(parent: ViewGroup): EmptyStateHolder {
@@ -24,7 +27,8 @@ class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    private val connectionService: ConnectionService by App.getKodein.instance()
+    override val kodein: Kodein by closestKodein(itemView.context)
+    private val connectionService: ConnectionService by instance()
 
     private val msgView: TextView by lazy {
         itemView.empty_msg
@@ -39,11 +43,16 @@ class EmptyStateHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     fun update(errorMsg: String? = null) {
-
         if (connectionService.hasNetworkConnection) {
             msgTitle.text = itemView.resources.getText(R.string.no_content_title)
             msgView.text = errorMsg?.toUpperCase()
-            msgIcon.setImageDrawable(ResourcesCompat.getDrawable(itemView.resources, R.drawable.ic_movie_black_24dp, itemView.context.theme))
+            msgIcon.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    itemView.resources,
+                    R.drawable.ic_movie_black_24dp,
+                    itemView.context.theme
+                )
+            )
         }
     }
 }
