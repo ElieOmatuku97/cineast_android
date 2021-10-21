@@ -2,7 +2,7 @@ package elieomatuku.cineast_android
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.ui.connection.ConnectionService
+import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.cache.*
 import elieomatuku.cineast_android.cache.dao.*
 import elieomatuku.cineast_android.data.AuthenticationRepositoryImpl
@@ -36,16 +36,16 @@ import elieomatuku.cineast_android.remote.PersonRemoteImpl
 import elieomatuku.cineast_android.remote.api.MovieApi
 import elieomatuku.cineast_android.remote.api.PersonApi
 import elieomatuku.cineast_android.remote.api.AuthenticationApi
-import elieomatuku.cineast_android.ui.details.MoviesViewModel
-import elieomatuku.cineast_android.ui.details.movie.MovieViewModel
-import elieomatuku.cineast_android.ui.details.person.PersonViewModel
-import elieomatuku.cineast_android.ui.discover.DiscoverViewModel
-import elieomatuku.cineast_android.ui.fragment.RateViewModel
-import elieomatuku.cineast_android.ui.search.SearchViewModel
-import elieomatuku.cineast_android.ui.search.movie.MoviesGridViewModel
-import elieomatuku.cineast_android.ui.search.people.PeopleGridViewModel
-import elieomatuku.cineast_android.ui.settings.SettingsViewModel
-import elieomatuku.cineast_android.ui.settings.user_movies.UserMoviesViewModel
+import elieomatuku.cineast_android.details.MoviesViewModel
+import elieomatuku.cineast_android.details.movie.MovieViewModel
+import elieomatuku.cineast_android.details.person.PersonViewModel
+import elieomatuku.cineast_android.discover.DiscoverViewModel
+import elieomatuku.cineast_android.fragment.RateViewModel
+import elieomatuku.cineast_android.search.SearchViewModel
+import elieomatuku.cineast_android.search.movie.MoviesGridViewModel
+import elieomatuku.cineast_android.search.people.PeopleGridViewModel
+import elieomatuku.cineast_android.settings.SettingsViewModel
+import elieomatuku.cineast_android.settings.user_movies.UserMoviesViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.kodein.di.Kodein
