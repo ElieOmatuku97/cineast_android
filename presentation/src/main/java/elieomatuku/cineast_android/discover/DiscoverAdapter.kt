@@ -4,10 +4,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.ui.extensions.Contents
-import elieomatuku.cineast_android.ui.viewholder.ContentHolder
-import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
-import elieomatuku.cineast_android.ui.viewholder.PeopleHolder
+import elieomatuku.cineast_android.extensions.Contents
+import elieomatuku.cineast_android.viewholder.ContentHolder
+import elieomatuku.cineast_android.viewholder.EmptyStateHolder
+import elieomatuku.cineast_android.viewholder.PeopleHolder
 import io.reactivex.subjects.PublishSubject
 import kotlin.properties.Delegates
 

@@ -44,13 +44,13 @@ dependencies {
 
     implementation "androidx.core:core-ktx:${versions.ktx}"
     implementation "androidx.preference:preference-ktx:1.1.1"
-    implementation("com.squareup.retrofit2:retrofit:${versions.retrofit}")
-    implementation("com.squareup.retrofit2:converter-gson:${versions.retrofit}") {
+    api("com.squareup.retrofit2:retrofit:${versions.retrofit}")
+    api("com.squareup.retrofit2:converter-gson:${versions.retrofit}") {
         exclude module: "retrofit:${versions.retrofit}"
     }
-    implementation "com.squareup.okhttp3:okhttp:${versions.okhttp}"
-    implementation "com.squareup.okio:okio:${versions.okio}"
-    implementation "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
+    api "com.squareup.okhttp3:okhttp:${versions.okhttp}"
+    api "com.squareup.okio:okio:${versions.okio}"
+    api "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
 
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlin}"

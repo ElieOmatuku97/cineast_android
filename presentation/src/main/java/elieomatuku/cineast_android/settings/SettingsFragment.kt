@@ -15,7 +15,7 @@ import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.base.BasePreferenceFragmentCompat
 import elieomatuku.cineast_android.settings.user_movies.UserMoviesActivity
-import elieomatuku.cineast_android.utils.WebLink
+import elieomatuku.cineast_android.utils.*
 
 
 class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
@@ -45,7 +45,7 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
         setPreferencesFromResource(R.xml.settings, null)
         setUpPreferenceViews()
 
-        val appVersion = findPreference<Preference>(getString(R.string.pref_app_version))
+        val appVersion = findPreference(getString(R.string.pref_app_version))
         val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
         summary.setSpan(
             ForegroundColorSpan(

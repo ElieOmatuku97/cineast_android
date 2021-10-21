@@ -18,6 +18,7 @@ import elieomatuku.cineast_android.details.movie.MovieActivity
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.SwipeToDeleteCallback
 import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.utils.consume
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -197,8 +198,8 @@ class UserMoviesActivity : BaseActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             android.R.id.home -> onSupportNavigateUp()
 //            R.id.action_edit -> {
 //                onEditMenuClicked()

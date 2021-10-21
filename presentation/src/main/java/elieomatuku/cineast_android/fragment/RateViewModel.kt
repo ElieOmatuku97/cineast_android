@@ -1,9 +1,11 @@
 package elieomatuku.cineast_android.fragment
 
+import androidx.lifecycle.viewModelScope
 import elieomatuku.cineast_android.domain.interactor.movie.RateMovie
 import elieomatuku.cineast_android.domain.interactor.runUseCase
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseViewModel
+import kotlinx.coroutines.launch
 
 
 /**

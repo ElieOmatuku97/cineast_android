@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Person
-import elieomatuku.cineast_android.ui.viewholder.PeopleHolder
+import elieomatuku.cineast_android.viewholder.PeopleHolder
 import io.reactivex.subjects.PublishSubject
 
 class MovieTeamAdapter(

@@ -1,12 +1,14 @@
 package elieomatuku.cineast_android.details
 
+import androidx.lifecycle.viewModelScope
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.movie.GetGenres
 import elieomatuku.cineast_android.domain.interactor.runUseCase
 import elieomatuku.cineast_android.base.BaseViewModel
-import elieomatuku.cineast_android.ui.utils.SingleEvent
-import elieomatuku.cineast_android.ui.utils.ViewErrorController
+import elieomatuku.cineast_android.utils.SingleEvent
+import elieomatuku.cineast_android.utils.ViewErrorController
+import kotlinx.coroutines.launch
 
 
 /**

@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.details.movie
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.domain.model.MovieSummary
-import elieomatuku.cineast_android.ui.viewholder.EmptyStateHolder
+import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates

@@ -8,7 +8,7 @@ import android.widget.ImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.ui.utils.UiUtils
+import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.fragment_poster.*
 
 class GalleryPosterFragment : BaseFragment() {

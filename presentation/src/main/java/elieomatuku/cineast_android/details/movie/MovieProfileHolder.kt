@@ -14,9 +14,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.MovieSummary
-import elieomatuku.cineast_android.ui.fragment.RateDialogFragment
-import elieomatuku.cineast_android.ui.viewholder.ProfileHolder
-import elieomatuku.cineast_android.ui.utils.UiUtils
+import elieomatuku.cineast_android.fragment.RateDialogFragment
+import elieomatuku.cineast_android.viewholder.ProfileHolder
+import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_movie.view.*
 

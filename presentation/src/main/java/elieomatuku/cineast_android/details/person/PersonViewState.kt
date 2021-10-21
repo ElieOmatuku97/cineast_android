@@ -3,8 +3,8 @@ package elieomatuku.cineast_android.details.person
 import elieomatuku.cineast_android.domain.model.Image
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.PersonDetails
-import elieomatuku.cineast_android.ui.utils.SingleEvent
-import elieomatuku.cineast_android.ui.utils.ViewError
+import elieomatuku.cineast_android.utils.SingleEvent
+import elieomatuku.cineast_android.utils.ViewError
 
 
 /**

@@ -17,7 +17,7 @@ import elieomatuku.cineast_android.details.MoviesFragment
 import elieomatuku.cineast_android.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewFragment
-import elieomatuku.cineast_android.ui.utils.*
+import elieomatuku.cineast_android.utils.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -197,8 +197,8 @@ class MovieActivity : BaseActivity(R.layout.activity_content_details) {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             android.R.id.home -> onSupportNavigateUp()
 
             R.id.action_share -> {

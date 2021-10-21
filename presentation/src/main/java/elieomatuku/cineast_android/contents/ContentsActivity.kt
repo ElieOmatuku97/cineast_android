@@ -10,9 +10,9 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.base.BaseActivity
-import elieomatuku.cineast_android.ui.details.movie.MovieActivity
-import elieomatuku.cineast_android.ui.details.person.PersonActivity
-import elieomatuku.cineast_android.ui.utils.Constants
+import elieomatuku.cineast_android.details.movie.MovieActivity
+import elieomatuku.cineast_android.details.person.PersonActivity
+import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject

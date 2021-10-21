@@ -11,17 +11,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
-import elieomatuku.cineast_android.ui.extensions.getFilteredWidgets
+import elieomatuku.cineast_android.extensions.getFilteredWidgets
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.details.movie.MovieActivity
 import elieomatuku.cineast_android.details.person.PersonActivity
-import elieomatuku.cineast_android.ui.fragment.WebViewFragment
-import elieomatuku.cineast_android.ui.settings.LoginWebViewFragment
-import elieomatuku.cineast_android.ui.utils.Constants
+import elieomatuku.cineast_android.fragment.WebViewFragment
+import elieomatuku.cineast_android.settings.LoginWebViewFragment
+import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_discover.*
+import elieomatuku.cineast_android.utils.*
 import java.io.Serializable
 
 

@@ -15,8 +15,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode = rootProject.ext.versionCode
+        versionName = rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -35,6 +35,19 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        dataBinding = true
+    }
+}
+
+androidExtensions {
+    experimental = true
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
+    maven { url "https://kotlin.bintray.com/kotlinx" }
+    maven { url "https://oss.sonatype.org/discoverContent/repositories/snapshots" }
 }
 
 dependencies {

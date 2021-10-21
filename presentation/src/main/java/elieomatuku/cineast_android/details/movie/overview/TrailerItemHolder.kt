@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.ui.fragment.YoutubeFragment
-import elieomatuku.cineast_android.ui.utils.UiUtils
+import elieomatuku.cineast_android.fragment.YoutubeFragment
+import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.holder_trailer_item.view.*
 import timber.log.Timber
 

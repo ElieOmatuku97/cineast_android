@@ -1,5 +1,6 @@
 package elieomatuku.cineast_android.details.person
 
+import androidx.lifecycle.viewModelScope
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.people.GetImages
@@ -8,8 +9,9 @@ import elieomatuku.cineast_android.domain.interactor.people.GetKnownForMovies
 import elieomatuku.cineast_android.domain.interactor.runUseCase
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.base.BaseViewModel
-import elieomatuku.cineast_android.ui.utils.SingleEvent
-import elieomatuku.cineast_android.ui.utils.ViewErrorController
+import elieomatuku.cineast_android.utils.SingleEvent
+import elieomatuku.cineast_android.utils.ViewErrorController
+import kotlinx.coroutines.launch
 
 
 /**

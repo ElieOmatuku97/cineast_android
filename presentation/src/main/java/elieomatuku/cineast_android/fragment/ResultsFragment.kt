@@ -10,8 +10,6 @@ import elieomatuku.cineast_android.domain.model.Content
 
 class ResultsFragment() : Fragment() {
     companion object {
-        val LOG_TAG = ResultsFragment::class.java.simpleName
-
         fun newInstance(contents: List<Content>): ResultsFragment {
             val fragment = ResultsFragment()
             val args = Bundle()

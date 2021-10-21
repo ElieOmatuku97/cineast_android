@@ -18,7 +18,7 @@ import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.contents.ContentsAdapter
 import elieomatuku.cineast_android.details.movie.MovieActivity
-import elieomatuku.cineast_android.ui.utils.Constants
+import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
