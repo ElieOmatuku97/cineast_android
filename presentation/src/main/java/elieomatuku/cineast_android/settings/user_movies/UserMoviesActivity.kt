@@ -14,7 +14,7 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseActivity
 import elieomatuku.cineast_android.contents.ContentsAdapter
-import elieomatuku.cineast_android.details.movie.MovieActivity
+import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.SwipeToDeleteCallback
 import elieomatuku.cineast_android.utils.UiUtils
@@ -250,7 +250,7 @@ class UserMoviesActivity : BaseActivity() {
     }
 
     private fun gotoMovie(params: Bundle) {
-        val intent = Intent(this, MovieActivity::class.java)
+        val intent = Intent(this, MovieFragment::class.java)
         intent.putExtras(params)
         startActivity(intent)
     }

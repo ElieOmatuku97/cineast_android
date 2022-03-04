@@ -10,7 +10,7 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.base.BaseActivity
-import elieomatuku.cineast_android.details.movie.MovieActivity
+import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.details.person.PersonActivity
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
@@ -18,7 +18,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_content.*
 import java.io.Serializable
-
 
 class ContentsActivity : BaseActivity() {
     companion object {
@@ -92,7 +91,7 @@ class ContentsActivity : BaseActivity() {
                         gotoContent(params, PersonActivity::class.java)
                     } else {
                         params.putSerializable(MOVIE_KEY, content)
-                        gotoContent(params, MovieActivity::class.java)
+                        gotoContent(params, MovieFragment::class.java)
                     }
                 }
         )

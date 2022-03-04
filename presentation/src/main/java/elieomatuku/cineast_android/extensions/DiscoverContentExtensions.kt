@@ -20,10 +20,6 @@ fun DiscoverContents.isEmpty(): Boolean {
     return popularMovies.isEmpty() && nowPlayingMovies.isEmpty() && upcomingMovies.isEmpty() && topRatedMovies.isEmpty() && people.isEmpty()
 }
 
-fun DiscoverContents.emptyDiscoverContent(): DiscoverContents {
-    return DiscoverContents()
-}
-
 fun DiscoverContents.getFilteredWidgets(): MutableMap<Int, Contents> {
     val filteredWidgets: MutableMap<Int, Contents> = mutableMapOf()
 

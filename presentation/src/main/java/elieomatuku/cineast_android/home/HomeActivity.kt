@@ -11,19 +11,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : BaseActivity() {
 
-    private val adapter by lazy {
-        HomeFragmentPagerAdapter(supportFragmentManager)
-    }
-
-    private val pager by lazy {
-        home_pager
-    }
-
-    private val navIds: List<Int> by lazy {
-        listOf(R.id.action_discover, R.id.action_search, R.id.action_my_TMDb)
-    }
-
-    val bottomNav: BottomNavigationView by lazy {
+    private val bottomNav: BottomNavigationView by lazy {
         bottom_navig
     }
 
@@ -45,29 +33,9 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun initView() {
-        pager.adapter = adapter
-
         bottomNav.setOnNavigationItemSelectedListener {
             toolbar?.title = it.title
-            pager.setCurrentItem(navIds.indexOf(it.itemId), true)
             true
         }
-
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                toolbar?.title = bottomNav.menu.getItem(position).title
-                bottomNav.menu.getItem(position).isChecked = true
-            }
-        })
     }
 }

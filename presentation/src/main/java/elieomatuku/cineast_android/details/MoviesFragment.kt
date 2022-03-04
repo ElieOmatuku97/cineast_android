@@ -17,7 +17,7 @@ import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.contents.ContentsAdapter
-import elieomatuku.cineast_android.details.movie.MovieActivity
+import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,7 +31,6 @@ import java.io.Serializable
 
 class MoviesFragment : BaseFragment() {
     companion object {
-
         const val MOVIES = "movies"
         const val TITLE = "title"
         private const val SELECTED_MOVIE_TITLE = "gotomovie_title"
@@ -105,14 +104,12 @@ class MoviesFragment : BaseFragment() {
         }
 
         viewModel.viewState.observe(
-            this.viewLifecycleOwner,
-            { state ->
-
-                state.genres.let {
-                    genres = it
-                }
+            this.viewLifecycleOwner
+        ) { state ->
+            state.genres.let {
+                genres = it
             }
-        )
+        }
 
         updateView()
 
@@ -121,24 +118,21 @@ class MoviesFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-
         rxSubs.add(
-            (
-                    movieSelectObservable
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                            { movie: Content ->
-                                val params = Bundle()
-                                params.putString(Constants.SCREEN_NAME_KEY, selectedMovieTitle)
-                                params.putSerializable(MOVIE_KEY, movie)
-                                params.putSerializable(MOVIE_GENRES_KEY, genres as Serializable)
-                                gotoMovie(params)
-                            },
-                            { t: Throwable ->
-                                Timber.e("movieSelectObservable failed:$t")
-                            }
-                        )
-                    )
+            movieSelectObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { movie: Content ->
+                        val params = Bundle()
+                        params.putString(Constants.SCREEN_NAME_KEY, selectedMovieTitle)
+                        params.putSerializable(MOVIE_KEY, movie)
+                        params.putSerializable(MOVIE_GENRES_KEY, genres as Serializable)
+                        gotoMovie(params)
+                    },
+                    { t: Throwable ->
+                        Timber.e("movieSelectObservable failed:$t")
+                    }
+                )
         )
     }
 
@@ -176,7 +170,7 @@ class MoviesFragment : BaseFragment() {
     }
 
     private fun gotoMovie(params: Bundle) {
-        val intent = Intent(activity, MovieActivity::class.java)
+        val intent = Intent(activity, MovieFragment::class.java)
         intent.putExtras(params)
         activity?.startActivity(intent)
     }

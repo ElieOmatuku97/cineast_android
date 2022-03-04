@@ -45,17 +45,17 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
         setPreferencesFromResource(R.xml.settings, null)
         setUpPreferenceViews()
 
-        val appVersion = findPreference(getString(R.string.pref_app_version))
-        val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-        summary.setSpan(
-            ForegroundColorSpan(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.color_accent
-                )
-            ), 0, summary.length, 0
-        )
-        appVersion?.summary = summary
+//        val appVersion = findPreference(getString(R.string.pref_app_version))
+//        val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+//        summary.setSpan(
+//            ForegroundColorSpan(
+//                ContextCompat.getColor(
+//                    requireContext(),
+//                    R.color.color_accent
+//                )
+//            ), 0, summary.length, 0
+//        )
+//        appVersion?.summary = summary
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }

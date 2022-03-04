@@ -23,7 +23,7 @@ class MovieSummaryAdapter(
         errorMessage = null
     }
 
-    private var initialCheckedTab: String = MovieActivity.MOVIE_OVERVIEW
+    private var initialCheckedTab: String = MovieFragment.MOVIE_OVERVIEW
 
     var hasValidData = false
         private set
@@ -83,15 +83,15 @@ class MovieSummaryAdapter(
             holder.update(movieSummary, initialCheckedTab)
 
             holder.overviewSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieActivity.MOVIE_OVERVIEW, movieSummary))
+                segmentedButtonsPublisher.onNext(Pair(MovieFragment.MOVIE_OVERVIEW, movieSummary))
             }
 
             holder.peopleSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieActivity.MOVIE_CREW, movieSummary))
+                segmentedButtonsPublisher.onNext(Pair(MovieFragment.MOVIE_CREW, movieSummary))
             }
 
             holder.similarSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieActivity.SIMILAR_MOVIES, movieSummary))
+                segmentedButtonsPublisher.onNext(Pair(MovieFragment.SIMILAR_MOVIES, movieSummary))
             }
         }
 

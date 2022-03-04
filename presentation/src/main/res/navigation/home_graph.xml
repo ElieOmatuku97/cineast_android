@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_graph"
+    app:startDestination="@id/discover">
+
+    <fragment
+        android:id="@+id/discover"
+        android:name="elieomatuku.cineast_android.discover.DiscoverFragment"
+        android:label="Discover Screen"
+        tools:layout="@layout/fragment_discover">
+        <action
+            android:id="@+id/navigate_to_movie_detail"
+            app:destination="@id/movie_detail" />
+    </fragment>
+    <fragment
+        android:id="@+id/movie_detail"
+        android:name="elieomatuku.cineast_android.details.movie.MovieFragment"
+        android:label="Movie Detail"
+        tools:layout="@layout/fragment_movies">
+        <argument
+            android:name="screen_name"
+            app:argType="string" />
+        <argument
+            android:name="movie"
+            app:argType="elieomatuku.cineast_android.domain.model.Movie" />
+    </fragment>
+
+</navigation>

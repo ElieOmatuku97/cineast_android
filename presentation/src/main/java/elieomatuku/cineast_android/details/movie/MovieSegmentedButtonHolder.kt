@@ -36,9 +36,9 @@ class MovieSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemV
         itemView.visibility = if (movieSummary.movie != null) View.VISIBLE else View.GONE
 
         when (checkedTab) {
-            MovieActivity.MOVIE_OVERVIEW -> overviewSegmentBtn.isChecked = true
-            MovieActivity.MOVIE_CREW -> peopleSegmentBtn.isChecked = true
-            MovieActivity.SIMILAR_MOVIES -> similarSegmentBtn.isChecked = true
+            MovieFragment.MOVIE_OVERVIEW -> overviewSegmentBtn.isChecked = true
+            MovieFragment.MOVIE_CREW -> peopleSegmentBtn.isChecked = true
+            MovieFragment.SIMILAR_MOVIES -> similarSegmentBtn.isChecked = true
         }
     }
 }

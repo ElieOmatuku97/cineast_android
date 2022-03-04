@@ -23,11 +23,11 @@ import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_content_details.*
 import java.io.Serializable
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.fragment_content_details.*
 
-class PersonActivity : BaseActivity(R.layout.activity_content_details) {
+class PersonActivity : BaseActivity(R.layout.fragment_content_details) {
     companion object {
         const val OVERVIEW = "overview"
         const val KNOWN_FOR = "known_for"
@@ -77,7 +77,6 @@ class PersonActivity : BaseActivity(R.layout.activity_content_details) {
         }
 
         viewModel.viewState.observe(this) {
-
             if (it.isLoading) {
                 showLoading(rootView)
             } else {
@@ -90,7 +89,6 @@ class PersonActivity : BaseActivity(R.layout.activity_content_details) {
                 updateErrorView(this.message)
             }
         }
-
     }
 
     override fun onResume() {

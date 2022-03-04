@@ -6,7 +6,7 @@ import android.view.View
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.contents.ContentGridFragment
-import elieomatuku.cineast_android.details.movie.MovieActivity
+import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
 import java.io.Serializable
 
@@ -52,7 +52,7 @@ class MoviesGridFragment :
     }
 
     private fun gotoMovie(params: Bundle) {
-        val intent = Intent(activity, MovieActivity::class.java)
+        val intent = Intent(activity, MovieFragment::class.java)
         intent.putExtras(params)
         activity?.startActivity(intent)
     }

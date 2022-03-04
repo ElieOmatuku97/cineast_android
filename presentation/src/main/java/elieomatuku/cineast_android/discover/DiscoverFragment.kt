@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.getFilteredWidgets
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.details.movie.MovieActivity
 import elieomatuku.cineast_android.details.person.PersonActivity
 import elieomatuku.cineast_android.fragment.WebViewFragment
 import elieomatuku.cineast_android.settings.LoginWebViewFragment
@@ -23,8 +23,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_discover.*
 import elieomatuku.cineast_android.utils.*
-import java.io.Serializable
-
 
 class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
     companion object {
@@ -33,8 +31,6 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         }
 
         const val SCREEN_NAME = "Discover"
-        const val MOVIE_GENRES_KEY = "genres"
-        const val MOVIE_KEY = "movieApi"
         const val PEOPLE_KEY = "peopleApi"
     }
 
@@ -136,14 +132,7 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
             movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { movie: Movie ->
-                    val params = Bundle()
-                    params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
-                    params.putSerializable(MOVIE_KEY, movie)
-                    params.putSerializable(
-                        MOVIE_GENRES_KEY,
-                        viewModel.genres as Serializable
-                    )
-                    gotoMovie(params)
+                    gotoMovie(movie)
                 }
         )
     }
@@ -194,10 +183,9 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         refreshLayout.isRefreshing = false
     }
 
-    private fun gotoMovie(params: Bundle) {
-        val intent = Intent(activity, MovieActivity::class.java)
-        intent.putExtras(params)
-        activity?.startActivity(intent)
+    private fun gotoMovie(movie: Movie) {
+        val directions = DiscoverFragmentDirections.navigateToMovieDetail(SCREEN_NAME, movie)
+        findNavController().navigate(directions)
     }
 
     private fun gotoPeople(params: Bundle) {

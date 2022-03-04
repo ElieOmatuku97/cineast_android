@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId "elieomatuku.cineast_android"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode = rootProject.ext.versionCode
         versionName = rootProject.ext.versionName
         multiDexEnabled true

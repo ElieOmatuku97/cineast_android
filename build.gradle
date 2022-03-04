@@ -25,7 +25,8 @@ buildscript {
             kodein: '6.4.0',
             swiperefresh: '1.1.0',
             okio: '2.10.0',
-            moshi: '1.8.0'
+            moshi: '1.8.0',
+            nav_version: '2.4.0'
     ]
 
     repositories {
@@ -35,10 +36,10 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:4.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.4.0"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-
 
     }
 }
@@ -55,7 +56,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    compileSdkVersion = 29
+    compileSdkVersion = 31
     buildToolsVersion = "28.0.1"
     supportLibVersion = "28.0.0-alpha1"
     appName = "Cineast"
