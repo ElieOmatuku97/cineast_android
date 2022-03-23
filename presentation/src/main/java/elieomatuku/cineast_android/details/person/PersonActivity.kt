@@ -26,6 +26,7 @@ import io.reactivex.subjects.PublishSubject
 import java.io.Serializable
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_content_details.*
+import kotlinx.android.synthetic.main.holder_movie_list.*
 
 class PersonActivity : BaseActivity(R.layout.fragment_content_details) {
     companion object {
@@ -78,9 +79,9 @@ class PersonActivity : BaseActivity(R.layout.fragment_content_details) {
 
         viewModel.viewState.observe(this) {
             if (it.isLoading) {
-                showLoading(rootView)
+                showLoading(view)
             } else {
-                hideLoading(rootView)
+                hideLoading(view)
             }
 
             updateView(it.person, it.knownFor)

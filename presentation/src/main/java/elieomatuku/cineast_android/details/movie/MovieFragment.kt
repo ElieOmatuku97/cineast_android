@@ -6,7 +6,10 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Movie
@@ -23,6 +26,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_content_details.*
+import kotlinx.android.synthetic.main.fragment_content_details.toolbar
+import kotlinx.android.synthetic.main.fragment_discover.*
 import timber.log.Timber
 import java.io.Serializable
 
@@ -81,8 +86,11 @@ class MovieFragment : BaseFragment(R.layout.fragment_content_details) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpListView()
-        toolbar?.let {
-            UiUtils.initToolbar(requireActivity() as AppCompatActivity, it,true)
+
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        toolbar?.apply {
+            setupWithNavController(navController, appBarConfiguration)
         }
 
         val screenName = args.screenName
@@ -92,9 +100,9 @@ class MovieFragment : BaseFragment(R.layout.fragment_content_details) {
         viewModel.viewState.observe(viewLifecycleOwner) {
 
             if (it.isLoading) {
-                showLoading(rootView)
+                showLoading(binding.root)
             } else {
-                hideLoading(rootView)
+                hideLoading(binding.root)
             }
 
             toolbar?.title = it.screenName
@@ -164,13 +172,7 @@ class MovieFragment : BaseFragment(R.layout.fragment_content_details) {
         super.onResume()
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        if (!super.onSupportNavigateUp()) {
-//            onBackPressed()
-//        }
-//
-//        return true
-//    }
+
 //
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        this.menuInflater.inflate(R.menu.item_menu, menu)

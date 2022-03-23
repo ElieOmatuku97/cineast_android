@@ -8,6 +8,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
@@ -23,6 +25,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_discover.*
 import elieomatuku.cineast_android.utils.*
+import kotlinx.android.synthetic.main.fragment_discover.toolbar
 
 class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
     companion object {
@@ -62,6 +65,13 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        toolbar?.apply {
+            setupWithNavController(navController, appBarConfiguration)
+        }
+        toolbar?.title = this.getString(R.string.nav_title_discover)
 
         recyclerview.adapter = adapter
         val itemDecoration =
