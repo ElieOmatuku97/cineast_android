@@ -42,8 +42,8 @@ class PersonSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(item
         }
 
         when (checkedTab) {
-            PersonActivity.OVERVIEW -> overviewSegmentBtn.isChecked = true
-            PersonActivity.KNOWN_FOR -> knownForSegmentBtn.isChecked = true
+            PersonFragment.OVERVIEW -> overviewSegmentBtn.isChecked = true
+            PersonFragment.KNOWN_FOR -> knownForSegmentBtn.isChecked = true
         }
     }
 }

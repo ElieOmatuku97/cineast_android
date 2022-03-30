@@ -12,7 +12,7 @@ import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.databinding.FragmentMovieteamBinding
-import elieomatuku.cineast_android.details.person.PersonActivity
+import elieomatuku.cineast_android.details.person.PersonFragment
 import elieomatuku.cineast_android.utils.Constants.SCREEN_NAME_KEY
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -95,7 +95,7 @@ class MovieTeamFragment : BaseFragment() {
     }
 
     private fun gotoPeople(params: Bundle) {
-        val intent = Intent(activity, PersonActivity::class.java)
+        val intent = Intent(activity, PersonFragment::class.java)
         intent.putExtras(params)
         activity?.startActivity(intent)
     }

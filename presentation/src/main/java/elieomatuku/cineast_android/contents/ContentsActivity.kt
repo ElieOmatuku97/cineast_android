@@ -11,7 +11,7 @@ import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.base.BaseActivity
 import elieomatuku.cineast_android.details.movie.MovieFragment
-import elieomatuku.cineast_android.details.person.PersonActivity
+import elieomatuku.cineast_android.details.person.PersonFragment
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -88,7 +88,7 @@ class ContentsActivity : BaseActivity() {
 
                     if (content is Person) {
                         params.putSerializable(PEOPLE_KEY, content)
-                        gotoContent(params, PersonActivity::class.java)
+                        gotoContent(params, PersonFragment::class.java)
                     } else {
                         params.putSerializable(MOVIE_KEY, content)
                         gotoContent(params, MovieFragment::class.java)

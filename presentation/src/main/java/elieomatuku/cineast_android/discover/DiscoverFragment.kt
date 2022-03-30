@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.discover
 
-import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -16,10 +15,8 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.getFilteredWidgets
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.details.person.PersonActivity
 import elieomatuku.cineast_android.fragment.WebViewFragment
 import elieomatuku.cineast_android.settings.LoginWebViewFragment
-import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -32,9 +29,6 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         fun newInstance(): DiscoverFragment {
             return DiscoverFragment()
         }
-
-        const val SCREEN_NAME = "Discover"
-        const val PEOPLE_KEY = "peopleApi"
     }
 
     private val viewModel: DiscoverViewModel by viewModel<DiscoverViewModel>()
@@ -131,10 +125,9 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
             personSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { actor: Content ->
-                    val params = Bundle()
-                    params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
-                    params.putSerializable(PEOPLE_KEY, actor)
-                    gotoPeople(params)
+                    if (actor is Person) {
+                        gotoPerson(actor)
+                    }
                 }
         )
 
@@ -194,13 +187,18 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
     }
 
     private fun gotoMovie(movie: Movie) {
-        val directions = DiscoverFragmentDirections.navigateToMovieDetail(SCREEN_NAME, movie)
+        val directions = DiscoverFragmentDirections.navigateToMovieDetail(
+            getString(R.string.nav_title_discover),
+            movie
+        )
         findNavController().navigate(directions)
     }
 
-    private fun gotoPeople(params: Bundle) {
-        val intent = Intent(activity, PersonActivity::class.java)
-        intent.putExtras(params)
-        activity?.startActivity(intent)
+    private fun gotoPerson(person: Person) {
+        val directions = DiscoverFragmentDirections.navigateToPersonDetail(
+            getString(R.string.nav_title_discover),
+            person
+        )
+        findNavController().navigate(directions)
     }
 }

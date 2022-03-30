@@ -27,7 +27,7 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.io.Serializable
 
-class MovieFragment : BaseFragment(R.layout.fragment_content_details) {
+class MovieFragment : BaseFragment() {
     companion object {
         const val MOVIE_OVERVIEW = "overview"
         const val MOVIE_CREW = "crew"

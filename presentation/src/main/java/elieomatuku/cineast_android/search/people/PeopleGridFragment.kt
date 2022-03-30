@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.View
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.contents.ContentGridFragment
-import elieomatuku.cineast_android.details.person.PersonActivity
+import elieomatuku.cineast_android.details.person.PersonFragment
 import elieomatuku.cineast_android.utils.*
 
 /**
@@ -48,7 +48,7 @@ class PeopleGridFragment :
     }
 
     private fun gotoPeople(params: Bundle) {
-        val intent = Intent(activity, PersonActivity::class.java)
+        val intent = Intent(activity, PersonFragment::class.java)
         intent.putExtras(params)
         activity?.startActivity(intent)
     }
