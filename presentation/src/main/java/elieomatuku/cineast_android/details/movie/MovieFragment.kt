@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.details.movie
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -25,9 +24,6 @@ import elieomatuku.cineast_android.utils.*
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.fragment_content_details.*
-import kotlinx.android.synthetic.main.fragment_content_details.toolbar
-import kotlinx.android.synthetic.main.fragment_discover.*
 import timber.log.Timber
 import java.io.Serializable
 
@@ -89,14 +85,31 @@ class MovieFragment : BaseFragment(R.layout.fragment_content_details) {
 
         val navController = findNavController()
         val appBarConfiguration = AppBarConfiguration(navController.graph)
-        toolbar?.apply {
-            setupWithNavController(navController, appBarConfiguration)
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        binding.toolbar.inflateMenu(R.menu.item_menu)
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_share -> {
+                    onShareMenuClicked()
+                    true
+                }
+
+                R.id.action_watchlist -> {
+                    onWatchListMenuClicked(it)
+                    true
+                }
+
+                R.id.action_favorites -> {
+                    onFavoriteListMenuClicked(it)
+                    true
+                }
+
+                else -> false
+            }
         }
 
-        val screenName = args.screenName
         movie = args.movie
-        viewModel.getMovieDetails(movie, screenName)
-
+        viewModel.getMovieDetails(movie, args.screenName)
         viewModel.viewState.observe(viewLifecycleOwner) {
 
             if (it.isLoading) {
@@ -105,13 +118,14 @@ class MovieFragment : BaseFragment(R.layout.fragment_content_details) {
                 hideLoading(binding.root)
             }
 
-            toolbar?.title = it.screenName
+            binding.toolbar.title = it.screenName
 
             val movieSummary = it.movieSummary
             if (movieSummary != null) {
                 showMovie(movieSummary)
             }
 
+            updateActionShare()
             updateWatchList(it.isInWatchList)
             updateFavorite(it.isInFavorites)
 
@@ -172,134 +186,102 @@ class MovieFragment : BaseFragment(R.layout.fragment_content_details) {
         super.onResume()
     }
 
-
-//
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        this.menuInflater.inflate(R.menu.item_menu, menu)
-//        if (menu != null) {
-//            menu.findItem(R.id.action_share)?.let {
-//                val colorRes = R.color.color_orange_app
-//                UiUtils.tintMenuItem(it, this, colorRes)
-//            }
-//        }
-//        return true
-//    }
-
-//    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-//        menu?.findItem(R.id.action_share)?.let {
-//            it.isVisible = ContentUtils.supportsShare(movie.id)
-//        }
-//
-//        menu?.findItem(R.id.action_watchlist)?.let {
-//            val menuItem = it
-//            menuItem.isChecked = isInWatchList
-//
-//            updateWatchListIcon(it)
-//            it.isVisible = viewModel.isLoggedIn()
-//        }
-//
-//        menu?.findItem(R.id.action_favorites)?.let {
-//            val menuItem = it
-//            menuItem.isChecked = isInFavoriteList
-//            updateFavoriteListIcon(it)
-//            it.isVisible = viewModel.isLoggedIn()
-//        }
-//
-//        return true
-//    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-//            android.R.id.home -> onSupportNavigateUp()
-//
-//            R.id.action_share -> {
-//                onShareMenuClicked()
-//            }
-//
-//            R.id.action_watchlist -> {
-//                onWatchListMenuClicked(item)
-//            }
-//
-//            R.id.action_favorites -> {
-//                onFavoriteListMenuClicked(item)
-//            }
-//
-//            else -> super.onOptionsItemSelected(item)
+    private fun updateActionShare() {
+        binding.toolbar.menu?.findItem(R.id.action_share)?.apply {
+            isVisible = ContentUtils.supportsShare(movie.id)
+            UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
         }
-        return true
     }
 
     private fun updateWatchList(event: Boolean) {
-//        isInWatchList = event
-//        invalidateOptionsMenu()
+        isInWatchList = event
+        binding.toolbar.menu?.findItem(R.id.action_watchlist)?.apply {
+            isChecked = isInWatchList
+            updateWatchListIcon(this)
+            isVisible = viewModel.isLoggedIn()
+        }
     }
 
     private fun updateFavorite(event: Boolean) {
-//        isInFavoriteList = event
-//        invalidateOptionsMenu()
+        isInFavoriteList = event
+        binding.toolbar.menu?.findItem(R.id.action_favorites)?.apply {
+            isChecked = isInFavoriteList
+            updateFavoriteListIcon(this)
+            isVisible = viewModel.isLoggedIn()
+        }
     }
 
-//    private fun onShareMenuClicked() {
-//        val shareIntent: Intent? = UiUtils.getShareIntent(movie.title, movie.id)
-//        // Make sure there is an activity that supports the intent
-//        if (shareIntent?.resolveActivity(packageManager) != null) {
-//            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_title)))
-//        }
-//    }
+    private fun onShareMenuClicked() {
+        val shareIntent: Intent? = UiUtils.getShareIntent(movie.title, movie.id)
+        // Make sure there is an activity that supports the intent
+        shareIntent?.apply {
+            if (resolveActivity(requireContext().packageManager) != null) {
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_title)))
+            }
+        }
+    }
 
     private fun onWatchListMenuClicked(item: MenuItem) {
-//        item.isChecked = !item.isChecked
-//        val checked = item.isChecked
-//        updateWatchListIcon(item)
-//
-//        if (checked) {
-//            viewModel.addMovieToWatchList()
-//        } else {
-//            viewModel.removeMovieFromWatchList()
-//        }
+        item.isChecked = !item.isChecked
+        val checked = item.isChecked
+        updateWatchListIcon(item)
+
+        if (checked) {
+            viewModel.addMovieToWatchList()
+        } else {
+            viewModel.removeMovieFromWatchList()
+        }
     }
 
-//    private fun updateWatchListIcon(item: MenuItem) {
-//        val colorRes = R.color.color_orange_app
-//        if (item.isChecked) {
-//            item.icon =
-//                ResourcesCompat.getDrawable(resources, R.drawable.ic_nav_watch_list_selected, theme)
-//        } else {
-//            item.icon = ResourcesCompat.getDrawable(
-//                resources,
-//                R.drawable.ic_nav_watch_list_unselected,
-//                theme
-//            )
-//            UiUtils.tintMenuItem(item, this, colorRes)
-//        }
-//    }
+    private fun updateWatchListIcon(item: MenuItem) {
+        val colorRes = R.color.color_orange_app
+        if (item.isChecked) {
+            item.icon =
+                ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.ic_nav_watch_list_selected,
+                    requireContext().theme
+                )
+        } else {
+            item.icon = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.ic_nav_watch_list_unselected,
+                requireContext().theme
+            )
+            UiUtils.tintMenuItem(item, requireContext(), colorRes)
+        }
+    }
 
     private fun onFavoriteListMenuClicked(item: MenuItem) {
-//        item.isChecked = !item.isChecked
-//        val checked = item.isChecked
-//        updateFavoriteListIcon(item)
-//
-//        if (checked) {
-//            viewModel.addMovieToFavoriteList()
-//        } else {
-//            viewModel.removeMovieFromFavoriteList()
-//        }
+        item.isChecked = !item.isChecked
+        val checked = item.isChecked
+        updateFavoriteListIcon(item)
+
+        if (checked) {
+            viewModel.addMovieToFavoriteList()
+        } else {
+            viewModel.removeMovieFromFavoriteList()
+        }
     }
 
-//    private fun updateFavoriteListIcon(item: MenuItem) {
-//        val colorRes = R.color.color_orange_app
-//        if (item.isChecked) {
-//            item.icon =
-//                ResourcesCompat.getDrawable(resources, R.drawable.ic_star_black_selected, theme)
-//        } else {
-//            item.icon = ResourcesCompat.getDrawable(
-//                resources,
-//                R.drawable.ic_star_border_black_unselected,
-//                theme
-//            )
-//            UiUtils.tintMenuItem(item, this, colorRes)
-//        }
-//    }
+    private fun updateFavoriteListIcon(item: MenuItem) {
+        val colorRes = R.color.color_orange_app
+        if (item.isChecked) {
+            item.icon =
+                ResourcesCompat.getDrawable(
+                    resources,
+                    R.drawable.ic_star_black_selected,
+                    requireContext().theme
+                )
+        } else {
+            item.icon = ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.ic_star_border_black_unselected,
+                requireContext().theme
+            )
+            UiUtils.tintMenuItem(item, requireContext(), colorRes)
+        }
+    }
 
     private fun setUpListView() {
         binding.listViewContainer.adapter = adapter
