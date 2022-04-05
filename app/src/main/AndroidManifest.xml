@@ -31,7 +31,6 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name="elieomatuku.cineast_android.details.person.PersonFragment" />
         <activity android:name="elieomatuku.cineast_android.settings.user_movies.UserMoviesActivity" />
         <activity android:name="elieomatuku.cineast_android.contents.ContentsActivity" />
 

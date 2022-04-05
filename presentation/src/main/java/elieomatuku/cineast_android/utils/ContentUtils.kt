@@ -12,7 +12,6 @@ object ContentUtils {
     }
 
     fun getContentUrl(contentId: Int?, path: String? = null): String {
-
         return Uri.parse(URL)
             .buildUpon()
             .appendPath(path ?: "movieApi")
