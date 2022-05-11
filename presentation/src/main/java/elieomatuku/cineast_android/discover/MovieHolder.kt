@@ -31,14 +31,18 @@ class MovieHolder(itemView: View) : ContentHolder, RecyclerView.ViewHolder(itemV
         itemView.root_layout
     }
 
+//    private val fragmentContainerView: FragmentContainerView by lazy {
+//        val fragmentContainerView = FragmentContainerView(itemView.context)
+//        fragmentContainerView.id = View.generateViewId()
+//        fragmentContainerView.layoutParams = ViewGroup.LayoutParams(
+//            ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.MATCH_PARENT
+//        )
+//        fragmentContainerView
+//    }
+
     private val fragmentContainerView: FragmentContainerView by lazy {
-        val fragmentContainerView = FragmentContainerView(itemView.context)
-        fragmentContainerView.id = View.generateViewId()
-        fragmentContainerView.layoutParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
-        fragmentContainerView
+        itemView.container
     }
 
     override fun update(content: List<Content>, titleRes: Int) {
@@ -46,15 +50,15 @@ class MovieHolder(itemView: View) : ContentHolder, RecyclerView.ViewHolder(itemV
         val title: String = itemView.context.getString(titleRes)
 
         val fragment = MoviesFragment.newInstance(content as List<Movie>, title)
-        fm.beginTransaction().replace(fragmentContainerView.id, fragment).addToBackStack(null)
+        fm.beginTransaction().add(R.id.container, fragment).addToBackStack(null)
             .commit()
 
-        if (fragmentContainerView.parent == null) {
-            rootLayout.addView(fragmentContainerView, 0)
-            val set = ConstraintSet()
-            set.clone(rootLayout)
-            set.applyTo(rootLayout)
-        }
+//        if (fragmentContainerView.parent == null) {
+//            rootLayout.addView(fragmentContainerView, 0)
+//            val set = ConstraintSet()
+//            set.clone(rootLayout)
+//            set.applyTo(rootLayout)
+//        }
     }
 
     override fun update(content: Contents) {
@@ -62,14 +66,15 @@ class MovieHolder(itemView: View) : ContentHolder, RecyclerView.ViewHolder(itemV
         val title: String = itemView.context.getString(content.titleResources)
 
         val fragment = MoviesFragment.newInstance(content.value as List<Movie>, title)
-        fm.beginTransaction().replace(fragmentContainerView.id, fragment).addToBackStack(null)
+        fm.beginTransaction().add(R.id.container, fragment).addToBackStack(null)
             .commit()
 
-        if (fragmentContainerView.parent == null) {
-            rootLayout.addView(fragmentContainerView, 0)
-            val set = ConstraintSet()
-            set.clone(rootLayout)
-            set.applyTo(rootLayout)
-        }
+
+//        if (fragmentContainerView.parent == null) {
+//            rootLayout.addView(fragmentContainerView, 0)
+//            val set = ConstraintSet()
+//            set.clone(rootLayout)
+//            set.applyTo(rootLayout)
+//        }
     }
 }

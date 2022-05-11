@@ -5,7 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.domain.model.Movie
 import io.reactivex.subjects.PublishSubject
 
-class HeaderAdapter(private val movies: List<Movie>, private val onItemClickPublisher: PublishSubject<Movie>, private val itemListLayoutRes: Int? = null) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HeaderAdapter(
+    private val movies: List<Movie>,
+    private val onItemClickPublisher: PublishSubject<Movie>,
+    private val itemListLayoutRes: Int? = null
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int {
         return movies.size
     }

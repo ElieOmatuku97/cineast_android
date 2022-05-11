@@ -124,19 +124,23 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         rxSubs.add(
             personSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { actor: Content ->
+                .subscribe({ actor: Content ->
                     if (actor is Person) {
                         gotoPerson(actor)
                     }
-                }
+                }, {
+
+                })
         )
 
         rxSubs.add(
             movieSelectObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { movie: Movie ->
+                .subscribe({ movie: Movie ->
                     gotoMovie(movie)
-                }
+                }, {
+
+                })
         )
     }
 
