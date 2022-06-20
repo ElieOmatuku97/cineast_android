@@ -16,8 +16,6 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode = rootProject.ext.versionCode
-        versionName = rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -40,6 +38,11 @@ android {
     buildFeatures {
         viewBinding true
         dataBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.1.1'
     }
 }
 
@@ -105,6 +108,28 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$versions.nav_version"
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    // Compose Material Design
+    implementation 'androidx.compose.material:material:1.1.1'
+    // Animations
+    implementation 'androidx.compose.animation:animation:1.1.1'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.1.1'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
+
+    // When using a MDC theme
+    implementation "com.google.android.material:compose-theme-adapter:1.1.1"
+
+    // When using a AppCompat theme
+    implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
+
+    implementation("io.coil-kt:coil-compose:1.3.1")
+
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
 
     // test
     testImplementation 'junit:junit:4.12'

@@ -5,20 +5,37 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.rememberImagePainter
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.contents.ContentsAdapter
 import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
+import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -70,17 +87,17 @@ class MoviesFragment : BaseFragment() {
     private val movieSelectObservable: Observable<Content>
         get() = movieSelectPublisher.hide()
 
-    private val listView: RecyclerView by lazy {
-        viewDataBinding.recyclerviewMovie
-    }
-
-    private val sectionTitleView: TextView by lazy {
-        viewDataBinding.sectionTitle
-    }
-
-    private val seeAllClickView: LinearLayout by lazy {
-        viewDataBinding.seeAll
-    }
+//    private val listView: RecyclerView by lazy {
+//        viewDataBinding.recyclerviewMovie
+//    }
+//
+//    private val sectionTitleView: TextView by lazy {
+//        viewDataBinding.sectionTitle
+//    }
+//
+//    private val seeAllClickView: LinearLayout by lazy {
+//        viewDataBinding.seeAll
+//    }
 
     private val adapter: ContentsAdapter by lazy {
         ContentsAdapter(movieSelectPublisher)
@@ -137,20 +154,28 @@ class MoviesFragment : BaseFragment() {
     }
 
     private fun updateView() {
-        setTitle(arguments?.getString(TITLE))
-        setSelectedMovieTitle(arguments?.getString(SELECTED_MOVIE_TITLE))
-        sectionTitleView.text = title
-        listView.adapter = adapter
-        listView.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        adapter.contents = movies.toMutableList()
-        adapter.notifyDataSetChanged()
-
-        seeAllClickView.setOnClickListener {
-            context?.let {
-                ContentsActivity.startActivity(it, movies, R.string.movies)
+        viewDataBinding.moviesWidget.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AppCompatTheme {
+                    MoviesWidget(movies, arguments?.getString(TITLE) ?: getString(R.string.movies))
+                }
             }
         }
+//        setTitle(arguments?.getString(TITLE))
+//        setSelectedMovieTitle(arguments?.getString(SELECTED_MOVIE_TITLE))
+//        sectionTitleView.text = title
+//        listView.adapter = adapter
+//        listView.layoutManager =
+//            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+//        adapter.contents = movies.toMutableList()
+//        adapter.notifyDataSetChanged()
+//
+//        seeAllClickView.setOnClickListener {
+//            context?.let {
+//                ContentsActivity.startActivity(it, movies, R.string.movies)
+//            }
+//        }
     }
 
     private fun setTitle(title: String?) {
@@ -173,5 +198,71 @@ class MoviesFragment : BaseFragment() {
         val intent = Intent(activity, MovieFragment::class.java)
         intent.putExtras(params)
         activity?.startActivity(intent)
+    }
+}
+
+@Composable
+fun MoviesWidget(movies: List<Movie>, sectionTitle: String) {
+    Column(modifier = Modifier.padding(16.dp)) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = sectionTitle,
+                color = colorResource(R.color.color_white)
+            )
+            Row(horizontalArrangement = Arrangement.End) {
+                Text(
+                    stringResource(id = R.string.see_all),
+                    color = colorResource(R.color.color_orange_app)
+                )
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_keyboard_arrow_right_black_24dp),
+                    contentDescription = null,
+                    tint = colorResource(R.color.color_orange_app)
+                )
+            }
+        }
+        LazyRow {
+            items(movies) { movie ->
+                MovieItem(movie)
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalCoilApi::class)
+@Composable
+fun MovieItem(movie: Movie) {
+    val imageUrl = UiUtils.getImageUrl(movie.posterPath, stringResource(id = R.string.image_small))
+    Column(modifier = Modifier.padding(8.dp)) {
+        Image(
+            painter = rememberImagePainter(
+                data = imageUrl,
+            ),
+            contentDescription = null,
+            modifier = Modifier
+                .height(96.dp)
+                .width(70.dp)
+        )
+        (movie.title ?: movie.originalTitle)?.let {
+            Text(
+                text = it,
+                color = colorResource(R.color.color_white),
+                maxLines = 1,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .padding(8.dp)
+            )
+        }
+        movie.releaseDate?.let {
+            Text(
+                text = it,
+                color = colorResource(R.color.color_white),
+                fontSize = 11.sp,
+            )
+        }
     }
 }

@@ -8,13 +8,10 @@ apply from: "../ktlint.gradle"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion "29.0.2"
 
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode = rootProject.ext.versionCode
-        versionName = rootProject.ext.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"

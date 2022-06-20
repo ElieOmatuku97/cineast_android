@@ -66,7 +66,7 @@ class MovieHolder(itemView: View) : ContentHolder, RecyclerView.ViewHolder(itemV
         val title: String = itemView.context.getString(content.titleResources)
 
         val fragment = MoviesFragment.newInstance(content.value as List<Movie>, title)
-        fm.beginTransaction().add(R.id.container, fragment).addToBackStack(null)
+        fm.beginTransaction().replace(R.id.container, fragment).addToBackStack(null)
             .commit()
 
 
