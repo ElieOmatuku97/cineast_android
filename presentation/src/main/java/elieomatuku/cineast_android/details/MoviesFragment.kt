@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -235,7 +236,7 @@ fun MoviesWidget(movies: List<Movie>, sectionTitle: String) {
 @Composable
 fun MovieItem(movie: Movie) {
     val imageUrl = UiUtils.getImageUrl(movie.posterPath, stringResource(id = R.string.image_small))
-    Column(modifier = Modifier.padding(8.dp)) {
+    Column {
         Image(
             painter = rememberImagePainter(
                 data = imageUrl,
@@ -254,7 +255,7 @@ fun MovieItem(movie: Movie) {
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
-                    .padding(8.dp)
+                    .widthIn(max = 100.dp)
             )
         }
         movie.releaseDate?.let {
@@ -262,6 +263,7 @@ fun MovieItem(movie: Movie) {
                 text = it,
                 color = colorResource(R.color.color_white),
                 fontSize = 11.sp,
+                textAlign = TextAlign.Center
             )
         }
     }
