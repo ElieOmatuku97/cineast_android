@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -22,6 +23,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
@@ -202,11 +206,23 @@ class MoviesFragment : BaseFragment() {
     }
 }
 
+@Preview
 @Composable
-fun MoviesWidget(movies: List<Movie>, sectionTitle: String) {
-    Column(modifier = Modifier.padding(16.dp)) {
+fun MoviesWidget(
+    @PreviewParameter(MoviePreviewParameterProvider::class) movies: List<Movie>,
+    sectionTitle: String = /*String()*/"Upcoming"
+) {
+    Column(modifier = Modifier.padding(bottom = 8.dp)) {
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = 16.dp,
+                    end = 4.dp,
+                    top = 4.dp,
+                    bottom = 2.dp
+                )
         ) {
             Text(
                 text = sectionTitle,
@@ -224,7 +240,7 @@ fun MoviesWidget(movies: List<Movie>, sectionTitle: String) {
                 )
             }
         }
-        LazyRow {
+        LazyRow(modifier = Modifier.padding(top = 4.dp, start = 8.dp)) {
             items(movies) { movie ->
                 MovieItem(movie)
             }
@@ -267,4 +283,15 @@ fun MovieItem(movie: Movie) {
             )
         }
     }
+}
+
+class MoviePreviewParameterProvider : PreviewParameterProvider<List<Movie>> {
+    override val values = sequenceOf(
+        listOf<Movie>(
+            Movie(
+                id = 1,
+                name = "name"
+            )
+        )
+    )
 }
