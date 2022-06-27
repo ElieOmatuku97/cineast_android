@@ -271,7 +271,8 @@ fun MovieItem(movie: Movie) {
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
-                    .widthIn(max = 100.dp)
+                    .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+                    .widthIn(max = 70.dp)
             )
         }
         movie.releaseDate?.let {
@@ -279,7 +280,10 @@ fun MovieItem(movie: Movie) {
                 text = it,
                 color = colorResource(R.color.color_white),
                 fontSize = 11.sp,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(start = 8.dp, end = 8.dp)
+                    .widthIn(max = 70.dp)
             )
         }
     }
