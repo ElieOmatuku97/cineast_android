@@ -16,7 +16,6 @@ import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.databinding.FragmentContentDetailsBinding
 import elieomatuku.cineast_android.details.MoviesFragment
-import elieomatuku.cineast_android.details.movie.MovieFragmentArgs
 import elieomatuku.cineast_android.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewFragment

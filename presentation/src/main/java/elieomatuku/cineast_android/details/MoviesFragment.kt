@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -14,12 +14,10 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -37,14 +35,10 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.contents.ContentsAdapter
+import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.UiUtils
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 import java.io.Serializable
 
 /**
@@ -85,29 +79,6 @@ class MoviesFragment : BaseFragment() {
 
     private val viewModel: MoviesViewModel by viewModel<MoviesViewModel>()
 
-    private val movieSelectPublisher: PublishSubject<Content> by lazy {
-        PublishSubject.create<Content>()
-    }
-
-    private val movieSelectObservable: Observable<Content>
-        get() = movieSelectPublisher.hide()
-
-//    private val listView: RecyclerView by lazy {
-//        viewDataBinding.recyclerviewMovie
-//    }
-//
-//    private val sectionTitleView: TextView by lazy {
-//        viewDataBinding.sectionTitle
-//    }
-//
-//    private val seeAllClickView: LinearLayout by lazy {
-//        viewDataBinding.seeAll
-//    }
-
-    private val adapter: ContentsAdapter by lazy {
-        ContentsAdapter(movieSelectPublisher)
-    }
-
     private lateinit var movies: List<Movie>
     private var title: String? = null
     private var selectedMovieTitle: String? = null
@@ -118,8 +89,8 @@ class MoviesFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val rootView = inflater.inflate(R.layout.fragment_movies, container, false)
-        viewDataBinding = FragmentMoviesBinding.bind(rootView)
+        viewDataBinding =
+            FragmentMoviesBinding.bind(inflater.inflate(R.layout.fragment_movies, container, false))
 
         arguments?.getSerializable(MOVIES)?.let {
             movies = it as List<Movie>
@@ -138,49 +109,33 @@ class MoviesFragment : BaseFragment() {
         return viewDataBinding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        rxSubs.add(
-            movieSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { movie: Content ->
-                        val params = Bundle()
-                        params.putString(Constants.SCREEN_NAME_KEY, selectedMovieTitle)
-                        params.putSerializable(MOVIE_KEY, movie)
-                        params.putSerializable(MOVIE_GENRES_KEY, genres as Serializable)
-                        gotoMovie(params)
-                    },
-                    { t: Throwable ->
-                        Timber.e("movieSelectObservable failed:$t")
-                    }
-                )
-        )
-    }
-
     private fun updateView() {
         viewDataBinding.moviesWidget.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 AppCompatTheme {
-                    MoviesWidget(movies, arguments?.getString(TITLE) ?: getString(R.string.movies))
+                    MoviesWidget(
+                        movies,
+                        arguments?.getString(TITLE) ?: getString(R.string.movies),
+                        onItemClick = {
+                            val params = Bundle()
+                            params.putString(Constants.SCREEN_NAME_KEY, selectedMovieTitle)
+                            params.putSerializable(MOVIE_KEY, it)
+                            params.putSerializable(MOVIE_GENRES_KEY, genres as Serializable)
+                            gotoMovie(params)
+                        },
+                        onSeeAllClick = {
+                            context?.let {
+                                ContentsActivity.startActivity(it, movies, R.string.movies)
+                            }
+                        }
+                    )
                 }
             }
         }
 //        setTitle(arguments?.getString(TITLE))
 //        setSelectedMovieTitle(arguments?.getString(SELECTED_MOVIE_TITLE))
 //        sectionTitleView.text = title
-//        listView.adapter = adapter
-//        listView.layoutManager =
-//            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-//        adapter.contents = movies.toMutableList()
-//        adapter.notifyDataSetChanged()
-//
-//        seeAllClickView.setOnClickListener {
-//            context?.let {
-//                ContentsActivity.startActivity(it, movies, R.string.movies)
-//            }
-//        }
     }
 
     private fun setTitle(title: String?) {
@@ -210,7 +165,9 @@ class MoviesFragment : BaseFragment() {
 @Composable
 fun MoviesWidget(
     @PreviewParameter(MoviePreviewParameterProvider::class) movies: List<Movie>,
-    sectionTitle: String = /*String()*/"Upcoming"
+    sectionTitle: String = /*String()*/"Upcoming",
+    onItemClick: (content: Content) -> Unit = {},
+    onSeeAllClick: () -> Unit = {}
 ) {
     Column(modifier = Modifier.padding(bottom = 8.dp)) {
         Row(
@@ -223,6 +180,7 @@ fun MoviesWidget(
                     top = 4.dp,
                     bottom = 2.dp
                 )
+                .clickable(onClick = onSeeAllClick)
         ) {
             Text(
                 text = sectionTitle,
@@ -242,7 +200,7 @@ fun MoviesWidget(
         }
         LazyRow(modifier = Modifier.padding(top = 4.dp, start = 8.dp)) {
             items(movies) { movie ->
-                MovieItem(movie)
+                MovieItem(movie = movie, onMovieClick = onItemClick)
             }
         }
     }
@@ -250,9 +208,9 @@ fun MoviesWidget(
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun MovieItem(movie: Movie) {
+fun MovieItem(movie: Movie, onMovieClick: (content: Content) -> Unit) {
     val imageUrl = UiUtils.getImageUrl(movie.posterPath, stringResource(id = R.string.image_small))
-    Column {
+    Column(Modifier.clickable(onClick = { onMovieClick.invoke(movie) })) {
         Image(
             painter = rememberImagePainter(
                 data = imageUrl,

@@ -75,8 +75,8 @@ class DiscoverAdapter(
             TYPE_EMPTY_STATE
         } else {
             when (position) {
-                POSITION_HEADER, POSITION_NOW_PLAYING_MOVIE, POSITION_TOP_RATED_MOVIE -> TYPE_HEADER
-                POSITION_POPULAR_MOVIE, /*POSITION_TOP_RATED_MOVIE,*/ POSITION_UPCOMING_MOVIE /*, POSITION_NOW_PLAYING_MOVIE*/ -> TYPE_MOVIES
+                POSITION_HEADER -> TYPE_HEADER
+                POSITION_POPULAR_MOVIE, POSITION_TOP_RATED_MOVIE, POSITION_UPCOMING_MOVIE, POSITION_NOW_PLAYING_MOVIE -> TYPE_MOVIES
                 POSITION_POPULAR_PEOPLE -> TYPE_POPULAR_PEOPLE
                 TYPE_LOGIN -> TYPE_LOGIN
                 else -> -1
@@ -95,7 +95,7 @@ class DiscoverAdapter(
             }
 
             TYPE_MOVIES -> {
-                MovieHolder.newInstance(parent)
+                MoviesHolder.newInstance(parent, onMovieClickPublisher)
             }
 
             TYPE_LOGIN -> {
@@ -135,6 +135,12 @@ class DiscoverAdapter(
             is EmptyStateHolder -> {
                 holder.update(errorMessage)
             }
+        }
+    }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        if (holder is MoviesHolder) {
+            holder.composeView.disposeComposition()
         }
     }
 }
