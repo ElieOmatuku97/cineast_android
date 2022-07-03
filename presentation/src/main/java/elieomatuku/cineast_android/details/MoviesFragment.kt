@@ -80,8 +80,6 @@ class MoviesFragment : BaseFragment() {
     private val viewModel: MoviesViewModel by viewModel<MoviesViewModel>()
 
     private lateinit var movies: List<Movie>
-    private var title: String? = null
-    private var selectedMovieTitle: String? = null
     private var genres: List<Genre>? = listOf()
 
     override fun onCreateView(
@@ -116,10 +114,12 @@ class MoviesFragment : BaseFragment() {
                 AppCompatTheme {
                     MoviesWidget(
                         movies,
-                        arguments?.getString(TITLE) ?: getString(R.string.movies),
+                        arguments?.getString(SELECTED_MOVIE_TITLE) ?: arguments?.getString(TITLE) ?: getString(R.string.movies),
                         onItemClick = {
                             val params = Bundle()
-                            params.putString(Constants.SCREEN_NAME_KEY, selectedMovieTitle)
+                            if (it is Movie) {
+                                params.putString(Constants.SCREEN_NAME_KEY, it.title)
+                            }
                             params.putSerializable(MOVIE_KEY, it)
                             params.putSerializable(MOVIE_GENRES_KEY, genres as Serializable)
                             gotoMovie(params)
@@ -132,25 +132,6 @@ class MoviesFragment : BaseFragment() {
                     )
                 }
             }
-        }
-//        setTitle(arguments?.getString(TITLE))
-//        setSelectedMovieTitle(arguments?.getString(SELECTED_MOVIE_TITLE))
-//        sectionTitleView.text = title
-    }
-
-    private fun setTitle(title: String?) {
-        if (title != null) {
-            this.title = title
-        } else {
-            this.title = getString(R.string.movies)
-        }
-    }
-
-    private fun setSelectedMovieTitle(title: String?) {
-        if (title != null) {
-            this.selectedMovieTitle = title
-        } else {
-            this.selectedMovieTitle = this.title
         }
     }
 
