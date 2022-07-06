@@ -7,7 +7,6 @@
         android:layout_height="wrap_content" />
 
     <data>
-
         <import type="android.view.View" />
     </data>
 </layout>

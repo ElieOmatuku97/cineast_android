@@ -194,9 +194,9 @@ class UserMoviesActivity : BaseActivity() {
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        return true
-    }
+//    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+//        return true
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

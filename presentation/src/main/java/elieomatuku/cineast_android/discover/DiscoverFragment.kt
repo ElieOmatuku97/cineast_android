@@ -3,9 +3,7 @@ package elieomatuku.cineast_android.discover
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
@@ -83,7 +81,6 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         recyclerview.addItemDecoration(itemDecoration)
         recyclerview.layoutManager = LinearLayoutManager(activity)
 
-
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
             if (state.isLoading) {
                 showLoading(requireView())
@@ -140,9 +137,9 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ movie: Movie ->
                     gotoMovie(movie)
-                }, {
-
-                })
+                },
+                    {}
+                )
         )
     }
 
