@@ -3,18 +3,21 @@ package elieomatuku.cineast_android.discover
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.getFilteredWidgets
 import elieomatuku.cineast_android.base.BaseFragment
+import elieomatuku.cineast_android.databinding.FragmentDiscoverBinding
 import elieomatuku.cineast_android.fragment.WebViewFragment
 import elieomatuku.cineast_android.settings.LoginWebViewFragment
 import io.reactivex.Observable
@@ -22,9 +25,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_discover.*
 import elieomatuku.cineast_android.utils.*
-import kotlinx.android.synthetic.main.fragment_discover.toolbar
 
-class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
+class DiscoverFragment : BaseFragment() {
     companion object {
         fun newInstance(): DiscoverFragment {
             return DiscoverFragment()
@@ -57,19 +59,30 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
     }
 
+    private lateinit var binding: FragmentDiscoverBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentDiscoverBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        toolbar?.apply {
-            setupWithNavController(navController, appBarConfiguration)
-        }
-        toolbar?.title = this.getString(R.string.nav_title_discover)
+        setupWithNavController(
+            binding.toolbar,
+            findNavController(),
+            AppBarConfiguration(findNavController().graph)
+        )
+        binding.toolbar.title = this.getString(R.string.nav_title_discover)
 
-        recyclerview.adapter = adapter
+        binding.recyclerview.adapter = adapter
         val itemDecoration =
-            DividerItemDecoration(recyclerview.context, DividerItemDecoration.VERTICAL)
+            DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         val drawable: Drawable? = ResourcesCompat.getDrawable(
             resources,
             R.drawable.item_decoration,
@@ -78,8 +91,8 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         if (drawable != null) {
             itemDecoration.setDrawable(drawable)
         }
-        recyclerview.addItemDecoration(itemDecoration)
-        recyclerview.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerview.addItemDecoration(itemDecoration)
+        binding.recyclerview.layoutManager = LinearLayoutManager(activity)
 
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
             if (state.isLoading) {
@@ -99,7 +112,7 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
             }
         }
 
-        refreshLayout.setOnRefreshListener {
+        binding.refreshLayout.setOnRefreshListener {
             viewModel.getDiscoverContent()
         }
     }
@@ -148,10 +161,11 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         isLoggedIn: Boolean
     ) {
         discoverContents?.let {
-            adapter.filteredContents = discoverContents.getFilteredWidgets()
+            adapter.filteredContents =
+                discoverContents.getFilteredWidgets()
             adapter.isLoggedIn = isLoggedIn
             adapter.notifyDataSetChanged()
-            recyclerview.visibility = View.VISIBLE
+            binding.recyclerview.visibility = View.VISIBLE
             dismissRefreshLayout()
         }
     }
@@ -159,7 +173,7 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
     private fun updateErrorView(errorMsg: String?) {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
-        recyclerview.visibility = View.VISIBLE
+        binding.recyclerview.visibility = View.VISIBLE
         dismissRefreshLayout()
     }
 
