@@ -37,7 +37,8 @@ class MovieFragment : BaseFragment() {
     private var isInWatchList: Boolean = false
     private var isInFavoriteList: Boolean = false
 
-    private lateinit var binding: FragmentContentDetailsBinding
+    private var _binding: FragmentContentDetailsBinding? = null
+    private val binding get() = _binding!!
     private val args: MovieFragmentArgs by navArgs()
 
     private val watchListCheckPublisher: PublishSubject<Boolean> by lazy {
@@ -73,7 +74,7 @@ class MovieFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentContentDetailsBinding.inflate(inflater, container, false)
+        _binding = FragmentContentDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -183,6 +184,11 @@ class MovieFragment : BaseFragment() {
         )
 
         super.onResume()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun updateActionShare() {

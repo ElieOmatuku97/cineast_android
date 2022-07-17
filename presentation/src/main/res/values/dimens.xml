@@ -17,7 +17,7 @@
     <dimen name="holder_movie_layout_padding">4dp</dimen>
     <dimen name="holder_movie_layout_padding_start">16dp</dimen>
     <dimen name="holder_movie_imageview_padding_bottom">10dp</dimen>
-    <dimen name="holder_movie_listview_padding_start">9dp</dimen>
+    <dimen name="holder_movie_listview_padding_start">8dp</dimen>
     <dimen name="holder_movie_facts_textview_padding_right">20dp</dimen>
     <dimen name="holder_profile_movie_layout_padding_bottom">15dp</dimen>
     <dimen name="holder_profile_movie_rate_margin_right">40dp</dimen>

@@ -16,14 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
@@ -114,7 +112,8 @@ class MoviesFragment : BaseFragment() {
                 AppCompatTheme {
                     MoviesWidget(
                         movies,
-                        arguments?.getString(SELECTED_MOVIE_TITLE) ?: arguments?.getString(TITLE) ?: getString(R.string.movies),
+                        arguments?.getString(SELECTED_MOVIE_TITLE) ?: arguments?.getString(TITLE)
+                        ?: getString(R.string.movies),
                         onItemClick = {
                             val params = Bundle()
                             if (it is Movie) {
@@ -142,24 +141,23 @@ class MoviesFragment : BaseFragment() {
     }
 }
 
-@Preview
 @Composable
 fun MoviesWidget(
-    @PreviewParameter(MoviePreviewParameterProvider::class) movies: List<Movie>,
-    sectionTitle: String = /*String()*/"Upcoming",
+    movies: List<Movie>,
+    sectionTitle: String = String(),
     onItemClick: (content: Content) -> Unit = {},
     onSeeAllClick: () -> Unit = {}
 ) {
-    Column(modifier = Modifier.padding(bottom = 8.dp)) {
+    Column(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.holder_item_movie_textview_margin))) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = 16.dp,
-                    end = 4.dp,
-                    top = 4.dp,
-                    bottom = 2.dp
+                    start = dimensionResource(id = R.dimen.holder_movie_layout_padding_start),
+                    end = dimensionResource(id = R.dimen.holder_movie_layout_padding),
+                    top = dimensionResource(id = R.dimen.holder_movie_layout_padding),
+                    bottom = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin)
                 )
                 .clickable(onClick = onSeeAllClick)
         ) {
@@ -179,7 +177,12 @@ fun MoviesWidget(
                 )
             }
         }
-        LazyRow(modifier = Modifier.padding(top = 4.dp, start = 8.dp)) {
+        LazyRow(
+            modifier = Modifier.padding(
+                top = dimensionResource(id = R.dimen.holder_movie_layout_padding),
+                start = dimensionResource(id = R.dimen.holder_movie_listview_padding_start)
+            )
+        ) {
             items(movies) { movie ->
                 MovieItem(movie = movie, onMovieClick = onItemClick)
             }
@@ -198,19 +201,23 @@ fun MovieItem(movie: Movie, onMovieClick: (content: Content) -> Unit) {
             ),
             contentDescription = null,
             modifier = Modifier
-                .height(96.dp)
-                .width(70.dp)
+                .height(dimensionResource(id = R.dimen.movie_summary_image_size))
+                .width(dimensionResource(id = R.dimen.movie_summary_image_width))
         )
         (movie.title ?: movie.originalTitle)?.let {
             Text(
                 text = it,
                 color = colorResource(R.color.color_white),
                 maxLines = 1,
-                fontSize = 11.sp,
+                fontSize = dimensionResource(id = R.dimen.holder_item_movie_textview_size).value.sp,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
-                    .padding(top = 8.dp, start = 8.dp, end = 8.dp)
+                    .padding(
+                        top = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                        start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                        end = dimensionResource(id = R.dimen.holder_item_movie_textview_margin)
+                    )
                     .widthIn(max = 70.dp)
             )
         }
@@ -218,23 +225,15 @@ fun MovieItem(movie: Movie, onMovieClick: (content: Content) -> Unit) {
             Text(
                 text = it,
                 color = colorResource(R.color.color_white),
-                fontSize = 11.sp,
+                fontSize = dimensionResource(id = R.dimen.holder_item_movie_textview_size).value.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .padding(start = 8.dp, end = 8.dp)
+                    .padding(
+                        start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                        end = dimensionResource(id = R.dimen.holder_item_movie_textview_margin)
+                    )
                     .widthIn(max = 70.dp)
             )
         }
     }
-}
-
-class MoviePreviewParameterProvider : PreviewParameterProvider<List<Movie>> {
-    override val values = sequenceOf(
-        listOf<Movie>(
-            Movie(
-                id = 1,
-                name = "name"
-            )
-        )
-    )
 }
