@@ -5,10 +5,10 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.recyclerview.widget.RecyclerView
 import com.google.accompanist.appcompattheme.AppCompatTheme
+import elieomatuku.cineast_android.commonwidgets.MoviesWidget
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.extensions.Contents
-import elieomatuku.cineast_android.details.MoviesWidget
 import elieomatuku.cineast_android.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
 
@@ -40,10 +40,12 @@ class MoviesHolder(
         val title = itemView.context.getString(titleRes)
         composeView.setContent {
             AppCompatTheme {
-                MoviesWidget(content as List<Movie>, title,
-                    onItemClick = {
-                        if (it is Movie) {
-                            onMovieClickPublisher.onNext(it)
+                MoviesWidget(
+                    movies = content as List<Movie>,
+                    sectionTitle = title,
+                    onItemClick = { content, _ ->
+                        if (content is Movie) {
+                            onMovieClickPublisher.onNext(content)
                         }
                     },
                     onSeeAllClick = {}
@@ -53,18 +55,6 @@ class MoviesHolder(
     }
 
     override fun update(content: Contents) {
-        val title = itemView.context.getString(content.titleResources)
-        composeView.setContent {
-            AppCompatTheme {
-                MoviesWidget(content.value as List<Movie>, title,
-                    onItemClick = {
-                        if (it is Movie) {
-                            onMovieClickPublisher.onNext(it)
-                        }
-                    },
-                    onSeeAllClick = {}
-                )
-            }
-        }
+        update(content.value as List<Movie>, content.titleResources)
     }
 }
