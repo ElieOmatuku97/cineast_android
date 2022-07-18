@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.commonwidgets
+package elieomatuku.cineast_android.widgets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

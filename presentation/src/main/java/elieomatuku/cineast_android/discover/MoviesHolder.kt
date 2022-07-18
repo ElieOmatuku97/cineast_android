@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.recyclerview.widget.RecyclerView
 import com.google.accompanist.appcompattheme.AppCompatTheme
-import elieomatuku.cineast_android.commonwidgets.MoviesWidget
+import elieomatuku.cineast_android.widgets.MoviesWidget
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.extensions.Contents

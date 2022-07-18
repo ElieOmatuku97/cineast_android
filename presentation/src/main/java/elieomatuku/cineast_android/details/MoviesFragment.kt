@@ -11,7 +11,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.databinding.FragmentMoviesBinding
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.commonwidgets.MoviesWidget
+import elieomatuku.cineast_android.widgets.MoviesWidget
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
