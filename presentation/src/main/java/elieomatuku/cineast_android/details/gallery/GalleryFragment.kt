@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
 import com.eftimoff.viewpagertransformers.TabletTransformer
-import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Image
 import elieomatuku.cineast_android.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_gallery.*
+import elieomatuku.cineast_android.databinding.FragmentGalleryBinding
 
 class GalleryFragment : BaseFragment() {
     companion object {
@@ -23,38 +21,30 @@ class GalleryFragment : BaseFragment() {
         }
     }
 
-    private val viewPager: ViewPager by lazy {
-        viewpager_images
-    }
+    private var _binding: FragmentGalleryBinding? = null
+    private val binding get() = _binding!!
 
-    private val closeIconView: ImageButton by lazy {
-        gallery_widget_close_icon
-    }
+    private val args: GalleryFragmentArgs by navArgs()
 
     private val galleryPagerAdapter: GalleryPagerAdapter by lazy {
-        GalleryPagerAdapter(checkNotNull(childFragmentManager))
+        GalleryPagerAdapter(childFragmentManager)
     }
-
-    private var posters: List<Image> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        arguments?.getSerializable(POSTERS)?.let {
-            posters = it as List<Image>
-        }
-
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
+        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewPager.setPageTransformer(true, TabletTransformer())
-        viewPager.adapter = galleryPagerAdapter
+        binding.viewpagerImages.setPageTransformer(true, TabletTransformer())
+        binding.viewpagerImages.adapter = galleryPagerAdapter
         galleryPagerAdapter.notifyDataSetChanged()
 
-        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        binding.viewpagerImages.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
@@ -69,15 +59,20 @@ class GalleryFragment : BaseFragment() {
             }
         })
 
-        updateView(posters)
+        updateView(args.posters.toList())
 
-        closeIconView.setOnClickListener {
+        binding.galleryWidgetCloseIcon.setOnClickListener {
             (activity as AppCompatActivity).supportFragmentManager.popBackStack()
         }
     }
 
-    private fun updateView(posters: List<Image>) {
-        galleryPagerAdapter.posters = posters
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun updateView(postersPaths: List<String>) {
+        galleryPagerAdapter.postersPaths = postersPaths
         galleryPagerAdapter.notifyDataSetChanged()
     }
 }

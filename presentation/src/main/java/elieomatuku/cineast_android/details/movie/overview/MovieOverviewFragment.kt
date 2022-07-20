@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.databinding.FragmentMovieOverviewBinding
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.details.BareOverviewFragment
-import elieomatuku.cineast_android.fragment.YoutubeFragment
+import elieomatuku.cineast_android.details.movie.MovieFragmentDirections
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 
@@ -78,10 +78,8 @@ class MovieOverviewFragment(private val bareOverviewFragment: Fragment) : BaseFr
     }
 
     private fun showTrailer(trailerKey: String) {
-        val youtubeFragment = YoutubeFragment.newInstance(trailerKey)
-        val fm = (context as AppCompatActivity).supportFragmentManager
-        fm.beginTransaction().add(android.R.id.content, youtubeFragment, null)
-            .addToBackStack(null).commit()
+        val directions = MovieFragmentDirections.navigateToVideo(trailerKey)
+        findNavController().navigate(directions)
     }
 
     override fun onDestroyView() {

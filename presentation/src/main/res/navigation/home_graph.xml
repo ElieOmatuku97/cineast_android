@@ -12,22 +12,17 @@
         tools:layout="@layout/fragment_discover">
         <action
             android:id="@+id/navigate_to_movie_detail"
-            app:destination="@id/movie_detail" />
+            app:destination="@id/movie_detail_graph">
+            <argument
+                android:name="screen_name"
+                app:argType="string" />
+            <argument
+                android:name="movie"
+                app:argType="elieomatuku.cineast_android.domain.model.Movie" />
+        </action>
         <action
             android:id="@+id/navigate_to_person_detail"
             app:destination="@id/person_detail" />
-    </fragment>
-    <fragment
-        android:id="@+id/movie_detail"
-        android:name="elieomatuku.cineast_android.details.movie.MovieFragment"
-        android:label="Movie Detail"
-        tools:layout="@layout/fragment_content_details">
-        <argument
-            android:name="screen_name"
-            app:argType="string" />
-        <argument
-            android:name="movie"
-            app:argType="elieomatuku.cineast_android.domain.model.Movie" />
     </fragment>
     <fragment
         android:id="@+id/person_detail"
@@ -41,5 +36,9 @@
             android:name="person"
             app:argType="elieomatuku.cineast_android.domain.model.Person" />
     </fragment>
+
+    <include
+        android:id="@+id/movie_detail_graph"
+        app:graph="@navigation/movie_detail_graph" />
 
 </navigation>

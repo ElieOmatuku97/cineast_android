@@ -16,7 +16,6 @@ import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.databinding.FragmentContentDetailsBinding
 import elieomatuku.cineast_android.details.MoviesFragment
-import elieomatuku.cineast_android.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamFragment
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewFragment
 import elieomatuku.cineast_android.utils.*
@@ -24,7 +23,6 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
-import java.io.Serializable
 
 class MovieFragment : BaseFragment() {
     companion object {
@@ -49,7 +47,7 @@ class MovieFragment : BaseFragment() {
         PublishSubject.create<Boolean>()
     }
 
-    private val viewModel: MovieViewModel by viewModel<MovieViewModel>()
+    private val viewModel: MovieViewModel by sharedViewModel()
 
     private val onProfileClickedPicturePublisher: PublishSubject<Int> by lazy {
         PublishSubject.create<Int>()
@@ -171,7 +169,7 @@ class MovieFragment : BaseFragment() {
             onProfileClickedPictureObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    goToGallery()
+                    navigateToGallery()
                 }
         )
 
@@ -313,17 +311,14 @@ class MovieFragment : BaseFragment() {
         updateContainer(overViewFragment)
     }
 
-    private fun goToGallery() {
-        val galleryFragment = GalleryFragment.newInstance()
-        val args = Bundle()
-        args.putSerializable(
-            GalleryFragment.POSTERS,
-            viewModel.posters() as Serializable
-        )
-        galleryFragment.arguments = args
-
-        childFragmentManager.beginTransaction()
-            .add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
+    private fun navigateToGallery() {
+        val directions =
+            MovieFragmentDirections.navigateToGallery(
+                viewModel.posters()
+                    .map { it.filePath }
+                    .toTypedArray()
+            )
+        findNavController().navigate(directions)
     }
 
     private fun updateErrorView(errorMsg: String?) {
