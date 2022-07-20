@@ -3,9 +3,12 @@ package elieomatuku.cineast_android.details.movie.overview
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.domain.model.MovieSummary
+import io.reactivex.subjects.PublishSubject
 
-class MovieOverviewAdapter(private val movieSummary: MovieSummary?) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieOverviewAdapter(
+    private val movieSummary: MovieSummary?,
+    private val onTrailClickedPublisher: PublishSubject<String>
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_TRAILERS = 0
@@ -26,7 +29,7 @@ class MovieOverviewAdapter(private val movieSummary: MovieSummary?) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_TRAILERS -> TrailersHolder.newInstance(parent)
+            TYPE_TRAILERS -> TrailersHolder.newInstance(parent, onTrailClickedPublisher)
             TYPE_MOVIE_FACTS -> MovieFactsHolder.newInstance(parent)
             else -> throw RuntimeException("View Type does not exist.")
         }

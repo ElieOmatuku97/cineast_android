@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_graph">
+
+    <fragment
+        android:id="@+id/movie_detail"
+        android:name="elieomatuku.cineast_android.details.movie.MovieFragment"
+        android:label="Movie Detail"
+        tools:layout="@layout/fragment_content_details" />
+
+    <fragment
+        android:id="@+id/gallery"
+        android:name="elieomatuku.cineast_android.details.gallery.GalleryFragment"
+        android:label="Movie Gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/video"
+        android:name="elieomatuku.cineast_android.fragment.YoutubeFragment"
+        android:label="Movie Gallery"
+        tools:layout="@layout/fragment_gallery" />
+
+</navigation>

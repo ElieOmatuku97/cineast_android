@@ -8,16 +8,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Trailer
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_trailers.view.*
 
-class TrailersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TrailersHolder(itemView: View, private val onTrailClickedPublisher: PublishSubject<String>) :
+    RecyclerView.ViewHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context).inflate(R.layout.holder_trailers, parent, false)
+            return LayoutInflater.from(parent.context)
+                .inflate(R.layout.holder_trailers, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup): TrailersHolder {
-            return TrailersHolder(createView(parent))
+        fun newInstance(
+            parent: ViewGroup,
+            onTrailClickedPublisher: PublishSubject<String>
+        ): TrailersHolder {
+            return TrailersHolder(createView(parent), onTrailClickedPublisher)
         }
     }
 
@@ -26,7 +32,7 @@ class TrailersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     }
 
     private val adapter: TrailersAdapter by lazy {
-        TrailersAdapter()
+        TrailersAdapter(onTrailClickedPublisher)
     }
 
     private val root: ConstraintLayout by lazy {
@@ -37,8 +43,7 @@ class TrailersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val trailersVideoIds = mutableListOf<String?>()
         val trailersVideosTitleMap = mutableMapOf<String?, String?>()
 
-        if (!movieTrailers.isNullOrEmpty()) {
-
+        if (movieTrailers.isNotEmpty()) {
             root.visibility = View.VISIBLE
 
             movieTrailers.forEach {
@@ -47,7 +52,8 @@ class TrailersHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
 
             listView.adapter = adapter
-            listView.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
+            listView.layoutManager =
+                LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             adapter.trailers = trailersVideoIds as List<String>
             adapter.trailersVideosTitleMap = trailersVideosTitleMap as Map<String, String>
             adapter.notifyDataSetChanged()
