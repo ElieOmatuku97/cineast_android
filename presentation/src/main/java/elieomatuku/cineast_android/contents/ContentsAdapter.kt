@@ -79,7 +79,6 @@ open class ContentsAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-
             is MovieItemHolder -> {
                 val movie = contents[position]
                 holder.update(movie as Movie)

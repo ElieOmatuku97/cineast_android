@@ -1,72 +1,51 @@
 package elieomatuku.cineast_android.viewholder
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.extensions.Contents
 import elieomatuku.cineast_android.contents.ContentsActivity
-import elieomatuku.cineast_android.contents.ContentsAdapter
+import elieomatuku.cineast_android.extensions.asListOfType
+import elieomatuku.cineast_android.widgets.PeopleWidget
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.holder_people.view.*
 
-class PeopleHolder(itemView: View, private val onPeopleClickPublisher: PublishSubject<Content>) :
-    ContentHolder, RecyclerView.ViewHolder(itemView) {
+class PeopleHolder(
+    val composeView: ComposeView,
+    private val onPeopleClickPublisher: PublishSubject<Content>
+) :
+    ContentHolder, RecyclerView.ViewHolder(composeView) {
 
     companion object {
-        fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context)
-                .inflate(R.layout.holder_people, parent, false)
+        private fun createComposeView(parent: ViewGroup): ComposeView {
+            return ComposeView(parent.context)
         }
 
         fun newInstance(
             parent: ViewGroup,
             onPersonalityClickPublisher: PublishSubject<Content>
         ): PeopleHolder {
-            return PeopleHolder(createView(parent), onPersonalityClickPublisher)
+            return PeopleHolder(createComposeView(parent), onPersonalityClickPublisher)
         }
     }
 
-    private val seeAllView by lazy {
-        itemView.see_all
-    }
-
-    private val adapter: ContentsAdapter by lazy {
-        ContentsAdapter(onPeopleClickPublisher)
-    }
-
-    private val listView: RecyclerView by lazy {
-        itemView.recyclerview_people
-    }
-
-    override fun update(contents: Contents) {
-        adapter.contents = contents.value?.toMutableList() ?: mutableListOf()
-        listView.adapter = adapter
-        adapter.notifyDataSetChanged()
-        listView.layoutManager =
-            LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-
-        seeAllView.setOnClickListener {
-            ContentsActivity.startActivity(
-                itemView.context,
-                contents.value,
-                contents.titleResources
-            )
-        }
+    override fun update(content: Contents) {
+        update(content.value ?: emptyList(), content.titleResources)
     }
 
     override fun update(content: List<Content>, titleRes: Int) {
-        adapter.contents = content.toMutableList()
-        listView.adapter = adapter
-        adapter.notifyDataSetChanged()
-        listView.layoutManager =
-            LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-
-        seeAllView.setOnClickListener {
-            ContentsActivity.startActivity(itemView.context, content, titleRes)
+        composeView.setContent {
+            AppCompatTheme {
+                PeopleWidget(
+                    people = content.asListOfType() ?: emptyList(),
+                    sectionTitle = composeView.context.getString(R.string.popular_people),
+                    onItemClick = { onPeopleClickPublisher.onNext(it) }
+                ) {
+                    ContentsActivity.startActivity(itemView.context, content, titleRes)
+                }
+            }
         }
     }
 }

@@ -131,8 +131,10 @@ class DiscoverAdapter(
     }
 
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
-        if (holder is MoviesHolder) {
-            holder.composeView.disposeComposition()
+        when (holder) {
+            is MoviesHolder -> holder.composeView.disposeComposition()
+            is PeopleHolder -> holder.composeView.disposeComposition()
+            else -> {}
         }
     }
 }
