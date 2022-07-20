@@ -10,6 +10,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.extensions.Contents
+import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_header.view.*
@@ -45,26 +46,11 @@ class HeaderHolder(itemView: View, private val onItemClickPublisher: PublishSubj
     }
 
     override fun update(content: Contents) {
-        val adapter = HeaderAdapter(content.value as List<Movie>, onItemClickPublisher)
-        listView.adapter = adapter
-        adapter.notifyDataSetChanged()
-        listView.layoutManager =
-            LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-        listView.visibility = View.VISIBLE
-
-        val lm = listView.layoutManager
-        val position = adapter.getArticlePosition(CURRENT_MOVIE_ID)
-
-        if ((position >= 0) && (position < adapter.itemCount)) {
-            smoothScroller.targetPosition = position
-            listView.post {
-                lm?.startSmoothScroll(smoothScroller)
-            }
-        }
+        update(content.value ?: emptyList(), 0)
     }
 
     override fun update(content: List<Content>, titleRes: Int) {
-        val adapter = HeaderAdapter(content as List<Movie>, onItemClickPublisher)
+        val adapter = HeaderAdapter(content.asListOfType() ?: emptyList(), onItemClickPublisher)
         listView.adapter = adapter
         adapter.notifyDataSetChanged()
         listView.layoutManager =

@@ -20,6 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import elieomatuku.cineast_android.R
@@ -36,7 +38,8 @@ import elieomatuku.cineast_android.utils.UiUtils
 
 @Composable
 fun MoviesWidget(
-    viewModel: MoviesViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    viewModelFactory: ViewModelProvider.Factory,
+    viewModel: MoviesViewModel = viewModel(factory = viewModelFactory),
     movies: List<Movie>,
     sectionTitle: String = String(),
     onItemClick: (content: Content, genres: List<Genre>) -> Unit = { _, _ -> },

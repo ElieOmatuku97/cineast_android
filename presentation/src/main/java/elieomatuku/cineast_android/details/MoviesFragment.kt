@@ -14,6 +14,7 @@ import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.details.movie.MovieFragment
+import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.Constants
 import java.io.Serializable
 
@@ -64,7 +65,11 @@ class MoviesFragment : BaseFragment() {
             FragmentMoviesBinding.bind(inflater.inflate(R.layout.fragment_movies, container, false))
 
         arguments?.getSerializable(MOVIES)?.let {
-            movies = it as List<Movie>
+            movies = if (it is List<*>) {
+                it.asListOfType() ?: emptyList()
+            } else {
+                emptyList()
+            }
         }
 
         updateView()
@@ -78,6 +83,7 @@ class MoviesFragment : BaseFragment() {
             setContent {
                 AppCompatTheme {
                     MoviesWidget(
+                        viewModelFactory = viewModelFactory,
                         movies = movies,
                         sectionTitle = arguments?.getString(SELECTED_MOVIE_TITLE)
                             ?: arguments?.getString(TITLE)
