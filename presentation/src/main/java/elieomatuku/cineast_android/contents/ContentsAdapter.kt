@@ -14,7 +14,7 @@ import kotlin.properties.Delegates
 
 open class ContentsAdapter(
     private val onContentClickPublisher: PublishSubject<Content>,
-    private val contentLayoutRes: Int? = null
+    private val contentLayoutRes: Int
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {

@@ -12,22 +12,21 @@ import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.utils.UiUtils
-import kotlinx.android.synthetic.main.holder_item_movie.view.*
+import kotlinx.android.synthetic.main.holder_movie_list.view.*
 
 class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
         const val USER_RATING_STRING_FORMAT = "(%.1f, me)"
         const val MOVIE_RATING_STRING_FORMAT = "(%.1f, %d)"
 
-        fun createView(parent: ViewGroup, layoutRes: Int? = null): View {
+        fun createView(parent: ViewGroup, layoutRes: Int): View {
             return LayoutInflater.from(parent.context).inflate(
-                layoutRes
-                    ?: R.layout.holder_item_movie,
+                layoutRes,
                 parent, false
             )
         }
 
-        fun newInstance(parent: ViewGroup, layoutRes: Int? = null): MovieItemHolder {
+        fun newInstance(parent: ViewGroup, layoutRes: Int): MovieItemHolder {
             return MovieItemHolder(createView(parent, layoutRes))
         }
     }
@@ -70,7 +69,8 @@ class MovieItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val posterPath = movie.posterPath
 
         if ((posterPath != null) && !(posterPath.isNullOrEmpty())) {
-            val imageUrl = UiUtils.getImageUrl(posterPath, itemView.context.getString(R.string.image_small))
+            val imageUrl =
+                UiUtils.getImageUrl(posterPath, itemView.context.getString(R.string.image_small))
 
             Picasso.get()
                 .load(imageUrl)

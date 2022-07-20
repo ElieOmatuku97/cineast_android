@@ -10,19 +10,18 @@ import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.utils.UiUtils
-import kotlinx.android.synthetic.main.holder_item_people.view.*
+import kotlinx.android.synthetic.main.holder_people_list.view.*
 
 class PeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
-        fun createView(parent: ViewGroup, layoutRes: Int? = null): View {
+        fun createView(parent: ViewGroup, layoutRes: Int): View {
             return LayoutInflater.from(parent.context).inflate(
-                layoutRes
-                    ?: R.layout.holder_item_people,
+                layoutRes,
                 parent, false
             )
         }
 
-        fun newInstance(parent: ViewGroup, layoutRes: Int? = null): PeopleItemHolder {
+        fun newInstance(parent: ViewGroup, layoutRes: Int): PeopleItemHolder {
             return PeopleItemHolder(createView(parent, layoutRes))
         }
     }
@@ -40,7 +39,12 @@ class PeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         if (!profilePath.isNullOrEmpty()) {
             peopleImageView?.visibility = View.VISIBLE
             Picasso.get()
-                .load(UiUtils.getImageUrl(profilePath, itemView.context.getString(R.string.image_small)))
+                .load(
+                    UiUtils.getImageUrl(
+                        profilePath,
+                        itemView.context.getString(R.string.image_small)
+                    )
+                )
                 .into(peopleImageView)
         } else {
             peopleImageView?.visibility = View.GONE
