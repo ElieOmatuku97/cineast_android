@@ -63,8 +63,10 @@ class MovieOverviewFragment(private val bareOverviewFragment: Fragment) : BaseFr
         binding.overviewList.adapter = MovieOverviewAdapter(movieSummary, onTrailClickPublisher)
         binding.overviewList.layoutManager = LinearLayoutManager(this.context)
 
-        childFragmentManager.beginTransaction().add(R.id.bareOverView, bareOverviewFragment)
-            .addToBackStack(null).commit()
+        if (!bareOverviewFragment.isAdded) {
+            childFragmentManager.beginTransaction().add(R.id.bareOverView, bareOverviewFragment)
+                .addToBackStack(null).commit()
+        }
     }
 
     override fun onResume() {

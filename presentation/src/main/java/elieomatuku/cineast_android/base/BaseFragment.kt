@@ -135,6 +135,11 @@ abstract class BaseFragment : Fragment, KodeinAware {
     }
 
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        rxSubs.clear()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         rxSubs.clear()
