@@ -1,48 +1,17 @@
 package elieomatuku.cineast_android.details.movie.overview
 
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import androidx.recyclerview.widget.RecyclerView
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.MovieFacts
-
-class MovieFactsHolder(val composeView: ComposeView) : RecyclerView.ViewHolder(composeView) {
-    companion object {
-        private fun createComposeView(parent: ViewGroup): ComposeView {
-            return ComposeView(parent.context)
-        }
-
-        fun newInstance(parent: ViewGroup): MovieFactsHolder {
-            return MovieFactsHolder(createComposeView(parent))
-        }
-    }
-
-    fun update(movieFacts: MovieFacts?) {
-        composeView.setContent {
-            AppCompatTheme {
-                movieFacts?.let {
-                    MovieFactsWidget(movieFacts = it)
-                } ?: hideRootView()
-            }
-        }
-    }
-
-    private fun hideRootView() {
-        composeView.visibility = View.GONE
-    }
-}
 
 @Composable
 fun MovieFactsWidget(movieFacts: MovieFacts?) {

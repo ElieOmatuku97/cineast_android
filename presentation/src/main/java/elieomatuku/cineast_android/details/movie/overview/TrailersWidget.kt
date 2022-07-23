@@ -1,7 +1,5 @@
 package elieomatuku.cineast_android.details.movie.overview
 
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,7 +8,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -18,50 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.recyclerview.widget.RecyclerView
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Trailer
 import elieomatuku.cineast_android.utils.UiUtils
-import io.reactivex.subjects.PublishSubject
-
-class TrailersHolder(
-    val composeView: ComposeView,
-    private val onTrailClickedPublisher: PublishSubject<String>
-) :
-    RecyclerView.ViewHolder(composeView) {
-    companion object {
-        private fun createComposeView(parent: ViewGroup): ComposeView {
-            return ComposeView(parent.context)
-        }
-
-        fun newInstance(
-            parent: ViewGroup,
-            onTrailClickedPublisher: PublishSubject<String>
-        ): TrailersHolder {
-            return TrailersHolder(createComposeView(parent), onTrailClickedPublisher)
-        }
-    }
-
-    fun update(movieTrailers: List<Trailer>) {
-        if (movieTrailers.isNotEmpty()) {
-            composeView.visibility = View.VISIBLE
-            composeView.setContent {
-                AppCompatTheme {
-                    TrailersWidget(trailers = movieTrailers, onItemClick = {
-                        it.key?.let {
-                            onTrailClickedPublisher.onNext(it)
-                        }
-                    })
-                }
-            }
-        } else {
-            composeView.visibility = View.GONE
-        }
-    }
-}
 
 @Composable
 fun TrailersWidget(
