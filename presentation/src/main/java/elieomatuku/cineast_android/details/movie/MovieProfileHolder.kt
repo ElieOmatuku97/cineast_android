@@ -20,13 +20,20 @@ import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_movie.view.*
 
-class MovieProfileHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>) : ProfileHolder(itemView) {
+class MovieProfileHolder(
+    itemView: View,
+    private val onProfileClickedPicturePublisher: PublishSubject<Int>
+) : ProfileHolder(itemView) {
     companion object {
         fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context).inflate(R.layout.holder_profile_movie, parent, false)
+            return LayoutInflater.from(parent.context)
+                .inflate(R.layout.holder_profile_movie, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup, onProfileClickedPicturePublisher: PublishSubject<Int>): MovieProfileHolder {
+        fun newInstance(
+            parent: ViewGroup,
+            onProfileClickedPicturePublisher: PublishSubject<Int>
+        ): MovieProfileHolder {
             return MovieProfileHolder(createView(parent), onProfileClickedPicturePublisher)
         }
     }
@@ -145,7 +152,10 @@ class MovieProfileHolder(itemView: View, private val onProfileClickedPicturePubl
             val rateDialogFragment = RateDialogFragment.newInstance(movie)
 
             if (itemView.context is AppCompatActivity) {
-                rateDialogFragment.show((itemView.context as AppCompatActivity).supportFragmentManager, RateDialogFragment.TAG)
+                rateDialogFragment.show(
+                    (itemView.context as AppCompatActivity).supportFragmentManager,
+                    RateDialogFragment.TAG
+                )
             }
         }
     }
