@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.navigation.fragment.findNavController
@@ -89,15 +89,19 @@ fun MovieOverviewWidget(
     onTrailerClick: (trailer: Trailer) -> Unit,
     bareOverviewComposable: @Composable (title: String, overview: String) -> Unit
 ) {
-    Column {
-        bareOverviewComposable(
-            title = overviewTitle,
-            overview = movieSummary.movie?.overview ?: String()
-        )
-        TrailersWidget(
-            trailers = movieSummary.trailers ?: emptyList(),
-            onItemClick = onTrailerClick
-        )
-        MovieFactsWidget(movieFacts = movieSummary.facts)
+    LazyColumn {
+        item {
+            bareOverviewComposable(
+                title = overviewTitle,
+                overview = movieSummary.movie?.overview ?: String()
+            )
+        }
+        item {
+            TrailersWidget(
+                trailers = movieSummary.trailers ?: emptyList(),
+                onItemClick = onTrailerClick
+            )
+        }
+        item { MovieFactsWidget(movieFacts = movieSummary.facts) }
     }
 }
