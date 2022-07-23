@@ -3,26 +3,35 @@ package elieomatuku.cineast_android.details.movie
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.databinding.FragmentContentDetailsBinding
-import elieomatuku.cineast_android.details.MoviesFragment
-import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamFragment
-import elieomatuku.cineast_android.details.movie.overview.MovieOverviewFragment
+import elieomatuku.cineast_android.details.BareOverviewWidget
+import elieomatuku.cineast_android.details.movie.movie_team.MOVIE_TEAM_KEY
+import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamWidget
+import elieomatuku.cineast_android.details.movie.movie_team.PEOPLE_KEY
+import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
+import elieomatuku.cineast_android.details.person.PersonFragment
+import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.utils.*
+import elieomatuku.cineast_android.widgets.MOVIE_GENRES_KEY
+import elieomatuku.cineast_android.widgets.MOVIE_KEY
+import elieomatuku.cineast_android.widgets.MoviesWidget
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
+import java.io.Serializable
 
 class MovieFragment : BaseFragment() {
     companion object {
@@ -105,6 +114,7 @@ class MovieFragment : BaseFragment() {
                 else -> false
             }
         }
+        binding.composeviewContainer.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
         movie = args.movie
         viewModel.getMovieDetails(movie, args.screenName)
@@ -304,11 +314,20 @@ class MovieFragment : BaseFragment() {
         adapter.movieSummary = movieSummary
         adapter.notifyDataSetChanged()
 
-        val overViewFragment = MovieOverviewFragment.newInstance(
-            getString(R.string.plot_summary),
-            movieSummary
-        )
-        updateContainer(overViewFragment)
+        binding.composeviewContainer.setContent {
+            AppCompatTheme {
+                MovieOverviewWidget(
+                    overviewTitle = getString(R.string.plot_summary),
+                    movieSummary = movieSummary,
+                    onTrailerClick = { trailer ->
+                        trailer.key?.let {
+                            showTrailer(it)
+                        }
+                    }) { title, overview ->
+                    BareOverviewWidget(title = title, overview = overview)
+                }
+            }
+        }
     }
 
     private fun navigateToGallery() {
@@ -328,31 +347,83 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun gotoTab(displayAndMovieSummary: Pair<String, MovieSummary>) {
-        val fragment = when (displayAndMovieSummary.first) {
-            SIMILAR_MOVIES -> {
-                val movieSummary: MovieSummary = displayAndMovieSummary.second
-                val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
-                MoviesFragment.newInstance(similarMovies)
+        binding.composeviewContainer.setContent {
+            AppCompatTheme {
+                when (displayAndMovieSummary.first) {
+                    SIMILAR_MOVIES -> {
+                        val movieSummary: MovieSummary = displayAndMovieSummary.second
+                        val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
+                        MoviesWidget(
+                            viewModelFactory = viewModelFactory,
+                            movies = similarMovies,
+                            sectionTitle = movie.title ?: getString(R.string.movies),
+                            onItemClick = { content, genres ->
+                                val params = Bundle()
+                                if (content is Movie) {
+                                    params.putString(Constants.SCREEN_NAME_KEY, content.title)
+                                }
+                                params.putSerializable(MOVIE_KEY, content)
+                                params.putSerializable(
+                                    MOVIE_GENRES_KEY,
+                                    genres as Serializable
+                                )
+                                gotoMovie(params)
+                            },
+                            onSeeAllClick = {
+                                context?.let {
+//                                    ContentsActivity.startActivity(it, movies, R.string.movies)
+                                }
+                            }
+                        )
+                    }
+                    MOVIE_CREW -> {
+                        val cast = displayAndMovieSummary.second.cast
+                        val crew = displayAndMovieSummary.second.crew
+                        if (cast != null && crew != null) {
+                            MovieTeamWidget(
+                                cast = cast,
+                                crew = crew,
+                                onItemClick = ::gotoPerson
+                            ) {
+//                                ContentsActivity.startActivity(itemView.context, content, titleRes)
+                            }
+                        }
+                    }
+                    MOVIE_OVERVIEW -> {
+                        MovieOverviewWidget(
+                            overviewTitle = getString(R.string.plot_summary),
+                            movieSummary = displayAndMovieSummary.second,
+                            onTrailerClick = { trailer ->
+                                trailer.key?.let {
+                                    showTrailer(it)
+                                }
+                            }) { title, overview ->
+                            BareOverviewWidget(title = title, overview = overview)
+                        }
+                    }
+                }
             }
-            MOVIE_CREW -> {
-                MovieTeamFragment.newInstance(displayAndMovieSummary.second)
-            }
-            MOVIE_OVERVIEW -> {
-                MovieOverviewFragment.newInstance(
-                    getString(R.string.plot_summary),
-                    displayAndMovieSummary.second
-                )
-            }
-            else -> null
-        }
-
-        if (fragment != null) {
-            updateContainer(fragment)
         }
     }
 
-    private fun updateContainer(fragment: Fragment) {
-        childFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment).commit()
+    private fun showTrailer(trailerKey: String) {
+        val directions = MovieFragmentDirections.navigateToVideo(trailerKey)
+        findNavController().navigate(directions)
+    }
+
+    private fun gotoPerson(person: Content) {
+        val params = Bundle()
+        params.putString(Constants.SCREEN_NAME_KEY, movie.title)
+        params.putSerializable(PEOPLE_KEY, person)
+        params.putBoolean(MOVIE_TEAM_KEY, true)
+        val intent = Intent(activity, PersonFragment::class.java)
+        intent.putExtras(params)
+        activity?.startActivity(intent)
+    }
+
+    private fun gotoMovie(params: Bundle) {
+        val intent = Intent(activity, MovieFragment::class.java)
+        intent.putExtras(params)
+        activity?.startActivity(intent)
     }
 }

@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.accompanist.appcompattheme.AppCompatTheme
-import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.extensions.Contents
 import elieomatuku.cineast_android.contents.ContentsActivity
@@ -40,7 +39,7 @@ class PeopleHolder(
             AppCompatTheme {
                 PeopleWidget(
                     people = content.asListOfType() ?: emptyList(),
-                    sectionTitle = composeView.context.getString(R.string.popular_people),
+                    sectionTitle = composeView.context.getString(titleRes),
                     onItemClick = { onPeopleClickPublisher.onNext(it) }
                 ) {
                     ContentsActivity.startActivity(itemView.context, content, titleRes)

@@ -9,19 +9,25 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.databinding.FragmentContentDetailsBinding
-import elieomatuku.cineast_android.details.BareOverviewFragment
-import elieomatuku.cineast_android.details.MoviesFragment
+import elieomatuku.cineast_android.details.BareOverviewWidget
+import elieomatuku.cineast_android.details.movie.MovieFragment
+import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.widgets.MOVIE_GENRES_KEY
+import elieomatuku.cineast_android.widgets.MOVIE_KEY
+import elieomatuku.cineast_android.widgets.MoviesWidget
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.Observable
+import java.io.Serializable
 
 class PersonFragment : BaseFragment() {
     companion object {
@@ -169,13 +175,14 @@ class PersonFragment : BaseFragment() {
     }
 
     private fun initDetailsFragment(personDetails: PersonDetails) {
-        childFragmentManager.beginTransaction().replace(
-            R.id.fragment_container,
-            BareOverviewFragment.newInstance(
-                getString(R.string.biography),
-                personDetails.biography
-            )
-        ).commit()
+        binding.composeviewContainer.setContent {
+            AppCompatTheme {
+                BareOverviewWidget(
+                    title = getString(R.string.biography),
+                    overview = personDetails.biography ?: String()
+                )
+            }
+        }
     }
 
     private fun navigateToGallery() {
@@ -196,26 +203,47 @@ class PersonFragment : BaseFragment() {
     private fun gotoTab(
         displayAndPersonDetails: Pair<String, PersonDetails>
     ) {
-        val fragment = when (displayAndPersonDetails.first) {
-            OVERVIEW -> {
-                BareOverviewFragment.newInstance(
-                    getString(R.string.biography),
-                    displayAndPersonDetails.second.biography
-                )
+        binding.composeviewContainer.setContent {
+            AppCompatTheme {
+                when (displayAndPersonDetails.first) {
+                    OVERVIEW -> {
+                        BareOverviewWidget(
+                            title = getString(R.string.biography),
+                            overview = displayAndPersonDetails.second.biography ?: String()
+                        )
+                    }
+                    KNOWN_FOR -> {
+                        MoviesWidget(
+                            viewModelFactory = viewModelFactory,
+                            movies = viewModel.knownForMovies,
+                            sectionTitle = getString(R.string.cast),
+                            onItemClick = { content, genres ->
+                                val params = Bundle()
+                                if (content is Movie) {
+                                    params.putString(Constants.SCREEN_NAME_KEY, content.title)
+                                }
+                                params.putSerializable(MOVIE_KEY, content)
+                                params.putSerializable(
+                                    MOVIE_GENRES_KEY,
+                                    genres as Serializable
+                                )
+                                gotoMovie(params)
+                            },
+                            onSeeAllClick = {
+                                context?.let {
+//                                    ContentsActivity.startActivity(it, movies, R.string.movies)
+                                }
+                            }
+                        )
+                    }
+                }
             }
-            KNOWN_FOR -> {
-                MoviesFragment.newInstance(
-                    viewModel.knownForMovies,
-                    getString(R.string.cast),
-                    displayAndPersonDetails.second.name
-                )
-            }
-            else -> null
         }
+    }
 
-        if (fragment != null) {
-            childFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment).commit()
-        }
+    private fun gotoMovie(params: Bundle) {
+        val intent = Intent(activity, MovieFragment::class.java)
+        intent.putExtras(params)
+        activity?.startActivity(intent)
     }
 }

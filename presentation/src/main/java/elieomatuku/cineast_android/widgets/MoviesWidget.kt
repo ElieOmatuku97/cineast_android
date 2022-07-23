@@ -36,6 +36,9 @@ import elieomatuku.cineast_android.utils.UiUtils
  * Created by elieomatuku on 2022-07-17
  */
 
+const val MOVIE_KEY = "movieApi"
+const val MOVIE_GENRES_KEY = "genres"
+
 @Composable
 fun MoviesWidget(
     viewModelFactory: ViewModelProvider.Factory,
