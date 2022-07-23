@@ -10,20 +10,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Image
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.databinding.FragmentContentDetailsBinding
 import elieomatuku.cineast_android.details.BareOverviewFragment
 import elieomatuku.cineast_android.details.MoviesFragment
-import elieomatuku.cineast_android.details.gallery.GalleryFragment
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import java.io.Serializable
 import io.reactivex.Observable
 
 class PersonFragment : BaseFragment() {
@@ -122,7 +119,7 @@ class PersonFragment : BaseFragment() {
             onProfileClickedPictureObservable
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    goToGallery(viewModel.posters)
+                    navigateToGallery()
                 }
         )
     }
@@ -181,15 +178,14 @@ class PersonFragment : BaseFragment() {
         ).commit()
     }
 
-    private fun goToGallery(posters: List<Image>) {
-        val galleryFragment = GalleryFragment.newInstance()
-
-        val args = Bundle()
-        args.putSerializable(GalleryFragment.POSTERS, posters as Serializable)
-        galleryFragment.arguments = args
-
-        childFragmentManager.beginTransaction()
-            .add(android.R.id.content, galleryFragment, null).addToBackStack(null).commit()
+    private fun navigateToGallery() {
+        val directions =
+            PersonFragmentDirections.navigateToGallery(
+                viewModel.posters
+                    .map { it.filePath }
+                    .toTypedArray()
+            )
+        findNavController().navigate(directions)
     }
 
     private fun updateErrorView(errorMsg: String?) {

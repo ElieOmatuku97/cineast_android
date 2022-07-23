@@ -13,12 +13,7 @@ import elieomatuku.cineast_android.databinding.FragmentGalleryBinding
 
 class GalleryFragment : BaseFragment() {
     companion object {
-        const val POSTERS = "posters"
         const val MOVIE_POSTER_PATH = "movie_poster_path"
-
-        fun newInstance(): GalleryFragment {
-            return GalleryFragment()
-        }
     }
 
     private var _binding: FragmentGalleryBinding? = null

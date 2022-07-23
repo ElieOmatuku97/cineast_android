@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/person_detail_graph"
+    app:startDestination="@id/person_detail">
+
+    <fragment
+        android:id="@+id/person_detail"
+        android:name="elieomatuku.cineast_android.details.person.PersonFragment"
+        android:label="Person Detail"
+        tools:layout="@layout/fragment_content_details">
+        <action
+            android:id="@+id/navigate_to_gallery"
+            app:destination="@id/gallery" />
+
+        <argument
+            android:name="screen_name"
+            app:argType="string" />
+        <argument
+            android:name="person"
+            app:argType="elieomatuku.cineast_android.domain.model.Person" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gallery"
+        android:name="elieomatuku.cineast_android.details.gallery.GalleryFragment"
+        android:label="Movie Gallery"
+        tools:layout="@layout/fragment_gallery">
+        <argument
+            android:name="posters"
+            app:argType="string[]" />
+    </fragment>
+</navigation>

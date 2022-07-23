@@ -123,7 +123,6 @@ class DiscoverFragment : BaseFragment() {
 
         rxSubs.add(
             loginClickObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     if (!viewModel.isLoggedIn()) {
                         viewModel.logIn()
@@ -135,7 +134,6 @@ class DiscoverFragment : BaseFragment() {
 
         rxSubs.add(
             personSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ actor: Content ->
                     if (actor is Person) {
                         gotoPerson(actor)
@@ -147,7 +145,6 @@ class DiscoverFragment : BaseFragment() {
 
         rxSubs.add(
             movieSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe({ movie: Movie ->
                     gotoMovie(movie)
                 },
