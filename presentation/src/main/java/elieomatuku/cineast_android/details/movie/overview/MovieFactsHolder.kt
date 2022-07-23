@@ -1,63 +1,124 @@
 package elieomatuku.cineast_android.details.movie.overview
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.recyclerview.widget.RecyclerView
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.MovieFacts
-import kotlinx.android.synthetic.main.holder_movie_facts.view.*
 
-class MovieFactsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class MovieFactsHolder(val composeView: ComposeView) : RecyclerView.ViewHolder(composeView) {
     companion object {
-        fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context).inflate(R.layout.holder_movie_facts, parent, false)
+        private fun createComposeView(parent: ViewGroup): ComposeView {
+            return ComposeView(parent.context)
         }
 
         fun newInstance(parent: ViewGroup): MovieFactsHolder {
-            return MovieFactsHolder(createView(parent))
+            return MovieFactsHolder(createComposeView(parent))
         }
     }
 
-    private val rootView: ConstraintLayout by lazy {
-        itemView.root
-    }
-
-    private val releaseDateView: TextView by lazy {
-        itemView.release_date_view
-    }
-
-    private val runtimeView: TextView by lazy {
-        itemView.runtime_view
-    }
-
-    private val budgetView: TextView by lazy {
-        itemView.budget_view
-    }
-
-    private val revenueView: TextView by lazy {
-        itemView.revenue_view
-    }
-
     fun update(movieFacts: MovieFacts?) {
-        movieFacts?.let {
-            rootView.visibility = View.VISIBLE
-            releaseDateView.text = displayFacts(itemView.context.getString(R.string.release_date), movieFacts.releaseDate)
-            runtimeView.text = displayFacts(itemView.context.getString(R.string.runtime), movieFacts.runtimeInHoursAndMinutes)
-            budgetView.text = displayFacts(itemView.context.getString(R.string.budget), String.format("$%,.2f", movieFacts.budget?.toDouble()))
-            revenueView.text = displayFacts(itemView.context.getString(R.string.revenue), String.format("$%,.2f", movieFacts.revenue?.toDouble()))
-        } ?: hideRootView()
-    }
-
-    private fun displayFacts(factName: String, factValue: String?): String {
-        return factValue?.let {
-            String.format("%s: %s", factName, it)
-        } ?: String.format("%s: n/a", factName)
+        composeView.setContent {
+            AppCompatTheme {
+                movieFacts?.let {
+                    MovieFactsWidget(movieFacts = it)
+                } ?: hideRootView()
+            }
+        }
     }
 
     private fun hideRootView() {
-        rootView.visibility = View.GONE
+        composeView.visibility = View.GONE
     }
+}
+
+@Composable
+fun MovieFactsWidget(movieFacts: MovieFacts?) {
+    Column {
+        Text(
+            text = stringResource(id = R.string.movie_facts),
+            fontSize = dimensionResource(id = R.dimen.toolbar_text_size).value.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(
+                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                top = dimensionResource(id = R.dimen.holder_movie_layout_padding)
+            ),
+            color = colorResource(id = R.color.color_white)
+        )
+        Text(
+            text = displayFacts(
+                stringResource(id = R.string.release_date),
+                movieFacts?.releaseDate
+            ),
+            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            modifier = Modifier.padding(
+                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                top = dimensionResource(id = R.dimen.activity_margin_top),
+                end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
+                bottom = dimensionResource(id = R.dimen.holder_movie_layout_padding)
+            ),
+            color = colorResource(id = R.color.color_white)
+        )
+        Text(
+            text = displayFacts(
+                stringResource(id = R.string.runtime),
+                movieFacts?.runtimeInHoursAndMinutes
+            ),
+            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            modifier = Modifier.padding(
+                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                top = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin),
+                end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
+                bottom = dimensionResource(id = R.dimen.holder_movie_layout_padding)
+            ),
+            color = colorResource(id = R.color.color_white)
+        )
+        Text(
+            text = displayFacts(
+                stringResource(id = R.string.budget),
+                String.format("$%,.2f", movieFacts?.budget?.toDouble())
+            ),
+            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            modifier = Modifier.padding(
+                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                top = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin),
+                end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
+                bottom = dimensionResource(id = R.dimen.holder_movie_layout_padding)
+            ),
+            color = colorResource(id = R.color.color_white)
+        )
+        Text(
+            text = displayFacts(
+                stringResource(id = R.string.revenue),
+                String.format("$%,.2f", movieFacts?.revenue?.toDouble())
+            ),
+            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            modifier = Modifier.padding(
+                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                top = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin),
+                end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
+                bottom = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right)
+            ),
+            color = colorResource(id = R.color.color_white)
+        )
+    }
+
+}
+
+private fun displayFacts(factName: String, factValue: String?): String {
+    return factValue?.let {
+        String.format("%s: %s", factName, it)
+    } ?: String.format("%s: n/a", factName)
 }

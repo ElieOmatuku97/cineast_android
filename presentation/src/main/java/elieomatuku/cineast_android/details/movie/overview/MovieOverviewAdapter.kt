@@ -53,4 +53,11 @@ class MovieOverviewAdapter(
             }
         }
     }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        when (holder) {
+            is MovieFactsHolder -> holder.composeView.disposeComposition()
+            is TrailersHolder -> holder.composeView.disposeComposition()
+        }
+    }
 }
