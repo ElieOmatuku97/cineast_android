@@ -36,9 +36,6 @@ import elieomatuku.cineast_android.utils.UiUtils
  * Created by elieomatuku on 2022-07-17
  */
 
-const val MOVIE_KEY = "movieApi"
-const val MOVIE_GENRES_KEY = "genres"
-
 @Composable
 fun MoviesWidget(
     viewModelFactory: ViewModelProvider.Factory,
@@ -46,7 +43,7 @@ fun MoviesWidget(
     movies: List<Movie>,
     sectionTitle: String = String(),
     onItemClick: (content: Content, genres: List<Genre>) -> Unit = { _, _ -> },
-    onSeeAllClick: () -> Unit = {}
+    onSeeAllClick: (contents: List<Content>) -> Unit = {}
 ) {
     val viewState by viewModel.viewState.observeAsState()
     val genres = viewState?.genres ?: emptyList()
@@ -66,7 +63,7 @@ fun MoviesWidget(
     genres: List<Genre>,
     sectionTitle: String,
     onItemClick: (content: Content, genres: List<Genre>) -> Unit,
-    onSeeAllClick: () -> Unit
+    onSeeAllClick: (contents: List<Content>) -> Unit
 ) {
     Column(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.holder_item_movie_textview_margin))) {
         Row(
@@ -79,7 +76,7 @@ fun MoviesWidget(
                     top = dimensionResource(id = R.dimen.holder_movie_layout_padding),
                     bottom = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin)
                 )
-                .clickable(onClick = onSeeAllClick)
+                .clickable(onClick = { onSeeAllClick(movies) })
         ) {
             Text(
                 text = sectionTitle,

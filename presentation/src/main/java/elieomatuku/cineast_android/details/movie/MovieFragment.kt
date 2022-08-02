@@ -12,26 +12,19 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.base.BaseFragment
+import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.databinding.FragmentContentDetailsBinding
 import elieomatuku.cineast_android.details.BareOverviewWidget
-import elieomatuku.cineast_android.details.movie.movie_team.MOVIE_TEAM_KEY
 import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamWidget
-import elieomatuku.cineast_android.details.movie.movie_team.PEOPLE_KEY
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
-import elieomatuku.cineast_android.details.person.PersonFragment
-import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.utils.*
-import elieomatuku.cineast_android.widgets.MOVIE_GENRES_KEY
-import elieomatuku.cineast_android.widgets.MOVIE_KEY
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
-import java.io.Serializable
 
 class MovieFragment : BaseFragment() {
     companion object {
@@ -119,7 +112,6 @@ class MovieFragment : BaseFragment() {
         movie = args.movie
         viewModel.getMovieDetails(movie, args.screenName)
         viewModel.viewState.observe(viewLifecycleOwner) {
-
             if (it.isLoading) {
                 showLoading(binding.root)
             } else {
@@ -357,22 +349,15 @@ class MovieFragment : BaseFragment() {
                             viewModelFactory = viewModelFactory,
                             movies = similarMovies,
                             sectionTitle = movie.title ?: getString(R.string.movies),
-                            onItemClick = { content, genres ->
-                                val params = Bundle()
-                                if (content is Movie) {
-                                    params.putString(Constants.SCREEN_NAME_KEY, content.title)
-                                }
-                                params.putSerializable(MOVIE_KEY, content)
-                                params.putSerializable(
-                                    MOVIE_GENRES_KEY,
-                                    genres as Serializable
-                                )
-                                gotoMovie(params)
+                            onItemClick = { content, _ ->
+                                gotoMovie(content)
                             },
-                            onSeeAllClick = {
-                                context?.let {
-//                                    ContentsActivity.startActivity(it, movies, R.string.movies)
-                                }
+                            onSeeAllClick = { movies ->
+                                ContentsActivity.startActivity(
+                                    requireContext(),
+                                    movies,
+                                    R.string.movies
+                                )
                             }
                         )
                     }
@@ -385,7 +370,11 @@ class MovieFragment : BaseFragment() {
                                 crew = crew,
                                 onItemClick = ::gotoPerson
                             ) {
-//                                ContentsActivity.startActivity(itemView.context, content, titleRes)
+                                ContentsActivity.startActivity(
+                                    requireContext(),
+                                    it,
+                                    R.string.people
+                                )
                             }
                         }
                     }
@@ -412,18 +401,22 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun gotoPerson(person: Content) {
-        val params = Bundle()
-        params.putString(Constants.SCREEN_NAME_KEY, movie.title)
-        params.putSerializable(PEOPLE_KEY, person)
-        params.putBoolean(MOVIE_TEAM_KEY, true)
-        val intent = Intent(activity, PersonFragment::class.java)
-        intent.putExtras(params)
-        activity?.startActivity(intent)
+        if (person is Person) {
+            val directions = MovieFragmentDirections.navigateToPersonDetail(
+                movie.title ?: String(),
+                person
+            )
+            findNavController().navigate(directions)
+        }
     }
 
-    private fun gotoMovie(params: Bundle) {
-        val intent = Intent(activity, MovieFragment::class.java)
-        intent.putExtras(params)
-        activity?.startActivity(intent)
+    private fun gotoMovie(content: Content) {
+        if (content is Movie) {
+            val directions = MovieFragmentDirections.navigateToMovieDetail(
+                movie.title ?: String(),
+                content
+            )
+            findNavController().navigate(directions)
+        }
     }
 }

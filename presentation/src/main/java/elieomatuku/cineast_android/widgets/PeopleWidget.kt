@@ -34,7 +34,7 @@ fun PeopleWidget(
     people: List<Person>,
     sectionTitle: String,
     onItemClick: (content: Content) -> Unit,
-    onSeeAllClick: () -> Unit
+    onSeeAllClick: (contents: List<Content>) -> Unit
 ) {
     Column(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.holder_item_movie_textview_margin))) {
         Row(
@@ -47,7 +47,7 @@ fun PeopleWidget(
                     top = dimensionResource(id = R.dimen.holder_movie_layout_padding),
                     bottom = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin)
                 )
-                .clickable(onClick = onSeeAllClick)
+                .clickable(onClick = { onSeeAllClick(people) })
         ) {
             Text(
                 text = sectionTitle,

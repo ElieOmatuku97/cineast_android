@@ -8,15 +8,12 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.widgets.PeopleWidget
 
-const val PEOPLE_KEY = "peopleApi"
-const val MOVIE_TEAM_KEY = "movie_team"
-
 @Composable
 fun MovieTeamWidget(
     cast: List<Person>,
     crew: List<Person>,
     onItemClick: (content: Content) -> Unit,
-    onSeeAllClick: () -> Unit
+    onSeeAllClick: (contents: List<Content>) -> Unit
 ) {
     Column {
         PeopleWidget(

@@ -13,7 +13,9 @@
         <action
             android:id="@+id/navigate_to_gallery"
             app:destination="@id/gallery" />
-
+        <action
+            android:id="@+id/navigate_to_movie_detail"
+            app:destination="@id/movie_detail_graph" />
         <argument
             android:name="screen_name"
             app:argType="string" />

@@ -16,6 +16,19 @@
         <action
             android:id="@+id/navigate_to_gallery"
             app:destination="@id/gallery" />
+        <action
+            android:id="@+id/navigate_to_person_detail"
+            app:destination="@id/person_detail_graph">
+            <argument
+                android:name="screen_name"
+                app:argType="string" />
+            <argument
+                android:name="person"
+                app:argType="elieomatuku.cineast_android.domain.model.Person" />
+        </action>
+        <action
+            android:id="@+id/navigate_to_movie_detail"
+            app:destination="@id/movie_detail" />
         <argument
             android:name="screen_name"
             app:argType="string" />
@@ -43,4 +56,9 @@
             android:name="youtube_url"
             app:argType="string" />
     </fragment>
+
+    <include
+        android:id="@+id/person_detail_graph"
+        app:graph="@navigation/person_detail_graph" />
+
 </navigation>

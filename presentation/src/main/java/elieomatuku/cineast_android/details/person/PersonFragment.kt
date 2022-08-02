@@ -14,20 +14,18 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.base.BaseFragment
+import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.databinding.FragmentContentDetailsBinding
 import elieomatuku.cineast_android.details.BareOverviewWidget
-import elieomatuku.cineast_android.details.movie.MovieFragment
-import elieomatuku.cineast_android.utils.Constants
+import elieomatuku.cineast_android.details.movie.MovieFragmentDirections
+import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.widgets.MOVIE_GENRES_KEY
-import elieomatuku.cineast_android.widgets.MOVIE_KEY
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.Observable
-import java.io.Serializable
 
 class PersonFragment : BaseFragment() {
     companion object {
@@ -93,7 +91,6 @@ class PersonFragment : BaseFragment() {
         viewModel.getPersonDetails(person)
         viewModel.getKnownForMovies(person)
         viewModel.getImages(person)
-
 
         viewModel.viewState.observe(viewLifecycleOwner) {
             if (it.isLoading) {
@@ -217,21 +214,12 @@ class PersonFragment : BaseFragment() {
                             viewModelFactory = viewModelFactory,
                             movies = viewModel.knownForMovies,
                             sectionTitle = getString(R.string.cast),
-                            onItemClick = { content, genres ->
-                                val params = Bundle()
-                                if (content is Movie) {
-                                    params.putString(Constants.SCREEN_NAME_KEY, content.title)
-                                }
-                                params.putSerializable(MOVIE_KEY, content)
-                                params.putSerializable(
-                                    MOVIE_GENRES_KEY,
-                                    genres as Serializable
-                                )
-                                gotoMovie(params)
+                            onItemClick = { content, _ ->
+                                gotoMovie(content)
                             },
-                            onSeeAllClick = {
+                            onSeeAllClick = {movies ->
                                 context?.let {
-//                                    ContentsActivity.startActivity(it, movies, R.string.movies)
+                                    ContentsActivity.startActivity(it, movies, R.string.movies)
                                 }
                             }
                         )
@@ -241,9 +229,13 @@ class PersonFragment : BaseFragment() {
         }
     }
 
-    private fun gotoMovie(params: Bundle) {
-        val intent = Intent(activity, MovieFragment::class.java)
-        intent.putExtras(params)
-        activity?.startActivity(intent)
+    private fun gotoMovie(content: Content) {
+        if (content is Movie) {
+            val directions = MovieFragmentDirections.navigateToMovieDetail(
+                content.title ?: String(),
+                content
+            )
+            findNavController().navigate(directions)
+        }
     }
 }
