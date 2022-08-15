@@ -21,6 +21,7 @@ import org.kodein.di.generic.instance
 class MoviesHolder(
     val composeView: ComposeView,
     private val onMovieClickPublisher: PublishSubject<Movie>,
+    private val onSeeAllClickPublisher: PublishSubject<Pair<List<Content>, Int>>
 ) : ContentHolder,
     RecyclerView.ViewHolder(composeView), KodeinAware {
     companion object {
@@ -30,9 +31,14 @@ class MoviesHolder(
 
         fun newInstance(
             parent: ViewGroup,
-            onMovieClickPublisher: PublishSubject<Movie>
+            onMovieClickPublisher: PublishSubject<Movie>,
+            onSeeAllClickPublisher: PublishSubject<Pair<List<Content>, Int>>
         ): MoviesHolder {
-            return MoviesHolder(createComposeView(parent), onMovieClickPublisher)
+            return MoviesHolder(
+                createComposeView(parent),
+                onMovieClickPublisher,
+                onSeeAllClickPublisher
+            )
         }
     }
 
@@ -44,6 +50,10 @@ class MoviesHolder(
 
     override val kodein: Kodein by kodein(itemView.context)
     private val viewModelFactory: ViewModelProvider.Factory by instance()
+
+    override fun update(content: Contents) {
+        update(content.value?.asListOfType<Movie>() ?: emptyList(), content.titleResources)
+    }
 
     override fun update(content: List<Content>, titleRes: Int) {
         val title = itemView.context.getString(titleRes)
@@ -58,13 +68,12 @@ class MoviesHolder(
                             onMovieClickPublisher.onNext(content)
                         }
                     },
-                    onSeeAllClick = {}
+                    onSeeAllClick = {
+                        val pair = Pair(content, titleRes)
+                        onSeeAllClickPublisher.onNext(pair)
+                    }
                 )
             }
         }
-    }
-
-    override fun update(content: Contents) {
-        update(content.value?.asListOfType<Movie>() ?: emptyList(), content.titleResources)
     }
 }

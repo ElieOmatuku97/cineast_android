@@ -14,7 +14,8 @@ import kotlin.properties.Delegates
 class DiscoverAdapter(
     private val onMovieClickPublisher: PublishSubject<Movie>,
     private val onPersonClickPublisher: PublishSubject<Content>,
-    private val loginClickPublisher: PublishSubject<Boolean>
+    private val loginClickPublisher: PublishSubject<Boolean>,
+    private val onSeeAllClickPublisher: PublishSubject<Pair<List<Content>, Int>>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -91,11 +92,11 @@ class DiscoverAdapter(
             }
 
             TYPE_POPULAR_PEOPLE -> {
-                PeopleHolder.newInstance(parent, onPersonClickPublisher)
+                PeopleHolder.newInstance(parent, onPersonClickPublisher, onSeeAllClickPublisher)
             }
 
             TYPE_MOVIES -> {
-                MoviesHolder.newInstance(parent, onMovieClickPublisher)
+                MoviesHolder.newInstance(parent, onMovieClickPublisher, onSeeAllClickPublisher)
             }
 
             TYPE_LOGIN -> {

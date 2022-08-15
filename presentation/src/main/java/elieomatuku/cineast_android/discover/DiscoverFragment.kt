@@ -17,11 +17,11 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.getFilteredWidgets
 import elieomatuku.cineast_android.base.BaseFragment
+import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.databinding.FragmentDiscoverBinding
 import elieomatuku.cineast_android.fragment.WebViewFragment
 import elieomatuku.cineast_android.settings.LoginWebViewFragment
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_discover.*
 import elieomatuku.cineast_android.utils.*
@@ -33,30 +33,42 @@ class DiscoverFragment : BaseFragment() {
         }
     }
 
-    private val viewModel: DiscoverViewModel by viewModel<DiscoverViewModel>()
+    private val viewModel: DiscoverViewModel by viewModel()
 
     private val movieSelectPublisher: PublishSubject<Movie> by lazy {
-        PublishSubject.create<Movie>()
+        PublishSubject.create()
     }
     private val movieSelectObservable: Observable<Movie>
         get() = movieSelectPublisher.hide()
 
     private val personSelectPublisher: PublishSubject<Content> by lazy {
-        PublishSubject.create<Content>()
+        PublishSubject.create()
     }
 
     private val personSelectObservable: Observable<Content>
         get() = personSelectPublisher.hide()
 
     private val loginClickPublisher: PublishSubject<Boolean> by lazy {
-        PublishSubject.create<Boolean>()
+        PublishSubject.create()
     }
 
     private val loginClickObservable: Observable<Boolean>
         get() = loginClickPublisher.hide()
 
+    private val onSeeAllClickPublisher: PublishSubject<Pair<List<Content>, Int>> by lazy {
+        PublishSubject.create()
+    }
+
+    private val onSeeAllClickObservable: Observable<Pair<List<Content>, Int>>
+        get() = onSeeAllClickPublisher.hide()
+
     val adapter: DiscoverAdapter by lazy {
-        DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
+        DiscoverAdapter(
+            movieSelectPublisher,
+            personSelectPublisher,
+            loginClickPublisher,
+            onSeeAllClickPublisher
+        )
     }
 
     private lateinit var binding: FragmentDiscoverBinding
@@ -150,6 +162,15 @@ class DiscoverFragment : BaseFragment() {
                 },
                     {}
                 )
+        )
+
+        rxSubs.add(
+            onSeeAllClickObservable
+                .subscribe({ pair: Pair<List<Content>, Int> ->
+                    ContentsActivity.startActivity(requireContext(), pair.first, pair.second)
+                }, {
+
+                })
         )
     }
 

@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.extensions.Contents
-import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.widgets.PeopleWidget
 import io.reactivex.subjects.PublishSubject
 
 class PeopleHolder(
     val composeView: ComposeView,
-    private val onPeopleClickPublisher: PublishSubject<Content>
+    private val onPeopleClickPublisher: PublishSubject<Content>,
+    private val onSeeAllClickPublisher: PublishSubject<Pair<List<Content>, Int>>
 ) :
     ContentHolder, RecyclerView.ViewHolder(composeView) {
 
@@ -24,9 +24,14 @@ class PeopleHolder(
 
         fun newInstance(
             parent: ViewGroup,
-            onPersonalityClickPublisher: PublishSubject<Content>
+            onPersonalityClickPublisher: PublishSubject<Content>,
+            onSeeAllClickPublisher: PublishSubject<Pair<List<Content>, Int>>
         ): PeopleHolder {
-            return PeopleHolder(createComposeView(parent), onPersonalityClickPublisher)
+            return PeopleHolder(
+                createComposeView(parent),
+                onPersonalityClickPublisher,
+                onSeeAllClickPublisher
+            )
         }
     }
 
@@ -42,7 +47,8 @@ class PeopleHolder(
                     sectionTitle = composeView.context.getString(titleRes),
                     onItemClick = { onPeopleClickPublisher.onNext(it) }
                 ) {
-                    ContentsActivity.startActivity(itemView.context, content, titleRes)
+                    val pair = Pair(content, titleRes)
+                    onSeeAllClickPublisher.onNext(pair)
                 }
             }
         }
