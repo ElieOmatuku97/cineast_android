@@ -7,7 +7,7 @@
     <dimen name="tababr_rule_width_neg">-1dp</dimen>
     <dimen name="image_margin_horizontal">16dp</dimen>
     <dimen name="activity_margin_top">5dp</dimen>
-    <dimen name="holder_header_item_height">140dp</dimen>
+    <dimen name="holder_header_item_height">240dp</dimen>
     <dimen name="framelayout_height_size">320dp</dimen>
     <dimen name="holder_botttom_height">40dp</dimen>
     <dimen name="holder_item_movie_image_view_margin">2dp</dimen>

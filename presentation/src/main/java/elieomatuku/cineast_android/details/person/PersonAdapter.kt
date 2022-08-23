@@ -91,4 +91,11 @@ class PersonAdapter(
             }
         }
     }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        when (holder) {
+            is EmptyStateHolder -> holder.composeView.disposeComposition()
+            else -> {}
+        }
+    }
 }

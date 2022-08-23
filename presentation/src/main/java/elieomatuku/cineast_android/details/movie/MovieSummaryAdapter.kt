@@ -2,8 +2,12 @@ package elieomatuku.cineast_android.details.movie
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import elieomatuku.cineast_android.discover.HeaderHolder
+import elieomatuku.cineast_android.discover.LoginViewHolder
+import elieomatuku.cineast_android.discover.MoviesHolder
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
+import elieomatuku.cineast_android.viewholder.PeopleHolder
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import kotlin.properties.Delegates
@@ -97,6 +101,13 @@ class MovieSummaryAdapter(
 
         if (holder is EmptyStateHolder) {
             holder.update(errorMessage)
+        }
+    }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        when (holder) {
+            is EmptyStateHolder -> holder.composeView.disposeComposition()
+            else -> {}
         }
     }
 }

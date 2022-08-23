@@ -105,4 +105,11 @@ open class ContentsAdapter(
             }
         }
     }
+
+    override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
+        when (holder) {
+            is EmptyStateHolder -> holder.composeView.disposeComposition()
+            else -> {}
+        }
+    }
 }

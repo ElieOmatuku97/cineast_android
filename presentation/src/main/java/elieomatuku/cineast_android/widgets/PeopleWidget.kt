@@ -71,8 +71,8 @@ fun PeopleWidget(
                 start = dimensionResource(id = R.dimen.holder_movie_listview_padding_start)
             )
         ) {
-            items(people) { movie ->
-                PeopleItem(person = movie, onPersonClick = onItemClick)
+            items(people) { person ->
+                PeopleItem(person = person, onPersonClick = onItemClick)
             }
         }
     }

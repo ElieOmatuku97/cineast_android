@@ -135,24 +135,10 @@ class DiscoverAdapter(
         when (holder) {
             is MoviesHolder -> holder.composeView.disposeComposition()
             is PeopleHolder -> holder.composeView.disposeComposition()
+            is HeaderHolder -> holder.composeView.disposeComposition()
+            is LoginViewHolder -> holder.composeView.disposeComposition()
+            is EmptyStateHolder -> holder.composeView.disposeComposition()
             else -> {}
         }
     }
-}
-
-enum class ViewType {
-    TYPE_HEADER,
-    TYPE_MOVIES,
-    TYPE_POPULAR_PEOPLE,
-    TYPE_LOGIN,
-    TYPE_EMPTY_STATE;
-}
-
-enum class POSITION(val value: Int) {
-    HEADER(0),
-    POPULAR_MOVIE(1),
-    POPULAR_PEOPLE(2),
-    NOW_PLAYING_MOVIE(3),
-    UPCOMING_MOVIE(4),
-    TOP_RATED_MOVIE(5);
 }

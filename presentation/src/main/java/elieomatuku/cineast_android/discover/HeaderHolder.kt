@@ -1,11 +1,14 @@
 package elieomatuku.cineast_android.discover
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.dimensionResource
 import androidx.recyclerview.widget.RecyclerView
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
@@ -13,35 +16,22 @@ import elieomatuku.cineast_android.extensions.Contents
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.holder_header.view.*
 
-class HeaderHolder(itemView: View, private val onItemClickPublisher: PublishSubject<Movie>) :
-    ContentHolder, RecyclerView.ViewHolder(itemView) {
+class HeaderHolder(
+    val composeView: ComposeView,
+    private val onItemClickPublisher: PublishSubject<Movie>
+) :
+    ContentHolder, RecyclerView.ViewHolder(composeView) {
     companion object {
-        fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context)
-                .inflate(R.layout.holder_header, parent, false)
+        private fun createComposeView(parent: ViewGroup): ComposeView {
+            return ComposeView(parent.context)
         }
 
         fun newInstance(
             parent: ViewGroup,
             onItemClickPublisher: PublishSubject<Movie>
         ): HeaderHolder {
-            return HeaderHolder(createView(parent), onItemClickPublisher)
-        }
-
-        const val CURRENT_MOVIE_ID = -1
-    }
-
-    private val listView: RecyclerView by lazy {
-        itemView.header_popular_movie
-    }
-
-    private val smoothScroller: RecyclerView.SmoothScroller by lazy {
-        object : LinearSmoothScroller(itemView.context) {
-            override fun getVerticalSnapPreference(): Int {
-                return SNAP_TO_START
-            }
+            return HeaderHolder(createComposeView(parent), onItemClickPublisher)
         }
     }
 
@@ -50,20 +40,18 @@ class HeaderHolder(itemView: View, private val onItemClickPublisher: PublishSubj
     }
 
     override fun update(content: List<Content>, titleRes: Int) {
-        val adapter = HeaderAdapter(content.asListOfType() ?: emptyList(), onItemClickPublisher)
-        listView.adapter = adapter
-        adapter.notifyDataSetChanged()
-        listView.layoutManager =
-            LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
-        listView.visibility = View.VISIBLE
-
-        val lm = listView.layoutManager
-        val position = adapter.getArticlePosition(CURRENT_MOVIE_ID)
-
-        if ((position >= 0) && (position < adapter.itemCount)) {
-            smoothScroller.targetPosition = position
-            listView.post {
-                lm?.startSmoothScroll(smoothScroller)
+        composeView.setContent {
+            AppCompatTheme {
+                LazyRow(
+                    modifier = Modifier
+                        .height(dimensionResource(id = R.dimen.holder_header_item_height))
+                ) {
+                    items(content.asListOfType<Movie>() ?: emptyList()) { movie ->
+                        HeaderItem(movie = movie) {
+                            onItemClickPublisher.onNext(it)
+                        }
+                    }
+                }
             }
         }
     }
