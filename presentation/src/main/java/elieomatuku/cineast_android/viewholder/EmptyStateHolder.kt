@@ -55,12 +55,13 @@ fun EmptyStateItem(
     hasNetworkConnection: Boolean
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .aspectRatio(9 / 16f),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = if (hasNetworkConnection) "No Internet" else stringResource(id = R.string.no_content_title),
+            text = if (hasNetworkConnection) stringResource(id = R.string.no_content_title) else "No Internet",
             color = colorResource(id = R.color.color_white),
             fontFamily = FontFamily(listOf(Font(R.font.barlow_bold))),
             fontSize = 20.sp
@@ -86,9 +87,8 @@ fun EmptyStateItem(
             modifier = Modifier
                 .width(35.dp)
                 .height(35.dp)
-                .padding(
-                    top = 20.dp,
-                )
+                .padding(top = 8.dp),
+            tint = colorResource(id = R.color.color_accent)
         )
     }
 }
