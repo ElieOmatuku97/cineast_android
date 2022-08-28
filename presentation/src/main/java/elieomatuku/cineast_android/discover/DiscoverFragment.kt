@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
@@ -18,6 +21,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.google.accompanist.appcompattheme.AppCompatTheme
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.getWidgets
@@ -29,7 +34,6 @@ import elieomatuku.cineast_android.extensions.DiscoverWidget
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.fragment.WebViewFragment
 import elieomatuku.cineast_android.settings.LoginWebViewFragment
-import kotlinx.android.synthetic.main.fragment_discover.*
 import elieomatuku.cineast_android.utils.*
 import elieomatuku.cineast_android.viewholder.EmptyStateItem
 import elieomatuku.cineast_android.widgets.MoviesWidget
@@ -65,7 +69,6 @@ class DiscoverFragment : BaseFragment() {
             if (state.isLoading) {
                 showLoading(requireView())
             } else {
-                dismissRefreshLayout()
                 hideLoading(requireView())
             }
 
@@ -76,10 +79,6 @@ class DiscoverFragment : BaseFragment() {
             state.accessToken.consume {
                 gotoWebView(it)
             }
-        }
-
-        binding.refreshLayout.setOnRefreshListener {
-            viewModel.getDiscoverContent()
         }
     }
 
@@ -95,53 +94,41 @@ class DiscoverFragment : BaseFragment() {
         binding.composeView.setContent {
             AppCompatTheme {
                 discoverContents?.apply {
-                    LazyColumn {
-                        items(getWidgets()) { widget ->
-                            when (widget) {
-                                is DiscoverWidget.Header -> {
-                                    LazyRow(
-                                        modifier = Modifier
-                                            .height(dimensionResource(id = R.dimen.holder_header_item_height))
-                                    ) {
-                                        items(
-                                            widget.value.asListOfType<Movie>() ?: emptyList()
-                                        ) { movie ->
-                                            HeaderItem(movie = movie) {
-                                                gotoMovie(it)
+                    val isRefreshing by viewModel.isRefreshing.collectAsState()
+                    SwipeRefresh(
+                        state = rememberSwipeRefreshState(isRefreshing),
+                        modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
+                        onRefresh = {
+                            viewModel.refresh()
+                        }
+                    ) {
+                        LazyColumn {
+                            items(getWidgets()) { widget ->
+                                when (widget) {
+                                    is DiscoverWidget.Header -> {
+                                        LazyRow(
+                                            modifier = Modifier
+                                                .height(dimensionResource(id = R.dimen.holder_header_item_height))
+                                        ) {
+                                            items(
+                                                widget.value.asListOfType<Movie>() ?: emptyList()
+                                            ) { movie ->
+                                                HeaderItem(movie = movie) {
+                                                    gotoMovie(it)
+                                                }
                                             }
                                         }
                                     }
-                                }
-                                is DiscoverWidget.People -> {
-                                    PeopleWidget(
-                                        people = widget.value.asListOfType() ?: emptyList(),
-                                        sectionTitle = requireContext().getString(widget.titleResources),
-                                        onItemClick = {
-                                            if (it is Person) {
-                                                gotoPerson(it)
+                                    is DiscoverWidget.People -> {
+                                        PeopleWidget(
+                                            people = widget.value.asListOfType() ?: emptyList(),
+                                            sectionTitle = requireContext().getString(widget.titleResources),
+                                            onItemClick = {
+                                                if (it is Person) {
+                                                    gotoPerson(it)
+                                                }
                                             }
-                                        }
-                                    ) {
-                                        val pair = Pair(it, widget.titleResources)
-                                        ContentsActivity.startActivity(
-                                            requireContext(),
-                                            pair.first,
-                                            pair.second
-                                        )
-                                    }
-                                    Divider(color = colorResource(id = R.color.color_grey_app))
-                                }
-                                is DiscoverWidget.Movies -> {
-                                    MoviesWidget(
-                                        viewModelFactory = viewModelFactory,
-                                        movies = widget.value.asListOfType() ?: emptyList(),
-                                        sectionTitle = requireContext().getString(widget.titleResources),
-                                        onItemClick = { content, _ ->
-                                            if (content is Movie) {
-                                                gotoMovie(content)
-                                            }
-                                        },
-                                        onSeeAllClick = {
+                                        ) {
                                             val pair = Pair(it, widget.titleResources)
                                             ContentsActivity.startActivity(
                                                 requireContext(),
@@ -149,21 +136,42 @@ class DiscoverFragment : BaseFragment() {
                                                 pair.second
                                             )
                                         }
-                                    )
-                                    Divider(color = colorResource(id = R.color.color_grey_app))
-                                }
-                                is DiscoverWidget.Login -> {
-                                    LoginItem(isLoggedIn = isLoggedIn) {
-                                        if (!viewModel.isLoggedIn()) {
-                                            viewModel.logIn()
-                                        } else {
-                                            viewModel.logout()
+                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                    }
+                                    is DiscoverWidget.Movies -> {
+                                        MoviesWidget(
+                                            viewModelFactory = viewModelFactory,
+                                            movies = widget.value.asListOfType() ?: emptyList(),
+                                            sectionTitle = requireContext().getString(widget.titleResources),
+                                            onItemClick = { content, _ ->
+                                                if (content is Movie) {
+                                                    gotoMovie(content)
+                                                }
+                                            },
+                                            onSeeAllClick = {
+                                                val pair = Pair(it, widget.titleResources)
+                                                ContentsActivity.startActivity(
+                                                    requireContext(),
+                                                    pair.first,
+                                                    pair.second
+                                                )
+                                            }
+                                        )
+                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                    }
+                                    is DiscoverWidget.Login -> {
+                                        LoginItem(isLoggedIn = isLoggedIn) {
+                                            if (!viewModel.isLoggedIn()) {
+                                                viewModel.logIn()
+                                            } else {
+                                                viewModel.logout()
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
+                        }
                     }
                 }
             }
@@ -196,10 +204,6 @@ class DiscoverFragment : BaseFragment() {
             fm.beginTransaction().add(android.R.id.content, webViewFragment, null)
                 .addToBackStack(null).commit()
         }
-    }
-
-    private fun dismissRefreshLayout() {
-        refreshLayout.isRefreshing = false
     }
 
     private fun gotoMovie(movie: Movie) {

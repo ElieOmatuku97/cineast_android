@@ -13,6 +13,9 @@ import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 
@@ -38,7 +41,11 @@ class DiscoverViewModel(
     val genres: List<Genre>?
         get() = state.genres
 
-    fun getDiscoverContent() {
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
+
+    private fun getDiscoverContent() {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             val result =
@@ -98,6 +105,14 @@ class DiscoverViewModel(
         viewModelScope.launch {
             runUseCase(logout, Unit)
             state = state.copy(isLoggedIn = false)
+        }
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _isRefreshing.emit(true)
+            getDiscoverContent()
+            _isRefreshing.emit(false)
         }
     }
 
