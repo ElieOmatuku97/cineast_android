@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,6 +22,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.getWidgets
 import elieomatuku.cineast_android.base.BaseFragment
+import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.databinding.FragmentDiscoverBinding
 import elieomatuku.cineast_android.extensions.DiscoverWidget
@@ -28,12 +31,15 @@ import elieomatuku.cineast_android.fragment.WebViewFragment
 import elieomatuku.cineast_android.settings.LoginWebViewFragment
 import kotlinx.android.synthetic.main.fragment_discover.*
 import elieomatuku.cineast_android.utils.*
+import elieomatuku.cineast_android.viewholder.EmptyStateItem
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import elieomatuku.cineast_android.widgets.PeopleWidget
+import org.kodein.di.generic.instance
 
 class DiscoverFragment : BaseFragment() {
 
     private val viewModel: DiscoverViewModel by viewModel()
+    private val connectionService: ConnectionService by instance()
     private lateinit var binding: FragmentDiscoverBinding
 
     override fun onCreateView(
@@ -55,20 +61,6 @@ class DiscoverFragment : BaseFragment() {
         )
         binding.toolbar.title = this.getString(R.string.nav_title_discover)
 
-//        binding.recyclerview.adapter = adapter
-//        val itemDecoration =
-//            DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
-//        val drawable: Drawable? = ResourcesCompat.getDrawable(
-//            resources,
-//            R.drawable.item_decoration,
-//            activity?.theme
-//        )
-//        if (drawable != null) {
-//            itemDecoration.setDrawable(drawable)
-//        }
-//        binding.recyclerview.addItemDecoration(itemDecoration)
-//        binding.recyclerview.layoutManager = LinearLayoutManager(activity)
-
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
             if (state.isLoading) {
                 showLoading(requireView())
@@ -80,7 +72,6 @@ class DiscoverFragment : BaseFragment() {
             state.viewError.consume {
                 updateErrorView(it.message)
             }
-            updateLoginState(state.isLoggedIn)
             updateView(state.discoverContents, state.isLoggedIn)
             state.accessToken.consume {
                 gotoWebView(it)
@@ -132,8 +123,13 @@ class DiscoverFragment : BaseFragment() {
                                         }
                                     ) {
                                         val pair = Pair(it, widget.titleResources)
-                                        ContentsActivity.startActivity(requireContext(), pair.first, pair.second)
+                                        ContentsActivity.startActivity(
+                                            requireContext(),
+                                            pair.first,
+                                            pair.second
+                                        )
                                     }
+                                    Divider(color = colorResource(id = R.color.color_grey_app))
                                 }
                                 is DiscoverWidget.Movies -> {
                                     MoviesWidget(
@@ -147,9 +143,14 @@ class DiscoverFragment : BaseFragment() {
                                         },
                                         onSeeAllClick = {
                                             val pair = Pair(it, widget.titleResources)
-                                            ContentsActivity.startActivity(requireContext(), pair.first, pair.second)
+                                            ContentsActivity.startActivity(
+                                                requireContext(),
+                                                pair.first,
+                                                pair.second
+                                            )
                                         }
                                     )
+                                    Divider(color = colorResource(id = R.color.color_grey_app))
                                 }
                                 is DiscoverWidget.Login -> {
                                     LoginItem(isLoggedIn = isLoggedIn) {
@@ -167,22 +168,17 @@ class DiscoverFragment : BaseFragment() {
                 }
             }
         }
-
-//        discoverContents?.let {
-//            adapter.filteredContents =
-//                discoverContents.getFilteredWidgets()
-//            adapter.isLoggedIn = isLoggedIn
-//            adapter.notifyDataSetChanged()
-//            binding.recyclerview.visibility = View.VISIBLE
-//            dismissRefreshLayout()
-//        }
     }
 
     private fun updateErrorView(errorMsg: String?) {
-//        adapter.errorMessage = errorMsg
-//        adapter.notifyDataSetChanged()
-//        binding.recyclerview.visibility = View.VISIBLE
-//        dismissRefreshLayout()
+        binding.composeView.setContent {
+            AppCompatTheme {
+                EmptyStateItem(
+                    errorMsg = errorMsg,
+                    hasNetworkConnection = connectionService.hasNetworkConnection
+                )
+            }
+        }
     }
 
     private fun gotoWebView(accessToken: AccessToken?) {
@@ -200,11 +196,6 @@ class DiscoverFragment : BaseFragment() {
             fm.beginTransaction().add(android.R.id.content, webViewFragment, null)
                 .addToBackStack(null).commit()
         }
-    }
-
-    private fun updateLoginState(isLoggedIn: Boolean) {
-//        adapter.isLoggedIn = isLoggedIn
-//        adapter.notifyDataSetChanged()
     }
 
     private fun dismissRefreshLayout() {

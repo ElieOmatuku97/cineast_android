@@ -71,7 +71,7 @@ fun MoviesWidget(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = dimensionResource(id = R.dimen.holder_movie_layout_padding_start),
+                    start = dimensionResource(id = R.dimen.holder_movie_listview_padding_start),
                     end = dimensionResource(id = R.dimen.holder_movie_layout_padding),
                     top = dimensionResource(id = R.dimen.holder_movie_layout_padding),
                     bottom = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin)
