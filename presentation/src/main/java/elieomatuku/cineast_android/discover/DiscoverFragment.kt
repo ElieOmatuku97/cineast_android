@@ -6,21 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.*
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.google.accompanist.appcompattheme.AppCompatTheme
+import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import elieomatuku.cineast_android.R
@@ -58,13 +66,6 @@ class DiscoverFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupWithNavController(
-            binding.toolbar,
-            findNavController(),
-            AppBarConfiguration(findNavController().graph)
-        )
-        binding.toolbar.title = this.getString(R.string.nav_title_discover)
-
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
             if (state.isLoading) {
                 showLoading(requireView())
@@ -93,62 +94,69 @@ class DiscoverFragment : BaseFragment() {
     ) {
         binding.composeView.setContent {
             AppCompatTheme {
-                discoverContents?.apply {
-                    val isRefreshing by viewModel.isRefreshing.collectAsState()
-                    SwipeRefresh(
-                        state = rememberSwipeRefreshState(isRefreshing),
-                        modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
-                        onRefresh = {
-                            viewModel.refresh()
+                Scaffold(
+                    topBar = {
+                        Box {
+                            val drawable = AppCompatResources.getDrawable(LocalContext.current, R.drawable.bg_actionbar)
+                            Image(
+                                painter = rememberDrawablePainter(drawable = drawable),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .matchParentSize()
+                            )
+                            TopAppBar(
+                                title = {
+                                    Text(
+                                        stringResource(R.string.nav_title_discover),
+                                        style = TextStyle(
+                                            fontSize = dimensionResource(id = R.dimen.toolbar_text_size).value.sp,
+                                            color = colorResource(id = R.color.color_white),
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    )
+                                },
+                                backgroundColor = Color.Transparent
+                            )
                         }
-                    ) {
-                        LazyColumn {
-                            items(getWidgets()) { widget ->
-                                when (widget) {
-                                    is DiscoverWidget.Header -> {
-                                        LazyRow(
-                                            modifier = Modifier
-                                                .height(dimensionResource(id = R.dimen.holder_header_item_height))
-                                        ) {
-                                            items(
-                                                widget.value.asListOfType<Movie>() ?: emptyList()
-                                            ) { movie ->
-                                                HeaderItem(movie = movie) {
-                                                    gotoMovie(it)
+                    }
+                ) {
+                    discoverContents?.apply {
+                        val isRefreshing by viewModel.isRefreshing.collectAsState()
+                        SwipeRefresh(
+                            state = rememberSwipeRefreshState(isRefreshing),
+                            modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
+                            onRefresh = {
+                                viewModel.refresh()
+                            }
+                        ) {
+                            LazyColumn {
+                                items(getWidgets()) { widget ->
+                                    when (widget) {
+                                        is DiscoverWidget.Header -> {
+                                            LazyRow(
+                                                modifier = Modifier
+                                                    .height(dimensionResource(id = R.dimen.holder_header_item_height))
+                                            ) {
+                                                items(
+                                                    widget.value.asListOfType<Movie>()
+                                                        ?: emptyList()
+                                                ) { movie ->
+                                                    HeaderItem(movie = movie) {
+                                                        gotoMovie(it)
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                    is DiscoverWidget.People -> {
-                                        PeopleWidget(
-                                            people = widget.value.asListOfType() ?: emptyList(),
-                                            sectionTitle = requireContext().getString(widget.titleResources),
-                                            onItemClick = {
-                                                if (it is Person) {
-                                                    gotoPerson(it)
+                                        is DiscoverWidget.People -> {
+                                            PeopleWidget(
+                                                people = widget.value.asListOfType() ?: emptyList(),
+                                                sectionTitle = requireContext().getString(widget.titleResources),
+                                                onItemClick = {
+                                                    if (it is Person) {
+                                                        gotoPerson(it)
+                                                    }
                                                 }
-                                            }
-                                        ) {
-                                            val pair = Pair(it, widget.titleResources)
-                                            ContentsActivity.startActivity(
-                                                requireContext(),
-                                                pair.first,
-                                                pair.second
-                                            )
-                                        }
-                                        Divider(color = colorResource(id = R.color.color_grey_app))
-                                    }
-                                    is DiscoverWidget.Movies -> {
-                                        MoviesWidget(
-                                            viewModelFactory = viewModelFactory,
-                                            movies = widget.value.asListOfType() ?: emptyList(),
-                                            sectionTitle = requireContext().getString(widget.titleResources),
-                                            onItemClick = { content, _ ->
-                                                if (content is Movie) {
-                                                    gotoMovie(content)
-                                                }
-                                            },
-                                            onSeeAllClick = {
+                                            ) {
                                                 val pair = Pair(it, widget.titleResources)
                                                 ContentsActivity.startActivity(
                                                     requireContext(),
@@ -156,21 +164,41 @@ class DiscoverFragment : BaseFragment() {
                                                     pair.second
                                                 )
                                             }
-                                        )
-                                        Divider(color = colorResource(id = R.color.color_grey_app))
-                                    }
-                                    is DiscoverWidget.Login -> {
-                                        LoginItem(isLoggedIn = isLoggedIn) {
-                                            if (!viewModel.isLoggedIn()) {
-                                                viewModel.logIn()
-                                            } else {
-                                                viewModel.logout()
+                                            Divider(color = colorResource(id = R.color.color_grey_app))
+                                        }
+                                        is DiscoverWidget.Movies -> {
+                                            MoviesWidget(
+                                                viewModelFactory = viewModelFactory,
+                                                movies = widget.value.asListOfType() ?: emptyList(),
+                                                sectionTitle = requireContext().getString(widget.titleResources),
+                                                onItemClick = { content, _ ->
+                                                    if (content is Movie) {
+                                                        gotoMovie(content)
+                                                    }
+                                                },
+                                                onSeeAllClick = {
+                                                    val pair = Pair(it, widget.titleResources)
+                                                    ContentsActivity.startActivity(
+                                                        requireContext(),
+                                                        pair.first,
+                                                        pair.second
+                                                    )
+                                                }
+                                            )
+                                            Divider(color = colorResource(id = R.color.color_grey_app))
+                                        }
+                                        is DiscoverWidget.Login -> {
+                                            LoginItem(isLoggedIn = isLoggedIn) {
+                                                if (!viewModel.isLoggedIn()) {
+                                                    viewModel.logIn()
+                                                } else {
+                                                    viewModel.logout()
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-
                         }
                     }
                 }
