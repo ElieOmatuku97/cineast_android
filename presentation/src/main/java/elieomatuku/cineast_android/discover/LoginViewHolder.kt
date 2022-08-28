@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.discover
 
 import android.view.ViewGroup
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.recyclerview.widget.RecyclerView
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Genre
 
 class LoginViewHolder(val composeView: ComposeView) : RecyclerView.ViewHolder(composeView) {
     companion object {
@@ -32,7 +35,9 @@ class LoginViewHolder(val composeView: ComposeView) : RecyclerView.ViewHolder(co
     fun update(isLoggedIn: Boolean) {
         composeView.setContent {
             AppCompatTheme {
-                LoginItem(isLoggedIn = isLoggedIn)
+                LoginItem(isLoggedIn = isLoggedIn) {
+
+                }
             }
         }
     }
@@ -40,10 +45,13 @@ class LoginViewHolder(val composeView: ComposeView) : RecyclerView.ViewHolder(co
 
 @Composable
 fun LoginItem(
-    isLoggedIn: Boolean
+    isLoggedIn: Boolean,
+    onClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { onClick() }),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (!isLoggedIn) {

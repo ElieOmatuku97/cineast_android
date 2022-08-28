@@ -5,7 +5,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.extensions.Contents
+import elieomatuku.cineast_android.extensions.DiscoverWidget
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.widgets.PeopleWidget
 import io.reactivex.subjects.PublishSubject
@@ -35,8 +35,8 @@ class PeopleHolder(
         }
     }
 
-    override fun update(content: Contents) {
-        update(content.value ?: emptyList(), content.titleResources)
+    override fun update(content: DiscoverWidget) {
+//        update(content.value ?: emptyList(), content.titleResources)
     }
 
     override fun update(content: List<Content>, titleRes: Int) {

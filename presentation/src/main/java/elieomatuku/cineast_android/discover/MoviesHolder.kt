@@ -9,7 +9,7 @@ import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.extensions.Contents
+import elieomatuku.cineast_android.extensions.DiscoverWidget
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
@@ -51,8 +51,8 @@ class MoviesHolder(
     override val kodein: Kodein by kodein(itemView.context)
     private val viewModelFactory: ViewModelProvider.Factory by instance()
 
-    override fun update(content: Contents) {
-        update(content.value?.asListOfType<Movie>() ?: emptyList(), content.titleResources)
+    override fun update(content: DiscoverWidget) {
+//        update(content.value?.asListOfType<Movie>() ?: emptyList(), content.titleResources)
     }
 
     override fun update(content: List<Content>, titleRes: Int) {

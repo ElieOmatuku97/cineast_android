@@ -12,7 +12,7 @@ import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.extensions.Contents
+import elieomatuku.cineast_android.extensions.DiscoverWidget
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.viewholder.ContentHolder
 import io.reactivex.subjects.PublishSubject
@@ -35,8 +35,8 @@ class HeaderHolder(
         }
     }
 
-    override fun update(content: Contents) {
-        update(content.value ?: emptyList(), 0)
+    override fun update(content: DiscoverWidget) {
+//        update(content.value ?: emptyList(), 0)
     }
 
     override fun update(content: List<Content>, titleRes: Int) {
