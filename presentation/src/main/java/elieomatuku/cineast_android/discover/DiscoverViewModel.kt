@@ -54,9 +54,9 @@ class DiscoverViewModel(
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
-                    discoverContents = result.data
+                    discoverContents = result.data,
+                    viewError = null
                 )
-
                 is Fail -> state.copy(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
@@ -66,7 +66,7 @@ class DiscoverViewModel(
         }
     }
 
-    fun getIsLoggedIn() {
+    private fun getIsLoggedIn() {
         viewModelScope.launch {
             state = when (val result = runUseCase(isLoggedIn, Unit)) {
                 is Success -> {

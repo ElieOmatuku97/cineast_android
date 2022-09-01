@@ -13,14 +13,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
@@ -52,17 +50,14 @@ import org.kodein.di.generic.instance
 
 class DiscoverFragment : BaseFragment() {
 
-    private val viewModel: DiscoverViewModel by viewModel()
     private val connectionService: ConnectionService by instance()
-    private lateinit var composeView: ComposeView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        composeView = ComposeView(requireContext())
-        return composeView.apply {
+        return ComposeView(requireContext()).apply {
             setContent {
                 DiscoverScreen(
                     viewModelFactory = viewModelFactory,
@@ -78,17 +73,6 @@ class DiscoverFragment : BaseFragment() {
                     gotoPerson = ::gotoPerson,
                     gotoWebView = ::gotoWebView
                 )
-            }
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.viewState.observe(viewLifecycleOwner) { state ->
-            if (state.isLoading) {
-                showLoading(requireView())
-            } else {
-                hideLoading(requireView())
             }
         }
     }
@@ -144,14 +128,7 @@ fun DiscoverScreen(
         gotoWebView(it)
     }
 
-    viewState?.viewError?.apply {
-        EmptyStateItem(
-            errorMsg = this.peek().message,
-            hasNetworkConnection = hasNetworkConnection
-        )
-    }
-
-    viewState?.discoverContents?.apply {
+    viewState?.apply {
         Scaffold(
             topBar = {
                 Box {
@@ -182,71 +159,91 @@ fun DiscoverScreen(
                 }
             }
         ) {
-            SwipeRefresh(
-                state = rememberSwipeRefreshState(isRefreshing),
-                modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
-                onRefresh = {
-                    viewModel.refresh()
+            Box(contentAlignment = Alignment.Center) {
+                if (isLoading) {
+                    CircularProgressIndicator()
                 }
-            ) {
-                LazyColumn {
-                    items(getWidgets()) { widget ->
-                        when (widget) {
-                            is DiscoverWidget.Header -> {
-                                LazyRow(
-                                    modifier = Modifier
-                                        .height(dimensionResource(id = R.dimen.holder_header_item_height))
-                                ) {
-                                    items(
-                                        widget.value.asListOfType<Movie>()
-                                            ?: emptyList()
-                                    ) { movie ->
-                                        HeaderItem(movie = movie) {
-                                            gotoMovie(it)
+
+                SwipeRefresh(
+                    state = rememberSwipeRefreshState(isRefreshing),
+                    modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
+                    onRefresh = {
+                        viewModel.refresh()
+                    }
+                ) {
+                    viewError?.apply {
+                        EmptyStateItem(
+                            errorMsg = this.peek().message,
+                            hasNetworkConnection = hasNetworkConnection
+                        )
+                    }
+
+                    discoverContents?.apply {
+                        LazyColumn {
+                            items(getWidgets()) { widget ->
+                                when (widget) {
+                                    is DiscoverWidget.Header -> {
+                                        LazyRow(
+                                            modifier = Modifier
+                                                .height(dimensionResource(id = R.dimen.holder_header_item_height))
+                                        ) {
+                                            items(
+                                                widget.value.asListOfType<Movie>()
+                                                    ?: emptyList()
+                                            ) { movie ->
+                                                HeaderItem(movie = movie) {
+                                                    gotoMovie(it)
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                            is DiscoverWidget.People -> {
-                                PeopleWidget(
-                                    people = widget.value.asListOfType() ?: emptyList(),
-                                    sectionTitle = stringResource(widget.titleResources),
-                                    onItemClick = {
-                                        if (it is Person) {
-                                            gotoPerson(it)
+                                    is DiscoverWidget.People -> {
+                                        PeopleWidget(
+                                            people = widget.value.asListOfType()
+                                                ?: emptyList(),
+                                            sectionTitle = stringResource(widget.titleResources),
+                                            onItemClick = {
+                                                if (it is Person) {
+                                                    gotoPerson(it)
+                                                }
+                                            }
+                                        ) {
+                                            onSeeAllClick(it, widget.titleResources)
                                         }
+                                        Divider(color = colorResource(id = R.color.color_grey_app))
                                     }
-                                ) {
-                                    onSeeAllClick(it, widget.titleResources)
-                                }
-                                Divider(color = colorResource(id = R.color.color_grey_app))
-                            }
-                            is DiscoverWidget.Movies -> {
-                                MoviesWidget(
-                                    viewModelFactory = viewModelFactory,
-                                    movies = widget.value.asListOfType() ?: emptyList(),
-                                    sectionTitle = stringResource(widget.titleResources),
-                                    onItemClick = { content, _ ->
-                                        if (content is Movie) {
-                                            gotoMovie(content)
+                                    is DiscoverWidget.Movies -> {
+                                        MoviesWidget(
+                                            viewModelFactory = viewModelFactory,
+                                            movies = widget.value.asListOfType()
+                                                ?: emptyList(),
+                                            sectionTitle = stringResource(widget.titleResources),
+                                            onItemClick = { content, _ ->
+                                                if (content is Movie) {
+                                                    gotoMovie(content)
+                                                }
+                                            },
+                                            onSeeAllClick = {
+                                                onSeeAllClick(it, widget.titleResources)
+                                            }
+                                        )
+                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                    }
+                                    is DiscoverWidget.Login -> {
+                                        LoginItem(
+                                            isLoggedIn = viewState?.isLoggedIn ?: false
+                                        ) {
+                                            if (!viewModel.isLoggedIn()) {
+                                                viewModel.logIn()
+                                            } else {
+                                                viewModel.logout()
+                                            }
                                         }
-                                    },
-                                    onSeeAllClick = {
-                                        onSeeAllClick(it, widget.titleResources)
-                                    }
-                                )
-                                Divider(color = colorResource(id = R.color.color_grey_app))
-                            }
-                            is DiscoverWidget.Login -> {
-                                LoginItem(isLoggedIn = viewState?.isLoggedIn ?: false) {
-                                    if (!viewModel.isLoggedIn()) {
-                                        viewModel.logIn()
-                                    } else {
-                                        viewModel.logout()
                                     }
                                 }
                             }
                         }
+
                     }
                 }
             }
