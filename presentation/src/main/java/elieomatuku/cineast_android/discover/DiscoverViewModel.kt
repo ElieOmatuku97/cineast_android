@@ -36,6 +36,7 @@ class DiscoverViewModel(
     init {
         getDiscoverContent()
         getGenres()
+        getIsLoggedIn()
     }
 
     val genres: List<Genre>?

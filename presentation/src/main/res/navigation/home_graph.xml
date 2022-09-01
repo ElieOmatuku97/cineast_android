@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/discover"
         android:name="elieomatuku.cineast_android.discover.DiscoverFragment"
-        android:label="Discover Screen"
-        tools:layout="@layout/fragment_discover">
+        android:label="Discover Screen">
         <action
             android:id="@+id/navigate_to_movie_detail"
             app:destination="@id/movie_detail_graph"
