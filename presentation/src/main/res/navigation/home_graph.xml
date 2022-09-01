@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_graph"
     app:startDestination="@id/discover">
 
@@ -34,6 +33,16 @@
                 app:argType="elieomatuku.cineast_android.domain.model.Person" />
         </action>
     </fragment>
+
+    <fragment
+        android:id="@+id/search"
+        android:name="elieomatuku.cineast_android.search.SearchFragment"
+        android:label="@string/nav_title_search"/>
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="elieomatuku.cineast_android.settings.SettingsFragment"
+        android:label="@string/nav_title_my_tmdb"/>
 
     <include
         android:id="@+id/movie_detail_graph"
