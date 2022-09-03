@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-
 /**
  * Created by elieomatuku on 2021-09-05
  */
@@ -32,7 +31,6 @@ class DiscoverViewModel(
 ) : BaseViewModel<DiscoverViewState>(
     DiscoverViewState(),
 ) {
-
     init {
         getDiscoverContent()
         getGenres()

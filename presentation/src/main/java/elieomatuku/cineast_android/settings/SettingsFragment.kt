@@ -19,12 +19,6 @@ import elieomatuku.cineast_android.utils.*
 
 
 class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
-    companion object {
-        fun newInstance(): SettingsFragment {
-            return SettingsFragment()
-        }
-    }
-
     private var logInBtn: Preference? = null
     private var favoritesBtn: Preference? = null
     private var watchListBtn: Preference? = null

@@ -159,11 +159,7 @@ fun DiscoverScreen(
                 }
             }
         ) {
-            Box(contentAlignment = Alignment.Center) {
-                if (isLoading) {
-                    CircularProgressIndicator()
-                }
-
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(isRefreshing),
                     modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
@@ -172,10 +168,17 @@ fun DiscoverScreen(
                     }
                 ) {
                     viewError?.apply {
-                        EmptyStateItem(
-                            errorMsg = this.peek().message,
-                            hasNetworkConnection = hasNetworkConnection
-                        )
+                        val errorMessage = peek().message
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            EmptyStateItem(
+                                errorMsg = errorMessage,
+                                hasNetworkConnection = hasNetworkConnection
+                            )
+                        }
                     }
 
                     discoverContents?.apply {
@@ -243,8 +246,12 @@ fun DiscoverScreen(
                                 }
                             }
                         }
-
                     }
+                }
+                if (isLoading) {
+                    CircularProgressIndicator(
+                        color = colorResource(id = R.color.color_orange_app),
+                    )
                 }
             }
         }

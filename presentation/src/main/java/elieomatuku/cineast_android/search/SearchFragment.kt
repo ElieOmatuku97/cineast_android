@@ -22,10 +22,6 @@ import kotlinx.android.synthetic.main.fragment_search_parent.view.*
 class SearchFragment : BaseFragment(R.layout.fragment_search_parent) {
     companion object {
         const val GRID_VIEW_NUMBER_OF_COLUMNS = 2
-
-        fun newInstance(): SearchFragment {
-            return SearchFragment()
-        }
     }
 
     private val viewModel: SearchViewModel by viewModel<SearchViewModel>()
@@ -68,7 +64,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search_parent) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
