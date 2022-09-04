@@ -24,7 +24,6 @@ import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
-import elieomatuku.cineast_android.search.SearchFragment.Companion.GRID_VIEW_NUMBER_OF_COLUMNS
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.viewholder.EmptyStateItem
 import org.kodein.di.generic.instance
@@ -32,6 +31,9 @@ import org.kodein.di.generic.instance
 /**
  * Created by elieomatuku on 2021-05-30
  */
+
+
+const val GRID_VIEW_NUMBER_OF_COLUMNS = 2
 
 abstract class ContentGridFragment : BaseFragment() {
 

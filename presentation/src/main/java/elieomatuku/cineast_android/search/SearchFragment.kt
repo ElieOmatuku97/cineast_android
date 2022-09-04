@@ -5,79 +5,73 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.ViewModelProvider
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.pagerTabIndicatorOffset
+import com.google.accompanist.pager.rememberPagerState
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.base.BaseFragment
+import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.contents.ContentsActivity
+import elieomatuku.cineast_android.search.movie.MoviesGrid
+import elieomatuku.cineast_android.search.people.PeopleGrid
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_home.view.*
-import kotlinx.android.synthetic.main.fragment_search_parent.*
-import kotlinx.android.synthetic.main.fragment_search_parent.view.*
+import kotlinx.coroutines.launch
+import org.kodein.di.generic.instance
 
-class SearchFragment : BaseFragment(R.layout.fragment_search_parent) {
-    companion object {
-        const val GRID_VIEW_NUMBER_OF_COLUMNS = 2
-    }
-
-    private val viewModel: SearchViewModel by viewModel<SearchViewModel>()
-
-    private val tabLayout by lazy {
-        sliding_tabs
-    }
-
-    private val searchPager by lazy {
-        search_viewpager
-    }
+class SearchFragment : BaseFragment() {
+    private val viewModel: SearchViewModel by viewModel()
 
     val searchQueryPublisher: PublishSubject<String> by lazy {
-        PublishSubject.create<String>()
+        PublishSubject.create()
     }
-
     private val searchQueryObservable: Observable<String>
         get() = searchQueryPublisher.hide()
 
-    private val searchAdapter by lazy {
-        SearchFragmentPagerAdapter(checkNotNull(this))
-    }
+    private lateinit var composeView: ComposeView
+    private val connectionService: ConnectionService by instance()
 
     var isMovieSearchScreen: Boolean = true
-    private val onTabSelectedListener: TabLayout.OnTabSelectedListener =
-        object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.let {
-                    isMovieSearchScreen = it.position == 0
-                }
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        composeView = ComposeView(requireContext())
+        return composeView
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchPager.adapter = searchAdapter
-        TabLayoutMediator(tabLayout, searchPager) { tab, position ->
-            if (position == 0) {
-                tab.text = activity?.getText(R.string.movies)
-            } else {
-                tab.text = activity?.getText(R.string.people)
+        composeView.setContent {
+            SearchPager(
+                viewModelFactory = viewModelFactory,
+                hasNetworkConnection = connectionService.hasNetworkConnection
+            ) {
+                isMovieSearchScreen = it == 0
             }
-        }.attach()
-
-        tabLayout.addOnTabSelectedListener(onTabSelectedListener)
+        }
 
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
             if (state.isLoading) {
@@ -94,7 +88,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search_parent) {
 
     override fun onResume() {
         super.onResume()
-
         rxSubs.add(
             searchQueryObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -129,9 +122,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search_parent) {
                 }
             })
         }
-
         super.onCreateOptionsMenu(menu, inflater)
-
     }
 
     private fun showSearchResults(results: List<Content>?) {
@@ -139,9 +130,73 @@ class SearchFragment : BaseFragment(R.layout.fragment_search_parent) {
             ContentsActivity.startActivity(requireActivity(), results, R.string.search_hint)
         }
     }
+}
 
-    override fun onDestroy() {
-        tabLayout.removeOnTabSelectedListener(onTabSelectedListener)
-        super.onDestroy()
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun SearchPager(
+    viewModelFactory: ViewModelProvider.Factory,
+    hasNetworkConnection: Boolean,
+    updateCurrentPosition: (currentPosition: Int) -> Unit
+) {
+    val pagerState = rememberPagerState()
+    val scope = rememberCoroutineScope()
+    val pages: List<Int> by lazy {
+        listOf(
+            R.string.movies,
+            R.string.people
+        )
+    }
+
+    Column {
+        TabRow(
+            selectedTabIndex = pagerState.currentPage,
+            contentColor = colorResource(id = R.color.color_orange_app),
+            backgroundColor = colorResource(id = R.color.color_black_app),
+            indicator = { tabPositions ->
+                updateCurrentPosition(pagerState.currentPage)
+                TabRowDefaults.Indicator(
+                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                )
+            }
+        ) {
+            pages.forEachIndexed { index, title ->
+                Tab(
+                    text = { Text(stringResource(id = title).uppercase()) },
+                    selected = pagerState.currentPage == index,
+                    onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    selectedContentColor = colorResource(id = R.color.color_orange_app),
+                    unselectedContentColor = colorResource(id = R.color.color_grey_app),
+                )
+            }
+        }
+
+        HorizontalPager(
+            count = pages.size,
+            state = pagerState
+        ) { page ->
+            when (pages[page]) {
+                R.string.movies -> {
+                    MoviesGrid(
+                        viewModelFactory = viewModelFactory,
+                        hasNetworkConnection = hasNetworkConnection
+                    ) {
+
+                    }
+                }
+                R.string.people -> {
+                    PeopleGrid(
+                        viewModelFactory = viewModelFactory,
+                        hasNetworkConnection = hasNetworkConnection
+                    ) {
+
+                    }
+                }
+            }
+        }
     }
 }
