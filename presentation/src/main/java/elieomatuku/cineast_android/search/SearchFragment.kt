@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
@@ -26,6 +27,8 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.contents.ContentsActivity
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.search.movie.MoviesGrid
 import elieomatuku.cineast_android.search.people.PeopleGrid
 import io.reactivex.Observable
@@ -46,7 +49,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var composeView: ComposeView
     private val connectionService: ConnectionService by instance()
 
-    var isMovieSearchScreen: Boolean = true
+    private var isMovieSearchScreen: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +70,14 @@ class SearchFragment : BaseFragment() {
         composeView.setContent {
             SearchPager(
                 viewModelFactory = viewModelFactory,
-                hasNetworkConnection = connectionService.hasNetworkConnection
+                hasNetworkConnection = connectionService.hasNetworkConnection,
+                onContentClick = {
+                    if (it is Movie) {
+                        gotoMovie(it)
+                    } else if (it is Person) {
+                        gotoPerson(it)
+                    }
+                }
             ) {
                 isMovieSearchScreen = it == 0
             }
@@ -130,6 +140,22 @@ class SearchFragment : BaseFragment() {
             ContentsActivity.startActivity(requireActivity(), results, R.string.search_hint)
         }
     }
+
+    private fun gotoMovie(movie: Movie) {
+        val directions = SearchFragmentDirections.navigateToMovieDetail(
+            getString(R.string.nav_title_search),
+            movie
+        )
+        findNavController().navigate(directions)
+    }
+
+    private fun gotoPerson(person: Person) {
+        val directions = SearchFragmentDirections.navigateToPersonDetail(
+            getString(R.string.nav_title_search),
+            person
+        )
+        findNavController().navigate(directions)
+    }
 }
 
 @OptIn(ExperimentalPagerApi::class)
@@ -137,6 +163,7 @@ class SearchFragment : BaseFragment() {
 fun SearchPager(
     viewModelFactory: ViewModelProvider.Factory,
     hasNetworkConnection: Boolean,
+    onContentClick: (content: Content) -> Unit,
     updateCurrentPosition: (currentPosition: Int) -> Unit
 ) {
     val pagerState = rememberPagerState()
@@ -185,7 +212,7 @@ fun SearchPager(
                         viewModelFactory = viewModelFactory,
                         hasNetworkConnection = hasNetworkConnection
                     ) {
-
+                        onContentClick(it)
                     }
                 }
                 R.string.people -> {
@@ -193,7 +220,7 @@ fun SearchPager(
                         viewModelFactory = viewModelFactory,
                         hasNetworkConnection = hasNetworkConnection
                     ) {
-
+                        onContentClick(it)
                     }
                 }
             }

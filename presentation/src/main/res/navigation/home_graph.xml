@@ -37,7 +37,32 @@
     <fragment
         android:id="@+id/search"
         android:name="elieomatuku.cineast_android.search.SearchFragment"
-        android:label="@string/nav_title_search"/>
+        android:label="@string/nav_title_search">
+        <action
+            android:id="@+id/navigate_to_movie_detail"
+            app:destination="@id/movie_detail_graph"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out">
+            <argument
+                android:name="screen_name"
+                app:argType="string" />
+            <argument
+                android:name="movie"
+                app:argType="elieomatuku.cineast_android.domain.model.Movie" />
+        </action>
+        <action
+            android:id="@+id/navigate_to_person_detail"
+            app:destination="@id/person_detail_graph">
+            <argument
+                android:name="screen_name"
+                app:argType="string" />
+            <argument
+                android:name="person"
+                app:argType="elieomatuku.cineast_android.domain.model.Person" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/settings"
