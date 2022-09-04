@@ -5,17 +5,20 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -31,6 +34,7 @@ import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.search.movie.MoviesGrid
 import elieomatuku.cineast_android.search.people.PeopleGrid
+import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
@@ -51,11 +55,6 @@ class SearchFragment : BaseFragment() {
 
     private var isMovieSearchScreen: Boolean = true
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,6 +66,36 @@ class SearchFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.search_menu, menu)
+
+                val searchManager =
+                    (activity)?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+                (menu.findItem(R.id.menu_action_search).actionView as SearchView).apply {
+                    setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
+                    setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            return true
+                        }
+
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            query?.let {
+                                this@SearchFragment.searchQueryPublisher.onNext(it)
+                            }
+                            return false
+                        }
+                    })
+                }
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         composeView.setContent {
             SearchPager(
                 viewModelFactory = viewModelFactory,
@@ -84,12 +113,7 @@ class SearchFragment : BaseFragment() {
         }
 
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
-            if (state.isLoading) {
-                showLoading(requireView())
-            } else {
-                hideLoading(requireView())
-            }
-
+            updateView(state)
             if (state.results.isNotEmpty()) {
                 showSearchResults(state.results)
             }
@@ -102,7 +126,6 @@ class SearchFragment : BaseFragment() {
             searchQueryObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { argQuery ->
-                    showLoading(requireView())
                     if (isMovieSearchScreen) {
                         viewModel.searchMovies(argQuery)
                     } else {
@@ -112,33 +135,32 @@ class SearchFragment : BaseFragment() {
         )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.search_menu, menu)
-
-        val searchManager = (activity)?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.menu_action_search)?.actionView as SearchView).apply {
-            setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName))
-
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return true
-                }
-
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    query?.let {
-                        this@SearchFragment.searchQueryPublisher.onNext(it)
+    private fun updateView(state: SearchViewState) {
+        composeView.setContent {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                SearchPager(
+                    viewModelFactory = viewModelFactory,
+                    hasNetworkConnection = connectionService.hasNetworkConnection,
+                    onContentClick = {
+                        if (it is Movie) {
+                            gotoMovie(it)
+                        } else if (it is Person) {
+                            gotoPerson(it)
+                        }
                     }
-                    return false
+                ) {
+                    isMovieSearchScreen = it == 0
                 }
-            })
+
+                if (state.isLoading) {
+                    LoadingIndicatorWidget()
+                }
+            }
         }
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun showSearchResults(results: List<Content>?) {
-        results?.let {
-            ContentsActivity.startActivity(requireActivity(), results, R.string.search_hint)
-        }
+    private fun showSearchResults(results: List<Content>) {
+        ContentsActivity.startActivity(requireActivity(), results, R.string.search_hint)
     }
 
     private fun gotoMovie(movie: Movie) {

@@ -36,6 +36,7 @@ import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.settings.LoginWebViewFragment
 import elieomatuku.cineast_android.utils.*
 import elieomatuku.cineast_android.viewholder.EmptyStateItem
+import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import elieomatuku.cineast_android.widgets.PeopleWidget
 import org.kodein.di.generic.instance
@@ -212,9 +213,7 @@ fun DiscoverScreen(
                     }
                 }
                 if (isLoading) {
-                    CircularProgressIndicator(
-                        color = colorResource(id = R.color.color_orange_app),
-                    )
+                    LoadingIndicatorWidget()
                 }
             }
         }
