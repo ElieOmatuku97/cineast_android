@@ -12,8 +12,7 @@
         <item name="actionMenuTextColor">@color/color_orange_app</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
@@ -64,10 +63,6 @@
         <item name="colorControlNormal">@color/color_grey_light</item>
         <item name="colorControlActivated">@android:color/holo_green_light</item>
     </style>
-
-
-
-
 
 
 </resources>

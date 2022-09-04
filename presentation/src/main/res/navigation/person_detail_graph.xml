@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/gallery"
         android:name="elieomatuku.cineast_android.details.gallery.GalleryFragment"
-        android:label="Movie Gallery"
+        android:label="Gallery"
         tools:layout="@layout/fragment_gallery">
         <argument
             android:name="posters"

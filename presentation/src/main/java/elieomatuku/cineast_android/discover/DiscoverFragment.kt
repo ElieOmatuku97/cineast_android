@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,17 +18,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.*
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
-import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import elieomatuku.cineast_android.R
@@ -129,36 +121,7 @@ fun DiscoverScreen(
     }
 
     viewState?.apply {
-        Scaffold(
-            topBar = {
-                Box {
-                    val drawable =
-                        AppCompatResources.getDrawable(
-                            LocalContext.current,
-                            R.drawable.bg_actionbar
-                        )
-                    Image(
-                        painter = rememberDrawablePainter(drawable = drawable),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .matchParentSize()
-                    )
-                    TopAppBar(
-                        title = {
-                            Text(
-                                stringResource(R.string.nav_title_discover),
-                                style = TextStyle(
-                                    fontSize = dimensionResource(id = R.dimen.toolbar_text_size).value.sp,
-                                    color = colorResource(id = R.color.color_white),
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                        },
-                        backgroundColor = Color.Transparent
-                    )
-                }
-            }
-        ) {
+        Scaffold {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(isRefreshing),

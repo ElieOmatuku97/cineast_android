@@ -4,10 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
@@ -35,6 +36,7 @@ class PersonFragment : BaseFragment() {
 
     private val viewModel: PersonViewModel by viewModel()
     private lateinit var binding: FragmentContentDetailsBinding
+    private lateinit var menuHost: MenuHost
     private val args: PersonFragmentArgs by navArgs()
 
     private val onProfileClickedPicturePublisher: PublishSubject<Int> by lazy {
@@ -68,25 +70,32 @@ class PersonFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-        binding.toolbar.inflateMenu(R.menu.item_menu)
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_share -> {
-                    onShareMenuClicked()
-                    true
+        menuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.item_menu, menu)
+                menu.findItem(R.id.action_share)?.apply {
+                    isVisible = ContentUtils.supportsShare(viewModel.person?.id)
+                    UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
                 }
-                else -> false
             }
-        }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_share -> {
+                        onShareMenuClicked()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         binding.listViewContainer.adapter = adapter
         binding.listViewContainer.layoutManager = LinearLayoutManager(requireContext())
 
         val screenName = args.screenName
-        binding.toolbar.title = screenName
+//        binding.toolbar.title = screenName
         val person = args.person
         viewModel.getPersonDetails(person)
         viewModel.getKnownForMovies(person)
@@ -128,10 +137,7 @@ class PersonFragment : BaseFragment() {
     }
 
     private fun updateActionShare() {
-        binding.toolbar.menu?.findItem(R.id.action_share)?.apply {
-            isVisible = ContentUtils.supportsShare(viewModel.person?.id)
-            UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
-        }
+        menuHost.invalidateMenu()
     }
 
     private fun onShareMenuClicked() {
@@ -217,7 +223,7 @@ class PersonFragment : BaseFragment() {
                             onItemClick = { content, _ ->
                                 gotoMovie(content)
                             },
-                            onSeeAllClick = {movies ->
+                            onSeeAllClick = { movies ->
                                 context?.let {
                                     ContentsActivity.startActivity(it, movies, R.string.movies)
                                 }

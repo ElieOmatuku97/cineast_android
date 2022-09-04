@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.view.*
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
@@ -40,26 +41,27 @@ class MovieFragment : BaseFragment() {
     private var _binding: FragmentContentDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: MovieFragmentArgs by navArgs()
+    private lateinit var menuHost: MenuHost
 
     private val watchListCheckPublisher: PublishSubject<Boolean> by lazy {
-        PublishSubject.create<Boolean>()
+        PublishSubject.create()
     }
 
     private val favoriteListCheckPublisher: PublishSubject<Boolean> by lazy {
-        PublishSubject.create<Boolean>()
+        PublishSubject.create()
     }
 
     private val viewModel: MovieViewModel by sharedViewModel()
 
     private val onProfileClickedPicturePublisher: PublishSubject<Int> by lazy {
-        PublishSubject.create<Int>()
+        PublishSubject.create()
     }
 
     private val onProfileClickedPictureObservable: Observable<Int>
         get() = onProfileClickedPicturePublisher.hide()
 
     private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>> by lazy {
-        PublishSubject.create<Pair<String, MovieSummary>>()
+        PublishSubject.create()
     }
 
     private val segmentedButtonsObservable: Observable<Pair<String, MovieSummary>>
@@ -83,30 +85,52 @@ class MovieFragment : BaseFragment() {
 
         setUpListView()
 
-        val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-        binding.toolbar.inflateMenu(R.menu.item_menu)
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_share -> {
-                    onShareMenuClicked()
-                    true
+        menuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.item_menu, menu)
+
+                menu.findItem(R.id.action_share).apply {
+                    isVisible = ContentUtils.supportsShare(movie.id)
+                    UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
                 }
 
-                R.id.action_watchlist -> {
-                    onWatchListMenuClicked(it)
-                    true
+                menu.findItem(R.id.action_watchlist).apply {
+                    isChecked = isInWatchList
+                    updateWatchListIcon(this)
+                    isVisible = viewModel.isLoggedIn()
                 }
 
-                R.id.action_favorites -> {
-                    onFavoriteListMenuClicked(it)
-                    true
+                menu.findItem(R.id.action_favorites).apply {
+                    isChecked = isInFavoriteList
+                    updateFavoriteListIcon(this)
+                    isVisible = viewModel.isLoggedIn()
                 }
-
-                else -> false
             }
-        }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.action_share -> {
+                        onShareMenuClicked()
+                        true
+                    }
+
+                    R.id.action_watchlist -> {
+                        onWatchListMenuClicked(menuItem)
+                        true
+                    }
+
+                    R.id.action_favorites -> {
+                        onFavoriteListMenuClicked(menuItem)
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         binding.composeviewContainer.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
 
         movie = args.movie
@@ -118,14 +142,13 @@ class MovieFragment : BaseFragment() {
                 hideLoading(binding.root)
             }
 
-            binding.toolbar.title = it.screenName
+//            binding.toolbar.title = it.screenName
 
             val movieSummary = it.movieSummary
             if (movieSummary != null) {
                 showMovie(movieSummary)
             }
 
-            updateActionShare()
             updateWatchList(it.isInWatchList)
             updateFavorite(it.isInFavorites)
 
@@ -191,29 +214,14 @@ class MovieFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun updateActionShare() {
-        binding.toolbar.menu?.findItem(R.id.action_share)?.apply {
-            isVisible = ContentUtils.supportsShare(movie.id)
-            UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
-        }
-    }
-
     private fun updateWatchList(event: Boolean) {
         isInWatchList = event
-        binding.toolbar.menu?.findItem(R.id.action_watchlist)?.apply {
-            isChecked = isInWatchList
-            updateWatchListIcon(this)
-            isVisible = viewModel.isLoggedIn()
-        }
+        menuHost.invalidateMenu()
     }
 
     private fun updateFavorite(event: Boolean) {
         isInFavoriteList = event
-        binding.toolbar.menu?.findItem(R.id.action_favorites)?.apply {
-            isChecked = isInFavoriteList
-            updateFavoriteListIcon(this)
-            isVisible = viewModel.isLoggedIn()
-        }
+        menuHost.invalidateMenu()
     }
 
     private fun onShareMenuClicked() {
