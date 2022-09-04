@@ -23,20 +23,12 @@ class PeopleGridFragment :
         }
     }
 
-    private val viewModel: PeopleGridViewModel by viewModel<PeopleGridViewModel>()
+    private val viewModel: PeopleGridViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
-            state.viewError.consume {
-                updateErrorView(it.message)
-            }
-
-            state.contents?.let {
-                updateView(it)
-            }
-
+            updateView(state)
         }
-
         super.onViewCreated(view, savedInstanceState)
     }
 

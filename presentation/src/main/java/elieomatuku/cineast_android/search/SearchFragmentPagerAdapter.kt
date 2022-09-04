@@ -24,7 +24,6 @@ class SearchFragmentPagerAdapter(fragment: Fragment) : FragmentStateAdapter(frag
     }
 
     override fun createFragment(position: Int): Fragment {
-        Timber.d("SearchFragmentPagerAdapter position: $position")
         return when (titleResList[position]) {
             R.string.movies -> MoviesGridFragment.newInstance()
             R.string.people -> PeopleGridFragment.newInstance()

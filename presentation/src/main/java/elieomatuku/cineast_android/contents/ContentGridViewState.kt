@@ -5,7 +5,6 @@ import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewError
 
-
 /**
  * Created by elieomatuku on 2021-09-11
  */

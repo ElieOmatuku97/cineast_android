@@ -27,13 +27,11 @@ class MoviesGridFragment :
     }
 
     private var genres: List<Genre>? = listOf()
-    private val viewModel: MoviesGridViewModel by viewModel<MoviesGridViewModel>()
+    private val viewModel: MoviesGridViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
-            state.contents?.let {
-                updateView(it)
-            }
+            updateView(state)
 
             state.genres?.let {
                 genres = it

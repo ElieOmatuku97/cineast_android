@@ -9,14 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
-import elieomatuku.cineast_android.BuildConfig
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.base.BasePreferenceFragmentCompat
 import elieomatuku.cineast_android.settings.user_movies.UserMoviesActivity
 import elieomatuku.cineast_android.utils.*
-
 
 class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
     private var logInBtn: Preference? = null
