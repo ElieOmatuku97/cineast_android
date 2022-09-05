@@ -2,131 +2,54 @@ package elieomatuku.cineast_android.settings
 
 import android.net.Uri
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.preference.Preference
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.domain.model.AccessToken
-import elieomatuku.cineast_android.domain.model.Account
-import elieomatuku.cineast_android.base.BasePreferenceFragmentCompat
 import elieomatuku.cineast_android.settings.user_movies.UserMoviesActivity
 import elieomatuku.cineast_android.utils.*
 
-class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
-    private var logInBtn: Preference? = null
-    private var favoritesBtn: Preference? = null
-    private var watchListBtn: Preference? = null
-    private var ratedBtn: Preference? = null
-    private var userName: Preference? = null
-
-    private val viewModel: SettingsViewModel by sharedViewModel<SettingsViewModel>()
-
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        preferenceManager.sharedPreferencesName = getString(R.string.pref_app_settings)
-    }
+class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
+    private val viewModel: SettingsViewModel by sharedViewModel()
+    lateinit var composeView: ComposeView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        setPreferencesFromResource(R.xml.settings, null)
-        setUpPreferenceViews()
-
-//        val appVersion = findPreference(getString(R.string.pref_app_version))
-//        val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-//        summary.setSpan(
-//            ForegroundColorSpan(
-//                ContextCompat.getColor(
-//                    requireContext(),
-//                    R.color.color_accent
-//                )
-//            ), 0, summary.length, 0
-//        )
-//        appVersion?.summary = summary
-
-        return super.onCreateView(inflater, container, savedInstanceState)
+    ): View {
+        composeView = ComposeView(requireContext())
+        return composeView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel.viewState.observe(viewLifecycleOwner) { state ->
             if (state.isLoggedIn) {
                 viewModel.getAccount()
             }
-            updateState(state.isLoggedIn, state.account)
+            updateView(state)
             state.accessToken.consume {
                 gotoWebview(it)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.isLoggedIn()
-
-        logInBtn?.setOnPreferenceClickListener {
-            if (!viewModel.isLoggedIn) {
-                viewModel.getAccessToken()
-            } else {
-                updateState(false)
-                viewModel.logout()
-            }
-            true
-        }
-
-        watchListBtn?.setOnPreferenceClickListener {
-            UserMoviesActivity.gotoWatchList(requireContext())
-            true
-        }
-
-        favoritesBtn?.setOnPreferenceClickListener {
-            UserMoviesActivity.gotoFavorites(requireContext())
-            true
-        }
-
-        ratedBtn?.setOnPreferenceClickListener {
-            this@SettingsFragment.context?.let {
-                UserMoviesActivity.gotoRatedMovies(it)
-            }
-
-            true
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        clearPreferenceViews()
-    }
-
-    private fun updateState(isLoggedIn: Boolean, account: Account? = null) {
-        logInBtn?.title =
-            if (isLoggedIn) activity?.getString(R.string.settings_logout) else activity?.getString(R.string.settings_login)
-        userName?.isVisible = isLoggedIn
-        if (account?.username != null) {
-            val summary = SpannableString(account.username)
-            summary.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.color_white
-                    )
-                ), 0, summary.length, 0
-            )
-            userName?.summary = summary
-        } else {
-            userName?.isVisible = false
-        }
-
-        favoritesBtn?.isVisible = isLoggedIn
-        watchListBtn?.isVisible = isLoggedIn
-        ratedBtn?.isVisible = isLoggedIn
     }
 
     override fun gotoWebview(value: AccessToken?) {
@@ -139,25 +62,118 @@ class SettingsFragment : BasePreferenceFragmentCompat(), WebLink<AccessToken?> {
 
             val fm = activity?.supportFragmentManager
             fm?.beginTransaction()
-                ?.add(android.R.id.content, LoginWebViewFragment.newInstance(authenticateUrl), null)
+                ?.add(
+                    android.R.id.content,
+                    LoginWebViewFragment.newInstance(authenticateUrl),
+                    null
+                )
                 ?.addToBackStack(null)?.commit()
         }
     }
 
-    private fun setUpPreferenceViews() {
-        logInBtn = findPreference(getString(R.string.pref_logout))
-        favoritesBtn = findPreference(getString(R.string.pref_favorites))
-        watchListBtn = findPreference(getString(R.string.pref_watchlist))
-        ratedBtn = findPreference(getString(R.string.pref_rated))
-        userName = findPreference(getString(R.string.pref_settings_username))
+    private fun updateView(state: SettingsViewState) {
+        composeView.setContent {
+            SettingsScreen(
+                state = state,
+                onLoginClick = {
+                    if (!viewModel.isLoggedIn) {
+                        viewModel.getAccessToken()
+                    } else {
+                        viewModel.logout()
+                    }
+                },
+                onWatchListClick = { UserMoviesActivity.gotoWatchList(requireContext()) },
+                onRatedClick = { UserMoviesActivity.gotoRatedMovies(requireContext()) },
+                onFavoritesClick = { UserMoviesActivity.gotoFavorites(requireContext()) }
+            )
+        }
     }
+}
 
-    private fun clearPreferenceViews() {
-        preferenceScreen = null
-        logInBtn = null
-        favoritesBtn = null
-        watchListBtn = null
-        ratedBtn = null
-        userName = null
+@Composable
+fun SettingsScreen(
+    state: SettingsViewState,
+    onLoginClick: () -> Unit,
+    onWatchListClick: () -> Unit,
+    onRatedClick: () -> Unit,
+    onFavoritesClick: () -> Unit
+) {
+    LazyColumn {
+        if (state.isLoggedIn) {
+            item {
+                SettingItem(
+                    title = stringResource(id = R.string.settings_username),
+                    summary = state.account?.username ?: String()
+                ) {}
+            }
+
+            item {
+                SettingItem(title = stringResource(id = R.string.settings_favorites)) {
+                    onFavoritesClick()
+                }
+            }
+
+            item {
+                SettingItem(title = stringResource(id = R.string.settings_watchlist)) {
+                    onWatchListClick()
+                }
+            }
+
+            item {
+                SettingItem(title = stringResource(id = R.string.settings_rated)) {
+                    onRatedClick()
+                }
+            }
+        }
+
+        item {
+            val title =
+                if (state.isLoggedIn) stringResource(R.string.settings_logout) else stringResource(
+                    R.string.settings_login
+                )
+            SettingItem(title = title) {
+                onLoginClick()
+            }
+        }
+
+        item {
+            //        val appVersion = findPreference(getString(R.string.pref_app_version))
+//        val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+//        summary.setSpan(
+//            ForegroundColorSpan(
+//                ContextCompat.getColor(
+//                    requireContext(),
+//                    R.color.color_accent
+//                )
+//            ), 0, summary.length, 0
+//        )
+//        appVersion?.summary = summary
+            SettingItem(title = stringResource(id = R.string.settings_app_version)) {}
+        }
+    }
+}
+
+@Composable
+fun SettingItem(title: String, summary: String = String(), onItemClick: () -> Unit) {
+    Column(modifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth()
+        .clickable { onItemClick() }) {
+        Text(
+            title,
+            color = colorResource(R.color.color_orange_app),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            fontFamily = FontFamily.SansSerif,
+        )
+        if (summary.isNotBlank()) {
+            Text(
+                summary,
+                color = colorResource(R.color.color_white),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+                fontFamily = FontFamily.SansSerif
+            )
+        }
     }
 }

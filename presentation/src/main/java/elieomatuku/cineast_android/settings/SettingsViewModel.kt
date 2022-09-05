@@ -23,6 +23,10 @@ class SettingsViewModel(
     private val getAccount: GetAccount
 ) : BaseViewModel<SettingsViewState>(SettingsViewState()) {
 
+    init {
+        isLoggedIn()
+    }
+
     val isLoggedIn: Boolean
         get() = state.isLoggedIn
 
@@ -77,7 +81,7 @@ class SettingsViewModel(
         }
     }
 
-    fun isLoggedIn() {
+    private fun isLoggedIn() {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             val result =
