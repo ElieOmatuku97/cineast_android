@@ -32,6 +32,9 @@
                 android:name="person"
                 app:argType="elieomatuku.cineast_android.domain.model.Person" />
         </action>
+        <action
+            android:id="@+id/navigate_to_login"
+            app:destination="@id/login"/>
     </fragment>
 
     <fragment
@@ -67,7 +70,26 @@
     <fragment
         android:id="@+id/settings"
         android:name="elieomatuku.cineast_android.settings.SettingsFragment"
-        android:label="@string/nav_title_my_tmdb"/>
+        android:label="@string/nav_title_my_tmdb" >
+        <action
+            android:id="@+id/navigate_to_login"
+            app:destination="@id/login"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/login"
+        android:name="elieomatuku.cineast_android.settings.LoginWebViewFragment"
+        android:label="@string/login">
+        <argument
+            android:name="showAppBar"
+            android:defaultValue="false" />
+        <argument
+            android:name="showBottomNav"
+            android:defaultValue="false" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 
     <include
         android:id="@+id/movie_detail_graph"

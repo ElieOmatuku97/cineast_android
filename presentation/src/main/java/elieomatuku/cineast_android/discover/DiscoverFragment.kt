@@ -77,13 +77,8 @@ class DiscoverFragment : BaseFragment() {
                 .appendPath(it.requestToken)
                 .build()
                 .toString()
-
-            val fm = (activity as AppCompatActivity).supportFragmentManager
-
-            fm.beginTransaction()
-                .add(android.R.id.content, LoginWebViewFragment.newInstance(authenticateUrl), null)
-                .addToBackStack(null)
-                .commit()
+            val directions = DiscoverFragmentDirections.navigateToLogin(authenticateUrl)
+            findNavController().navigate(directions)
         }
     }
 

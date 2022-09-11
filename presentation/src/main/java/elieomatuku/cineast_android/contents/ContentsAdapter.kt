@@ -43,7 +43,6 @@ open class ContentsAdapter(
         get() = hasValidData && (contents.isEmpty())
 
     override fun getItemCount(): Int {
-        Timber.d("hasEmptyState: $hasEmptyState")
         return if (hasEmptyState) {
             1
         } else {

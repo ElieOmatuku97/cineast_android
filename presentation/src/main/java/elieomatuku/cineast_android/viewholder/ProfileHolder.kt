@@ -30,6 +30,7 @@ abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     override fun gotoWebview(value: String) {
         val webViewFragment: WebViewFragment = WebViewFragment.newInstance(value)
         val fm = (itemView.context as AppCompatActivity).supportFragmentManager
-        fm.beginTransaction().add(android.R.id.content, webViewFragment, null).addToBackStack(null).commit()
+        fm.beginTransaction().add(android.R.id.content, webViewFragment, null).addToBackStack(null)
+            .commit()
     }
 }

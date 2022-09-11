@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.home
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -10,6 +11,9 @@ import androidx.navigation.ui.setupWithNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseActivity
 import elieomatuku.cineast_android.databinding.ActivityHomeBinding
+
+private const val SHOW_APP_BAR_ARG = "showAppBar"
+private const val SHOW_BOTTOM_NAV_ARG = "showBottomNav"
 
 class HomeActivity : BaseActivity() {
 
@@ -30,6 +34,7 @@ class HomeActivity : BaseActivity() {
         navController = navHostFragment.navController
         setupActionBar()
         setupBottomNavMenu()
+        setDestinationChangedListener()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -46,5 +51,19 @@ class HomeActivity : BaseActivity() {
         appBarConfiguration =
             AppBarConfiguration(setOf(R.id.discover, R.id.search, R.id.settings))
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun setDestinationChangedListener() {
+        navController.addOnDestinationChangedListener { _, _, arguments ->
+            val showAppBar = arguments?.getBoolean(SHOW_APP_BAR_ARG, true) ?: true
+            val showBottomNav = arguments?.getBoolean(SHOW_BOTTOM_NAV_ARG, true) ?: true
+
+            if (showAppBar) {
+                supportActionBar?.show()
+            } else {
+                supportActionBar?.hide()
+            }
+            binding.bottomNavig.isVisible = showBottomNav
+        }
     }
 }

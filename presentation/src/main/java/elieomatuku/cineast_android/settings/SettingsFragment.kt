@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.domain.model.AccessToken
@@ -59,15 +60,8 @@ class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
                 .appendPath(it.requestToken)
                 .build()
                 .toString()
-
-            val fm = activity?.supportFragmentManager
-            fm?.beginTransaction()
-                ?.add(
-                    android.R.id.content,
-                    LoginWebViewFragment.newInstance(authenticateUrl),
-                    null
-                )
-                ?.addToBackStack(null)?.commit()
+            val directions = SettingsFragmentDirections.navigateToLogin(authenticateUrl)
+            findNavController().navigate(directions)
         }
     }
 

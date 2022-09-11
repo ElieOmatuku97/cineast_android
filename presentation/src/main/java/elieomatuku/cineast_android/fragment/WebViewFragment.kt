@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
+import elieomatuku.cineast_android.databinding.FragmentGalleryBinding
 import elieomatuku.cineast_android.utils.UiUtils
 import kotlinx.android.synthetic.main.fragment_webview.view.*
 
@@ -36,12 +38,12 @@ open class WebViewFragment : BaseFragment() {
 
         val progressBar = view.web_progress
 
-        val webview by lazy {
-            val webv = view.web_html_widget
-            UiUtils.configureWebView(webv, progressBar)
+        val webView by lazy {
+            val webV = view.web_html_widget
+            UiUtils.configureWebView(webV, progressBar)
         }
 
-        webview.webViewClient = object : WebViewClient() {
+        webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 url?.let {
                     view?.loadUrl(it)
@@ -51,7 +53,7 @@ open class WebViewFragment : BaseFragment() {
         }
 
         if (!url.isNullOrEmpty()) {
-            webview.loadUrl(url)
+            webView.loadUrl(url)
         }
 
         view.html_close_icon.setOnClickListener { view ->
@@ -62,6 +64,6 @@ open class WebViewFragment : BaseFragment() {
     }
 
     open fun closeIconListener() {
-        activity?.supportFragmentManager?.popBackStack()
+        findNavController().navigateUp()
     }
 }

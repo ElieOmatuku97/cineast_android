@@ -43,6 +43,12 @@
         android:label="Movie Gallery"
         tools:layout="@layout/fragment_gallery">
         <argument
+            android:name="showAppBar"
+            android:defaultValue="false" />
+        <argument
+            android:name="showBottomNav"
+            android:defaultValue="false" />
+        <argument
             android:name="posters"
             app:argType="string[]" />
     </fragment>
@@ -52,6 +58,12 @@
         android:name="elieomatuku.cineast_android.fragment.YoutubeFragment"
         android:label="Movie Gallery"
         tools:layout="@layout/widget_youtube">
+        <argument
+            android:name="showAppBar"
+            android:defaultValue="false" />
+        <argument
+            android:name="showBottomNav"
+            android:defaultValue="false" />
         <argument
             android:name="youtube_url"
             app:argType="string" />
