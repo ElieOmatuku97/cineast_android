@@ -39,12 +39,12 @@ class PersonFragment : BaseFragment() {
     private lateinit var menuHost: MenuHost
     private val args: PersonFragmentArgs by navArgs()
 
-    private val onProfileClickedPicturePublisher: PublishSubject<Int> by lazy {
+    private val onProfilePictureClickedPublisher: PublishSubject<Int> by lazy {
         PublishSubject.create()
     }
 
-    private val onProfileClickedPictureObservable: Observable<Int>
-        get() = onProfileClickedPicturePublisher.hide()
+    private val onProfilePictureClickedObservable: Observable<Int>
+        get() = onProfilePictureClickedPublisher.hide()
 
     private val onProfileLinkClickedPublisher: PublishSubject<String> by lazy {
         PublishSubject.create()
@@ -62,7 +62,7 @@ class PersonFragment : BaseFragment() {
 
     private val adapter: PersonAdapter by lazy {
         PersonAdapter(
-            onProfileClickedPicturePublisher,
+            onProfilePictureClickedPublisher,
             onSegmentedButtonsPublisher,
             onProfileLinkClickedPublisher
         )
@@ -138,10 +138,18 @@ class PersonFragment : BaseFragment() {
         )
 
         rxSubs.add(
-            onProfileClickedPictureObservable
+            onProfilePictureClickedObservable
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     navigateToGallery()
+                }
+        )
+
+        rxSubs.add(
+            onProfileLinkClickedObservable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    goToWebsite(it)
                 }
         )
     }
@@ -253,5 +261,10 @@ class PersonFragment : BaseFragment() {
             )
             findNavController().navigate(directions)
         }
+    }
+
+    private fun goToWebsite(url: String) {
+        val directions = PersonFragmentDirections.navigateToWebsite(url)
+        findNavController().navigate(directions)
     }
 }

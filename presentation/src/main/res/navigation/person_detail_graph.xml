@@ -16,6 +16,9 @@
         <action
             android:id="@+id/navigate_to_movie_detail"
             app:destination="@id/movie_detail_graph" />
+        <action
+            android:id="@+id/navigate_to_website"
+            app:destination="@id/website" />
         <argument
             android:name="screen_name"
             app:argType="string" />
@@ -32,5 +35,19 @@
         <argument
             android:name="posters"
             app:argType="string[]" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/website"
+        android:name="elieomatuku.cineast_android.fragment.WebViewFragment">
+        <argument
+            android:name="showAppBar"
+            android:defaultValue="false" />
+        <argument
+            android:name="showBottomNav"
+            android:defaultValue="false" />
+        <argument
+            android:name="url"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -221,7 +221,7 @@ class MovieFragment : BaseFragment() {
             onProfileLinkClickedObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { url ->
-                    navigateToWebsite(url)
+                    goToWebsite(url)
                 }
         )
 
@@ -447,7 +447,7 @@ class MovieFragment : BaseFragment() {
         }
     }
 
-    private fun navigateToWebsite(url: String) {
+    private fun goToWebsite(url: String) {
         val directions = MovieFragmentDirections.navigateToWebsite(url)
         findNavController().navigate(directions)
     }

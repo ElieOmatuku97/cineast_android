@@ -28,17 +28,7 @@ import elieomatuku.cineast_android.utils.UiUtils
 
 open class WebViewFragment : BaseFragment() {
     companion object {
-        const val URL = "url"
-
-        fun newInstance(url: String?): WebViewFragment {
-            val fragment = WebViewFragment()
-            val args = Bundle()
-            url?.let {
-                args.putString(URL, it)
-            }
-            fragment.arguments = args
-            return fragment
-        }
+        private const val URL = "url"
     }
 
     override fun onCreateView(
