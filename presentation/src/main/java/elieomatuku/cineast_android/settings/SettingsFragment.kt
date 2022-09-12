@@ -48,12 +48,12 @@ class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
             }
             updateView(state)
             state.accessToken.consume {
-                gotoWebview(it)
+                gotoLink(it)
             }
         }
     }
 
-    override fun gotoWebview(value: AccessToken?) {
+    override fun gotoLink(value: AccessToken?) {
         value?.let {
             val authenticateUrl = Uri.parse(context?.getString(R.string.authenticate_url))
                 .buildUpon()

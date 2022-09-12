@@ -46,6 +46,12 @@ class PersonFragment : BaseFragment() {
     private val onProfileClickedPictureObservable: Observable<Int>
         get() = onProfileClickedPicturePublisher.hide()
 
+    private val onProfileLinkClickedPublisher: PublishSubject<String> by lazy {
+        PublishSubject.create()
+    }
+
+    private val onProfileLinkClickedObservable: Observable<String>
+        get() = onProfileLinkClickedPublisher.hide()
 
     private val onSegmentedButtonsPublisher: PublishSubject<Pair<String, PersonDetails>> by lazy {
         PublishSubject.create()
@@ -54,8 +60,12 @@ class PersonFragment : BaseFragment() {
     private val onSegmentedButtonsObservable: Observable<Pair<String, PersonDetails>>
         get() = onSegmentedButtonsPublisher.hide()
 
-    val adapter: PersonAdapter by lazy {
-        PersonAdapter(onProfileClickedPicturePublisher, onSegmentedButtonsPublisher)
+    private val adapter: PersonAdapter by lazy {
+        PersonAdapter(
+            onProfileClickedPicturePublisher,
+            onSegmentedButtonsPublisher,
+            onProfileLinkClickedPublisher
+        )
     }
 
     override fun onCreateView(

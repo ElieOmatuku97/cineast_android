@@ -5,12 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 import kotlin.properties.Delegates
 
 class PersonAdapter(
     private val onProfileClickedPicturePublisher: PublishSubject<Int>,
-    private val segmentedButtonPublisher: PublishSubject<Pair<String, PersonDetails>>
+    private val segmentedButtonPublisher: PublishSubject<Pair<String, PersonDetails>>,
+    private val onProfileLinkClickedPublisher: PublishSubject<String>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_PEOPLE_PROFILE = 0
@@ -19,7 +19,6 @@ class PersonAdapter(
     }
 
     var personDetails: PersonDetails by Delegates.observable(PersonDetails()) { prop, oldPeopleDetails, nuPeopleDetails ->
-        Timber.d("peopleApi facts = $nuPeopleDetails")
         hasValidData = true
         errorMessage = null
     }
@@ -33,7 +32,6 @@ class PersonAdapter(
     var errorMessage: String?
         get() = _errorMessage
         set(nuErrorMessage) {
-            Timber.d("from MovieListAdapter: $nuErrorMessage")
             _errorMessage = nuErrorMessage
             hasValidData = true
         }
@@ -43,7 +41,6 @@ class PersonAdapter(
         get() = hasValidData && (personDetails.isEmpty())
 
     override fun getItemCount(): Int {
-        Timber.d("hasEmptyState: $hasEmptyState")
         return if (hasEmptyState) {
             1
         } else {
@@ -65,7 +62,11 @@ class PersonAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_PEOPLE_PROFILE -> PersonProfileHolder.newInstance(parent, onProfileClickedPicturePublisher)
+            TYPE_PEOPLE_PROFILE -> PersonProfileHolder.newInstance(
+                parent,
+                onProfileClickedPicturePublisher,
+                onProfileLinkClickedPublisher
+            )
             TYPE_MENU_PEOPLE -> PersonSegmentedButtonHolder.newInstance(parent)
             TYPE_EMPTY_STATE -> {
                 EmptyStateHolder.newInstance(parent)

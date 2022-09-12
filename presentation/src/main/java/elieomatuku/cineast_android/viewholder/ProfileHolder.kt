@@ -3,13 +3,15 @@ package elieomatuku.cineast_android.viewholder
 import android.text.Spannable
 import android.text.style.URLSpan
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.fragment.WebViewFragment
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.utils.WebLink
+import io.reactivex.subjects.PublishSubject
 
-abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView), WebLink<String> {
+abstract class ProfileHolder(
+    itemView: View,
+    private val onProfileLinkClickedPublisher: PublishSubject<String>
+) : RecyclerView.ViewHolder(itemView), WebLink<String> {
 
     fun linkify(spannable: Spannable): Spannable {
         val spans = spannable.getSpans(0, spannable.length, URLSpan::class.java)
@@ -18,7 +20,7 @@ abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
                 urlSpan, spannable,
                 object : URLSpan(urlSpan.url) {
                     override fun onClick(view: View) {
-                        gotoWebview(url)
+                        gotoLink(url)
                     }
                 }
             )
@@ -27,10 +29,7 @@ abstract class ProfileHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
         return spannable
     }
 
-    override fun gotoWebview(value: String) {
-        val webViewFragment: WebViewFragment = WebViewFragment.newInstance(value)
-        val fm = (itemView.context as AppCompatActivity).supportFragmentManager
-        fm.beginTransaction().add(android.R.id.content, webViewFragment, null).addToBackStack(null)
-            .commit()
+    override fun gotoLink(value: String) {
+        onProfileLinkClickedPublisher.onNext(value)
     }
 }

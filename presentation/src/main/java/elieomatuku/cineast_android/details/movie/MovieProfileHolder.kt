@@ -22,8 +22,9 @@ import kotlinx.android.synthetic.main.holder_profile_movie.view.*
 
 class MovieProfileHolder(
     itemView: View,
-    private val onProfileClickedPicturePublisher: PublishSubject<Int>
-) : ProfileHolder(itemView) {
+    private val onProfileClickedPublisher: PublishSubject<Int>,
+    onProfileLinkClickedPublisher: PublishSubject<String>
+) : ProfileHolder(itemView, onProfileLinkClickedPublisher) {
     companion object {
         fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context)
@@ -32,9 +33,14 @@ class MovieProfileHolder(
 
         fun newInstance(
             parent: ViewGroup,
-            onProfileClickedPicturePublisher: PublishSubject<Int>
+            onProfileClickedPicturePublisher: PublishSubject<Int>,
+            onProfileLinkClickedPublisher: PublishSubject<String>
         ): MovieProfileHolder {
-            return MovieProfileHolder(createView(parent), onProfileClickedPicturePublisher)
+            return MovieProfileHolder(
+                createView(parent),
+                onProfileClickedPicturePublisher,
+                onProfileLinkClickedPublisher
+            )
         }
     }
 
@@ -83,7 +89,7 @@ class MovieProfileHolder(
 
         movieProfileImageView.setOnClickListener {
             if (movie?.id != null)
-                onProfileClickedPicturePublisher.onNext(movie.id)
+                onProfileClickedPublisher.onNext(movie.id)
         }
 
         val title = movie?.title

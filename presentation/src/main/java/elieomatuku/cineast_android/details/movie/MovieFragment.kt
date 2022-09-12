@@ -60,6 +60,13 @@ class MovieFragment : BaseFragment() {
     private val onProfileClickedPictureObservable: Observable<Int>
         get() = onProfileClickedPicturePublisher.hide()
 
+    private val onProfileLinkClickedPublisher: PublishSubject<String> by lazy {
+        PublishSubject.create()
+    }
+
+    private val onProfileLinkClickedObservable: Observable<String>
+        get() = onProfileLinkClickedPublisher.hide()
+
     private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>> by lazy {
         PublishSubject.create()
     }
@@ -68,7 +75,11 @@ class MovieFragment : BaseFragment() {
         get() = segmentedButtonsPublisher.hide()
 
     private val adapter: MovieSummaryAdapter by lazy {
-        MovieSummaryAdapter(onProfileClickedPicturePublisher, segmentedButtonsPublisher)
+        MovieSummaryAdapter(
+            onProfileClickedPicturePublisher,
+            segmentedButtonsPublisher,
+            onProfileLinkClickedPublisher
+        )
     }
 
     override fun onCreateView(
@@ -203,6 +214,14 @@ class MovieFragment : BaseFragment() {
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { displayAndMovieSummary ->
                     gotoTab(displayAndMovieSummary)
+                }
+        )
+
+        rxSubs.add(
+            onProfileLinkClickedObservable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe { url ->
+                    navigateToWebsite(url)
                 }
         )
 
@@ -426,5 +445,10 @@ class MovieFragment : BaseFragment() {
             )
             findNavController().navigate(directions)
         }
+    }
+
+    private fun navigateToWebsite(url: String) {
+        val directions = MovieFragmentDirections.navigateToWebsite(url)
+        findNavController().navigate(directions)
     }
 }

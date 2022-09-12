@@ -17,14 +17,27 @@ import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.holder_profile_people.view.*
 
-class PersonProfileHolder(itemView: View, private val onProfileClickedPicturePublisher: PublishSubject<Int>) : ProfileHolder(itemView) {
+class PersonProfileHolder(
+    itemView: View,
+    private val onProfileClickedPicturePublisher: PublishSubject<Int>,
+    onProfileLinkClickedPublisher: PublishSubject<String>
+) : ProfileHolder(itemView, onProfileLinkClickedPublisher) {
     companion object {
-        fun createView(parent: ViewGroup): View {
-            return LayoutInflater.from(parent.context).inflate(R.layout.holder_profile_people, parent, false)
+        private fun createView(parent: ViewGroup): View {
+            return LayoutInflater.from(parent.context)
+                .inflate(R.layout.holder_profile_people, parent, false)
         }
 
-        fun newInstance(parent: ViewGroup, onProfileClickedPicturePublisher: PublishSubject<Int>): PersonProfileHolder {
-            return PersonProfileHolder(createView(parent), onProfileClickedPicturePublisher)
+        fun newInstance(
+            parent: ViewGroup,
+            onProfileClickedPicturePublisher: PublishSubject<Int>,
+            onProfileLinkClickedPublisher: PublishSubject<String>
+        ): PersonProfileHolder {
+            return PersonProfileHolder(
+                createView(parent),
+                onProfileClickedPicturePublisher,
+                onProfileLinkClickedPublisher
+            )
         }
     }
 
@@ -50,7 +63,10 @@ class PersonProfileHolder(itemView: View, private val onProfileClickedPicturePub
 
     fun update(peopleDetails: PersonDetails?) {
         val imageUrl: String? = if (peopleDetails?.profilePath != null) {
-            UiUtils.getImageUrl(peopleDetails.profilePath, itemView.context.getString(R.string.image_small))
+            UiUtils.getImageUrl(
+                peopleDetails.profilePath,
+                itemView.context.getString(R.string.image_small)
+            )
         } else null
 
         if (!imageUrl.isNullOrEmpty()) {
