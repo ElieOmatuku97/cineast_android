@@ -4,14 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.databinding.FragmentGalleryBinding
 import elieomatuku.cineast_android.utils.UiUtils
-import kotlinx.android.synthetic.main.fragment_webview.view.*
 
 open class WebViewFragment : BaseFragment() {
     companion object {
@@ -33,37 +46,68 @@ open class WebViewFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_webview, container, false)
         val url = arguments?.getString(URL)
-
-        val progressBar = view.web_progress
-
-        val webView by lazy {
-            val webV = view.web_html_widget
-            UiUtils.configureWebView(webV, progressBar)
-        }
-
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                url?.let {
-                    view?.loadUrl(it)
+        return ComposeView(requireContext()).apply {
+            setContent {
+                if (!url.isNullOrEmpty()) {
+                    WebView(url = url) {
+                        closeIconListener()
+                    }
                 }
-                return true
             }
         }
-
-        if (!url.isNullOrEmpty()) {
-            webView.loadUrl(url)
-        }
-
-        view.html_close_icon.setOnClickListener { view ->
-            closeIconListener()
-        }
-
-        return view
     }
 
     open fun closeIconListener() {
         findNavController().navigateUp()
+    }
+}
+
+@Composable
+fun WebView(url: String, onCloseButtonClick: () -> Unit) {
+    Column {
+        var progress by rememberSaveable { mutableStateOf(0) }
+        var showProgress by remember { mutableStateOf(true) }
+
+        if (showProgress) {
+            LinearProgressIndicator(
+                progress = progress.toFloat() / 10,
+                color = colorResource(id = R.color.color_orange_app)
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .background(color = Color.Black)
+                .align(Alignment.End)
+        ) {
+            IconButton(onClick = { onCloseButtonClick() }) {
+                Icon(
+                    Icons.Filled.Close,
+                    tint = Color.White,
+                    contentDescription = null
+                )
+            }
+        }
+        AndroidView(
+            factory = {
+                WebView(it).let {
+                    val webView by lazy {
+                        UiUtils.configureWebView(
+                            it,
+                            {
+                                progress = it
+                            }, {
+                                showProgress = it
+                            }
+                        )
+                    }
+
+                    webView.loadUrl(url)
+
+                    webView
+                }
+            }
+        )
     }
 }
