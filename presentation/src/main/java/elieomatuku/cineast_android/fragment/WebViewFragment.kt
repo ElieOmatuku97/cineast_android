@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.fragment.findNavController
@@ -38,6 +39,7 @@ open class WebViewFragment : BaseFragment() {
     ): View? {
         val url = arguments?.getString(URL)
         return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 if (!url.isNullOrEmpty()) {
                     WebView(url = url) {

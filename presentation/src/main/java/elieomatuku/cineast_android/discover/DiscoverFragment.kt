@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -33,7 +33,6 @@ import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.extensions.DiscoverWidget
 import elieomatuku.cineast_android.extensions.asListOfType
-import elieomatuku.cineast_android.settings.LoginWebViewFragment
 import elieomatuku.cineast_android.utils.*
 import elieomatuku.cineast_android.viewholder.EmptyStateItem
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
@@ -51,6 +50,7 @@ class DiscoverFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 DiscoverScreen(
                     viewModelFactory = viewModelFactory,
