@@ -102,6 +102,7 @@ class MovieSummaryAdapter(
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         when (holder) {
             is EmptyStateHolder -> holder.composeView.disposeComposition()
+            is MovieProfileHolder -> holder.composeView.disposeComposition()
             else -> {}
         }
     }
