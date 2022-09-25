@@ -1,26 +1,27 @@
 package elieomatuku.cineast_android.details.movie
 
-import android.text.Html
 import android.text.SpannableString
-import android.text.method.LinkMovementMethod
+import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.util.TypedValue
-import android.view.View
 import android.view.ViewGroup
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.annotation.ExperimentalCoilApi
@@ -28,10 +29,10 @@ import coil.compose.rememberImagePainter
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.MovieSummary
+import elieomatuku.cineast_android.fragment.RateDialogFragment
 import elieomatuku.cineast_android.viewholder.ProfileHolder
 import elieomatuku.cineast_android.utils.UiUtils
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.holder_profile_movie.view.*
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class MovieProfileHolder(
@@ -57,136 +58,40 @@ class MovieProfileHolder(
         }
     }
 
-    private val genresView: TextView by lazy {
-        itemView.item_genre_view
-    }
-
-    private val movieProfileImageView: AppCompatImageView by lazy {
-        itemView.profile_image
-    }
-
-    private val linkTextView: TextView by lazy {
-        itemView.item_link_view
-    }
-
-    private val rateBtn: TextView by lazy {
-        itemView.rate_btn
-    }
-
-    private val titleView: TextView by lazy {
-        itemView.item_title_view
-    }
-
-    private val releaseDateView: TextView by lazy {
-        itemView.item_release_view
-    }
-
-    private val ratingBarView: RatingBar by lazy {
-        itemView.movie_rating_bar
-    }
-
     fun update(movieSummary: MovieSummary) {
         composeView.setContent {
             AppCompatTheme {
                 MovieProfile(
-                    movieSummary = movieSummary
+                    movieSummary = movieSummary,
+                    onProfileClick = {
+                        onProfileClickedPublisher.onNext(it)
+                    },
+                    onRateClick = {
+                        val rateDialogFragment = RateDialogFragment.newInstance(movieSummary.movie)
+                        if (itemView.context is AppCompatActivity) {
+                            rateDialogFragment.show(
+                                (itemView.context as AppCompatActivity).supportFragmentManager,
+                                RateDialogFragment.TAG
+                            )
+                        }
+                    },
+                    gotoLink = {
+                        gotoLink(it)
+                    }
                 )
             }
         }
-//        val movie = movieSummary.movie
-//        val imageUrl: String? = if (movie?.posterPath != null) {
-//            UiUtils.getImageUrl(movie.posterPath, itemView.context.getString(R.string.image_small))
-//        } else null
-//
-//        if (!imageUrl.isNullOrEmpty()) {
-//            movieProfileImageView.visibility = View.VISIBLE
-//            Picasso.get()
-//                .load(imageUrl)
-//                .into(movieProfileImageView)
-//        } else {
-//            movieProfileImageView.visibility = View.GONE
-//        }
-//
-//        movieProfileImageView.setOnClickListener {
-//            if (movie?.id != null)
-//                onProfileClickedPublisher.onNext(movie.id)
-//        }
-//
-//        val title = movie?.title
-//        if (title != null) {
-//            titleView.visibility = View.VISIBLE
-//            titleView.text = title
-//        } else {
-//            titleView.visibility = View.GONE
-//        }
-//
-//        val releaseDate = movie?.releaseDate
-//        if (releaseDate != null) {
-//            releaseDateView.visibility = View.VISIBLE
-//            releaseDateView.text = releaseDate
-//        } else {
-//            releaseDateView.visibility = View.GONE
-//        }
-//
-//        val voteAverage = movie?.voteAverage
-//        if (voteAverage != null) {
-//            ratingBarView.visibility = View.VISIBLE
-//            ratingBarView.rating = voteAverage
-//        } else {
-//            ratingBarView.visibility = View.GONE
-//        }
-//
-//        val genres = movieSummary.genres
-//        val genresIds = movie?.genreIds
-//        val names = if (genresIds != null && genres != null) {
-//            UiUtils.mapMovieGenreIdsWithGenreNames(genresIds, genres)
-//        } else {
-//            null
-//        }
-//
-//        if (!names.isNullOrEmpty()) {
-//            genresView.visibility = View.VISIBLE
-//            genresView.text = names
-//        } else {
-//            genresView.isVisible = movie?.genres != null
-//            movie?.genres?.apply {
-//                genresView.text = UiUtils.retrieveNameFromGenre(this)
-//            }
-//        }
-//
-//        val homepage = movieSummary.facts?.homepage
-//        if (!homepage.isNullOrEmpty()) {
-//            linkTextView.visibility = View.VISIBLE
-//            val spannable = SpannableString(Html.fromHtml(homepage))
-//            Linkify.addLinks(spannable, Linkify.WEB_URLS)
-//            linkTextView.movementMethod = LinkMovementMethod.getInstance()
-//            linkTextView.setText(linkify(spannable), TextView.BufferType.SPANNABLE)
-//        } else {
-//            linkTextView.visibility = View.GONE
-//        }
-//
-//        if (movieSummary.isEmpty()) {
-//            rateBtn.visibility = View.GONE
-//        } else {
-//            rateBtn.visibility = View.VISIBLE
-//        }
-//
-//        rateBtn.setOnClickListener {
-//            val rateDialogFragment = RateDialogFragment.newInstance(movie)
-//
-//            if (itemView.context is AppCompatActivity) {
-//                rateDialogFragment.show(
-//                    (itemView.context as AppCompatActivity).supportFragmentManager,
-//                    RateDialogFragment.TAG
-//                )
-//            }
-//        }
     }
 }
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun MovieProfile(movieSummary: MovieSummary) {
+fun MovieProfile(
+    movieSummary: MovieSummary,
+    onProfileClick: (Int) -> Unit,
+    onRateClick: () -> Unit,
+    gotoLink: (String) -> Unit
+) {
     val movie = movieSummary.movie
     val imageUrl = UiUtils.getImageUrl(movie?.posterPath, stringResource(id = R.string.image_small))
     val genres = movieSummary.genres
@@ -198,6 +103,7 @@ fun MovieProfile(movieSummary: MovieSummary) {
             UiUtils.retrieveNameFromGenre(this)
         }
     }
+    val homepage = movieSummary.facts?.homepage
 
     Row {
         Image(
@@ -210,8 +116,14 @@ fun MovieProfile(movieSummary: MovieSummary) {
                 .width(dimensionResource(id = R.dimen.movie_summary_image_width))
                 .padding(
                     top = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                    start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin)
+                    start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                    bottom = dimensionResource(id = R.dimen.holder_profile_movie_layout_padding_bottom)
                 )
+                .clickable {
+                    movie?.let {
+                        onProfileClick(it.id)
+                    }
+                }
         )
         Column(
             modifier = Modifier.padding(
@@ -223,9 +135,6 @@ fun MovieProfile(movieSummary: MovieSummary) {
                 Text(
                     it,
                     color = colorResource(id = R.color.color_white),
-                    modifier = Modifier.padding(
-                        start = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right)
-                    )
                 )
             }
 
@@ -235,21 +144,28 @@ fun MovieProfile(movieSummary: MovieSummary) {
                     color = colorResource(id = R.color.color_grey),
                     fontSize = dimensionResource(id = R.dimen.holder_item_movie_textview_size).value.sp,
                     modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.activity_margin_top),
-                        start = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
+                        top = dimensionResource(id = R.dimen.activity_margin_top)
                     )
                 )
             }
 
-            Text(
-                text = "link",
-                color = colorResource(id = R.color.color_orange_app),
-                fontSize = dimensionResource(id = R.dimen.holder_item_movie_textview_size).value.sp,
-                modifier = Modifier.padding(
-                    top = dimensionResource(id = R.dimen.activity_margin_top),
-                    start = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
+            homepage?.let {
+                val linkStyle = SpanStyle(
+                    color = colorResource(id = R.color.color_orange_app),
+                    textDecoration = TextDecoration.Underline,
                 )
-            )
+                ClickableText(
+                    text = remember(it) { it.linkify(linkStyle) },
+                    onClick = { position ->
+                        it.linkify(linkStyle).urlAt(position) { link ->
+                            gotoLink(link)
+                        }
+                    },
+                    modifier = Modifier.padding(
+                        top = dimensionResource(id = R.dimen.activity_margin_top)
+                    )
+                )
+            }
 
             genresNames?.let {
                 Text(
@@ -257,21 +173,26 @@ fun MovieProfile(movieSummary: MovieSummary) {
                     color = colorResource(id = R.color.color_grey),
                     fontSize = dimensionResource(id = R.dimen.holder_item_movie_textview_size).value.sp,
                     modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.activity_margin_top),
-                        start = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
+                        top = dimensionResource(id = R.dimen.activity_margin_top)
                     )
                 )
             }
 
             Row(
-                modifier = Modifier.padding(
-                    top = dimensionResource(id = R.dimen.activity_margin_top),
-                    start = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
-                )
+                modifier = Modifier
+                    .padding(
+                        top = dimensionResource(id = R.dimen.activity_margin_top)
+                    )
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 movie?.voteAverage?.let { voteAverage ->
                     AndroidView(factory = {
-                        MaterialRatingBar(it).apply {
+                        MaterialRatingBar(
+                            it,
+                            null,
+                            R.style.Widget_MaterialRatingBar_RatingBar
+                        ).apply {
                             val params = ViewGroup.LayoutParams(
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -291,20 +212,49 @@ fun MovieProfile(movieSummary: MovieSummary) {
                 }
 
                 if (!movieSummary.isEmpty()) {
-                    TextButton(
-                        onClick = { },
-                        modifier = Modifier.padding(
-                            end = dimensionResource(id = R.dimen.holder_profile_movie_rate_margin_right),
-                        )
-                    ) {
-                        Text(
-                            stringResource(id = R.string.rate),
-                            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
-                            color = colorResource(id = R.color.color_orange_app)
-                        )
-                    }
+                    Text(
+                        stringResource(id = R.string.rate),
+                        fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+                        color = colorResource(id = R.color.color_orange_app),
+                        modifier = Modifier
+                            .padding(end = dimensionResource(id = R.dimen.holder_profile_movie_rate_margin_right))
+                            .clickable(onClick = { onRateClick() })
+                    )
                 }
             }
         }
     }
 }
+
+const val URL = "URL"
+fun String.linkify(
+    linkStyle: SpanStyle,
+) = buildAnnotatedString {
+    append(this@linkify)
+
+    val spannable = SpannableString(this@linkify)
+    Linkify.addLinks(spannable, Linkify.WEB_URLS)
+
+    val spans = spannable.getSpans(0, spannable.length, URLSpan::class.java)
+    for (span in spans) {
+        val start = spannable.getSpanStart(span)
+        val end = spannable.getSpanEnd(span)
+
+        addStyle(
+            start = start,
+            end = end,
+            style = linkStyle,
+        )
+        addStringAnnotation(
+            tag = URL,
+            annotation = span.url,
+            start = start,
+            end = end
+        )
+    }
+}
+
+fun AnnotatedString.urlAt(position: Int, onFound: (String) -> Unit) =
+    getStringAnnotations(URL, position, position).firstOrNull()?.item?.let {
+        onFound(it)
+    }

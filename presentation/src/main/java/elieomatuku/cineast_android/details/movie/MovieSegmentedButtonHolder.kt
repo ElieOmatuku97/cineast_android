@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.holder_menu_movie.view.*
 
 class MovieSegmentedButtonHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     companion object {
-        fun createView(parent: ViewGroup): View {
+        private fun createView(parent: ViewGroup): View {
             return LayoutInflater.from(parent.context).inflate(R.layout.holder_menu_movie, parent, false)
         }
 
