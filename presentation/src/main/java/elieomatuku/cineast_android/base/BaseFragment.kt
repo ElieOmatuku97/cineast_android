@@ -29,7 +29,7 @@ abstract class BaseFragment : Fragment, KodeinAware {
         io.reactivex.disposables.CompositeDisposable()
     }
 
-    private val connectionService: ConnectionService by instance()
+    protected val connectionService: ConnectionService by instance()
 
     override val kodein: Kodein by kodein()
     val viewModelFactory: ViewModelProvider.Factory by instance()

@@ -5,7 +5,6 @@ import android.text.style.URLSpan
 import android.text.util.Linkify
 import android.util.TypedValue
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,7 +13,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -26,63 +24,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.MovieSummary
-import elieomatuku.cineast_android.fragment.RateDialogFragment
-import elieomatuku.cineast_android.viewholder.ProfileHolder
 import elieomatuku.cineast_android.utils.UiUtils
-import io.reactivex.subjects.PublishSubject
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
-class MovieProfileHolder(
-    val composeView: ComposeView,
-    private val onProfileClickedPublisher: PublishSubject<Int>,
-    onProfileLinkClickedPublisher: PublishSubject<String>
-) : ProfileHolder(composeView, onProfileLinkClickedPublisher) {
-    companion object {
-        private fun createComposeView(parent: ViewGroup): ComposeView {
-            return ComposeView(parent.context)
-        }
-
-        fun newInstance(
-            parent: ViewGroup,
-            onProfileClickedPicturePublisher: PublishSubject<Int>,
-            onProfileLinkClickedPublisher: PublishSubject<String>
-        ): MovieProfileHolder {
-            return MovieProfileHolder(
-                createComposeView(parent),
-                onProfileClickedPicturePublisher,
-                onProfileLinkClickedPublisher
-            )
-        }
-    }
-
-    fun update(movieSummary: MovieSummary) {
-        composeView.setContent {
-            AppCompatTheme {
-                MovieProfile(
-                    movieSummary = movieSummary,
-                    onProfileClick = {
-                        onProfileClickedPublisher.onNext(it)
-                    },
-                    onRateClick = {
-                        val rateDialogFragment = RateDialogFragment.newInstance(movieSummary.movie)
-                        if (itemView.context is AppCompatActivity) {
-                            rateDialogFragment.show(
-                                (itemView.context as AppCompatActivity).supportFragmentManager,
-                                RateDialogFragment.TAG
-                            )
-                        }
-                    },
-                    gotoLink = {
-                        gotoLink(it)
-                    }
-                )
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable

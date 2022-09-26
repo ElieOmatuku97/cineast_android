@@ -29,7 +29,6 @@ import com.google.accompanist.pager.rememberPagerState
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
@@ -40,7 +39,6 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.launch
-import org.kodein.di.generic.instance
 
 class SearchFragment : BaseFragment() {
     private val viewModel: SearchViewModel by viewModel()
@@ -52,7 +50,6 @@ class SearchFragment : BaseFragment() {
         get() = searchQueryPublisher.hide()
 
     private lateinit var composeView: ComposeView
-    private val connectionService: ConnectionService by instance()
 
     private var isMovieSearchScreen: Boolean = true
 

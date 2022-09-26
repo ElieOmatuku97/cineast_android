@@ -29,7 +29,6 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.getWidgets
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.extensions.DiscoverWidget
 import elieomatuku.cineast_android.extensions.asListOfType
@@ -38,11 +37,8 @@ import elieomatuku.cineast_android.viewholder.EmptyStateItem
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import elieomatuku.cineast_android.widgets.PeopleWidget
-import org.kodein.di.generic.instance
 
 class DiscoverFragment : BaseFragment() {
-
-    private val connectionService: ConnectionService by instance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
