@@ -45,7 +45,8 @@ class MovieViewModel(
                     isLoading = false,
                     movieSummary = result.data,
                     posters = result.data.posters,
-                    screenName = screenName
+                    screenName = screenName,
+                    viewError = null
                 )
 
                 is Fail -> state.copy(
@@ -62,7 +63,8 @@ class MovieViewModel(
             state = when (val result = runUseCase(isLoggedIn, Unit)) {
                 is Success -> {
                     state.copy(
-                        isLoggedIn = SingleEvent(result.data)
+                        isLoggedIn = SingleEvent(result.data),
+                        viewError = null
                     )
                 }
 
@@ -81,7 +83,7 @@ class MovieViewModel(
                 is Success -> {
                     val movies = result.data
                     val isInFavorites = movies.contains(state.movieSummary?.movie)
-                    state.copy(isInFavorites = isInFavorites)
+                    state.copy(isInFavorites = isInFavorites, viewError = null)
                 }
 
                 is Fail -> {
@@ -99,7 +101,7 @@ class MovieViewModel(
                 is Success -> {
                     val movies = result.data
                     val isInWatchList = movies.contains(state.movieSummary?.movie)
-                    state.copy(isInFavorites = isInWatchList)
+                    state.copy(isInFavorites = isInWatchList, viewError = null)
                 }
 
                 is Fail -> {

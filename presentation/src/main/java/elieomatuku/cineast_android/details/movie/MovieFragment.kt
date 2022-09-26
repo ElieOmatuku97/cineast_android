@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
@@ -17,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.MenuHost
@@ -57,7 +56,7 @@ class MovieFragment : BaseFragment() {
         PublishSubject.create()
     }
 
-    private val viewModel: MovieViewModel by sharedViewModel()
+    private val viewModel: MovieViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -150,7 +149,6 @@ class MovieFragment : BaseFragment() {
             }
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
 
         movie = args.movie
         viewModel.getMovieDetails(movie, args.screenName)
@@ -344,7 +342,7 @@ fun MovieScreen(
     val viewState by viewModel.viewState.observeAsState()
 
     viewState?.apply {
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize()) {
             movieSummary?.let { movieSummary ->
                 Column {
                     MovieProfile(
@@ -386,14 +384,26 @@ fun MovieScreen(
             }
 
             viewError?.consume()?.apply {
-                EmptyStateItem(
-                    errorMsg = message,
-                    hasNetworkConnection = hasNetworkConnection
-                )
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    EmptyStateItem(
+                        errorMsg = message,
+                        hasNetworkConnection = hasNetworkConnection
+                    )
+                }
             }
 
             if (isLoading) {
-                LoadingIndicatorWidget()
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LoadingIndicatorWidget()
+                }
             }
         }
     }
@@ -416,12 +426,12 @@ fun MovieTabs(
             R.string.similar
         )
     }
-
     Column {
         TabRow(
             selectedTabIndex = state,
             contentColor = colorResource(id = R.color.color_orange_app),
-            backgroundColor = colorResource(id = R.color.color_black_app)
+            backgroundColor = colorResource(id = R.color.color_black_app), 
+            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.holder_item_movie_textview_margin))
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(
