@@ -431,7 +431,7 @@ fun MovieTabs(
             selectedTabIndex = state,
             contentColor = colorResource(id = R.color.color_orange_app),
             backgroundColor = colorResource(id = R.color.color_black_app), 
-            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.holder_item_movie_textview_margin))
+            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_small))
         ) {
             tabs.forEachIndexed { index, title ->
                 Tab(

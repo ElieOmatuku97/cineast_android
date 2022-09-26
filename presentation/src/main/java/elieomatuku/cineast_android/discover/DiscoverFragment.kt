@@ -143,7 +143,7 @@ fun DiscoverScreen(
                                     is DiscoverWidget.Header -> {
                                         LazyRow(
                                             modifier = Modifier
-                                                .height(dimensionResource(id = R.dimen.holder_header_item_height))
+                                                .height(dimensionResource(id = R.dimen.layout_height_xlarge))
                                         ) {
                                             items(
                                                 widget.value.asListOfType<Movie>()

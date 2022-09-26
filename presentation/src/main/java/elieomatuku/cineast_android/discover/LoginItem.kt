@@ -30,18 +30,18 @@ fun LoginItem(
             Text(
                 text = stringResource(id = R.string.not_logged_in),
                 color = colorResource(id = R.color.color_grey),
-                fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp
+                fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp
             )
         }
         Text(
             text = stringResource(id = if (isLoggedIn) R.string.settings_logout else R.string.settings_login),
             color = colorResource(id = R.color.color_orange_app),
             fontWeight = FontWeight.Bold,
-            fontSize = dimensionResource(id = R.dimen.login_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
             modifier = Modifier
                 .padding(
-                    top = dimensionResource(id = R.dimen.activity_margin_top),
-                    bottom = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    bottom = dimensionResource(id = R.dimen.padding_small),
                 )
 
         )

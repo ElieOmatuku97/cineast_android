@@ -22,25 +22,25 @@ fun BareOverviewWidget(
         Text(
             text = title,
             color = colorResource(id = R.color.color_white),
-            fontSize = dimensionResource(id = R.dimen.toolbar_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(
-                    top = dimensionResource(id = R.dimen.holder_movie_layout_padding),
-                    start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    start = dimensionResource(id = R.dimen.padding_small),
                 )
         )
         Text(
             text = overview,
             color = colorResource(id = R.color.color_white),
-            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
             textAlign = TextAlign.Justify,
             modifier = Modifier
                 .padding(
-                    top = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                    start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                    end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
-                    bottom = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right)
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    end = dimensionResource(id = R.dimen.padding_large),
+                    bottom = dimensionResource(id = R.dimen.padding_large)
                 )
         )
     }

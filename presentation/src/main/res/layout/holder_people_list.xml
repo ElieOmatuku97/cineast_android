@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/activity_margin_top"
+    android:layout_marginBottom="@dimen/padding_small"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -11,9 +10,9 @@
         android:id="@+id/content_image_view"
         android:layout_width="50dp"
         android:layout_height="86dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="@dimen/padding_medium"
+        android:layout_marginStart="@dimen/padding_medium"
+        android:layout_marginTop="@dimen/padding_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,12 +23,10 @@
         android:id="@+id/people_name_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/holder_item_movie_textview_margin"
-        android:layout_marginLeft="@dimen/holder_item_movie_textview_margin"
-        android:layout_marginRight="@dimen/holder_item_movie_textview_margin"
-        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
-        android:layout_marginTop="@dimen/holder_item_movie_textview_margin"
-        android:textSize="@dimen/holder_item_movie_title_size"
+        android:layout_marginEnd="@dimen/padding_small"
+        android:layout_marginStart="@dimen/padding_small"
+        android:layout_marginTop="@dimen/padding_small"
+        android:textSize="@dimen/text_size_medium"
         android:textStyle="bold"
         android:maxLength="29"
         android:textColor="@color/color_white"
@@ -40,8 +37,8 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_view"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/arrow_list_item_height"
-        android:layout_marginLeft="2dp"
+        android:layout_height="@dimen/image_height_large"
+        android:layout_marginLeft="@dimen/padding_small"
         android:tint="@color/color_white"
         app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,14 +48,13 @@
     <View
         android:layout_width="0dp"
         android:layout_height="0.5dp"
-        android:layout_marginTop="@dimen/arrow_list_item_height"
+        android:layout_marginTop="@dimen/padding_xlarge"
         android:background="@drawable/item_decoration"
-        android:layout_marginStart="@dimen/holder_item_list_movie_margin"
+        android:layout_marginStart="@dimen/padding_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_view"
         app:layout_constraintStart_toEndOf="@id/content_image_view"
-
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

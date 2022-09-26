@@ -36,16 +36,16 @@ fun PeopleWidget(
     onItemClick: (content: Content) -> Unit,
     onSeeAllClick: (contents: List<Content>) -> Unit
 ) {
-    Column(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.holder_item_movie_textview_margin))) {
+    Column(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_small))) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
-                    start = dimensionResource(id = R.dimen.holder_movie_layout_padding_start),
-                    end = dimensionResource(id = R.dimen.holder_movie_layout_padding),
-                    top = dimensionResource(id = R.dimen.holder_movie_layout_padding),
-                    bottom = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin)
+                    start = dimensionResource(id = R.dimen.padding_medium),
+                    end = dimensionResource(id = R.dimen.padding_small),
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    bottom = dimensionResource(id = R.dimen.padding_xsmall)
                 )
                 .clickable(onClick = { onSeeAllClick(people) })
         ) {
@@ -67,8 +67,8 @@ fun PeopleWidget(
         }
         LazyRow(
             modifier = Modifier.padding(
-                top = dimensionResource(id = R.dimen.holder_movie_layout_padding),
-                start = dimensionResource(id = R.dimen.holder_movie_listview_padding_start)
+                top = dimensionResource(id = R.dimen.padding_small),
+                start = dimensionResource(id = R.dimen.padding_small)
             )
         ) {
             items(people) { person ->
@@ -93,22 +93,22 @@ fun PeopleItem(
             ),
             contentDescription = null,
             modifier = Modifier
-                .height(dimensionResource(id = R.dimen.movie_summary_image_size))
-                .width(dimensionResource(id = R.dimen.movie_summary_image_width))
+                .height(dimensionResource(id = R.dimen.image_height_xxlarge))
+                .width(dimensionResource(id = R.dimen.image_width_xlarge))
         )
         person.name?.let {
             Text(
                 text = it,
                 color = colorResource(R.color.color_white),
                 maxLines = 1,
-                fontSize = dimensionResource(id = R.dimen.holder_item_movie_textview_size).value.sp,
+                fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .padding(
-                        top = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                        start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                        end = dimensionResource(id = R.dimen.holder_item_movie_textview_margin)
+                        top = dimensionResource(id = R.dimen.padding_small),
+                        start = dimensionResource(id = R.dimen.padding_small),
+                        end = dimensionResource(id = R.dimen.padding_small)
                     )
                     .widthIn(max = 70.dp)
             )

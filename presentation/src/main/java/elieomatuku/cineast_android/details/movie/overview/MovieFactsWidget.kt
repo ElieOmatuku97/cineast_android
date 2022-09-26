@@ -18,11 +18,11 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
     Column {
         Text(
             text = stringResource(id = R.string.movie_facts),
-            fontSize = dimensionResource(id = R.dimen.toolbar_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                top = dimensionResource(id = R.dimen.holder_movie_layout_padding)
+                start = dimensionResource(id = R.dimen.padding_small),
+                top = dimensionResource(id = R.dimen.padding_small)
             ),
             color = colorResource(id = R.color.color_white)
         )
@@ -31,12 +31,12 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
                 stringResource(id = R.string.release_date),
                 movieFacts?.releaseDate
             ),
-            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
             modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                top = dimensionResource(id = R.dimen.activity_margin_top),
-                end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
-                bottom = dimensionResource(id = R.dimen.holder_movie_layout_padding)
+                start = dimensionResource(id = R.dimen.padding_small),
+                top = dimensionResource(id = R.dimen.padding_small),
+                end = dimensionResource(id = R.dimen.padding_large),
+                bottom = dimensionResource(id = R.dimen.padding_small)
             ),
             color = colorResource(id = R.color.color_white)
         )
@@ -45,12 +45,12 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
                 stringResource(id = R.string.runtime),
                 movieFacts?.runtimeInHoursAndMinutes
             ),
-            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
             modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                top = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin),
-                end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
-                bottom = dimensionResource(id = R.dimen.holder_movie_layout_padding)
+                start = dimensionResource(id = R.dimen.padding_small),
+                top = dimensionResource(id = R.dimen.padding_xsmall),
+                end = dimensionResource(id = R.dimen.padding_large),
+                bottom = dimensionResource(id = R.dimen.padding_small)
             ),
             color = colorResource(id = R.color.color_white)
         )
@@ -59,12 +59,12 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
                 stringResource(id = R.string.budget),
                 String.format("$%,.2f", movieFacts?.budget?.toDouble())
             ),
-            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
             modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                top = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin),
-                end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
-                bottom = dimensionResource(id = R.dimen.holder_movie_layout_padding)
+                start = dimensionResource(id = R.dimen.padding_small),
+                top = dimensionResource(id = R.dimen.padding_xsmall),
+                end = dimensionResource(id = R.dimen.padding_large),
+                bottom = dimensionResource(id = R.dimen.padding_small)
             ),
             color = colorResource(id = R.color.color_white)
         )
@@ -73,12 +73,12 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
                 stringResource(id = R.string.revenue),
                 String.format("$%,.2f", movieFacts?.revenue?.toDouble())
             ),
-            fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
             modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                top = dimensionResource(id = R.dimen.holder_item_movie_image_view_margin),
-                end = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right),
-                bottom = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right)
+                start = dimensionResource(id = R.dimen.padding_small),
+                top = dimensionResource(id = R.dimen.padding_xsmall),
+                end = dimensionResource(id = R.dimen.padding_large),
+                bottom = dimensionResource(id = R.dimen.padding_large)
             ),
             color = colorResource(id = R.color.color_white)
         )

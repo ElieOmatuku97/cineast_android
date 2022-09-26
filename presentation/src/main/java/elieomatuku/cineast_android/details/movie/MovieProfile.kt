@@ -58,12 +58,12 @@ fun MovieProfile(
             ),
             contentDescription = null,
             modifier = Modifier
-                .height(dimensionResource(id = R.dimen.movie_summary_image_size))
-                .width(dimensionResource(id = R.dimen.movie_summary_image_width))
+                .height(dimensionResource(id = R.dimen.image_height_xxlarge))
+                .width(dimensionResource(id = R.dimen.image_width_xlarge))
                 .padding(
-                    top = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                    start = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                    bottom = dimensionResource(id = R.dimen.holder_profile_movie_layout_padding_bottom)
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    bottom = dimensionResource(id = R.dimen.padding_medium)
                 )
                 .clickable {
                     movie?.let {
@@ -73,8 +73,8 @@ fun MovieProfile(
         )
         Column(
             modifier = Modifier.padding(
-                top = dimensionResource(id = R.dimen.holder_item_movie_textview_margin),
-                start = dimensionResource(id = R.dimen.holder_movie_facts_textview_padding_right)
+                top = dimensionResource(id = R.dimen.padding_small),
+                start = dimensionResource(id = R.dimen.padding_large)
             )
         ) {
             movie?.title?.let {
@@ -88,9 +88,9 @@ fun MovieProfile(
                 Text(
                     text = it,
                     color = colorResource(id = R.color.color_grey),
-                    fontSize = dimensionResource(id = R.dimen.holder_item_movie_textview_size).value.sp,
+                    fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                     modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.activity_margin_top)
+                        top = dimensionResource(id = R.dimen.padding_small)
                     )
                 )
             }
@@ -108,7 +108,7 @@ fun MovieProfile(
                         }
                     },
                     modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.activity_margin_top)
+                        top = dimensionResource(id = R.dimen.padding_small)
                     )
                 )
             }
@@ -117,9 +117,9 @@ fun MovieProfile(
                 Text(
                     text = it,
                     color = colorResource(id = R.color.color_grey),
-                    fontSize = dimensionResource(id = R.dimen.holder_item_movie_textview_size).value.sp,
+                    fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                     modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.activity_margin_top)
+                        top = dimensionResource(id = R.dimen.padding_small)
                     )
                 )
             }
@@ -127,7 +127,7 @@ fun MovieProfile(
             Row(
                 modifier = Modifier
                     .padding(
-                        top = dimensionResource(id = R.dimen.activity_margin_top)
+                        top = dimensionResource(id = R.dimen.padding_small)
                     )
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -160,10 +160,10 @@ fun MovieProfile(
                 if (!movieSummary.isEmpty()) {
                     Text(
                         stringResource(id = R.string.rate),
-                        fontSize = dimensionResource(id = R.dimen.holder_movie_facts_text_size).value.sp,
+                        fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                         color = colorResource(id = R.color.color_orange_app),
                         modifier = Modifier
-                            .padding(end = dimensionResource(id = R.dimen.holder_profile_movie_rate_margin_right))
+                            .padding(end = dimensionResource(id = R.dimen.padding_xlarge))
                             .clickable(onClick = { onRateClick() })
                     )
                 }

@@ -72,7 +72,7 @@ fun EmptyStateItem(
                 ?: stringResource(id = R.string.empty_state_no_internet_msg),
             color = colorResource(id = R.color.color_white),
             fontFamily = FontFamily(listOf(Font(R.font.barlow_bold))),
-            fontSize = dimensionResource(id = R.dimen.login_text_size).value.sp,
+            fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
             modifier = Modifier
                 .padding(
                     top = 20.dp,
