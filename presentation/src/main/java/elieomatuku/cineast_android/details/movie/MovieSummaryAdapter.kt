@@ -9,12 +9,10 @@ import kotlin.properties.Delegates
 
 class MovieSummaryAdapter(
     private val onProfileClickedPicturePublisher: PublishSubject<Int>,
-    private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>>,
     private val onProfileLinkClickedPublisher: PublishSubject<String>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         const val TYPE_MOVIE_PROFILE = 0
-        const val TYPE_MENU_MOVIE = 1
         const val TYPE_EMPTY_STATE = -2
     }
 
@@ -22,8 +20,6 @@ class MovieSummaryAdapter(
         hasValidData = true
         errorMessage = null
     }
-
-    private var initialCheckedTab: String = MovieFragment.MOVIE_OVERVIEW
 
     var hasValidData = false
         private set
@@ -44,7 +40,7 @@ class MovieSummaryAdapter(
         return if (hasEmptyState) {
             1
         } else {
-            2
+            1
         }
     }
 
@@ -54,7 +50,6 @@ class MovieSummaryAdapter(
         } else {
             when (position) {
                 TYPE_MOVIE_PROFILE -> TYPE_MOVIE_PROFILE
-                TYPE_MENU_MOVIE -> TYPE_MENU_MOVIE
                 else -> -1
             }
         }
@@ -67,7 +62,6 @@ class MovieSummaryAdapter(
                 onProfileClickedPicturePublisher,
                 onProfileLinkClickedPublisher
             )
-            TYPE_MENU_MOVIE -> MovieSegmentedButtonHolder.newInstance(parent)
             TYPE_EMPTY_STATE -> EmptyStateHolder.newInstance(parent)
             else -> throw RuntimeException("View Type does not exist.")
         }
@@ -76,22 +70,6 @@ class MovieSummaryAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is MovieProfileHolder) {
             holder.update(movieSummary)
-        }
-
-        if (holder is MovieSegmentedButtonHolder) {
-            holder.update(movieSummary, initialCheckedTab)
-
-            holder.overviewSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieFragment.MOVIE_OVERVIEW, movieSummary))
-            }
-
-            holder.peopleSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieFragment.MOVIE_CREW, movieSummary))
-            }
-
-            holder.similarSegmentBtn.setOnClickListener {
-                segmentedButtonsPublisher.onNext(Pair(MovieFragment.SIMILAR_MOVIES, movieSummary))
-            }
         }
 
         if (holder is EmptyStateHolder) {

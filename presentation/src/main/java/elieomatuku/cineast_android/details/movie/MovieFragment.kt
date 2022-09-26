@@ -3,15 +3,30 @@ package elieomatuku.cineast_android.details.movie
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.accompanist.appcompattheme.AppCompatTheme
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.pagerTabIndicatorOffset
+import com.google.accompanist.pager.rememberPagerState
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
@@ -20,11 +35,13 @@ import elieomatuku.cineast_android.details.BareOverviewWidget
 import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamWidget
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
 import elieomatuku.cineast_android.domain.model.*
+import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.*
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class MovieFragment : BaseFragment() {
@@ -67,17 +84,9 @@ class MovieFragment : BaseFragment() {
     private val onProfileLinkClickedObservable: Observable<String>
         get() = onProfileLinkClickedPublisher.hide()
 
-    private val segmentedButtonsPublisher: PublishSubject<Pair<String, MovieSummary>> by lazy {
-        PublishSubject.create()
-    }
-
-    private val segmentedButtonsObservable: Observable<Pair<String, MovieSummary>>
-        get() = segmentedButtonsPublisher.hide()
-
     private val adapter: MovieSummaryAdapter by lazy {
         MovieSummaryAdapter(
             onProfileClickedPicturePublisher,
-            segmentedButtonsPublisher,
             onProfileLinkClickedPublisher
         )
     }
@@ -210,14 +219,6 @@ class MovieFragment : BaseFragment() {
         )
 
         rxSubs.add(
-            segmentedButtonsObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { displayAndMovieSummary ->
-                    gotoTab(displayAndMovieSummary)
-                }
-        )
-
-        rxSubs.add(
             onProfileLinkClickedObservable
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { url ->
@@ -335,16 +336,42 @@ class MovieFragment : BaseFragment() {
 
         binding.composeviewContainer.setContent {
             AppCompatTheme {
-                MovieOverviewWidget(
-                    overviewTitle = getString(R.string.plot_summary),
+                MoviePager(
+                    viewModelFactory = viewModelFactory,
                     movieSummary = movieSummary,
+                    movie = movie,
+                    onSeeAllClick = {
+                        it.asListOfType<Movie>()?.let { movies ->
+                            ContentsActivity.startActivity(
+                                requireContext(),
+                                movies,
+                                R.string.movies
+                            )
+                        }
+
+                        it.asListOfType<Person>()?.let { people ->
+                            ContentsActivity.startActivity(
+                                requireContext(),
+                                people,
+                                R.string.people
+                            )
+                        }
+                    },
+                    onItemClick = {
+                        if (it is Person) {
+                            gotoPerson(it)
+                        }
+
+                        if (it is Movie) {
+                            gotoMovie(it)
+                        }
+                    },
                     onTrailerClick = { trailer ->
-                        trailer.key?.let {
+                        trailer?.key?.let {
                             showTrailer(it)
                         }
-                    }) { title, overview ->
-                    BareOverviewWidget(title = title, overview = overview)
-                }
+                    }
+                )
             }
         }
     }
@@ -363,63 +390,6 @@ class MovieFragment : BaseFragment() {
         adapter.errorMessage = errorMsg
         adapter.notifyDataSetChanged()
         binding.listViewContainer.visibility = View.VISIBLE
-    }
-
-    private fun gotoTab(displayAndMovieSummary: Pair<String, MovieSummary>) {
-        binding.composeviewContainer.setContent {
-            AppCompatTheme {
-                when (displayAndMovieSummary.first) {
-                    SIMILAR_MOVIES -> {
-                        val movieSummary: MovieSummary = displayAndMovieSummary.second
-                        val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
-                        MoviesWidget(
-                            viewModelFactory = viewModelFactory,
-                            movies = similarMovies,
-                            sectionTitle = movie.title ?: getString(R.string.movies),
-                            onItemClick = { content, _ ->
-                                gotoMovie(content)
-                            },
-                            onSeeAllClick = { movies ->
-                                ContentsActivity.startActivity(
-                                    requireContext(),
-                                    movies,
-                                    R.string.movies
-                                )
-                            }
-                        )
-                    }
-                    MOVIE_CREW -> {
-                        val cast = displayAndMovieSummary.second.cast
-                        val crew = displayAndMovieSummary.second.crew
-                        if (cast != null && crew != null) {
-                            MovieTeamWidget(
-                                cast = cast,
-                                crew = crew,
-                                onItemClick = ::gotoPerson
-                            ) {
-                                ContentsActivity.startActivity(
-                                    requireContext(),
-                                    it,
-                                    R.string.people
-                                )
-                            }
-                        }
-                    }
-                    MOVIE_OVERVIEW -> {
-                        MovieOverviewWidget(
-                            overviewTitle = getString(R.string.plot_summary),
-                            movieSummary = displayAndMovieSummary.second,
-                            onTrailerClick = { trailer ->
-                                trailer.key?.let {
-                                    showTrailer(it)
-                                }
-                            }) { title, overview ->
-                            BareOverviewWidget(title = title, overview = overview)
-                        }
-                    }
-                }
-            }
-        }
     }
 
     private fun showTrailer(trailerKey: String) {
@@ -450,5 +420,100 @@ class MovieFragment : BaseFragment() {
     private fun goToWebsite(url: String) {
         val directions = MovieFragmentDirections.navigateToWebsite(url)
         findNavController().navigate(directions)
+    }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun MoviePager(
+    viewModelFactory: ViewModelProvider.Factory,
+    movieSummary: MovieSummary,
+    movie: Movie,
+    onSeeAllClick: (List<Content>) -> Unit,
+    onItemClick: (Content) -> Unit,
+    onTrailerClick: (Trailer?) -> Unit
+) {
+    val pagerState = rememberPagerState()
+    val scope = rememberCoroutineScope()
+    val pages: List<Int> by lazy {
+        listOf(
+            R.string.overview,
+            R.string.people,
+            R.string.similar
+        )
+    }
+
+    Column {
+        TabRow(
+            selectedTabIndex = pagerState.currentPage,
+            contentColor = colorResource(id = R.color.color_orange_app),
+            backgroundColor = colorResource(id = R.color.color_black_app),
+            indicator = { tabPositions ->
+                TabRowDefaults.Indicator(
+                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                )
+            }
+        ) {
+            pages.forEachIndexed { index, title ->
+                Tab(
+                    text = { Text(stringResource(id = title).uppercase()) },
+                    selected = pagerState.currentPage == index,
+                    onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(index)
+                        }
+                    },
+                    selectedContentColor = colorResource(id = R.color.color_orange_app),
+                    unselectedContentColor = colorResource(id = R.color.color_grey_app),
+                )
+            }
+        }
+
+        HorizontalPager(
+            count = pages.size,
+            state = pagerState
+        ) { page ->
+            when (pages[page]) {
+                R.string.overview -> {
+                    MovieOverviewWidget(
+                        overviewTitle = stringResource(R.string.plot_summary),
+                        movieSummary = movieSummary,
+                        onTrailerClick = { trailer ->
+                            onTrailerClick(trailer)
+                        }) { title, overview ->
+                        BareOverviewWidget(title = title, overview = overview)
+                    }
+                }
+                R.string.people -> {
+                    val cast = movieSummary.cast
+                    val crew = movieSummary.crew
+                    if (cast != null && crew != null) {
+                        MovieTeamWidget(
+                            cast = cast,
+                            crew = crew,
+                            onItemClick = {
+                                onItemClick(it)
+                            }
+                        ) {
+                            onSeeAllClick(it)
+                        }
+                    }
+                }
+                R.string.similar -> {
+                    val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
+                    MoviesWidget(
+                        viewModelFactory = viewModelFactory,
+                        movies = similarMovies,
+                        sectionTitle = movie.title ?: stringResource(R.string.movies),
+                        onItemClick = { content, _ ->
+                            onItemClick(content)
+                        },
+                        onSeeAllClick = { movies ->
+                            onSeeAllClick(movies)
+                        }
+                    )
+                }
+            }
+        }
     }
 }
