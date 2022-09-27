@@ -9,7 +9,7 @@
     <dimen name="tababr_rule_width_neg">-1dp</dimen>
 
     <!--  Layout height values  -->
-    <dimen name="layout_xsmall">24dp</dimen>
+    <dimen name="layout_height_xsmall">24dp</dimen>
     <dimen name="layout_height_small">40dp</dimen>
     <dimen name="layout_height_xlarge">240dp</dimen>
     <dimen name="layout_height_large">320dp</dimen>

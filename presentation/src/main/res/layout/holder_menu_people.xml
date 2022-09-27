@@ -8,7 +8,7 @@
     <info.hoang8f.android.segmented.SegmentedGroup
         android:id="@+id/segmented_group"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/layout_xsmall"
+        android:layout_height="@dimen/layout_height_xsmall"
         android:layout_marginBottom="@dimen/padding_small"
         android:orientation="horizontal"
         android:visibility="gone"
