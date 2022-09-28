@@ -5,17 +5,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.MenuHost
@@ -30,6 +25,7 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.details.BareOverviewWidget
+import elieomatuku.cineast_android.details.DetailTabs
 import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamWidget
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
 import elieomatuku.cineast_android.domain.model.*
@@ -418,35 +414,16 @@ fun MovieTabs(
     onItemClick: (Content) -> Unit,
     onTrailerClick: (Trailer?) -> Unit
 ) {
-    var state by remember { mutableStateOf(0) }
-    val tabs: List<Int> by lazy {
+    val tabs by lazy {
         listOf(
             R.string.overview,
             R.string.people,
             R.string.similar
         )
     }
-    Column {
-        TabRow(
-            selectedTabIndex = state,
-            contentColor = colorResource(id = R.color.color_orange_app),
-            backgroundColor = colorResource(id = R.color.color_black_app), 
-            modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_small))
-        ) {
-            tabs.forEachIndexed { index, title ->
-                Tab(
-                    text = { Text(stringResource(id = title).uppercase()) },
-                    selected = state == index,
-                    onClick = {
-                        state = index
-                    },
-                    selectedContentColor = colorResource(id = R.color.color_orange_app),
-                    unselectedContentColor = colorResource(id = R.color.color_grey_app),
-                )
-            }
-        }
 
-        when (tabs[state]) {
+    DetailTabs(tabs = tabs) {
+        when (it) {
             R.string.overview -> {
                 MovieOverviewWidget(
                     overviewTitle = stringResource(R.string.plot_summary),
