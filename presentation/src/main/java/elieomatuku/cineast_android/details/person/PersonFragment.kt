@@ -3,78 +3,78 @@ package elieomatuku.cineast_android.details.person
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.core.content.res.ResourcesCompat
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.stringResource
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
-import elieomatuku.cineast_android.databinding.FragmentContentDetailsBinding
 import elieomatuku.cineast_android.details.BareOverviewWidget
+import elieomatuku.cineast_android.details.DetailTabs
+import elieomatuku.cineast_android.details.Profile
 import elieomatuku.cineast_android.details.movie.MovieFragmentDirections
-import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.*
+import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.ContentUtils
-import elieomatuku.cineast_android.utils.DividerItemDecorator
 import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.viewholder.EmptyStateItem
+import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.MoviesWidget
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.Observable
 
 class PersonFragment : BaseFragment() {
-    companion object {
-        const val OVERVIEW = "overview"
-        const val KNOWN_FOR = "known_for"
-    }
-
     private val viewModel: PersonViewModel by viewModel()
-    private lateinit var binding: FragmentContentDetailsBinding
     private lateinit var menuHost: MenuHost
     private val args: PersonFragmentArgs by navArgs()
-
-    private val onProfilePictureClickedPublisher: PublishSubject<Int> by lazy {
-        PublishSubject.create()
-    }
-
-    private val onProfilePictureClickedObservable: Observable<Int>
-        get() = onProfilePictureClickedPublisher.hide()
-
-    private val onProfileLinkClickedPublisher: PublishSubject<String> by lazy {
-        PublishSubject.create()
-    }
-
-    private val onProfileLinkClickedObservable: Observable<String>
-        get() = onProfileLinkClickedPublisher.hide()
-
-    private val onSegmentedButtonsPublisher: PublishSubject<Pair<String, PersonDetails>> by lazy {
-        PublishSubject.create()
-    }
-
-    private val onSegmentedButtonsObservable: Observable<Pair<String, PersonDetails>>
-        get() = onSegmentedButtonsPublisher.hide()
-
-    private val adapter: PersonAdapter by lazy {
-        PersonAdapter(
-            onProfilePictureClickedPublisher,
-            onSegmentedButtonsPublisher,
-            onProfileLinkClickedPublisher
-        )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentContentDetailsBinding.inflate(inflater, container, false)
-        return binding.root
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                AppCompatTheme {
+                    PersonScreen(
+                        viewModelFactory = viewModelFactory,
+                        hasNetworkConnection = connectionService.hasNetworkConnection,
+                        goToGallery = { navigateToGallery() },
+                        goToWebsite = {
+                            goToWebsite(it)
+                        },
+                        gotoMovie = {
+                            gotoMovie(it)
+                        },
+                        onSeeAllClick = {
+                            it.asListOfType<Movie>()?.let { movies ->
+                                ContentsActivity.startActivity(
+                                    requireContext(),
+                                    movies,
+                                    R.string.movies
+                                )
+                            }
+                        }
+                    )
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,57 +101,14 @@ class PersonFragment : BaseFragment() {
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        binding.listViewContainer.adapter = adapter
-        binding.listViewContainer.layoutManager = LinearLayoutManager(requireContext())
-
-        val screenName = args.screenName
-//        binding.toolbar.title = screenName
         val person = args.person
         viewModel.getPersonDetails(person)
         viewModel.getKnownForMovies(person)
         viewModel.getImages(person)
 
         viewModel.viewState.observe(viewLifecycleOwner) {
-            if (it.isLoading) {
-                showLoading(view)
-            } else {
-                hideLoading(view)
-            }
-
             updateActionShare()
-            updateView(it.person, it.knownFor)
-
-            it.viewError?.consume()?.apply {
-                updateErrorView(this.message)
-            }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        rxSubs.add(
-            onSegmentedButtonsObservable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    gotoTab(it)
-                }
-        )
-
-        rxSubs.add(
-            onProfilePictureClickedObservable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    navigateToGallery()
-                }
-        )
-
-        rxSubs.add(
-            onProfileLinkClickedObservable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    goToWebsite(it)
-                }
-        )
     }
 
     private fun updateActionShare() {
@@ -174,38 +131,6 @@ class PersonFragment : BaseFragment() {
         }
     }
 
-    private fun updateView(
-        person: PersonDetails?,
-        knownFor: List<Movie>?
-    ) {
-        if (person != null && knownFor != null) {
-            adapter.personDetails = person
-
-            val dividerItemDecoration = DividerItemDecorator(
-                ResourcesCompat.getDrawable(
-                    resources,
-                    R.drawable.item_decoration,
-                    requireContext().theme
-                )
-            )
-            binding.listViewContainer.addItemDecoration(dividerItemDecoration)
-
-            adapter.notifyDataSetChanged()
-            initDetailsFragment(person)
-        }
-    }
-
-    private fun initDetailsFragment(personDetails: PersonDetails) {
-        binding.composeviewContainer.setContent {
-            AppCompatTheme {
-                BareOverviewWidget(
-                    title = getString(R.string.biography),
-                    overview = personDetails.biography ?: String()
-                )
-            }
-        }
-    }
-
     private fun navigateToGallery() {
         val directions =
             PersonFragmentDirections.navigateToGallery(
@@ -214,43 +139,6 @@ class PersonFragment : BaseFragment() {
                     .toTypedArray()
             )
         findNavController().navigate(directions)
-    }
-
-    private fun updateErrorView(errorMsg: String?) {
-        adapter.errorMessage = errorMsg
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun gotoTab(
-        displayAndPersonDetails: Pair<String, PersonDetails>
-    ) {
-        binding.composeviewContainer.setContent {
-            AppCompatTheme {
-                when (displayAndPersonDetails.first) {
-                    OVERVIEW -> {
-                        BareOverviewWidget(
-                            title = getString(R.string.biography),
-                            overview = displayAndPersonDetails.second.biography ?: String()
-                        )
-                    }
-                    KNOWN_FOR -> {
-                        MoviesWidget(
-                            viewModelFactory = viewModelFactory,
-                            movies = viewModel.knownForMovies,
-                            sectionTitle = getString(R.string.cast),
-                            onItemClick = { content, _ ->
-                                gotoMovie(content)
-                            },
-                            onSeeAllClick = { movies ->
-                                context?.let {
-                                    ContentsActivity.startActivity(it, movies, R.string.movies)
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-        }
     }
 
     private fun gotoMovie(content: Content) {
@@ -266,5 +154,118 @@ class PersonFragment : BaseFragment() {
     private fun goToWebsite(url: String) {
         val directions = PersonFragmentDirections.navigateToWebsite(url)
         findNavController().navigate(directions)
+    }
+}
+
+@Composable
+fun PersonScreen(
+    viewModelFactory: ViewModelProvider.Factory,
+    viewModel: PersonViewModel = viewModel(factory = viewModelFactory),
+    hasNetworkConnection: Boolean,
+    goToGallery: () -> Unit,
+    goToWebsite: (String) -> Unit,
+    gotoMovie: (Movie) -> Unit,
+    onSeeAllClick: (List<Content>) -> Unit,
+) {
+    val viewState by viewModel.viewState.observeAsState()
+
+    viewState?.apply {
+        Box(modifier = Modifier.fillMaxSize()) {
+            person?.let { person ->
+                Column {
+                    Profile(
+                        imagePath = person.profilePath,
+                        title = person.name,
+                        subTitle = person.birthday,
+                        description = person.placeOfBirth,
+                        webSiteLink = person.homepage,
+                        onProfileClick = {
+                            goToGallery()
+                        },
+                        onWebSiteLinkClick = {
+                            goToWebsite(it)
+                        }
+                    )
+
+                    PersonTabs(
+                        viewModelFactory = viewModelFactory,
+                        person = person,
+                        onSeeAllClick = {
+                            onSeeAllClick(it)
+                        },
+                        movies = viewModel.knownForMovies,
+                        onItemClick = {
+                            if (it is Movie) {
+                                gotoMovie(it)
+                            }
+                        }
+                    )
+                }
+            }
+
+            viewError?.consume()?.apply {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    EmptyStateItem(
+                        errorMsg = message,
+                        hasNetworkConnection = hasNetworkConnection
+                    )
+                }
+            }
+
+            if (isLoading) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LoadingIndicatorWidget()
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun PersonTabs(
+    viewModelFactory: ViewModelProvider.Factory,
+    person: PersonDetails,
+    movies: List<Movie>,
+    onSeeAllClick: (List<Content>) -> Unit,
+    onItemClick: (Content) -> Unit,
+) {
+    val tabs by lazy {
+        listOf(
+            R.string.overview,
+            R.string.known_for
+        )
+    }
+
+    DetailTabs(tabs = tabs) {
+        when (it) {
+            R.string.overview -> {
+                BareOverviewWidget(
+                    title = stringResource(R.string.biography),
+                    overview = person.biography ?: String()
+                )
+            }
+            R.string.known_for -> {
+                MoviesWidget(
+                    viewModelFactory = viewModelFactory,
+                    movies = movies,
+                    sectionTitle = stringResource(R.string.cast),
+                    onItemClick = { content, _ ->
+                        onItemClick(content)
+                    },
+                    onSeeAllClick = { movies ->
+                        onSeeAllClick(movies)
+                    }
+                )
+            }
+        }
     }
 }

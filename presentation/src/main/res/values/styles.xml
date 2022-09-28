@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -53,7 +52,6 @@
         <item name="colorSecondary">@color/color_white</item>
     </style>
 
-
     <style name="CineastRatingBarTheme" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/color_grey_light</item>
         <item name="colorControlActivated">@color/color_orange_app</item>
@@ -63,6 +61,4 @@
         <item name="colorControlNormal">@color/color_grey_light</item>
         <item name="colorControlActivated">@android:color/holo_green_light</item>
     </style>
-
-
 </resources>

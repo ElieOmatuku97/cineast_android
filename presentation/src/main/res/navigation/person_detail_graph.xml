@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/person_detail"
         android:name="elieomatuku.cineast_android.details.person.PersonFragment"
-        android:label="Person Detail"
-        tools:layout="@layout/fragment_content_details">
+        android:label="Person Detail">
         <action
             android:id="@+id/navigate_to_gallery"
             app:destination="@id/gallery" />

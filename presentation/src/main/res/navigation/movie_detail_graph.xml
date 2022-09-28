@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/movie_detail"
         android:name="elieomatuku.cineast_android.details.movie.MovieFragment"
-        android:label="Movie Detail"
-        tools:layout="@layout/fragment_content_details">
+        android:label="Movie Detail">
         <action
             android:id="@+id/navigate_to_video"
             app:destination="@id/video" />
