@@ -9,7 +9,6 @@ import elieomatuku.cineast_android.viewholder.EmptyStateHolder
 import elieomatuku.cineast_android.viewholder.MovieItemHolder
 import elieomatuku.cineast_android.viewholder.PeopleItemHolder
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 import kotlin.properties.Delegates
 
 open class ContentsAdapter(

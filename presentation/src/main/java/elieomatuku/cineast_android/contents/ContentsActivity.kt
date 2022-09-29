@@ -80,7 +80,6 @@ class ContentsActivity : BaseActivity() {
 
         rxSubs.add(
             contentSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe { content: Content ->
                     val params = Bundle()
 

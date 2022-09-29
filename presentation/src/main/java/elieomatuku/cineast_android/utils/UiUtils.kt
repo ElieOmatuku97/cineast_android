@@ -1,7 +1,6 @@
 package elieomatuku.cineast_android.utils
 
 import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -11,43 +10,19 @@ import android.os.Build
 import android.text.Spannable
 import android.text.Spanned
 import android.text.style.URLSpan
-import android.util.DisplayMetrics
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Genre
-import timber.log.Timber
 
 object UiUtils {
-
-    val LOG_TAG = UiUtils::class.java.simpleName
-    val loadingViewDimRes: Int
-        get() = R.dimen.loading_widget_dimen
-
-    fun createLoadingIndicator(activity: Activity): PopupWindow {
-        val inflater = LayoutInflater.from(activity)
-        val loadingView = inflater.inflate(R.layout.layout_loading, null)
-        val dimen = activity.resources.getDimensionPixelSize(loadingViewDimRes)
-        val popup = PopupWindow(dimen, dimen)
-        popup.contentView = loadingView
-        return popup
-    }
-
-    fun getDisplayMetrics(activity: Activity): DisplayMetrics {
-        val displayMetrics = DisplayMetrics()
-        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        return displayMetrics
-    }
 
     fun getImageUrl(path: String?, imageUrl: String?, fallBackImageUrl: String? = null): String {
         return getImageUri(imageUrl, fallBackImageUrl)
