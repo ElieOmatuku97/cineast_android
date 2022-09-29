@@ -5,45 +5,41 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
 
-        <com.google.android.material.appbar.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/results_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:background="@drawable/bg_actionbar"
+            android:minHeight="?android:attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextAppearance="@style/ToolbarTextStyle"
+            app:titleTextColor="@color/color_orange_app" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/results_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_actionbar"
-                android:minHeight="?android:attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextAppearance="@style/ToolbarTextStyle"
-                app:titleTextColor="@color/color_orange_app" />
+    </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_black_app"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_results"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/padding_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
 
-       <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-           android:background="@color/color_black_app"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-
-           <androidx.recyclerview.widget.RecyclerView
-               android:id="@+id/list_results"
-               android:layout_width="0dp"
-               android:layout_height="0dp"
-               android:layout_marginTop="@dimen/padding_small"
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintBottom_toBottomOf="parent"
-               app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintTop_toBottomOf="parent"
-               />
-
-       </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

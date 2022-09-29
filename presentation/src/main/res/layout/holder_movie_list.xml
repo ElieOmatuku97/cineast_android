@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/padding_small">
 
-
     <ImageView
         android:id="@+id/content_image_view"
         android:layout_width="50dp"
@@ -18,7 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_launcher_background" />
-
 
     <TextView
         android:id="@+id/movie_name_view"
@@ -59,8 +57,7 @@
         app:layout_constraintBottom_toBottomOf="@id/movie_rating_bar"
         app:layout_constraintStart_toEndOf="@id/content_image_view"
         app:layout_constraintTop_toTopOf="@id/movie_rating_bar"
-        tools:text="(7.5, 39)"
-        />
+        tools:text="(7.5, 39)" />
 
 
     <View
@@ -119,12 +116,12 @@
         app:layout_constraintBottom_toBottomOf="@id/user_rating_bar"
         app:layout_constraintStart_toEndOf="@id/content_image_view"
         app:layout_constraintTop_toTopOf="@id/user_rating_bar"
-        tools:text="(7.5, me)"
-        />
+        tools:text="(7.5, me)" />
 
 
     <androidx.appcompat.widget.AppCompatRatingBar
         android:id="@+id/user_rating_bar"
+        style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
@@ -138,7 +135,6 @@
         app:layout_constraintStart_toEndOf="@id/user_rating"
         app:layout_constraintTop_toBottomOf="@id/movie_rating_bar"
         app:layout_constraintVertical_bias="0.32999998"
-        style="?android:attr/ratingBarStyleSmall"
         tools:visibility="visible" />
 
 
