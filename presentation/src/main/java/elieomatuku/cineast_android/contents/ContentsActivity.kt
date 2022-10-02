@@ -14,7 +14,6 @@ import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.details.person.PersonFragment
 import elieomatuku.cineast_android.utils.Constants
 import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_content.*
 import java.io.Serializable
