@@ -2,7 +2,6 @@ package elieomatuku.cineast_android.contents
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
@@ -67,7 +66,7 @@ open class ContentsAdapter(
                 if (contents.first() is Movie) {
                     MovieItemHolder.newInstance(parent)
                 } else {
-                    PeopleItemHolder.newInstance(parent, R.layout.holder_people_list)
+                    PeopleItemHolder.newInstance(parent)
                 }
             }
 
@@ -108,6 +107,7 @@ open class ContentsAdapter(
         when (holder) {
             is EmptyStateHolder -> holder.composeView.disposeComposition()
             is MovieItemHolder -> holder.composeView.disposeComposition()
+            is PeopleItemHolder -> holder.composeView.disposeComposition()
             else -> {}
         }
     }

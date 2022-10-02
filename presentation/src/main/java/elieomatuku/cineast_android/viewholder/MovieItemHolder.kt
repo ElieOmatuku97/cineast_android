@@ -48,142 +48,162 @@ class MovieItemHolder(val composeView: ComposeView) : RecyclerView.ViewHolder(co
 const val USER_RATING_STRING_FORMAT = "(%.1f, me)"
 const val MOVIE_RATING_STRING_FORMAT = "(%.1f, %d)"
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MovieItem(movie: Movie) {
-    val fallBackUrl = stringResource(R.string.image_small)
-    val imageUrl = remember {
-        UiUtils.getImageUrl(movie.posterPath, fallBackUrl)
-    }
-    Row(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_small))) {
-        Image(
-            painter = rememberImagePainter(
-                data = imageUrl,
-            ),
-            contentDescription = null,
-            modifier = Modifier
-                .height(dimensionResource(id = R.dimen.image_height_xxlarge))
-                .width(dimensionResource(id = R.dimen.image_width_xlarge))
-                .padding(
-                    top = dimensionResource(id = R.dimen.padding_small),
-                    start = dimensionResource(id = R.dimen.padding_small),
-                    bottom = dimensionResource(id = R.dimen.padding_medium)
+    ContentItem(
+        imagePath = movie.posterPath,
+        title = movie.title ?: movie.originalTitle,
+        subTitle = movie.releaseDate
+    ) {
+        movie.voteAverage?.let { voteAverage ->
+            Row(
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.padding_small)
                 )
-
-        )
-        Column(
-            modifier = Modifier.padding(
-                top = dimensionResource(id = R.dimen.padding_small),
-                start = dimensionResource(id = R.dimen.padding_small)
-            )
-        ) {
-            (movie.title ?: movie.originalTitle)?.let {
+            ) {
                 Text(
-                    it,
-                    fontSize = dimensionResource(id = R.dimen.text_size_medium).value.sp,
-                    fontWeight = FontWeight.Bold,
+                    text = String.format(
+                        MOVIE_RATING_STRING_FORMAT,
+                        voteAverage,
+                        movie.voteCount
+                    ),
                     color = colorResource(id = R.color.color_white),
-                )
-            }
-
-            movie.releaseDate?.let {
-                Text(
-                    text = it,
-                    color = colorResource(id = R.color.color_grey),
                     fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                     modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.padding_small)
+                        end = dimensionResource(id = R.dimen.padding_small)
                     )
                 )
-            }
-
-            movie.voteAverage?.let { voteAverage ->
-                Row(
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.padding_small)
-                    )
-                ) {
-                    Text(
-                        text = String.format(
-                            MOVIE_RATING_STRING_FORMAT,
-                            voteAverage,
-                            movie.voteCount
-                        ),
-                        color = colorResource(id = R.color.color_white),
-                        fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-                        modifier = Modifier.padding(
-                            end = dimensionResource(id = R.dimen.padding_small)
+                AndroidView(factory = {
+                    AppCompatRatingBar(
+                        it,
+                        null,
+                        R.attr.ratingBarStyleSmall
+                    ).apply {
+                        val params = ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
                         )
-                    )
-                    AndroidView(factory = {
-                        AppCompatRatingBar(
-                            it,
-                            null,
-                            R.attr.ratingBarStyleSmall
-                        ).apply {
-                            val params = ViewGroup.LayoutParams(
-                                ViewGroup.LayoutParams.WRAP_CONTENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                            )
-                            rating = 2f
-                            scaleX = 0.7f
-                            scaleY = 0.65f
-                            pivotX = 0f
-                            pivotY = 0f
-                            layoutParams = params
+                        rating = 2f
+                        scaleX = 0.7f
+                        scaleY = 0.65f
+                        pivotX = 0f
+                        pivotY = 0f
+                        layoutParams = params
 
-                            numStars = 10
-                            stepSize = 0.1f
-                            rating = voteAverage
-                        }
-                    })
-                }
+                        numStars = 10
+                        stepSize = 0.1f
+                        rating = voteAverage
+                    }
+                })
             }
-
-            movie.currentUserRating?.let { userRating ->
-                Row(
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.padding_small)
-                    ),
-                    horizontalArrangement = Arrangement.spacedBy(0.dp)
-                ) {
-                    Text(
-                        text = String.format(USER_RATING_STRING_FORMAT, userRating),
-                        color = colorResource(id = R.color.color_white),
-                        fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-                        modifier = Modifier.padding(
-                            end = dimensionResource(id = R.dimen.padding_small)
-                        )
-                    )
-                    AndroidView(factory = {
-                        AppCompatRatingBar(
-                            it,
-                            null,
-                            R.attr.ratingBarStyleSmall
-                        ).apply {
-                            val params = ViewGroup.LayoutParams(
-                                ViewGroup.LayoutParams.WRAP_CONTENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                            )
-                            rating = 2f
-                            scaleX = 0.7f
-                            scaleY = 0.65f
-                            pivotX = 0f
-                            pivotY = 0f
-                            layoutParams = params
-
-                            numStars = 10
-                            stepSize = 0.1f
-                            rating = userRating
-                        }
-                    })
-                }
-            }
-            Divider(
-                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_xlarge)),
-                color = colorResource(id = R.color.color_grey_app),
-                thickness = 0.5.dp
-            )
         }
+
+        movie.currentUserRating?.let { userRating ->
+            Row(
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.padding_small)
+                ),
+                horizontalArrangement = Arrangement.spacedBy(0.dp)
+            ) {
+                Text(
+                    text = String.format(USER_RATING_STRING_FORMAT, userRating),
+                    color = colorResource(id = R.color.color_white),
+                    fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                    modifier = Modifier.padding(
+                        end = dimensionResource(id = R.dimen.padding_small)
+                    )
+                )
+                AndroidView(factory = {
+                    AppCompatRatingBar(
+                        it,
+                        null,
+                        R.attr.ratingBarStyleSmall
+                    ).apply {
+                        val params = ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        )
+                        rating = 2f
+                        scaleX = 0.7f
+                        scaleY = 0.65f
+                        pivotX = 0f
+                        pivotY = 0f
+                        layoutParams = params
+
+                        numStars = 10
+                        stepSize = 0.1f
+                        rating = userRating
+                    }
+                })
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalCoilApi::class)
+@Composable
+fun ContentItem(
+    imagePath: String?,
+    title: String?,
+    subTitle: String? = null,
+    child: @Composable () -> Unit = {}
+) {
+    val fallBackUrl = stringResource(R.string.image_small)
+    val imageUrl = remember {
+        UiUtils.getImageUrl(imagePath, fallBackUrl)
+    }
+    Column(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_small))) {
+        Row {
+            Image(
+                painter = rememberImagePainter(
+                    data = imageUrl,
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(dimensionResource(id = R.dimen.image_height_xxlarge))
+                    .width(dimensionResource(id = R.dimen.image_width_xlarge))
+                    .padding(
+                        top = dimensionResource(id = R.dimen.padding_small),
+                        start = dimensionResource(id = R.dimen.padding_small),
+                        bottom = dimensionResource(id = R.dimen.padding_medium)
+                    )
+
+            )
+            Column(
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    start = dimensionResource(id = R.dimen.padding_small)
+                )
+            ) {
+                title?.let {
+                    Text(
+                        it,
+                        fontSize = dimensionResource(id = R.dimen.text_size_medium).value.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colorResource(id = R.color.color_white),
+                    )
+                }
+
+                subTitle?.let {
+                    Text(
+                        text = it,
+                        color = colorResource(id = R.color.color_grey),
+                        fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                        modifier = Modifier.padding(
+                            top = dimensionResource(id = R.dimen.padding_small)
+                        )
+                    )
+                }
+
+                child()
+
+            }
+        }
+        Divider(
+            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_xlarge)),
+            color = colorResource(id = R.color.color_grey_app),
+            thickness = 0.5.dp,
+            startIndent = dimensionResource(id = R.dimen.padding_xlarge)
+        )
     }
 }

@@ -1,61 +1,27 @@
 package elieomatuku.cineast_android.viewholder
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import elieomatuku.cineast_android.R
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.domain.model.Person
-import elieomatuku.cineast_android.utils.UiUtils
-import kotlinx.android.synthetic.main.holder_people_list.view.*
 
-class PeopleItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class PeopleItemHolder(val composeView: ComposeView) : RecyclerView.ViewHolder(composeView) {
     companion object {
-        fun createView(parent: ViewGroup, layoutRes: Int): View {
-            return LayoutInflater.from(parent.context).inflate(
-                layoutRes,
-                parent, false
-            )
+        private fun createComposeView(parent: ViewGroup): ComposeView {
+            return ComposeView(parent.context)
         }
 
-        fun newInstance(parent: ViewGroup, layoutRes: Int): PeopleItemHolder {
-            return PeopleItemHolder(createView(parent, layoutRes))
+        fun newInstance(parent: ViewGroup): PeopleItemHolder {
+            return PeopleItemHolder(createComposeView(parent))
         }
-    }
-
-    private val peopleImageView: ImageView? by lazy {
-        itemView.content_image_view
-    }
-
-    private val peopleNameView: TextView? by lazy {
-        itemView.people_name_view
     }
 
     fun update(actor: Person) {
-        val profilePath = actor.profilePath
-        if (!profilePath.isNullOrEmpty()) {
-            peopleImageView?.visibility = View.VISIBLE
-            Picasso.get()
-                .load(
-                    UiUtils.getImageUrl(
-                        profilePath,
-                        itemView.context.getString(R.string.image_small)
-                    )
-                )
-                .into(peopleImageView)
-        } else {
-            peopleImageView?.visibility = View.GONE
-        }
-
-        val actorName = actor.name
-        if (!actorName.isNullOrEmpty()) {
-            peopleNameView?.visibility = View.VISIBLE
-            peopleNameView?.text = actor.name
-        } else {
-            peopleNameView?.visibility = View.GONE
+        composeView.setContent {
+            AppCompatTheme {
+                ContentItem(imagePath = actor.profilePath, title = actor.name)
+            }
         }
     }
 }
