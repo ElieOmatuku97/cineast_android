@@ -53,11 +53,11 @@ class ContentsActivity : BaseActivity() {
     lateinit var contentsAdapter: ContentsAdapter
 
     private val moviesAdapter: ContentsAdapter by lazy {
-        ContentsAdapter(contentSelectPublisher, R.layout.holder_movie_list)
+        ContentsAdapter(contentSelectPublisher)
     }
 
     private val peopleAdapter: ContentsAdapter by lazy {
-        ContentsAdapter(contentSelectPublisher, R.layout.holder_people_list)
+        ContentsAdapter(contentSelectPublisher)
     }
 
     private val listView: RecyclerView by lazy {

@@ -17,5 +17,5 @@ data class Movie(
     val voteCount: Int? = null,
     val video: Boolean? = true,
     val voteAverage: Float? = null,
-    val rating: Float? = null
+    val currentUserRating: Float? = null
 ) : Content

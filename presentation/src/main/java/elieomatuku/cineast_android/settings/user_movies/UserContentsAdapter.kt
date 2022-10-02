@@ -7,9 +7,8 @@ import io.reactivex.subjects.PublishSubject
 
 class UserContentsAdapter(
     onItemClickPublisher: PublishSubject<Content>,
-    itemListLayoutRes: Int,
     private val onMovieRemovedPublisher: PublishSubject<Movie>? = null
-) : ContentsAdapter(onItemClickPublisher, itemListLayoutRes) {
+) : ContentsAdapter(onItemClickPublisher) {
 
     fun deleteItem(position: Int) {
         val movie = contents[position]

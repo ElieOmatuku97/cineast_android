@@ -90,7 +90,6 @@ class UserMoviesActivity : BaseActivity() {
     private val adapter: ContentsAdapter by lazy {
         UserContentsAdapter(
             movieSelectPublisher,
-            R.layout.holder_movie_list,
             onMovieRemovedPublisher
         )
     }

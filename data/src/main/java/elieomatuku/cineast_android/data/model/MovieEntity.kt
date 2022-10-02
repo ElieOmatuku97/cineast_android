@@ -42,7 +42,7 @@ data class MovieEntity(
                 voteCount = movieEntity.voteCount,
                 video = movieEntity.video,
                 voteAverage = movieEntity.voteAverage,
-                rating = movieEntity.rating
+                currentUserRating = movieEntity.rating
             )
         }
 
@@ -63,7 +63,7 @@ data class MovieEntity(
                 voteCount = movie.voteCount,
                 video = movie.video,
                 voteAverage = movie.voteAverage,
-                rating = movie.rating
+                rating = movie.currentUserRating
             )
         }
     }

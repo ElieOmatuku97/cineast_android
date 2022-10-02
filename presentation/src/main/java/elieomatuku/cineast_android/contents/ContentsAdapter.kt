@@ -2,6 +2,7 @@ package elieomatuku.cineast_android.contents
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
@@ -12,8 +13,7 @@ import io.reactivex.subjects.PublishSubject
 import kotlin.properties.Delegates
 
 open class ContentsAdapter(
-    private val onContentClickPublisher: PublishSubject<Content>,
-    private val contentLayoutRes: Int
+    private val onContentClickPublisher: PublishSubject<Content>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -65,9 +65,9 @@ open class ContentsAdapter(
 
             TYPE_CONTENT -> {
                 if (contents.first() is Movie) {
-                    MovieItemHolder.newInstance(parent, contentLayoutRes)
+                    MovieItemHolder.newInstance(parent)
                 } else {
-                    PeopleItemHolder.newInstance(parent, contentLayoutRes)
+                    PeopleItemHolder.newInstance(parent, R.layout.holder_people_list)
                 }
             }
 
@@ -107,6 +107,7 @@ open class ContentsAdapter(
     override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
         when (holder) {
             is EmptyStateHolder -> holder.composeView.disposeComposition()
+            is MovieItemHolder -> holder.composeView.disposeComposition()
             else -> {}
         }
     }
