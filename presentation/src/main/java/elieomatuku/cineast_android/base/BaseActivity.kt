@@ -23,7 +23,7 @@ abstract class BaseActivity : AppCompatActivity, KodeinAware {
     override val kodein: Kodein by closestKodein()
     val viewModelFactory: ViewModelProvider.Factory by instance()
 
-    private val connectionService: ConnectionService by instance()
+    protected val connectionService: ConnectionService by instance()
 
     val rxSubs: io.reactivex.disposables.CompositeDisposable by lazy {
         io.reactivex.disposables.CompositeDisposable()

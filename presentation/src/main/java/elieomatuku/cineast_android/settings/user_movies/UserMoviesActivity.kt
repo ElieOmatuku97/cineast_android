@@ -5,24 +5,33 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.widget.Toolbar
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseActivity
+import elieomatuku.cineast_android.contents.ContentScreen
 import elieomatuku.cineast_android.contents.ContentsAdapter
+import elieomatuku.cineast_android.databinding.ActivityContentBinding
 import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
-import elieomatuku.cineast_android.utils.SwipeToDeleteCallback
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.utils.consume
+import elieomatuku.cineast_android.viewholder.EmptyStateItem
+import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.activity_content.*
 import java.io.Serializable
 
 class UserMoviesActivity : BaseActivity() {
@@ -94,37 +103,25 @@ class UserMoviesActivity : BaseActivity() {
         )
     }
 
-    private val listView: RecyclerView by lazy {
-        list_view_container
-    }
-
-    private val toolbarView: Toolbar by lazy {
-        toolbar
-    }
+    private lateinit var binding: ActivityContentBinding
 
     private var isWatchList: Boolean = false
     private var isFavoriteList: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_content)
+
+        binding = ActivityContentBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         isFavoriteList = intent.getBooleanExtra(DISPLAY_FAVORITE_LIST, false)
         isWatchList = intent.getBooleanExtra(DISPLAY_WATCH_LIST, false)
 
         initData()
+        UiUtils.initToolbar(this, binding.toolbar, true)
 
-        UiUtils.initToolbar(this, toolbarView, true)
-
-        viewModel.viewState.observe(this) { state ->
-            if (state.userMovies.isNotEmpty()) {
-                updateView(state.userMovies)
-            }
-
-            state.viewError?.consume {
-                updateErrorView(it.message)
-            }
-        }
+        updateView()
     }
 
     override fun onResume() {
@@ -136,9 +133,7 @@ class UserMoviesActivity : BaseActivity() {
                     {
                         removeMovie(it)
                     },
-                    { t: Throwable ->
-
-                    }
+                    {}
                 )
         )
 
@@ -217,35 +212,24 @@ class UserMoviesActivity : BaseActivity() {
         return true
     }
 
-    private fun updateView(contents: List<Content>?) {
+    private fun updateView() {
         val screenNameRes = intent.getIntExtra(Constants.SCREEN_NAME_KEY, 0)
         setToolbarTitle(screenNameRes)
-        contents?.let {
-            if (it.isNotEmpty()) {
-                setUpListView(it)
+        binding.composeView.setContent {
+            AppCompatTheme {
+                UserContentScreen(
+                    viewModelFactory = viewModelFactory,
+                    viewModel = viewModel,
+                    hasNetworkConnection = connectionService.hasNetworkConnection
+                )
             }
         }
     }
 
     private fun setToolbarTitle(screenNameRes: Int? = null) {
-        toolbarView.title = screenNameRes?.let {
+        binding.toolbar.title = screenNameRes?.let {
             resources.getString(it)
         } ?: resources.getString(R.string.nav_title_discover)
-    }
-
-    private fun setUpListView(contents: List<Content>) {
-        adapter.contents = contents.toMutableList()
-        val itemTouchHelper = ItemTouchHelper(SwipeToDeleteCallback(adapter as UserContentsAdapter))
-        itemTouchHelper.attachToRecyclerView(listView)
-        listView.layoutManager = LinearLayoutManager(this)
-        listView.adapter = adapter
-        adapter.notifyDataSetChanged()
-    }
-
-    private fun updateErrorView(errorMsg: String?) {
-        adapter.errorMessage = errorMsg
-        listView.layoutManager = LinearLayoutManager(this)
-        adapter.notifyDataSetChanged()
     }
 
     private fun gotoMovie(params: Bundle) {
@@ -258,4 +242,47 @@ class UserMoviesActivity : BaseActivity() {
         super.onDestroy()
         rxSubs.clear()
     }
+}
+
+@Composable
+fun UserContentScreen(
+    viewModelFactory: ViewModelProvider.Factory,
+    viewModel: UserMoviesViewModel = viewModel(factory = viewModelFactory),
+    hasNetworkConnection: Boolean,
+) {
+
+    val viewState by viewModel.viewState.observeAsState()
+    viewState?.apply {
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (userMovies.isNotEmpty()) {
+                ContentScreen(userMovies) {
+
+                }
+            }
+
+            viewError?.consume()?.apply {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    EmptyStateItem(
+                        errorMsg = message,
+                        hasNetworkConnection = hasNetworkConnection
+                    )
+                }
+            }
+
+            if (isLoading) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    LoadingIndicatorWidget()
+                }
+            }
+        }
+    }
+
 }
