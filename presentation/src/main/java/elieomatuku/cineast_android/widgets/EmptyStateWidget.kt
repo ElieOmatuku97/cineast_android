@@ -1,56 +1,20 @@
 package elieomatuku.cineast_android.viewholder
 
-import android.view.ViewGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.*
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.recyclerview.widget.RecyclerView
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.connection.ConnectionService
-import org.kodein.di.Kodein
-import org.kodein.di.android.closestKodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
-
-class EmptyStateHolder(val composeView: ComposeView) : RecyclerView.ViewHolder(composeView),
-    KodeinAware {
-    companion object {
-        private fun createComposeView(parent: ViewGroup): ComposeView {
-            return ComposeView(parent.context)
-        }
-
-        fun newInstance(parent: ViewGroup): EmptyStateHolder {
-            return EmptyStateHolder(createComposeView(parent))
-        }
-    }
-
-    override val kodein: Kodein by closestKodein(itemView.context)
-    private val connectionService: ConnectionService by instance()
-
-    fun update(errorMsg: String?) {
-        composeView.setContent {
-            AppCompatTheme {
-                EmptyStateItem(
-                    errorMsg = errorMsg,
-                    hasNetworkConnection = connectionService.hasNetworkConnection
-                )
-            }
-        }
-    }
-}
 
 @Composable
-fun EmptyStateItem(
+fun EmptyStateWidget(
     errorMsg: String?,
     hasNetworkConnection: Boolean
 ) {

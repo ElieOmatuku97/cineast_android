@@ -34,7 +34,7 @@ import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.viewholder.EmptyStateItem
+import elieomatuku.cineast_android.viewholder.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.MoviesWidget
 
@@ -209,7 +209,7 @@ fun PersonScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    EmptyStateItem(
+                    EmptyStateWidget(
                         errorMsg = message,
                         hasNetworkConnection = hasNetworkConnection
                     )

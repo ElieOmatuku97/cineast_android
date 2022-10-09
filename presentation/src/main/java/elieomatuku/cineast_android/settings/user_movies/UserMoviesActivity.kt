@@ -22,16 +22,12 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseActivity
 import elieomatuku.cineast_android.contents.ContentScreen
-import elieomatuku.cineast_android.contents.ContentsAdapter
 import elieomatuku.cineast_android.databinding.ActivityContentBinding
 import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.viewholder.EmptyStateItem
+import elieomatuku.cineast_android.viewholder.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.subjects.PublishSubject
 import java.io.Serializable
 
 class UserMoviesActivity : BaseActivity() {
@@ -80,28 +76,7 @@ class UserMoviesActivity : BaseActivity() {
         }
     }
 
-    private val viewModel: UserMoviesViewModel by viewModel<UserMoviesViewModel>()
-
-    private val movieSelectPublisher: PublishSubject<Content> by lazy {
-        PublishSubject.create<Content>()
-    }
-
-    private val movieSelectObservable: Observable<Content>
-        get() = movieSelectPublisher.hide()
-
-    private val onMovieRemovedPublisher: PublishSubject<Movie> by lazy {
-        PublishSubject.create<Movie>()
-    }
-
-    private val onMovieRemovedObservable: Observable<Movie>
-        get() = onMovieRemovedPublisher.hide()
-
-    private val adapter: ContentsAdapter by lazy {
-        UserContentsAdapter(
-            movieSelectPublisher,
-            onMovieRemovedPublisher
-        )
-    }
+    private val viewModel: UserMoviesViewModel by viewModel()
 
     private lateinit var binding: ActivityContentBinding
 
@@ -124,40 +99,6 @@ class UserMoviesActivity : BaseActivity() {
         updateView()
     }
 
-    override fun onResume() {
-        super.onResume()
-        rxSubs.add(
-            onMovieRemovedObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        removeMovie(it)
-                    },
-                    {}
-                )
-        )
-
-        rxSubs.add(
-            movieSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { movie: Content ->
-                        val params = Bundle()
-                        params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
-                        params.putSerializable(MOVIE_KEY, movie)
-                        params.putSerializable(
-                            MOVIE_GENRES_KEY,
-                            viewModel.genres as Serializable
-                        )
-                        gotoMovie(params)
-                    },
-                    { t: Throwable ->
-
-                    }
-                )
-        )
-    }
-
     private fun initData() {
         when {
             isFavoriteList -> {
@@ -169,16 +110,6 @@ class UserMoviesActivity : BaseActivity() {
             else -> {
                 viewModel.getRatedMovies()
             }
-        }
-    }
-
-    private fun removeMovie(movie: Movie) {
-        if (isWatchList) {
-            viewModel.removeMovieFromWatchList(movie)
-        }
-
-        if (isFavoriteList) {
-            viewModel.removeMovieFromFavorites(movie)
         }
     }
 
@@ -220,7 +151,17 @@ class UserMoviesActivity : BaseActivity() {
                 UserContentScreen(
                     viewModelFactory = viewModelFactory,
                     viewModel = viewModel,
-                    hasNetworkConnection = connectionService.hasNetworkConnection
+                    hasNetworkConnection = connectionService.hasNetworkConnection,
+                    onContentClick = {
+                        if (it is Movie) {
+                            gotoMovie(it)
+                        }
+                    },
+                    onSwipeItem = {
+                        if (it is Movie) {
+                            removeMovie(it)
+                        }
+                    }
                 )
             }
         }
@@ -232,10 +173,27 @@ class UserMoviesActivity : BaseActivity() {
         } ?: resources.getString(R.string.nav_title_discover)
     }
 
-    private fun gotoMovie(params: Bundle) {
+    private fun gotoMovie(movie: Movie) {
+        val params = Bundle()
+        params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
+        params.putSerializable(MOVIE_KEY, movie)
+        params.putSerializable(
+            MOVIE_GENRES_KEY,
+            viewModel.genres as Serializable
+        )
         val intent = Intent(this, MovieFragment::class.java)
         intent.putExtras(params)
         startActivity(intent)
+    }
+
+    private fun removeMovie(movie: Movie) {
+        if (isWatchList) {
+            viewModel.removeMovieFromWatchList(movie)
+        }
+
+        if (isFavoriteList) {
+            viewModel.removeMovieFromFavorites(movie)
+        }
     }
 
     override fun onDestroy() {
@@ -249,15 +207,19 @@ fun UserContentScreen(
     viewModelFactory: ViewModelProvider.Factory,
     viewModel: UserMoviesViewModel = viewModel(factory = viewModelFactory),
     hasNetworkConnection: Boolean,
+    onContentClick: (content: Content) -> Unit,
+    onSwipeItem: ((content: Content) -> Unit)
 ) {
 
     val viewState by viewModel.viewState.observeAsState()
     viewState?.apply {
         Box(modifier = Modifier.fillMaxSize()) {
             if (userMovies.isNotEmpty()) {
-                ContentScreen(userMovies) {
-
-                }
+                ContentScreen(
+                    contents = userMovies,
+                    onContentClick = onContentClick,
+                    onSwipeItem = onSwipeItem
+                )
             }
 
             viewError?.consume()?.apply {
@@ -266,7 +228,7 @@ fun UserContentScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    EmptyStateItem(
+                    EmptyStateWidget(
                         errorMsg = message,
                         hasNetworkConnection = hasNetworkConnection
                     )

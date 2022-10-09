@@ -10,4 +10,7 @@ import java.io.Serializable
 interface Content: Serializable {
     val id: Int
     val name: String?
+    val imagePath: String?
+    val title: String?
+    val subTitle: String?
 }

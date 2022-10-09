@@ -32,7 +32,7 @@ import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.fragment.RateDialogFragment
 import elieomatuku.cineast_android.utils.*
-import elieomatuku.cineast_android.viewholder.EmptyStateItem
+import elieomatuku.cineast_android.viewholder.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.MoviesWidget
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -385,7 +385,7 @@ fun MovieScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    EmptyStateItem(
+                    EmptyStateWidget(
                         errorMsg = message,
                         hasNetworkConnection = hasNetworkConnection
                     )

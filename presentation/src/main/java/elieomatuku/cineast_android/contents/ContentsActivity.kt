@@ -16,6 +16,7 @@ import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.details.person.PersonFragment
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.viewholder.MovieItem
+import elieomatuku.cineast_android.viewholder.SwipeableContentItem
 import java.io.Serializable
 
 class ContentsActivity : BaseActivity() {
@@ -29,8 +30,7 @@ class ContentsActivity : BaseActivity() {
             val intent = Intent(context, ContentsActivity::class.java)
             val params = Bundle()
             params.putSerializable(
-                Constants.WIDGET_KEY,
-                contents as Serializable
+                Constants.WIDGET_KEY, contents as Serializable
             )
 
             if (screenNameRes != null) {
@@ -77,19 +77,22 @@ class ContentsActivity : BaseActivity() {
 
     private fun setContents(contents: List<Content>) {
         binding.composeView.setContent {
-            ContentScreen(contents = contents) { content ->
-                val params = Bundle()
+            ContentScreen(
+                contents = contents,
+                onContentClick = { content ->
+                    val params = Bundle()
 
-                params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
+                    params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
 
-                if (content is Person) {
-                    params.putSerializable(PEOPLE_KEY, content)
-                    gotoContent(params, PersonFragment::class.java)
-                } else {
-                    params.putSerializable(MOVIE_KEY, content)
-                    gotoContent(params, MovieFragment::class.java)
+                    if (content is Person) {
+                        params.putSerializable(PEOPLE_KEY, content)
+                        gotoContent(params, PersonFragment::class.java)
+                    } else {
+                        params.putSerializable(MOVIE_KEY, content)
+                        gotoContent(params, MovieFragment::class.java)
+                    }
                 }
-            }
+            )
         }
     }
 
@@ -101,18 +104,29 @@ class ContentsActivity : BaseActivity() {
 }
 
 @Composable
-fun ContentScreen(contents: List<Content>, onContentClick: (content: Content) -> Unit) {
+fun ContentScreen(
+    contents: List<Content>,
+    onContentClick: (content: Content) -> Unit,
+    onSwipeItem: ((content: Content) -> Unit)? = null
+) {
     LazyColumn {
         items(contents) { content ->
             when (content) {
                 is Person -> {
                     elieomatuku.cineast_android.viewholder.ContentItem(
-                        imagePath = content.profilePath,
-                        title = content.name
+                        content = content
                     )
                 }
                 is Movie -> {
-                    MovieItem(movie = content)
+                    if (onSwipeItem != null) {
+                        SwipeableContentItem(
+                            content = content,
+                            onContentClick = onContentClick,
+                            onSwipeItem = onSwipeItem
+                        )
+                    } else {
+                        MovieItem(movie = content, onContentClick = onContentClick)
+                    }
                 }
             }
         }

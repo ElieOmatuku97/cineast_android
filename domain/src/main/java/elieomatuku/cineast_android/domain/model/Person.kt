@@ -4,4 +4,13 @@ data class Person(
     val profilePath: String?,
     override val id: Int,
     override val name: String?
-): Content
+): Content {
+    override val imagePath: String?
+        get() = profilePath
+
+    override val title: String?
+        get() = name
+
+    override val subTitle: String?
+        get() = null
+}
