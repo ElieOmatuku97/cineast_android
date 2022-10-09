@@ -25,7 +25,7 @@ import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.domain.model.AccessToken
-import elieomatuku.cineast_android.settings.user_movies.UserMoviesActivity
+import elieomatuku.cineast_android.settings.usercontents.UserContentsActivity
 import elieomatuku.cineast_android.utils.*
 
 class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
@@ -78,9 +78,9 @@ class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
                         viewModel.logout()
                     }
                 },
-                onWatchListClick = { UserMoviesActivity.gotoWatchList(requireContext()) },
-                onRatedClick = { UserMoviesActivity.gotoRatedMovies(requireContext()) },
-                onFavoritesClick = { UserMoviesActivity.gotoFavorites(requireContext()) }
+                onWatchListClick = { UserContentsActivity.gotoWatchList(requireContext()) },
+                onRatedClick = { UserContentsActivity.gotoRatedMovies(requireContext()) },
+                onFavoritesClick = { UserContentsActivity.gotoFavorites(requireContext()) }
             )
         }
     }

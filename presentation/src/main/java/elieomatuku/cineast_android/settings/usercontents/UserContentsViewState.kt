@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.settings.user_movies
+package elieomatuku.cineast_android.settings.usercontents
 
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
@@ -9,9 +9,9 @@ import elieomatuku.cineast_android.utils.ViewError
  * Created by elieomatuku on 2021-10-10
  */
 
-data class UserMoviesViewState(
+data class UserContentsViewState(
     val isLoading: Boolean = false,
     val viewError: SingleEvent<ViewError>? = null,
     val genres: List<Genre> = emptyList(),
-    val userMovies: List<Content> = emptyList(),
+    val contents: List<Content> = emptyList(),
 )

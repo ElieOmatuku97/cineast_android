@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.settings.user_movies
+package elieomatuku.cineast_android.settings.usercontents
 
 import androidx.lifecycle.viewModelScope
 import elieomatuku.cineast_android.domain.interactor.Fail
@@ -16,14 +16,14 @@ import kotlinx.coroutines.launch
  * Created by elieomatuku on 2021-05-29
  */
 
-class UserMoviesViewModel(
+class UserContentsViewModel(
     private val getGenres: GetGenres,
     private val getFavorites: GetFavorites,
     private val getWatchList: GetWatchList,
     private val getUserRatedMovies: GetUserRatedMovies,
     private val removeMovieFromWatchList: RemoveMovieFromWatchList,
     private val removeMovieFromFavorites: RemoveMovieFromFavorites
-) : BaseViewModel<UserMoviesViewState>(UserMoviesViewState()) {
+) : BaseViewModel<UserContentsViewState>(UserContentsViewState()) {
 
     val genres: List<Genre>
         get() = state.genres
@@ -47,7 +47,7 @@ class UserMoviesViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
-                else -> UserMoviesViewState()
+                else -> UserContentsViewState()
             }
         }
 
@@ -61,14 +61,14 @@ class UserMoviesViewModel(
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
-                    userMovies = result.data
+                    contents = result.data
                 )
 
                 is Fail -> state.copy(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
-                else -> UserMoviesViewState()
+                else -> UserContentsViewState()
             }
         }
     }
@@ -81,14 +81,14 @@ class UserMoviesViewModel(
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
-                    userMovies = result.data
+                    contents = result.data
                 )
 
                 is Fail -> state.copy(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
-                else -> UserMoviesViewState()
+                else -> UserContentsViewState()
             }
         }
     }
@@ -101,14 +101,14 @@ class UserMoviesViewModel(
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
-                    userMovies = result.data
+                    contents = result.data
                 )
 
                 is Fail -> state.copy(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
-                else -> UserMoviesViewState()
+                else -> UserContentsViewState()
             }
         }
     }

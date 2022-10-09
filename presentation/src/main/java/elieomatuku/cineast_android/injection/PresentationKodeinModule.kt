@@ -15,7 +15,7 @@ import elieomatuku.cineast_android.search.SearchViewModel
 import elieomatuku.cineast_android.search.movie.MoviesGridViewModel
 import elieomatuku.cineast_android.search.people.PeopleGridViewModel
 import elieomatuku.cineast_android.settings.SettingsViewModel
-import elieomatuku.cineast_android.settings.user_movies.UserMoviesViewModel
+import elieomatuku.cineast_android.settings.usercontents.UserContentsViewModel
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
@@ -176,8 +176,8 @@ object PresentationKodeinModule {
                 )
             }
 
-            bindViewModel<UserMoviesViewModel>() with provider {
-                UserMoviesViewModel(
+            bindViewModel<UserContentsViewModel>() with provider {
+                UserContentsViewModel(
                     instance(),
                     instance(),
                     instance(),

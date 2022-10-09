@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="elieomatuku.cineast_android.settings.user_movies.UserMoviesActivity"
+            android:name="elieomatuku.cineast_android.settings.usercontents.UserContentsActivity"
             android:exported="true" />
         <activity
             android:name="elieomatuku.cineast_android.contents.ContentsActivity"

@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.settings.user_movies
+package elieomatuku.cineast_android.settings.usercontents
 
 import android.content.Context
 import android.content.Intent
@@ -30,7 +30,7 @@ import elieomatuku.cineast_android.viewholder.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import java.io.Serializable
 
-class UserMoviesActivity : BaseActivity() {
+class UserContentsActivity : BaseActivity() {
     companion object {
         private const val DISPLAY_FAVORITE_LIST = "favorite_list_key"
         private const val DISPLAY_WATCH_LIST = "watch_list_key"
@@ -40,7 +40,7 @@ class UserMoviesActivity : BaseActivity() {
         const val MOVIE_GENRES_KEY = "genres"
 
         private fun gotoUserPreferencesActivity(context: Context, resources: Int? = null): Intent {
-            val intent = Intent(context, UserMoviesActivity::class.java)
+            val intent = Intent(context, UserContentsActivity::class.java)
             val params = Bundle()
 
             if (resources != null) {
@@ -76,7 +76,7 @@ class UserMoviesActivity : BaseActivity() {
         }
     }
 
-    private val viewModel: UserMoviesViewModel by viewModel()
+    private val viewModel: UserContentsViewModel by viewModel()
 
     private lateinit var binding: ActivityContentBinding
 
@@ -205,7 +205,7 @@ class UserMoviesActivity : BaseActivity() {
 @Composable
 fun UserContentScreen(
     viewModelFactory: ViewModelProvider.Factory,
-    viewModel: UserMoviesViewModel = viewModel(factory = viewModelFactory),
+    viewModel: UserContentsViewModel = viewModel(factory = viewModelFactory),
     hasNetworkConnection: Boolean,
     onContentClick: (content: Content) -> Unit,
     onSwipeItem: ((content: Content) -> Unit)
@@ -214,9 +214,9 @@ fun UserContentScreen(
     val viewState by viewModel.viewState.observeAsState()
     viewState?.apply {
         Box(modifier = Modifier.fillMaxSize()) {
-            if (userMovies.isNotEmpty()) {
+            if (contents.isNotEmpty()) {
                 ContentScreen(
-                    contents = userMovies,
+                    contents = contents,
                     onContentClick = onContentClick,
                     onSwipeItem = onSwipeItem
                 )
