@@ -33,7 +33,8 @@ fun Profile(
     description: String?,
     webSiteLink: String?,
     onProfileClick: () -> Unit,
-    onWebSiteLinkClick: (String) -> Unit
+    onWebSiteLinkClick: (String) -> Unit,
+    child: @Composable () -> Unit = {}
 ) {
     val imageUrl = UiUtils.getImageUrl(imagePath, stringResource(id = R.string.image_small))
 
@@ -107,6 +108,8 @@ fun Profile(
                     )
                 )
             }
+
+            child()
         }
     }
 }

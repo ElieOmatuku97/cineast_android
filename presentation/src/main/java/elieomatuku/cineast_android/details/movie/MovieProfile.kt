@@ -52,50 +52,50 @@ fun MovieProfile(
             onWebSiteLinkClick = {
                 gotoLink(it)
             }
-        )
-        Row(
-            modifier = Modifier
-                .padding(
-                    top = dimensionResource(id = R.dimen.padding_small),
-                    start = dimensionResource(id = R.dimen.padding_xlarge)
-                )
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            movie?.voteAverage?.let { voteAverage ->
-                AndroidView(factory = {
-                    MaterialRatingBar(
-                        it,
-                        null,
-                        R.style.Widget_MaterialRatingBar_RatingBar
-                    ).apply {
-                        val params = ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
-                        )
-                        params.height = TypedValue.applyDimension(
-                            TypedValue.COMPLEX_UNIT_DIP,
-                            10f,
-                            resources.displayMetrics
-                        ).toInt()
-                        layoutParams = params
+            Row(
+                modifier = Modifier
+                    .padding(
+                        top = dimensionResource(id = R.dimen.padding_small)
+                    )
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                movie?.voteAverage?.let { voteAverage ->
+                    AndroidView(factory = {
+                        MaterialRatingBar(
+                            it,
+                            null,
+                            R.style.Widget_MaterialRatingBar_RatingBar
+                        ).apply {
+                            val params = ViewGroup.LayoutParams(
+                                ViewGroup.LayoutParams.WRAP_CONTENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT
+                            )
+                            params.height = TypedValue.applyDimension(
+                                TypedValue.COMPLEX_UNIT_DIP,
+                                10f,
+                                resources.displayMetrics
+                            ).toInt()
+                            layoutParams = params
 
-                        numStars = 10
-                        stepSize = 0.1f
-                        rating = voteAverage
-                    }
-                })
-            }
+                            numStars = 10
+                            stepSize = 0.1f
+                            rating = voteAverage
+                        }
+                    })
+                }
 
-            if (!movieSummary.isEmpty()) {
-                Text(
-                    stringResource(id = R.string.rate),
-                    fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-                    color = colorResource(id = R.color.color_orange_app),
-                    modifier = Modifier
-                        .padding(end = dimensionResource(id = R.dimen.padding_xlarge))
-                        .clickable(onClick = { onRateClick() })
-                )
+                if (!movieSummary.isEmpty()) {
+                    Text(
+                        stringResource(id = R.string.rate),
+                        fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                        color = colorResource(id = R.color.color_orange_app),
+                        modifier = Modifier
+                            .padding(end = dimensionResource(id = R.dimen.padding_xlarge))
+                            .clickable(onClick = { onRateClick() })
+                    )
+                }
             }
         }
     }
