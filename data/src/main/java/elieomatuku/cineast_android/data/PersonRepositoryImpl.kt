@@ -34,8 +34,8 @@ class PersonRepositoryImpl(private val factory: PersonDataStoreFactory) : Person
             .let(PersonDetailsEntity::toPersonDetails)
     }
 
-    override suspend fun getImages(person: Person): Images {
-        return factory.retrieveRemoteDataStore().getImages(person.let(PersonEntity::fromPerson))
+    override suspend fun getImages(personId: Int): Images {
+        return factory.retrieveRemoteDataStore().getImages(personId)
             .let(ImageEntities::toImages)
     }
 

@@ -24,7 +24,7 @@ class PersonCacheDataStore(private val personCache: PersonCache) : PersonDataSto
         TODO("Not yet implemented")
     }
 
-    override suspend fun getImages(person: PersonEntity): ImageEntities {
+    override suspend fun getImages(personId: Int): ImageEntities {
         TODO("Not yet implemented")
     }
 

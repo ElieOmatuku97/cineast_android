@@ -4,7 +4,6 @@ import elieomatuku.cineast_android.domain.interactor.CompleteResult
 import elieomatuku.cineast_android.domain.interactor.UseCase
 import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.model.Images
-import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.repository.PersonRepository
 
 /**
@@ -17,10 +16,10 @@ class GetImages(private val personRepository: PersonRepository) :
     override suspend fun execute(params: Input): CompleteResult<Images> {
         return safeUseCaseCall {
             return@safeUseCaseCall personRepository.getImages(
-                params.person
+                params.personId
             )
         }
     }
 
-    data class Input(val person: Person)
+    data class Input(val personId: Int)
 }

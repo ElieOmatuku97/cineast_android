@@ -24,8 +24,8 @@ class PersonRemoteDataStore(private val personRemote: PersonRemote) : PersonData
         return personRemote.getPersonDetails(personId)
     }
 
-    override suspend fun getImages(person: PersonEntity): ImageEntities {
-        return personRemote.getPersonImages(person.id)
+    override suspend fun getImages(personId: Int): ImageEntities {
+        return personRemote.getPersonImages(personId)
     }
 
     override suspend fun searchPeople(argQuery: String): List<PersonEntity> {

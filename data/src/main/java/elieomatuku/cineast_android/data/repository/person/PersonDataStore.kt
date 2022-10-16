@@ -16,7 +16,7 @@ interface PersonDataStore {
 
     suspend fun getDetails(personId: Int): PersonDetailsEntity
 
-    suspend fun getImages(person: PersonEntity): ImageEntities
+    suspend fun getImages(personId: Int): ImageEntities
 
     suspend fun searchPeople(argQuery: String): List<PersonEntity>
 

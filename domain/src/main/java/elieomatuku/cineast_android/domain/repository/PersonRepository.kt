@@ -16,7 +16,7 @@ interface PersonRepository {
 
     suspend fun getDetails(personId: Int): PersonDetails
 
-    suspend fun getImages(person: Person): Images
+    suspend fun getImages(personId: Int): Images
 
     suspend fun searchPeople(argQuery: String): List<Person>
 }
