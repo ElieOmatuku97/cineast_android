@@ -81,7 +81,7 @@ class DiscoverFragment : BaseFragment() {
     private fun gotoMovie(movie: Movie) {
         val directions = DiscoverFragmentDirections.navigateToMovieDetail(
             getString(R.string.nav_title_discover),
-            movie
+            movie.id
         )
         findNavController().navigate(directions)
     }

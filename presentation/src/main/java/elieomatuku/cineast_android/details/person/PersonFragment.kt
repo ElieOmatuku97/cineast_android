@@ -145,7 +145,7 @@ class PersonFragment : BaseFragment() {
         if (content is Movie) {
             val directions = MovieFragmentDirections.navigateToMovieDetail(
                 content.title ?: String(),
-                content
+                content.id
             )
             findNavController().navigate(directions)
         }

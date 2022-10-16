@@ -165,7 +165,7 @@ class SearchFragment : BaseFragment() {
     private fun gotoMovie(movie: Movie) {
         val directions = SearchFragmentDirections.navigateToMovieDetail(
             getString(R.string.nav_title_search),
-            movie
+            movie.id
         )
         findNavController().navigate(directions)
     }

@@ -1,5 +1,6 @@
 package elieomatuku.cineast_android.injection
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.bindViewModel
 import elieomatuku.cineast_android.connection.ConnectionService
@@ -17,10 +18,7 @@ import elieomatuku.cineast_android.search.people.PeopleGridViewModel
 import elieomatuku.cineast_android.settings.SettingsViewModel
 import elieomatuku.cineast_android.settings.usercontents.UserContentsViewModel
 import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import org.kodein.di.generic.singleton
+import org.kodein.di.generic.*
 
 
 /**
@@ -28,7 +26,7 @@ import org.kodein.di.generic.singleton
  */
 
 object PresentationKodeinModule {
-    const val moduleName = "presentation"
+    private const val moduleName = "presentation"
 
     fun getModule(): Kodein.Module {
 
@@ -126,6 +124,10 @@ object PresentationKodeinModule {
                 GetAccount(instance())
             }
 
+            bind<GetMovie>() with singleton {
+                GetMovie(instance())
+            }
+
             bindViewModel<DiscoverViewModel>() with provider {
                 DiscoverViewModel(instance(), instance(), instance(), instance(), instance())
             }
@@ -142,8 +144,10 @@ object PresentationKodeinModule {
                 MoviesViewModel(instance())
             }
 
-            bindViewModel<MovieViewModel>() with provider {
+            bind() from factory { savedStateHandle: SavedStateHandle ->
                 MovieViewModel(
+                    savedStateHandle,
+                    instance(),
                     instance(),
                     instance(),
                     instance(),

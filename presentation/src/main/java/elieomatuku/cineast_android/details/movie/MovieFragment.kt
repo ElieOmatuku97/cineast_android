@@ -19,7 +19,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
@@ -30,7 +29,9 @@ import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamWidget
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.asListOfType
+import elieomatuku.cineast_android.extensions.getViewModel
 import elieomatuku.cineast_android.fragment.RateDialogFragment
+import elieomatuku.cineast_android.injection.KodeinAbstractSavedStateViewModelFactory
 import elieomatuku.cineast_android.utils.*
 import elieomatuku.cineast_android.viewholder.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
@@ -39,10 +40,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 
 class MovieFragment : BaseFragment() {
-    lateinit var movie: Movie
     private var isInWatchList: Boolean = false
     private var isInFavoriteList: Boolean = false
-    private val args: MovieFragmentArgs by navArgs()
     private lateinit var menuHost: MenuHost
 
     private val watchListCheckPublisher: PublishSubject<Boolean> by lazy {
@@ -52,7 +51,9 @@ class MovieFragment : BaseFragment() {
         PublishSubject.create()
     }
 
-    private val viewModel: MovieViewModel by viewModel()
+    private val viewModel: MovieViewModel by lazy {
+        getViewModel(KodeinAbstractSavedStateViewModelFactory(kodein))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,7 +67,6 @@ class MovieFragment : BaseFragment() {
                     MovieScreen(
                         viewModelFactory = viewModelFactory,
                         viewModel = viewModel,
-                        movie = movie,
                         hasNetworkConnection = connectionService.hasNetworkConnection,
                         goToGallery = { goToGallery() },
                         goToWebsite = { goToWebsite(it) },
@@ -106,7 +106,7 @@ class MovieFragment : BaseFragment() {
                 menuInflater.inflate(R.menu.item_menu, menu)
 
                 menu.findItem(R.id.action_share).apply {
-                    isVisible = ContentUtils.supportsShare(movie.id)
+                    isVisible = ContentUtils.supportsShare(viewModel.viewState.value?.movie?.id)
                     UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
                 }
 
@@ -146,8 +146,6 @@ class MovieFragment : BaseFragment() {
 
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
-        movie = args.movie
-        viewModel.getMovieDetails(movie, args.screenName)
         viewModel.viewState.observe(viewLifecycleOwner) {
             updateView(it)
             it.isLoggedIn.consume { isLoggedIn ->
@@ -198,7 +196,11 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun onShareMenuClicked() {
-        val shareIntent: Intent? = UiUtils.getShareIntent(movie.title, movie.id)
+        val shareIntent: Intent? =
+            UiUtils.getShareIntent(
+                viewModel.viewState.value?.movie?.title,
+                viewModel.viewState.value?.movie?.id
+            )
         // Make sure there is an activity that supports the intent
         shareIntent?.apply {
             if (resolveActivity(requireContext().packageManager) != null) {
@@ -282,7 +284,7 @@ class MovieFragment : BaseFragment() {
     private fun gotoPerson(person: Content) {
         if (person is Person) {
             val directions = MovieFragmentDirections.navigateToPersonDetail(
-                movie.title ?: String(),
+                viewModel.viewState.value?.movie?.title ?: String(),
                 person
             )
             findNavController().navigate(directions)
@@ -292,8 +294,8 @@ class MovieFragment : BaseFragment() {
     private fun gotoMovie(content: Content) {
         if (content is Movie) {
             val directions = MovieFragmentDirections.navigateToMovieDetail(
-                movie.title ?: String(),
-                content
+                viewModel.viewState.value?.movie?.title ?: String(),
+                content.id
             )
             findNavController().navigate(directions)
         }
@@ -325,7 +327,6 @@ class MovieFragment : BaseFragment() {
 fun MovieScreen(
     viewModelFactory: ViewModelProvider.Factory,
     viewModel: MovieViewModel = viewModel(factory = viewModelFactory),
-    movie: Movie,
     hasNetworkConnection: Boolean,
     goToGallery: () -> Unit,
     goToWebsite: (String) -> Unit,
@@ -354,28 +355,30 @@ fun MovieScreen(
                         }
                     )
 
-                    MovieTabs(
-                        viewModelFactory = viewModelFactory,
-                        movieSummary = movieSummary,
-                        movie = movie,
-                        onSeeAllClick = {
-                            onSeeAllClick(it)
-                        },
-                        onItemClick = {
-                            if (it is Person) {
-                                gotoPerson(it)
-                            }
+                    movie?.apply {
+                        MovieTabs(
+                            viewModelFactory = viewModelFactory,
+                            movieSummary = movieSummary,
+                            movie = this,
+                            onSeeAllClick = {
+                                onSeeAllClick(it)
+                            },
+                            onItemClick = {
+                                if (it is Person) {
+                                    gotoPerson(it)
+                                }
 
-                            if (it is Movie) {
-                                gotoMovie(it)
+                                if (it is Movie) {
+                                    gotoMovie(it)
+                                }
+                            },
+                            onTrailerClick = { trailer ->
+                                trailer?.key?.let {
+                                    showTrailer(it)
+                                }
                             }
-                        },
-                        onTrailerClick = { trailer ->
-                            trailer?.key?.let {
-                                showTrailer(it)
-                            }
-                        }
-                    )
+                        )
+                    }
                 }
             }
 

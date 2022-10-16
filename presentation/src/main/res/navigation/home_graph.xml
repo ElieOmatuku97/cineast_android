@@ -19,8 +19,9 @@
                 android:name="screen_name"
                 app:argType="string" />
             <argument
-                android:name="movie"
-                app:argType="elieomatuku.cineast_android.domain.model.Movie" />
+                android:name="movieId"
+                app:argType="integer"
+                />
         </action>
         <action
             android:id="@+id/navigate_to_person_detail"
@@ -52,8 +53,9 @@
                 android:name="screen_name"
                 app:argType="string" />
             <argument
-                android:name="movie"
-                app:argType="elieomatuku.cineast_android.domain.model.Movie" />
+                android:name="movieId"
+                app:argType="integer"
+                />
         </action>
         <action
             android:id="@+id/navigate_to_person_detail"
