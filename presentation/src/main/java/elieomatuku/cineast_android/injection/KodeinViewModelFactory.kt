@@ -29,6 +29,13 @@ class KodeinAbstractSavedStateViewModelFactory(private val injector: Kodein) :
         handle: SavedStateHandle
     ): T {
         val viewModelFactory: ((SavedStateHandle) -> ViewModel) = injector.direct.factory()
-        return viewModelFactory(handle) as T? ?: modelClass.newInstance()
+        val modelClassFromFactory = viewModelFactory(handle)
+
+        return if (modelClass.isInstance(modelClassFromFactory)) {
+            modelClassFromFactory as T? ?: modelClass.newInstance()
+        } else {
+            injector.direct.instanceOrNull<ViewModel>(tag = modelClass.simpleName) as T?
+                ?: modelClass.newInstance()
+        }
     }
 }
