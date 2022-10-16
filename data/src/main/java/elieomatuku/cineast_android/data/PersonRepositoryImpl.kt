@@ -22,15 +22,15 @@ class PersonRepositoryImpl(private val factory: PersonDataStoreFactory) : Person
         }
     }
 
-    override suspend fun getMovies(person: Person): List<Movie> {
-        return factory.retrieveRemoteDataStore().getMovies(person.let(PersonEntity::fromPerson))
+    override suspend fun getMovies(personId: Int): List<Movie> {
+        return factory.retrieveRemoteDataStore().getMovies(personId)
             .map {
                 it.let(MovieEntity::toMovie)
             }
     }
 
-    override suspend fun getDetails(person: Person): PersonDetails {
-        return factory.retrieveRemoteDataStore().getDetails(person.let(PersonEntity::fromPerson))
+    override suspend fun getDetails(personId: Int): PersonDetails {
+        return factory.retrieveRemoteDataStore().getDetails(personId)
             .let(PersonDetailsEntity::toPersonDetails)
     }
 

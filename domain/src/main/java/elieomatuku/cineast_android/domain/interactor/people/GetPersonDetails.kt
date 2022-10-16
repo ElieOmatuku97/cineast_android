@@ -3,7 +3,6 @@ package elieomatuku.cineast_android.domain.interactor.people
 import elieomatuku.cineast_android.domain.interactor.CompleteResult
 import elieomatuku.cineast_android.domain.interactor.UseCase
 import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
-import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.domain.repository.PersonRepository
 
@@ -17,10 +16,10 @@ class GetPersonDetails(private val personRepository: PersonRepository) :
     override suspend fun execute(params: Input): CompleteResult<PersonDetails> {
         return safeUseCaseCall {
             return@safeUseCaseCall personRepository.getDetails(
-                params.person
+                params.personId
             )
         }
     }
 
-    data class Input(val person: Person)
+    data class Input(val personId: Int)
 }

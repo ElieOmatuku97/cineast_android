@@ -37,7 +37,7 @@ class PersonViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
 
-            val result = runUseCase(getPersonDetails, GetPersonDetails.Input(person))
+            val result = runUseCase(getPersonDetails, GetPersonDetails.Input(person.id))
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
@@ -58,7 +58,7 @@ class PersonViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
 
-            val result = runUseCase(getKnownForMovies, GetKnownForMovies.Input(person))
+            val result = runUseCase(getKnownForMovies, GetKnownForMovies.Input(person.id))
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,

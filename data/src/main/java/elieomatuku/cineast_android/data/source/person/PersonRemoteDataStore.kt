@@ -16,12 +16,12 @@ class PersonRemoteDataStore(private val personRemote: PersonRemote) : PersonData
         return personRemote.getPopularPeople()
     }
 
-    override suspend fun getMovies(person: PersonEntity): List<MovieEntity> {
-        return personRemote.getPersonMovies(person.id)
+    override suspend fun getMovies(personId: Int): List<MovieEntity> {
+        return personRemote.getPersonMovies(personId)
     }
 
-    override suspend fun getDetails(person: PersonEntity): PersonDetailsEntity {
-        return personRemote.getPersonDetails(person.id)
+    override suspend fun getDetails(personId: Int): PersonDetailsEntity {
+        return personRemote.getPersonDetails(personId)
     }
 
     override suspend fun getImages(person: PersonEntity): ImageEntities {
