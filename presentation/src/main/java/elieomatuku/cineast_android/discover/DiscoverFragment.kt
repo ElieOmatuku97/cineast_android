@@ -35,7 +35,7 @@ import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.*
 import elieomatuku.cineast_android.viewholder.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
-import elieomatuku.cineast_android.widgets.MoviesWidget
+import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 import elieomatuku.cineast_android.widgets.PeopleWidget
 
 class DiscoverFragment : BaseFragment() {

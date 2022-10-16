@@ -35,7 +35,7 @@ import elieomatuku.cineast_android.injection.KodeinAbstractSavedStateViewModelFa
 import elieomatuku.cineast_android.utils.*
 import elieomatuku.cineast_android.viewholder.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
-import elieomatuku.cineast_android.widgets.MoviesWidget
+import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 

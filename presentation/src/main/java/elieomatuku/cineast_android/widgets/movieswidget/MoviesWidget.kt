@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.widgets
+package elieomatuku.cineast_android.widgets.movieswidget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -25,7 +25,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.details.MoviesViewModel
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie

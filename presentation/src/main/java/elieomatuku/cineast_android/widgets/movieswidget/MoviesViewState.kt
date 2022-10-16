@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.details
+package elieomatuku.cineast_android.widgets.movieswidget
 
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre

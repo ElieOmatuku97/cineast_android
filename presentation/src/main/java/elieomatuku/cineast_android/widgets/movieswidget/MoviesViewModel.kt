@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.details
+package elieomatuku.cineast_android.widgets.movieswidget
 
 import androidx.lifecycle.viewModelScope
 import elieomatuku.cineast_android.domain.interactor.Fail

@@ -36,7 +36,7 @@ import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.viewholder.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
-import elieomatuku.cineast_android.widgets.MoviesWidget
+import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 
 class PersonFragment : BaseFragment() {
     private val viewModel: PersonViewModel by viewModel()

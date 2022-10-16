@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.bindViewModel
 import elieomatuku.cineast_android.connection.ConnectionService
-import elieomatuku.cineast_android.details.MoviesViewModel
+import elieomatuku.cineast_android.widgets.movieswidget.MoviesViewModel
 import elieomatuku.cineast_android.details.movie.MovieViewModel
 import elieomatuku.cineast_android.details.person.PersonViewModel
 import elieomatuku.cineast_android.discover.DiscoverViewModel
