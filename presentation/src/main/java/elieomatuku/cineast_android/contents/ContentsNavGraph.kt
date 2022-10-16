@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import elieomatuku.cineast_android.details.movie.MovieScreen
+import elieomatuku.cineast_android.details.person.PersonScreen
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
@@ -68,7 +69,18 @@ fun ContentsNavGraph(
             )
         }
         composable(ContentsDestinations.PERSON_SCREEN) {
-
+            PersonScreen(
+                viewModelFactory = viewModelFactory,
+                hasNetworkConnection = hasNetworkConnection,
+                goToGallery = { /*navigateToGallery()*/ },
+                goToWebsite = {
+                    /*goToWebsite(it)*/
+                },
+                gotoMovie = {
+                    /*gotoMovie(it)*/
+                },
+                onSeeAllClick = onSeeAllClick
+            )
         }
     }
 }
