@@ -285,7 +285,7 @@ class MovieFragment : BaseFragment() {
         if (person is Person) {
             val directions = MovieFragmentDirections.navigateToPersonDetail(
                 viewModel.viewState.value?.movie?.title ?: String(),
-                person
+                person.id
             )
             findNavController().navigate(directions)
         }

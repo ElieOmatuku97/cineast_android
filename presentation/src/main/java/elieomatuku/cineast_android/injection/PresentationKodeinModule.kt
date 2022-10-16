@@ -159,8 +159,9 @@ object PresentationKodeinModule {
                 )
             }
 
-            bindViewModel<PersonViewModel>() with provider {
+            bind() from factory { savedStateHandle: SavedStateHandle ->
                 PersonViewModel(
+                    savedStateHandle,
                     instance(),
                     instance(),
                     instance()

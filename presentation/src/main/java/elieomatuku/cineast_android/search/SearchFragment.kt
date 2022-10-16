@@ -173,7 +173,7 @@ class SearchFragment : BaseFragment() {
     private fun gotoPerson(person: Person) {
         val directions = SearchFragmentDirections.navigateToPersonDetail(
             getString(R.string.nav_title_search),
-            person
+            person.id
         )
         findNavController().navigate(directions)
     }

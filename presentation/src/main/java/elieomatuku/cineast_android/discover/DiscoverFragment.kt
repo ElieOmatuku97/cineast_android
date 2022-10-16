@@ -89,7 +89,7 @@ class DiscoverFragment : BaseFragment() {
     private fun gotoPerson(person: Person) {
         val directions = DiscoverFragmentDirections.navigateToPersonDetail(
             getString(R.string.nav_title_discover),
-            person
+            person.id
         )
         findNavController().navigate(directions)
     }
