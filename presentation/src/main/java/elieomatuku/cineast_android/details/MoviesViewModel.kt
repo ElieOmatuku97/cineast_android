@@ -10,7 +10,6 @@ import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
 
-
 /**
  * Created by elieomatuku on 2021-05-06
  */

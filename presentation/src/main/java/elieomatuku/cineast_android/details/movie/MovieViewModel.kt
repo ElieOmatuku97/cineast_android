@@ -15,10 +15,12 @@ import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 /**
  * Created by elieomatuku on 2021-07-03
  */
+
+private const val MOVIE_ID = "movieId"
+private const val SCREEN_NAME = "screen_name"
 
 class MovieViewModel(
     private val savedStateHandle: SavedStateHandle,
@@ -44,13 +46,12 @@ class MovieViewModel(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
 
-            val screenName: String? = savedStateHandle["screen_name"]
-            val movieId: Int? = savedStateHandle["movieId"]
+            val movieId: Int? = savedStateHandle[MOVIE_ID]
             movieId?.let {
                 val result = runUseCase(getMovie, GetMovie.Input(movieId))
                 state = when (result) {
                     is Success -> {
-                        val state = getMovieSummary(result.data, screenName)
+                        val state = getMovieSummary(result.data)
                         state
                     }
                     is Fail -> state.copy(
@@ -63,7 +64,8 @@ class MovieViewModel(
         }
     }
 
-    private suspend fun getMovieSummary(movie: Movie, screenName: String?): MovieViewState {
+    private suspend fun getMovieSummary(movie: Movie): MovieViewState {
+        val screenName: String? = savedStateHandle[SCREEN_NAME]
         return withContext(viewModelScope.coroutineContext) {
             val state = when (val result =
                 runUseCase(getMovieSummary, GetMovieSummary.Input(movie))) {

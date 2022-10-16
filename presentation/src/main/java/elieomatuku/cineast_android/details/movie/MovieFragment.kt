@@ -25,7 +25,7 @@ import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
 import elieomatuku.cineast_android.details.BareOverviewWidget
 import elieomatuku.cineast_android.details.DetailTabs
-import elieomatuku.cineast_android.details.movie.movie_team.MovieTeamWidget
+import elieomatuku.cineast_android.details.movie.movie_staff.MovieStaffWidget
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.asListOfType
@@ -441,7 +441,7 @@ fun MovieTabs(
                 val cast = movieSummary.cast
                 val crew = movieSummary.crew
                 if (cast != null && crew != null) {
-                    MovieTeamWidget(
+                    MovieStaffWidget(
                         cast = cast,
                         crew = crew,
                         onItemClick = {

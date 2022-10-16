@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.details.movie.movie_team
+package elieomatuku.cineast_android.details.movie.movie_staff
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -9,7 +9,7 @@ import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.widgets.PeopleWidget
 
 @Composable
-fun MovieTeamWidget(
+fun MovieStaffWidget(
     cast: List<Person>,
     crew: List<Person>,
     onItemClick: (content: Content) -> Unit,
