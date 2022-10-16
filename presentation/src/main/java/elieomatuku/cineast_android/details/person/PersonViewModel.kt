@@ -1,5 +1,6 @@
 package elieomatuku.cineast_android.details.person
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
@@ -7,7 +8,6 @@ import elieomatuku.cineast_android.domain.interactor.people.GetImages
 import elieomatuku.cineast_android.domain.interactor.people.GetPersonDetails
 import elieomatuku.cineast_android.domain.interactor.people.GetKnownForMovies
 import elieomatuku.cineast_android.domain.interactor.runUseCase
-import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
@@ -18,11 +18,21 @@ import kotlinx.coroutines.launch
  * Created by elieomatuku on 2021-10-02
  */
 
+private const val PERSON_ID = "personId"
+
 class PersonViewModel(
+    savedStateHandle: SavedStateHandle,
     private val getPersonDetails: GetPersonDetails,
     private val getKnownForMovies: GetKnownForMovies,
     private val getImages: GetImages
 ) : BaseViewModel<PersonViewState>(PersonViewState()) {
+
+    init {
+        val personId: Int = checkNotNull(savedStateHandle[PERSON_ID])
+        getPersonDetails(personId)
+        getKnownForMovies(personId)
+        getImages(personId)
+    }
 
     val person
         get() = state.person
@@ -33,11 +43,11 @@ class PersonViewModel(
     val posters
         get() = state.posters
 
-    fun getPersonDetails(person: Person) {
+    private fun getPersonDetails(personId: Int) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
 
-            val result = runUseCase(getPersonDetails, GetPersonDetails.Input(person.id))
+            val result = runUseCase(getPersonDetails, GetPersonDetails.Input(personId))
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
@@ -54,11 +64,11 @@ class PersonViewModel(
 
     }
 
-    fun getKnownForMovies(person: Person) {
+    private fun getKnownForMovies(personId: Int) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
 
-            val result = runUseCase(getKnownForMovies, GetKnownForMovies.Input(person.id))
+            val result = runUseCase(getKnownForMovies, GetKnownForMovies.Input(personId))
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
@@ -75,11 +85,11 @@ class PersonViewModel(
 
     }
 
-    fun getImages(person: Person) {
+    private fun getImages(personId: Int) {
         viewModelScope.launch {
             state = state.copy(isLoading = true)
 
-            val result = runUseCase(getImages, GetImages.Input(person))
+            val result = runUseCase(getImages, GetImages.Input(personId))
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,

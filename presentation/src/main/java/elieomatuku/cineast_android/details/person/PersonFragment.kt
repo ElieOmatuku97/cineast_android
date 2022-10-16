@@ -21,7 +21,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
@@ -41,7 +40,6 @@ import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 class PersonFragment : BaseFragment() {
     private val viewModel: PersonViewModel by viewModel()
     private lateinit var menuHost: MenuHost
-    private val args: PersonFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -100,11 +98,6 @@ class PersonFragment : BaseFragment() {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-        val person = args.person
-        viewModel.getPersonDetails(person)
-        viewModel.getKnownForMovies(person)
-        viewModel.getImages(person)
 
         viewModel.viewState.observe(viewLifecycleOwner) {
             updateActionShare()
