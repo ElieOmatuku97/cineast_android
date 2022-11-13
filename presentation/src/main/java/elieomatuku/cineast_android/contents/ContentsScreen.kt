@@ -6,8 +6,6 @@ import androidx.compose.runtime.Composable
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
-import elieomatuku.cineast_android.viewholder.MovieItem
-import elieomatuku.cineast_android.viewholder.SwipeableContentItem
 
 @Composable
 fun ContentsScreen(
@@ -19,7 +17,7 @@ fun ContentsScreen(
         items(contents) { content ->
             when (content) {
                 is Person -> {
-                    elieomatuku.cineast_android.viewholder.ContentItem(
+                    ContentItem(
                         content = content
                     )
                 }

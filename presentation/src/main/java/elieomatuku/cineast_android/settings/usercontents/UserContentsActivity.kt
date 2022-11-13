@@ -26,7 +26,7 @@ import elieomatuku.cineast_android.databinding.ActivityContentBinding
 import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.viewholder.EmptyStateWidget
+import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import java.io.Serializable
 

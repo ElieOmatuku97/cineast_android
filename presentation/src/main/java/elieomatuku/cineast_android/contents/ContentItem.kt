@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.viewholder
+package elieomatuku.cineast_android.contents
 
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatRatingBar

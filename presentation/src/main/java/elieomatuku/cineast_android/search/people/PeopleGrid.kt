@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import elieomatuku.cineast_android.contents.ContentGrid
 import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.viewholder.EmptyStateWidget
+import elieomatuku.cineast_android.widgets.EmptyStateWidget
 
 /**
  * Created by elieomatuku on 2021-06-05

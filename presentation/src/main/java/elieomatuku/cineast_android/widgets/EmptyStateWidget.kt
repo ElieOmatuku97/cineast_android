@@ -1,4 +1,4 @@
-package elieomatuku.cineast_android.viewholder
+package elieomatuku.cineast_android.widgets
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
