@@ -32,7 +32,7 @@ object PresentationKodeinModule {
 
             bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
-            bind<ViewModelProvider.Factory>() with singleton { KodeinViewModelFactory(this.di) }
+            bind<ViewModelProvider.Factory>() with singleton { DIViewModelFactory(this.di) }
 
             bind<GetDiscoverContent>() with singleton {
                 GetDiscoverContent(instance(), instance())

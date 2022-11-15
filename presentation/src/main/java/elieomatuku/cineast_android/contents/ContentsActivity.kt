@@ -5,14 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.extensions.asListOfType
-import elieomatuku.cineast_android.injection.KodeinAbstractSavedStateViewModelFactory
 import elieomatuku.cineast_android.utils.Constants
 import org.kodein.di.*
 import org.kodein.di.android.closestDI
@@ -40,9 +39,7 @@ class ContentsActivity : ComponentActivity(), DIAware {
 
     override val di: DI by closestDI()
     private val connectionService: ConnectionService by instance()
-    val viewModelFactory: AbstractSavedStateViewModelFactory by lazy {
-        KodeinAbstractSavedStateViewModelFactory(di)
-    }
+    val viewModelFactory: ViewModelProvider.Factory by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.contents
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -19,7 +19,7 @@ import elieomatuku.cineast_android.domain.model.Person
 @Composable
 fun ContentsNavGraph(
     modifier: Modifier = Modifier,
-    viewModelFactory: AbstractSavedStateViewModelFactory,
+    viewModelFactory: ViewModelProvider.Factory,
     navController: NavHostController = rememberNavController(),
     contents: List<Content>,
     hasNetworkConnection: Boolean,
