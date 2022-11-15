@@ -9,18 +9,16 @@ import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.broadReceiver.NetworkConnectivityBroadcastReceiver
 import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
-import org.kodein.di.generic.instance
 import elieomatuku.cineast_android.extensions.*
+import org.kodein.di.*
+import org.kodein.di.android.closestDI
 
-abstract class BaseActivity : AppCompatActivity, KodeinAware {
+abstract class BaseActivity : AppCompatActivity, DIAware {
 
     constructor() : super()
     constructor(@LayoutRes resId: Int) : super(resId)
 
-    override val kodein: Kodein by closestKodein()
+    override val di: DI by closestDI()
     val viewModelFactory: ViewModelProvider.Factory by instance()
 
     protected val connectionService: ConnectionService by instance()

@@ -83,7 +83,7 @@ class RateDialogFragment : BaseDialogFragment() {
     }
 
     private fun onRatingInput() {
-        ratingBar?.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+        ratingBar?.setOnRatingBarChangeListener { _, rating, _ ->
             displayRating(rating)
         }
     }

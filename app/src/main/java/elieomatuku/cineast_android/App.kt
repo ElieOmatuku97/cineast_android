@@ -1,25 +1,18 @@
 package elieomatuku.cineast_android
 
 import android.app.Application
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
+import org.kodein.di.DI
+import org.kodein.di.DIAware
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-class App : Application(), KodeinAware {
-    companion object {
-        lateinit var getKodein: Kodein
-            private set
-    }
+class App : Application(), DIAware {
 
-    override val kodein: Kodein
+    override val di: DI
         get() = depInjecT(this)
 
     override fun onCreate() {
         super.onCreate()
-
-        getKodein = depInjecT(this)
-
         if (BuildConfig.DEBUG) {
             Timber.plant(DebugTree())
         }

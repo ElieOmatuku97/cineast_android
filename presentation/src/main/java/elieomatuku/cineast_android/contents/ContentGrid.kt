@@ -32,7 +32,7 @@ fun ContentGrid(contents: List<Content>, onContentClick: (content: Content) -> U
         cells = GridCells.Fixed(GRID_VIEW_NUMBER_OF_COLUMNS)
     ) {
         items(contents) { content ->
-            ContentItem(content = content) {
+            ContentGridItem(content = content) {
                 onContentClick(it)
             }
         }
@@ -41,7 +41,7 @@ fun ContentGrid(contents: List<Content>, onContentClick: (content: Content) -> U
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun ContentItem(content: Content, onContentClick: (content: Content) -> Unit) {
+fun ContentGridItem(content: Content, onContentClick: (content: Content) -> Unit) {
     val imagePath = when (content) {
         is Movie -> {
             content.posterPath

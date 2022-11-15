@@ -9,7 +9,6 @@ import com.squareup.picasso.Picasso
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.utils.UiUtils
-import kotlinx.android.synthetic.main.fragment_poster.*
 
 class GalleryPosterFragment : BaseFragment() {
     companion object {
@@ -20,9 +19,7 @@ class GalleryPosterFragment : BaseFragment() {
         }
     }
 
-    private val posterView: ImageView by lazy {
-        poster_view
-    }
+    private lateinit var posterView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +30,7 @@ class GalleryPosterFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        posterView = view.findViewById(R.id.poster_view)
         updateView(arguments?.getString(GalleryFragment.MOVIE_POSTER_PATH))
     }
 

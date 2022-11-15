@@ -29,15 +29,14 @@ import elieomatuku.cineast_android.details.movie.movie_staff.MovieStaffWidget
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.asListOfType
-import elieomatuku.cineast_android.extensions.getViewModel
 import elieomatuku.cineast_android.fragment.RateDialogFragment
-import elieomatuku.cineast_android.injection.KodeinAbstractSavedStateViewModelFactory
 import elieomatuku.cineast_android.utils.*
-import elieomatuku.cineast_android.viewholder.EmptyStateWidget
+import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
+import org.kodein.di.android.x.viewmodel.savedstate.viewModelWithSavedStateHandle
 
 class MovieFragment : BaseFragment() {
     private var isInWatchList: Boolean = false
@@ -51,9 +50,7 @@ class MovieFragment : BaseFragment() {
         PublishSubject.create()
     }
 
-    private val viewModel: MovieViewModel by lazy {
-        getViewModel(KodeinAbstractSavedStateViewModelFactory(kodein))
-    }
+    private val viewModel: MovieViewModel by viewModelWithSavedStateHandle()
 
     override fun onCreateView(
         inflater: LayoutInflater,

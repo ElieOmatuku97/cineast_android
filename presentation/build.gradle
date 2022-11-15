@@ -2,8 +2,6 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 apply plugin: 'androidx.navigation.safeargs'
@@ -45,10 +43,6 @@ android {
     }
 }
 
-androidExtensions {
-    experimental = true
-}
-
 repositories {
     maven { url "https://jitpack.io" }
     maven { url "https://kotlin.bintray.com/kotlinx" }
@@ -81,8 +75,8 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.2.0'
 
     //dependency
-    implementation 'org.kodein.di:kodein-di-generic-jvm:6.4.0'
-    implementation "org.kodein.di:kodein-di-framework-android-x:6.4.0"
+    implementation "org.kodein.di:kodein-di-framework-android-x:$versions.kodein"
+    implementation "org.kodein.di:kodein-di-framework-android-x-viewmodel-savedstate:$versions.kodein"
 
     // support
     implementation 'androidx.appcompat:appcompat:1.2.0'

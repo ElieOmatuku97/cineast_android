@@ -33,13 +33,15 @@ import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.viewholder.EmptyStateWidget
+import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
+import org.kodein.di.android.x.viewmodel.savedstate.viewModelWithSavedStateHandle
 
 class PersonFragment : BaseFragment() {
-    private val viewModel: PersonViewModel by viewModel()
+
     private lateinit var menuHost: MenuHost
+    private val viewModel: PersonViewModel by viewModelWithSavedStateHandle()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +54,7 @@ class PersonFragment : BaseFragment() {
                 AppCompatTheme {
                     PersonScreen(
                         viewModelFactory = viewModelFactory,
+                        viewModel = viewModel,
                         hasNetworkConnection = connectionService.hasNetworkConnection,
                         goToGallery = { navigateToGallery() },
                         goToWebsite = {

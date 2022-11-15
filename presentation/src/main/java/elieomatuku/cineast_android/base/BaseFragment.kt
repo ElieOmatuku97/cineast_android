@@ -6,16 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.extensions.*
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
-import org.kodein.di.android.x.kodein
+import org.kodein.di.*
+import org.kodein.di.android.x.closestDI
 
 /**
  * Created by elieomatuku on 2021-05-05
  */
 
-abstract class BaseFragment : Fragment, KodeinAware {
+abstract class BaseFragment : Fragment, DIAware {
 
     constructor()
     constructor(@LayoutRes resId: Int) : super(resId)
@@ -26,7 +24,7 @@ abstract class BaseFragment : Fragment, KodeinAware {
 
     protected val connectionService: ConnectionService by instance()
 
-    override val kodein: Kodein by kodein()
+    override val di: DI by closestDI()
     val viewModelFactory: ViewModelProvider.Factory by instance()
 
     protected inline fun <reified VM : ViewModel> getViewModel(): VM =

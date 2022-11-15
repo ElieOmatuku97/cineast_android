@@ -5,19 +5,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceFragmentCompat
 import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
 import elieomatuku.cineast_android.extensions.*
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.kodein
-import org.kodein.di.generic.instance
-
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.closestDI
+import org.kodein.di.instance
 
 /**
  * Created by elieomatuku on 2021-10-17
  */
 
-abstract class BasePreferenceFragmentCompat : PreferenceFragmentCompat(), KodeinAware {
+abstract class BasePreferenceFragmentCompat : PreferenceFragmentCompat(), DIAware {
 
-    override val kodein: Kodein by kodein()
+    override val di: DI by closestDI()
     val viewModelFactory: ViewModelProvider.Factory by instance()
 
     protected inline fun <reified VM : ViewModel> getViewModel(): VM =

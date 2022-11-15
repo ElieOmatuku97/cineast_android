@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
 
 apply from: "../ktlint.gradle"
@@ -78,10 +76,6 @@ android {
 
 }
 
-androidExtensions {
-    experimental = true
-}
-
 repositories {
     maven { url "https://jitpack.io" }
     maven { url "https://kotlin.bintray.com/kotlinx" }
@@ -107,8 +101,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
 
     //dependency
-    implementation 'org.kodein.di:kodein-di-generic-jvm:6.4.0'
-    implementation "org.kodein.di:kodein-di-framework-android-x:6.4.0"
+    implementation "org.kodein.di:kodein-di-framework-android-x:$versions.kodein"
 
     //dev utils
     implementation 'com.github.ajalt:timberkt:1.4.0'

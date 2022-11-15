@@ -2,7 +2,6 @@ package elieomatuku.cineast_android.injection
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.bindViewModel
 import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesViewModel
 import elieomatuku.cineast_android.details.movie.MovieViewModel
@@ -17,8 +16,7 @@ import elieomatuku.cineast_android.search.movie.MoviesGridViewModel
 import elieomatuku.cineast_android.search.people.PeopleGridViewModel
 import elieomatuku.cineast_android.settings.SettingsViewModel
 import elieomatuku.cineast_android.settings.usercontents.UserContentsViewModel
-import org.kodein.di.Kodein
-import org.kodein.di.generic.*
+import org.kodein.di.*
 
 
 /**
@@ -28,13 +26,13 @@ import org.kodein.di.generic.*
 object PresentationKodeinModule {
     private const val moduleName = "presentation"
 
-    fun getModule(): Kodein.Module {
+    fun getModule(): DI.Module {
 
-        return Kodein.Module(name = moduleName) {
+        return DI.Module(name = moduleName) {
 
             bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
-            bind<ViewModelProvider.Factory>() with singleton { KodeinViewModelFactory(this.kodein) }
+            bind<ViewModelProvider.Factory>() with singleton { KodeinViewModelFactory(this.di) }
 
             bind<GetDiscoverContent>() with singleton {
                 GetDiscoverContent(instance(), instance())
@@ -144,7 +142,7 @@ object PresentationKodeinModule {
                 MoviesViewModel(instance())
             }
 
-            bind() from factory { savedStateHandle: SavedStateHandle ->
+            bindFactory { savedStateHandle: SavedStateHandle ->
                 MovieViewModel(
                     savedStateHandle,
                     instance(),
@@ -159,7 +157,7 @@ object PresentationKodeinModule {
                 )
             }
 
-            bind() from factory { savedStateHandle: SavedStateHandle ->
+            bindFactory { savedStateHandle: SavedStateHandle ->
                 PersonViewModel(
                     savedStateHandle,
                     instance(),

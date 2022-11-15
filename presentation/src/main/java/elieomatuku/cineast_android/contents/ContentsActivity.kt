@@ -14,13 +14,11 @@ import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.injection.KodeinAbstractSavedStateViewModelFactory
 import elieomatuku.cineast_android.utils.Constants
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.closestKodein
-import org.kodein.di.generic.instance
+import org.kodein.di.*
+import org.kodein.di.android.closestDI
 import java.io.Serializable
 
-class ContentsActivity : ComponentActivity(), KodeinAware {
+class ContentsActivity : ComponentActivity(), DIAware {
     companion object {
         const val WIDGET_KEY = "content"
 
@@ -40,10 +38,10 @@ class ContentsActivity : ComponentActivity(), KodeinAware {
         }
     }
 
-    override val kodein: Kodein by closestKodein()
+    override val di: DI by closestDI()
     private val connectionService: ConnectionService by instance()
     val viewModelFactory: AbstractSavedStateViewModelFactory by lazy {
-        KodeinAbstractSavedStateViewModelFactory(kodein)
+        KodeinAbstractSavedStateViewModelFactory(di)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
