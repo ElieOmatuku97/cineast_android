@@ -116,12 +116,14 @@ class UserContentsViewModel(
     fun removeMovieFromWatchList(movie: Movie) {
         viewModelScope.launch {
             runUseCase(removeMovieFromWatchList, RemoveMovieFromWatchList.Input(movie))
+            getWatchList()
         }
     }
 
     fun removeMovieFromFavorites(movie: Movie) {
         viewModelScope.launch {
             runUseCase(removeMovieFromFavorites, RemoveMovieFromFavorites.Input(movie))
+            getFavourites()
         }
     }
 }
