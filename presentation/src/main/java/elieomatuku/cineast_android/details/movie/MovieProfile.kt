@@ -39,7 +39,7 @@ fun MovieProfile(
 
     Column {
         Profile(
-            imagePath = movie?.posterPath,
+            imagePath = movie?.imagePath,
             title = movie?.title,
             subTitle = movie?.releaseDate,
             description = genresNames,

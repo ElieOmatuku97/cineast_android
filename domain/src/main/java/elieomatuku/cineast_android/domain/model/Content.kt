@@ -7,7 +7,7 @@ import java.io.Serializable
  * Created by elieomatuku on 2021-09-05
  */
 
-interface Content: Serializable {
+interface Content : Serializable {
     val id: Int
     val name: String?
     val imagePath: String?

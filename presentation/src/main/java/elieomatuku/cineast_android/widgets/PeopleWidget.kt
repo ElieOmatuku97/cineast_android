@@ -85,7 +85,7 @@ fun PeopleItem(
     onPersonClick: (content: Content) -> Unit
 ) {
     val imageUrl =
-        UiUtils.getImageUrl(person.profilePath, stringResource(id = R.string.image_small))
+        UiUtils.getImageUrl(person.imagePath, stringResource(id = R.string.image_small))
     Column(Modifier.clickable(onClick = { onPersonClick.invoke(person) })) {
         Image(
             painter = rememberImagePainter(

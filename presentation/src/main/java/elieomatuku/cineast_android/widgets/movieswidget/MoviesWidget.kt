@@ -113,7 +113,7 @@ fun MovieItem(
     genres: List<Genre>,
     onMovieClick: (content: Content, genres: List<Genre>) -> Unit
 ) {
-    val imageUrl = UiUtils.getImageUrl(movie.posterPath, stringResource(id = R.string.image_small))
+    val imageUrl = UiUtils.getImageUrl(movie.imagePath, stringResource(id = R.string.image_small))
     Column(Modifier.clickable(onClick = { onMovieClick.invoke(movie, genres) })) {
         Image(
             painter = rememberImagePainter(

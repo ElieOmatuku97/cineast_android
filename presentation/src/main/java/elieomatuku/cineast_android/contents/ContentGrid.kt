@@ -15,8 +15,6 @@ import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.domain.model.Movie
-import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.utils.UiUtils
 
 /**
@@ -42,16 +40,7 @@ fun ContentGrid(contents: List<Content>, onContentClick: (content: Content) -> U
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ContentGridItem(content: Content, onContentClick: (content: Content) -> Unit) {
-    val imagePath = when (content) {
-        is Movie -> {
-            content.posterPath
-        }
-        is Person -> {
-            content.profilePath
-        }
-        else -> null
-    }
-
+    val imagePath = content.imagePath
     if (!imagePath.isNullOrEmpty()) {
         val imageUrl = UiUtils.getImageUrl(imagePath, stringResource(R.string.image_header))
         Image(
