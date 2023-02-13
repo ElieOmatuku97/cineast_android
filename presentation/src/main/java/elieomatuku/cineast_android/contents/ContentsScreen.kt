@@ -14,7 +14,10 @@ fun ContentsScreen(
     onSwipeItem: ((content: Content) -> Unit)? = null
 ) {
     LazyColumn {
-        items(contents) { content ->
+        items(
+            items = contents,
+            key = { content -> content.id }
+        ) { content ->
             when (content) {
                 is Person -> {
                     ContentItem(
