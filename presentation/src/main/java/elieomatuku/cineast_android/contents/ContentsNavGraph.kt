@@ -39,14 +39,18 @@ fun ContentsNavGraph(
         ) {
             ContentsScreen(
                 contents = contents,
-                onContentClick = {
-                    if (it is Movie) {
-                        contentsScreenActions.navigateToMovieDetail(it.id)
-                    }
+                contentItem = { content ->
+                    content.contentItem(
+                        onContentClick = {
+                            if (it is Movie) {
+                                contentsScreenActions.navigateToMovieDetail(it.id)
+                            }
 
-                    if (it is Person) {
-                        contentsScreenActions.navigateToPersonDetail(it.id)
-                    }
+                            if (it is Person) {
+                                contentsScreenActions.navigateToPersonDetail(it.id)
+                            }
+                        }
+                    )
                 }
             )
         }

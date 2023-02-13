@@ -22,6 +22,7 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseActivity
 import elieomatuku.cineast_android.contents.ContentsScreen
+import elieomatuku.cineast_android.contents.SwipeableContentItem
 import elieomatuku.cineast_android.databinding.ActivityContentBinding
 import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.utils.Constants
@@ -217,8 +218,13 @@ fun UserContentScreen(
             if (contents.isNotEmpty()) {
                 ContentsScreen(
                     contents = contents,
-                    onContentClick = onContentClick,
-                    onSwipeItem = onSwipeItem
+                    contentItem = { content ->
+                        SwipeableContentItem(
+                            content = content,
+                            onContentClick = onContentClick,
+                            onSwipeItem = onSwipeItem
+                        )
+                    }
                 )
             }
 
