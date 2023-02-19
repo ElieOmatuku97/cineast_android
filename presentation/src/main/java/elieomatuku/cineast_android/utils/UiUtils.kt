@@ -1,15 +1,10 @@
 package elieomatuku.cineast_android.utils
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
-import android.text.Spannable
-import android.text.Spanned
-import android.text.style.URLSpan
 import android.view.MenuItem
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
@@ -61,14 +56,14 @@ object UiUtils {
 
     fun mapMovieGenreIdsWithGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): String? {
         val genresNames = getGenreNames(movieGenreIds, genres)
-        return if ((genresNames != null) && genresNames.isNotEmpty()) {
+        return if (genresNames.isNotEmpty()) {
             genresNames.joinToString(", ")
         } else {
             null
         }
     }
 
-    fun retrieveNameFromGenre(genres: List<Genre>): String? {
+    fun retrieveNameFromGenre(genres: List<Genre>): String {
         val genreNames: MutableList<String> = mutableListOf()
         genres.forEach {
             genreNames.add(it.name)
@@ -80,7 +75,7 @@ object UiUtils {
     fun tintMenuItem(item: MenuItem, context: Context, colorRes: Int?) {
         val icon = item.icon
         if (colorRes != null)
-            item.icon = getTintedDrawable(icon, context, colorRes)
+            item.icon = icon?.let { getTintedDrawable(it, context, colorRes) }
     }
 
     fun getShareIntent(itemTitleOrName: String?, itemId: Int?, path: String? = null): Intent? {
@@ -112,7 +107,7 @@ object UiUtils {
         return drawableCompat
     }
 
-    private fun getGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): MutableList<String>? {
+    private fun getGenreNames(movieGenreIds: List<Int>, genres: List<Genre>): MutableList<String> {
         val genresNames: MutableList<String> = mutableListOf()
         movieGenreIds.forEach { id ->
             genres.forEach {
@@ -140,7 +135,6 @@ object UiUtils {
 
         webv.webViewClient = object : WebViewClient() {
 
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
@@ -171,18 +165,9 @@ object UiUtils {
 
         webv.settings.loadsImagesAutomatically = true
         webv.settings.javaScriptEnabled = true
-        webv.settings.layoutAlgorithm =
-            WebSettings.LayoutAlgorithm.SINGLE_COLUMN // required for facebook
         webv.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-        webv.settings.setAppCacheEnabled(false)
         webv.clearCache(true)
         return webv
     }
 
-    fun configSpannableLinkify(urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {
-        val spanStart = spannable.getSpanStart(urlSpan)
-        val spanEnd = spannable.getSpanEnd(urlSpan)
-        spannable.setSpan(linkSpan, spanStart, spanEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        spannable.removeSpan(urlSpan)
-    }
 }
