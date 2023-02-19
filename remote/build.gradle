@@ -7,11 +7,11 @@ apply plugin: 'kotlin-kapt'
 apply from: "../ktlint.gradle"
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdk
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdk rootProject.ext.targetSdk
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -40,7 +40,6 @@ dependencies {
     implementation project(':data')
 
     implementation "androidx.core:core-ktx:${versions.ktx}"
-    implementation "androidx.preference:preference-ktx:1.1.1"
     api("com.squareup.retrofit2:retrofit:${versions.retrofit}")
     api("com.squareup.retrofit2:converter-gson:${versions.retrofit}") {
         exclude module: "retrofit:${versions.retrofit}"
