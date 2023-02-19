@@ -5,8 +5,8 @@ plugins {
 apply from: "../ktlint.gradle"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility JavaVersion.VERSION_11
+    targetCompatibility JavaVersion.VERSION_11
 }
 
 dependencies {
@@ -14,5 +14,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
 
-    testImplementation 'junit:junit:4.13.2'
+    testImplementation "junit:junit:${versions.junit}"
 }
