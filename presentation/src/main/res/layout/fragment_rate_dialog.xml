@@ -7,8 +7,8 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="@dimen/rate_dialog_width"
-        android:layout_height="@dimen/rate_dialog_height">
+        android:layout_width="@dimen/dialog_width"
+        android:layout_height="@dimen/dialog_height">
 
         <TextView
             android:id="@+id/dialog_title"

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_graph"
+    app:startDestination="@id/discover">
+
+    <fragment
+        android:id="@+id/discover"
+        android:name="elieomatuku.cineast_android.discover.DiscoverFragment"
+        android:label="@string/nav_title_discover">
+        <action
+            android:id="@+id/navigate_to_movie_detail"
+            app:destination="@id/movie_detail_graph"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out">
+            <argument
+                android:name="screen_name"
+                app:argType="string" />
+            <argument
+                android:name="movieId"
+                app:argType="integer"
+                />
+        </action>
+        <action
+            android:id="@+id/navigate_to_person_detail"
+            app:destination="@id/person_detail_graph">
+            <argument
+                android:name="screen_name"
+                app:argType="string" />
+            <argument
+                android:name="personId"
+                app:argType="integer" />
+        </action>
+        <action
+            android:id="@+id/navigate_to_login"
+            app:destination="@id/login"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/search"
+        android:name="elieomatuku.cineast_android.search.SearchFragment"
+        android:label="@string/nav_title_search">
+        <action
+            android:id="@+id/navigate_to_movie_detail"
+            app:destination="@id/movie_detail_graph"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out">
+            <argument
+                android:name="screen_name"
+                app:argType="string" />
+            <argument
+                android:name="movieId"
+                app:argType="integer"
+                />
+        </action>
+        <action
+            android:id="@+id/navigate_to_person_detail"
+            app:destination="@id/person_detail_graph">
+            <argument
+                android:name="screen_name"
+                app:argType="string" />
+            <argument
+                android:name="personId"
+                app:argType="integer" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/settings"
+        android:name="elieomatuku.cineast_android.settings.SettingsFragment"
+        android:label="@string/nav_title_my_tmdb" >
+        <action
+            android:id="@+id/navigate_to_login"
+            app:destination="@id/login"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/login"
+        android:name="elieomatuku.cineast_android.settings.LoginWebViewFragment"
+        android:label="@string/login">
+        <argument
+            android:name="showAppBar"
+            android:defaultValue="false" />
+        <argument
+            android:name="showBottomNav"
+            android:defaultValue="false" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+
+    <include
+        android:id="@+id/movie_detail_graph"
+        app:graph="@navigation/movie_detail_graph" />
+
+    <include
+        android:id="@+id/person_detail_graph"
+        app:graph="@navigation/person_detail_graph" />
+
+</navigation>

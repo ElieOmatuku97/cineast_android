@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/person_detail_graph"
+    app:startDestination="@id/person_detail">
+
+    <fragment
+        android:id="@+id/person_detail"
+        android:name="elieomatuku.cineast_android.details.person.PersonFragment"
+        android:label="Person Detail">
+        <action
+            android:id="@+id/navigate_to_gallery"
+            app:destination="@id/gallery" />
+        <action
+            android:id="@+id/navigate_to_movie_detail"
+            app:destination="@id/movie_detail_graph" />
+        <action
+            android:id="@+id/navigate_to_website"
+            app:destination="@id/website" />
+        <argument
+            android:name="screen_name"
+            app:argType="string" />
+        <argument
+            android:name="personId"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/gallery"
+        android:name="elieomatuku.cineast_android.details.gallery.GalleryFragment"
+        android:label="Gallery"
+        tools:layout="@layout/fragment_gallery">
+        <argument
+            android:name="posters"
+            app:argType="string[]" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/website"
+        android:name="elieomatuku.cineast_android.fragment.WebViewFragment">
+        <argument
+            android:name="showAppBar"
+            android:defaultValue="false" />
+        <argument
+            android:name="showBottomNav"
+            android:defaultValue="false" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
+</navigation>

@@ -1,171 +1,69 @@
 package elieomatuku.cineast_android.discover
 
-import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.view.ViewGroup
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.res.*
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.fragment.findNavController
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.*
-import elieomatuku.cineast_android.extensions.getFilteredWidgets
+import elieomatuku.cineast_android.extensions.getWidgets
 import elieomatuku.cineast_android.base.BaseFragment
-import elieomatuku.cineast_android.details.movie.MovieActivity
-import elieomatuku.cineast_android.details.person.PersonActivity
-import elieomatuku.cineast_android.fragment.WebViewFragment
-import elieomatuku.cineast_android.settings.LoginWebViewFragment
-import elieomatuku.cineast_android.utils.Constants
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.fragment_discover.*
+import elieomatuku.cineast_android.contents.ContentsActivity
+import elieomatuku.cineast_android.extensions.DiscoverWidget
+import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.*
-import java.io.Serializable
+import elieomatuku.cineast_android.widgets.EmptyStateWidget
+import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
+import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
+import elieomatuku.cineast_android.widgets.PeopleWidget
 
+class DiscoverFragment : BaseFragment() {
 
-class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
-    companion object {
-        fun newInstance(): DiscoverFragment {
-            return DiscoverFragment()
-        }
-
-        const val SCREEN_NAME = "Discover"
-        const val MOVIE_GENRES_KEY = "genres"
-        const val MOVIE_KEY = "movieApi"
-        const val PEOPLE_KEY = "peopleApi"
-    }
-
-    private val viewModel: DiscoverViewModel by viewModel<DiscoverViewModel>()
-
-    private val movieSelectPublisher: PublishSubject<Movie> by lazy {
-        PublishSubject.create<Movie>()
-    }
-    private val movieSelectObservable: Observable<Movie>
-        get() = movieSelectPublisher.hide()
-
-    private val personSelectPublisher: PublishSubject<Content> by lazy {
-        PublishSubject.create<Content>()
-    }
-
-    private val personSelectObservable: Observable<Content>
-        get() = personSelectPublisher.hide()
-
-    private val loginClickPublisher: PublishSubject<Boolean> by lazy {
-        PublishSubject.create<Boolean>()
-    }
-
-    private val loginClickObservable: Observable<Boolean>
-        get() = loginClickPublisher.hide()
-
-    val adapter: DiscoverAdapter by lazy {
-        DiscoverAdapter(movieSelectPublisher, personSelectPublisher, loginClickPublisher)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        recyclerview.adapter = adapter
-        val itemDecoration =
-            DividerItemDecoration(recyclerview.context, DividerItemDecoration.VERTICAL)
-        val drawable: Drawable? = ResourcesCompat.getDrawable(
-            resources,
-            R.drawable.item_decoration,
-            activity?.theme
-        )
-        if (drawable != null) {
-            itemDecoration.setDrawable(drawable)
-        }
-        recyclerview.addItemDecoration(itemDecoration)
-        recyclerview.layoutManager = LinearLayoutManager(activity)
-
-
-        viewModel.viewState.observe(viewLifecycleOwner) { state ->
-            if (state.isLoading) {
-                showLoading(requireView())
-            } else {
-                dismissRefreshLayout()
-                hideLoading(requireView())
-            }
-
-            state.viewError.consume {
-                updateErrorView(it.message)
-            }
-            updateLoginState(state.isLoggedIn)
-            updateView(state.discoverContents, state.isLoggedIn)
-            state.accessToken.consume {
-                gotoWebView(it)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+                DiscoverScreen(
+                    viewModelFactory = viewModelFactory,
+                    hasNetworkConnection = connectionService.hasNetworkConnection,
+                    onSeeAllClick = { contents, titleResources ->
+                        ContentsActivity.startActivity(
+                            requireContext(),
+                            contents,
+                            titleResources
+                        )
+                    },
+                    gotoMovie = ::gotoMovie,
+                    gotoPerson = ::gotoPerson,
+                    gotoWebView = ::gotoWebView
+                )
             }
         }
-
-        refreshLayout.setOnRefreshListener {
-            viewModel.getDiscoverContent()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.getIsLoggedIn()
-
-        rxSubs.add(
-            loginClickObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    if (!viewModel.isLoggedIn()) {
-                        viewModel.logIn()
-                    } else {
-                        viewModel.logout()
-                    }
-                }
-        )
-
-        rxSubs.add(
-            personSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { actor: Content ->
-                    val params = Bundle()
-                    params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
-                    params.putSerializable(PEOPLE_KEY, actor)
-                    gotoPeople(params)
-                }
-        )
-
-        rxSubs.add(
-            movieSelectObservable
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe { movie: Movie ->
-                    val params = Bundle()
-                    params.putString(Constants.SCREEN_NAME_KEY, SCREEN_NAME)
-                    params.putSerializable(MOVIE_KEY, movie)
-                    params.putSerializable(
-                        MOVIE_GENRES_KEY,
-                        viewModel.genres as Serializable
-                    )
-                    gotoMovie(params)
-                }
-        )
-    }
-
-    private fun updateView(
-        discoverContents: DiscoverContents?,
-        isLoggedIn: Boolean
-    ) {
-        discoverContents?.let {
-            adapter.filteredContents = discoverContents.getFilteredWidgets()
-            adapter.isLoggedIn = isLoggedIn
-            adapter.notifyDataSetChanged()
-            recyclerview.visibility = View.VISIBLE
-            dismissRefreshLayout()
-        }
-    }
-
-    private fun updateErrorView(errorMsg: String?) {
-        adapter.errorMessage = errorMsg
-        adapter.notifyDataSetChanged()
-        recyclerview.visibility = View.VISIBLE
-        dismissRefreshLayout()
     }
 
     private fun gotoWebView(accessToken: AccessToken?) {
@@ -175,34 +73,140 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
                 .appendPath(it.requestToken)
                 .build()
                 .toString()
-
-            val webViewFragment: WebViewFragment =
-                LoginWebViewFragment.newInstance(authenticateUrl)
-            val fm = (activity as AppCompatActivity).supportFragmentManager
-
-            fm.beginTransaction().add(android.R.id.content, webViewFragment, null)
-                .addToBackStack(null).commit()
+            val directions = DiscoverFragmentDirections.navigateToLogin(authenticateUrl)
+            findNavController().navigate(directions)
         }
     }
 
-    private fun updateLoginState(isLoggedIn: Boolean) {
-        adapter.isLoggedIn = isLoggedIn
-        adapter.notifyDataSetChanged()
+    private fun gotoMovie(movie: Movie) {
+        val directions = DiscoverFragmentDirections.navigateToMovieDetail(
+            getString(R.string.nav_title_discover),
+            movie.id
+        )
+        findNavController().navigate(directions)
     }
 
-    private fun dismissRefreshLayout() {
-        refreshLayout.isRefreshing = false
+    private fun gotoPerson(person: Person) {
+        val directions = DiscoverFragmentDirections.navigateToPersonDetail(
+            getString(R.string.nav_title_discover),
+            person.id
+        )
+        findNavController().navigate(directions)
+    }
+}
+
+@Composable
+fun DiscoverScreen(
+    viewModelFactory: ViewModelProvider.Factory,
+    viewModel: DiscoverViewModel = viewModel(factory = viewModelFactory),
+    hasNetworkConnection: Boolean,
+    onSeeAllClick: (contents: List<Content>, titleResources: Int) -> Unit,
+    gotoMovie: (movie: Movie) -> Unit,
+    gotoPerson: (person: Person) -> Unit,
+    gotoWebView: (accessToken: AccessToken) -> Unit
+) {
+    val viewState by viewModel.viewState.observeAsState()
+    val isRefreshing by viewModel.isRefreshing.collectAsState()
+
+    viewState?.accessToken.consume {
+        gotoWebView(it)
     }
 
-    private fun gotoMovie(params: Bundle) {
-        val intent = Intent(activity, MovieActivity::class.java)
-        intent.putExtras(params)
-        activity?.startActivity(intent)
-    }
+    viewState?.apply {
+        Scaffold {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                SwipeRefresh(
+                    state = rememberSwipeRefreshState(isRefreshing),
+                    modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
+                    onRefresh = {
+                        viewModel.refresh()
+                    }
+                ) {
+                    viewError?.apply {
+                        val errorMessage = peek().message
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            EmptyStateWidget(
+                                errorMsg = errorMessage,
+                                hasNetworkConnection = hasNetworkConnection
+                            )
+                        }
+                    }
 
-    private fun gotoPeople(params: Bundle) {
-        val intent = Intent(activity, PersonActivity::class.java)
-        intent.putExtras(params)
-        activity?.startActivity(intent)
+                    discoverContents?.apply {
+                        LazyColumn {
+                            items(getWidgets()) { widget ->
+                                when (widget) {
+                                    is DiscoverWidget.Header -> {
+                                        LazyRow(
+                                            modifier = Modifier
+                                                .height(dimensionResource(id = R.dimen.layout_height_xlarge))
+                                        ) {
+                                            items(
+                                                widget.value.asListOfType<Movie>()
+                                                    ?: emptyList()
+                                            ) { movie ->
+                                                HeaderItem(movie = movie) {
+                                                    gotoMovie(it)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    is DiscoverWidget.People -> {
+                                        PeopleWidget(
+                                            people = widget.value.asListOfType()
+                                                ?: emptyList(),
+                                            sectionTitle = stringResource(widget.titleResources),
+                                            onItemClick = {
+                                                if (it is Person) {
+                                                    gotoPerson(it)
+                                                }
+                                            }
+                                        ) {
+                                            onSeeAllClick(it, widget.titleResources)
+                                        }
+                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                    }
+                                    is DiscoverWidget.Movies -> {
+                                        MoviesWidget(
+                                            viewModelFactory = viewModelFactory,
+                                            movies = widget.value.asListOfType()
+                                                ?: emptyList(),
+                                            sectionTitle = stringResource(widget.titleResources),
+                                            onItemClick = { content, _ ->
+                                                if (content is Movie) {
+                                                    gotoMovie(content)
+                                                }
+                                            },
+                                            onSeeAllClick = {
+                                                onSeeAllClick(it, widget.titleResources)
+                                            }
+                                        )
+                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                    }
+                                    is DiscoverWidget.Login -> {
+                                        LoginItem(
+                                            isLoggedIn = viewState?.isLoggedIn ?: false
+                                        ) {
+                                            if (!viewModel.isLoggedIn()) {
+                                                viewModel.logIn()
+                                            } else {
+                                                viewModel.logout()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (isLoading) {
+                    LoadingIndicatorWidget()
+                }
+            }
+        }
     }
 }

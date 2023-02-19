@@ -1,9 +1,9 @@
 package elieomatuku.cineast_android.injection
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModelProvider
-import elieomatuku.cineast_android.bindViewModel
 import elieomatuku.cineast_android.connection.ConnectionService
-import elieomatuku.cineast_android.details.MoviesViewModel
+import elieomatuku.cineast_android.widgets.movieswidget.MoviesViewModel
 import elieomatuku.cineast_android.details.movie.MovieViewModel
 import elieomatuku.cineast_android.details.person.PersonViewModel
 import elieomatuku.cineast_android.discover.DiscoverViewModel
@@ -15,12 +15,8 @@ import elieomatuku.cineast_android.search.SearchViewModel
 import elieomatuku.cineast_android.search.movie.MoviesGridViewModel
 import elieomatuku.cineast_android.search.people.PeopleGridViewModel
 import elieomatuku.cineast_android.settings.SettingsViewModel
-import elieomatuku.cineast_android.settings.user_movies.UserMoviesViewModel
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.provider
-import org.kodein.di.generic.singleton
+import elieomatuku.cineast_android.settings.usercontents.UserContentsViewModel
+import org.kodein.di.*
 
 
 /**
@@ -28,15 +24,15 @@ import org.kodein.di.generic.singleton
  */
 
 object PresentationKodeinModule {
-    const val moduleName = "presentation"
+    private const val moduleName = "presentation"
 
-    fun getModule(): Kodein.Module {
+    fun getModule(): DI.Module {
 
-        return Kodein.Module(name = moduleName) {
+        return DI.Module(name = moduleName) {
 
             bind<ConnectionService>() with singleton { ConnectionService(instance()) }
 
-            bind<ViewModelProvider.Factory>() with singleton { KodeinViewModelFactory(this.kodein) }
+            bind<ViewModelProvider.Factory>() with singleton { DIViewModelFactory(this.di) }
 
             bind<GetDiscoverContent>() with singleton {
                 GetDiscoverContent(instance(), instance())
@@ -126,6 +122,10 @@ object PresentationKodeinModule {
                 GetAccount(instance())
             }
 
+            bind<GetMovie>() with singleton {
+                GetMovie(instance())
+            }
+
             bindViewModel<DiscoverViewModel>() with provider {
                 DiscoverViewModel(instance(), instance(), instance(), instance(), instance())
             }
@@ -142,8 +142,10 @@ object PresentationKodeinModule {
                 MoviesViewModel(instance())
             }
 
-            bindViewModel<MovieViewModel>() with provider {
+            bindFactory { savedStateHandle: SavedStateHandle ->
                 MovieViewModel(
+                    savedStateHandle,
+                    instance(),
                     instance(),
                     instance(),
                     instance(),
@@ -155,8 +157,9 @@ object PresentationKodeinModule {
                 )
             }
 
-            bindViewModel<PersonViewModel>() with provider {
+            bindFactory { savedStateHandle: SavedStateHandle ->
                 PersonViewModel(
+                    savedStateHandle,
                     instance(),
                     instance(),
                     instance()
@@ -176,8 +179,8 @@ object PresentationKodeinModule {
                 )
             }
 
-            bindViewModel<UserMoviesViewModel>() with provider {
-                UserMoviesViewModel(
+            bindViewModel<UserContentsViewModel>() with provider {
+                UserContentsViewModel(
                     instance(),
                     instance(),
                     instance(),

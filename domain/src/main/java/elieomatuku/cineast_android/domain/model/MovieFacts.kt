@@ -1,12 +1,14 @@
 package elieomatuku.cineast_android.domain.model
 
+import java.io.Serializable
+
 data class MovieFacts(
     val budget: Int?,
     val releaseDate: String?,
     val runtime: Int?,
     val revenue: Int?,
     val homepage: String?
-) {
+): Serializable {
 
     val runtimeInHoursAndMinutes: String
         get() {

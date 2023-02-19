@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -12,8 +11,7 @@
         <item name="actionMenuTextColor">@color/color_orange_app</item>
     </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
-    </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
@@ -36,7 +34,7 @@
     </style>
 
     <style name="ToolbarTextStyle" parent="@style/Base.TextAppearance.AppCompat.Title">
-        <item name="android:textSize">@dimen/toolbar_text_size</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textColor">@color/color_white</item>
@@ -54,7 +52,6 @@
         <item name="colorSecondary">@color/color_white</item>
     </style>
 
-
     <style name="CineastRatingBarTheme" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/color_grey_light</item>
         <item name="colorControlActivated">@color/color_orange_app</item>
@@ -64,10 +61,4 @@
         <item name="colorControlNormal">@color/color_grey_light</item>
         <item name="colorControlActivated">@android:color/holo_green_light</item>
     </style>
-
-
-
-
-
-
 </resources>

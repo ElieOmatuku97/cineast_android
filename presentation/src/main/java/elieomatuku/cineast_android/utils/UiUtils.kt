@@ -1,7 +1,6 @@
 package elieomatuku.cineast_android.utils
 
 import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -11,43 +10,19 @@ import android.os.Build
 import android.text.Spannable
 import android.text.Spanned
 import android.text.style.URLSpan
-import android.util.DisplayMetrics
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Genre
-import timber.log.Timber
 
 object UiUtils {
-
-    val LOG_TAG = UiUtils::class.java.simpleName
-    val loadingViewDimRes: Int
-        get() = R.dimen.loading_widget_dimen
-
-    fun createLoadingIndicator(activity: Activity): PopupWindow {
-        val inflater = LayoutInflater.from(activity)
-        val loadingView = inflater.inflate(R.layout.layout_loading, null)
-        val dimen = activity.resources.getDimensionPixelSize(loadingViewDimRes)
-        val popup = PopupWindow(dimen, dimen)
-        popup.contentView = loadingView
-        return popup
-    }
-
-    fun getDisplayMetrics(activity: Activity): DisplayMetrics {
-        val displayMetrics = DisplayMetrics()
-        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        return displayMetrics
-    }
 
     fun getImageUrl(path: String?, imageUrl: String?, fallBackImageUrl: String? = null): String {
         return getImageUri(imageUrl, fallBackImageUrl)
@@ -116,11 +91,18 @@ object UiUtils {
         }
     }
 
-    private fun configureShareIntent(itemTitleOrName: String?, itemId: Int?, path: String? = null): Intent {
+    private fun configureShareIntent(
+        itemTitleOrName: String?,
+        itemId: Int?,
+        path: String? = null
+    ): Intent {
         return Intent()
             .setAction(Intent.ACTION_SEND)
             .putExtra(Intent.EXTRA_SUBJECT, "Cineast - $itemTitleOrName")
-            .putExtra(Intent.EXTRA_TEXT, "Check out $itemTitleOrName at TMDb.\n\n${ContentUtils.getContentUrl(itemId, path)}")
+            .putExtra(
+                Intent.EXTRA_TEXT,
+                "Check out $itemTitleOrName at TMDb.\n\n${ContentUtils.getContentUrl(itemId, path)}"
+            )
             .setType("text/plain")
     }
 
@@ -141,63 +123,60 @@ object UiUtils {
         return genresNames
     }
 
-    fun configureWebView(webView: WebView, progressBar: androidx.core.widget.ContentLoadingProgressBar? = null): WebView {
+    fun configureWebView(
+        webView: WebView,
+        progressListener: (progress: Int) -> Unit,
+        progressVisibilityListener: (showProgress: Boolean) -> Unit
+    ): WebView {
         val webv = webView
 
         webv.webChromeClient = object : WebChromeClient() {
 
             override fun onProgressChanged(view: WebView?, newProgress: Int) {
                 super.onProgressChanged(view, newProgress)
-                Timber.d("onProgressChanged: $newProgress")
-                progressBar?.progress = newProgress
+                progressListener(newProgress)
             }
         }
 
         webv.webViewClient = object : WebViewClient() {
 
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
-                Timber.d("shouldOverrideUrl: ${request?.url}")
-                viewUrl(request?.url?.toString(), webv.context)
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean {
+                request?.url?.toString()?.let {
+                    view?.loadUrl(it)
+                }
                 return true
             }
 
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                Timber.d("shouldOverrideUrl: $url")
-                viewUrl(url, webv.context)
-
+                url?.let {
+                    view?.loadUrl(it)
+                }
                 return true
             }
 
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                Timber.d("New Page Started!!")
-
-                progressBar?.show()
+                progressVisibilityListener(true)
             }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                Timber.d(LOG_TAG, "Page Finished")
-
-                progressBar?.hide()
+                progressVisibilityListener(false)
             }
         }
 
         webv.settings.loadsImagesAutomatically = true
         webv.settings.javaScriptEnabled = true
-        webv.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN // required for facebook
+        webv.settings.layoutAlgorithm =
+            WebSettings.LayoutAlgorithm.SINGLE_COLUMN // required for facebook
         webv.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webv.settings.setAppCacheEnabled(false)
         webv.clearCache(true)
         return webv
-    }
-
-    fun viewUrl(url: String?, context: Context) {
-        if (url != null) {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            context.startActivity(browserIntent)
-        }
     }
 
     fun configSpannableLinkify(urlSpan: URLSpan, spannable: Spannable, linkSpan: URLSpan) {

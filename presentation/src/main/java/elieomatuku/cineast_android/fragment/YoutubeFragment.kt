@@ -1,31 +1,22 @@
 package elieomatuku.cineast_android.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.pierfrancescosoffritti.youtubeplayer.player.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.youtubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayer
-import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayerView
-import elieomatuku.cineast_android.R
-import kotlinx.android.synthetic.main.widget_youtube.view.*
+import elieomatuku.cineast_android.base.BaseFragment
+import elieomatuku.cineast_android.databinding.WidgetYoutubeBinding
 
-class YoutubeFragment : Fragment() {
-    companion object {
-        val LOG_TAG = YoutubeFragment::class.java.simpleName
+class YoutubeFragment : BaseFragment() {
+    private var _binding: WidgetYoutubeBinding? = null
+    private val binding get() = _binding!!
 
-        fun newInstance(youtubeUrl: String): YoutubeFragment {
-            val fragment = YoutubeFragment()
-            val args = Bundle()
-            args.putString("youtube_url", youtubeUrl)
-            fragment.arguments = args
-            return fragment
-        }
-    }
+    private val args: YoutubeFragmentArgs by navArgs()
 
     private var player: YouTubePlayer? = null
 
@@ -40,14 +31,12 @@ class YoutubeFragment : Fragment() {
 
         override fun onReady() {
             super.onReady()
-            Log.d(LOG_TAG, "onReady")
             updateVideo()
         }
 
         override fun onVideoDuration(duration: Float) {
             super.onVideoDuration(duration)
             if (!initComplete) {
-                Log.d(LOG_TAG, "onVideoDuration $duration")
                 lastDuration = duration
                 initComplete = true
             }
@@ -62,57 +51,45 @@ class YoutubeFragment : Fragment() {
 
         override fun onStateChange(state: Int) {
             super.onStateChange(state)
-
             playing = when (state) {
                 PlayerConstants.PlayerState.PLAYING -> true
                 PlayerConstants.PlayerState.PAUSED -> false
                 else -> playing
             }
-
-            Log.d(LOG_TAG, "onStateChange: state = $state, playing = $playing")
         }
     }
 
-    private fun reset() {
-        Log.d(LOG_TAG, "reset")
-        playing = false
-        lastPosition = 0f
-        lastDuration = 0f
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = WidgetYoutubeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.widget_youtube, container, false)
-
-        val exitIconView: ImageView by lazy {
-            view.close_icon
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.closeIcon.setOnClickListener {
+            findNavController().navigateUp()
         }
 
-        exitIconView.setOnClickListener {
-            activity?.supportFragmentManager?.popBackStack()
-        }
-
-        val youTubePlayerView: YouTubePlayerView by lazy {
-            val ytview = view.youtube_widget
-            ytview.enterFullScreen()
-            ytview.playerUIController.showFullscreenButton(true)
-            ytview.playerUIController.showPlayPauseButton(true)
-            lifecycle.addObserver(ytview)
-            ytview
-        }
+        binding.youtubeWidget.enterFullScreen()
+        binding.youtubeWidget.playerUIController.showFullscreenButton(true)
+        binding.youtubeWidget.playerUIController.showPlayPauseButton(true)
+        lifecycle.addObserver(binding.youtubeWidget)
 
         initComplete = false
 
-        val videoId = arguments?.getString("youtube_url")
-        if (videoId != lastVideoId) {
+        if (args.youtubeUrl != lastVideoId) {
             reset()
-            lastVideoId = videoId
-            Log.d(LOG_TAG, "updateList: lastVideoId = $lastVideoId")
+            lastVideoId = args.youtubeUrl
         }
 
         if (player != null) {
             updateVideo()
         } else {
-            youTubePlayerView.initialize(
+            binding.youtubeWidget.initialize(
                 { initializedYouTubePlayer: YouTubePlayer ->
                     player = initializedYouTubePlayer
                     initializedYouTubePlayer.addListener(listener)
@@ -120,7 +97,6 @@ class YoutubeFragment : Fragment() {
                 true
             )
         }
-        return view
     }
 
     private fun updateVideo() {
@@ -131,5 +107,11 @@ class YoutubeFragment : Fragment() {
                 player?.cueVideo(it, lastPosition)
             }
         }
+    }
+
+    private fun reset() {
+        playing = false
+        lastPosition = 0f
+        lastDuration = 0f
     }
 }

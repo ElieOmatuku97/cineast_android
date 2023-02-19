@@ -12,11 +12,11 @@ import elieomatuku.cineast_android.domain.model.PersonDetails
 interface PersonRepository {
     suspend fun getPopularPeople(): List<Person>
 
-    suspend fun getMovies(person: Person): List<Movie>
+    suspend fun getMovies(personId: Int): List<Movie>
 
-    suspend fun getDetails(person: Person): PersonDetails
+    suspend fun getDetails(personId: Int): PersonDetails
 
-    suspend fun getImages(person: Person): Images
+    suspend fun getImages(personId: Int): Images
 
     suspend fun searchPeople(argQuery: String): List<Person>
 }

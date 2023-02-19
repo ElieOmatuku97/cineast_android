@@ -1,73 +1,69 @@
 package elieomatuku.cineast_android.home
 
 import android.os.Bundle
-import android.view.Menu
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.core.view.isVisible
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseActivity
-import elieomatuku.cineast_android.utils.UiUtils
-import kotlinx.android.synthetic.main.activity_home.*
+import elieomatuku.cineast_android.databinding.ActivityHomeBinding
+
+private const val SHOW_APP_BAR_ARG = "showAppBar"
+private const val SHOW_BOTTOM_NAV_ARG = "showBottomNav"
 
 class HomeActivity : BaseActivity() {
 
-    private val adapter by lazy {
-        HomeFragmentPagerAdapter(supportFragmentManager)
-    }
-
-    private val pager by lazy {
-        home_pager
-    }
-
-    private val navIds: List<Int> by lazy {
-        listOf(R.id.action_discover, R.id.action_search, R.id.action_my_TMDb)
-    }
-
-    val bottomNav: BottomNavigationView by lazy {
-        bottom_navig
-    }
+    private lateinit var binding: ActivityHomeBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
 
-        toolbar?.let {
-            UiUtils.initToolbar(this, it, false)
-        }
-        toolbar?.title = this.getString(R.string.nav_title_discover)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        initView()
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.home_container) as NavHostFragment
+        navController = navHostFragment.navController
+        setupActionBar()
+        setupBottomNavMenu()
+        setDestinationChangedListener()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return super.onCreateOptionsMenu(menu)
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
     }
 
-    private fun initView() {
-        pager.adapter = adapter
+    private fun setupBottomNavMenu() {
+        binding.bottomNavig.setupWithNavController(navController)
+    }
 
-        bottomNav.setOnNavigationItemSelectedListener {
-            toolbar?.title = it.title
-            pager.setCurrentItem(navIds.indexOf(it.itemId), true)
-            true
+    private fun setupActionBar() {
+        setSupportActionBar(binding.toolbar)
+        appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.discover, R.id.search, R.id.settings))
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun setDestinationChangedListener() {
+        navController.addOnDestinationChangedListener { _, _, arguments ->
+            val showAppBar = arguments?.getBoolean(SHOW_APP_BAR_ARG, true) ?: true
+            val showBottomNav = arguments?.getBoolean(SHOW_BOTTOM_NAV_ARG, true) ?: true
+
+            if (showAppBar) {
+                supportActionBar?.show()
+            } else {
+                supportActionBar?.hide()
+            }
+            binding.bottomNavig.isVisible = showBottomNav
         }
-
-        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                toolbar?.title = bottomNav.menu.getItem(position).title
-                bottomNav.menu.getItem(position).isChecked = true
-            }
-        })
     }
 }

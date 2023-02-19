@@ -11,11 +11,16 @@ data class Movie(
     override val name: String? = null,
     val originalTitle: String? = null,
     val originalLanguage: String? = null,
-    val title: String? = null,
+    override val title: String? = null,
     val backdropPath: String? = null,
     val popularity: Double? = null,
     val voteCount: Int? = null,
     val video: Boolean? = true,
     val voteAverage: Float? = null,
-    val rating: Float? = null
-) : Content
+    val currentUserRating: Float? = null
+) : Content {
+    override val imagePath: String?
+        get() = posterPath
+    override val subTitle: String?
+        get() = releaseDate
+}

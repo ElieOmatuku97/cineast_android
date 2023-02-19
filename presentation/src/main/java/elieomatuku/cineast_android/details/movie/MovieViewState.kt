@@ -18,4 +18,7 @@ data class MovieViewState(
     val isInFavorites: Boolean = false,
     val posters: List<Image>? = listOf(),
     val viewError: SingleEvent<ViewError>? = null
-)
+) {
+    val movie
+        get() = movieSummary?.movie
+}

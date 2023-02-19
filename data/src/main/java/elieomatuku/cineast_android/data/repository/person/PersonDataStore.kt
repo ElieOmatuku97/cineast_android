@@ -12,11 +12,11 @@ import elieomatuku.cineast_android.data.model.PersonEntity
 interface PersonDataStore {
     suspend fun getPopularPeople(): List<PersonEntity>
 
-    suspend fun getMovies(person: PersonEntity): List<MovieEntity>
+    suspend fun getMovies(personId: Int): List<MovieEntity>
 
-    suspend fun getDetails(person: PersonEntity): PersonDetailsEntity
+    suspend fun getDetails(personId: Int): PersonDetailsEntity
 
-    suspend fun getImages(person: PersonEntity): ImageEntities
+    suspend fun getImages(personId: Int): ImageEntities
 
     suspend fun searchPeople(argQuery: String): List<PersonEntity>
 

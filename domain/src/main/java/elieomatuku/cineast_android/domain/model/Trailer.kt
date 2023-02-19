@@ -1,5 +1,7 @@
 package elieomatuku.cineast_android.domain.model
 
+import java.io.Serializable
+
 data class Trailer(
     val id: String?,
     val iso6391: String?,
@@ -9,4 +11,4 @@ data class Trailer(
     val site: String?,
     val size: Int?,
     val type: String?
-)
+) : Serializable

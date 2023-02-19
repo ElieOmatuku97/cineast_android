@@ -61,6 +61,4 @@
 
     <string name="empty_state_no_internet_msg">Cineast cannot connect to a network. Please check your internet connection and try again.</string>
     <string name="no_content_title">No Content</string>
-
-
 </resources>

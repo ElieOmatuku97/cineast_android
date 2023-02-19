@@ -4,20 +4,20 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import elieomatuku.cineast_android.extensions.lifecycleAwareLazy
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.kodein
-import org.kodein.di.generic.instance
 import elieomatuku.cineast_android.extensions.*
+import org.kodein.di.DI
+import org.kodein.di.DIAware
+import org.kodein.di.android.x.closestDI
+import org.kodein.di.instance
 
 
 /**
  * Created by elieomatuku on 2021-10-10
  */
 
-abstract class BaseDialogFragment : DialogFragment(), KodeinAware {
+abstract class BaseDialogFragment : DialogFragment(), DIAware {
 
-    override val kodein: Kodein by kodein()
+    override val di: DI by closestDI()
     val viewModelFactory: ViewModelProvider.Factory by instance()
 
     protected inline fun <reified VM : ViewModel> getViewModel(): VM =

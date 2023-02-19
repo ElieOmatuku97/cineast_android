@@ -2,21 +2,18 @@ apply plugin: 'com.android.library'
 
 apply plugin: 'kotlin-android'
 
-apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
+
+apply plugin: 'androidx.navigation.safeargs'
 
 apply from: "../ktlint.gradle"
 
-
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode = rootProject.ext.versionCode
-        versionName = rootProject.ext.versionName
+        targetSdkVersion 31
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -37,12 +34,13 @@ android {
     }
 
     buildFeatures {
-        dataBinding true
+        viewBinding true
+        compose true
     }
-}
 
-androidExtensions {
-    experimental = true
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0'
+    }
 }
 
 repositories {
@@ -77,8 +75,8 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.2.0'
 
     //dependency
-    implementation 'org.kodein.di:kodein-di-generic-jvm:6.4.0'
-    implementation "org.kodein.di:kodein-di-framework-android-x:6.4.0"
+    implementation "org.kodein.di:kodein-di-framework-android-x:$versions.kodein"
+    implementation "org.kodein.di:kodein-di-framework-android-x-viewmodel-savedstate:$versions.kodein"
 
     // support
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -95,7 +93,46 @@ dependencies {
     implementation "androidx.activity:activity-ktx:1.2.3"
     implementation "androidx.fragment:fragment-ktx:1.3.3"
 
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$versions.nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$versions.nav_version"
+    implementation "androidx.navigation:navigation-compose:$versions.nav_version"
+
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$versions.nav_version"
+
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+
+    // Integration with activities
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    // Compose Material Design
+    implementation 'androidx.compose.material:material:1.1.1'
+    // Animations
+    implementation 'androidx.compose.animation:animation:1.1.1'
+    // Tooling support (Previews, etc.)
+    implementation 'androidx.compose.ui:ui-tooling:1.1.1'
+    // Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
+
+    // When using a MDC theme
+    implementation "com.google.android.material:compose-theme-adapter:1.1.1"
+
+    // When using a AppCompat theme
+    implementation "com.google.accompanist:accompanist-appcompat-theme:0.16.0"
+
+    implementation("io.coil-kt:coil-compose:1.3.1")
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.23.0"
+    implementation "com.google.accompanist:accompanist-drawablepainter:0.23.1"
+    implementation "com.google.accompanist:accompanist-pager:0.23.1"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.23.1"
+
+    implementation "androidx.compose.runtime:runtime-livedata:1.1.1"
+
+    debugImplementation "androidx.compose.ui:ui-tooling:1.1.1"
+    implementation "androidx.compose.ui:ui-tooling-preview:1.1.1"
+
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
 
     // test
     testImplementation 'junit:junit:4.12'

@@ -34,18 +34,18 @@ import elieomatuku.cineast_android.remote.api.AuthenticationApi
 import elieomatuku.cineast_android.injection.PresentationKodeinModule
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.kodein.di.Kodein
+import org.kodein.di.DI
 import org.kodein.di.android.x.androidXModule
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-fun depInjecT(app: Application): Kodein {
+fun depInjecT(app: Application): DI {
 
-    return Kodein.lazy {
+    return DI.lazy {
         import(androidXModule(app))
 
         bind<OkHttpClient>() with singleton {

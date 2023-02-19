@@ -16,15 +16,15 @@ class PersonCacheDataStore(private val personCache: PersonCache) : PersonDataSto
         return personCache.getPopularPeople()
     }
 
-    override suspend fun getMovies(person: PersonEntity): List<MovieEntity> {
+    override suspend fun getMovies(personId: Int): List<MovieEntity> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getDetails(person: PersonEntity): PersonDetailsEntity {
+    override suspend fun getDetails(personId: Int): PersonDetailsEntity {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getImages(person: PersonEntity): ImageEntities {
+    override suspend fun getImages(personId: Int): ImageEntities {
         TODO("Not yet implemented")
     }
 
