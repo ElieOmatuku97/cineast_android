@@ -83,4 +83,4 @@ Coroutines are used for async/background. This [blog post](https://medium.com/an
 
 [Architecture Components](https://developer.android.com/topic/libraries/architecture) - Room ORM
 
-Coroutines
+[Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) - Coroutines
