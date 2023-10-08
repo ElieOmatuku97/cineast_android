@@ -66,7 +66,7 @@ fun MovieProfile(
                         MaterialRatingBar(
                             it,
                             null,
-                            R.style.Widget_MaterialRatingBar_RatingBar
+                            me.zhanghai.android.materialratingbar.R.style.Widget_MaterialRatingBar_RatingBar//Widget_MaterialRatingBar_RatingBar
                         ).apply {
                             val params = ViewGroup.LayoutParams(
                                 ViewGroup.LayoutParams.WRAP_CONTENT,

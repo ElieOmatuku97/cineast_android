@@ -5,7 +5,7 @@ apply from: "../ktlint.gradle"
 
 android {
     compileSdk rootProject.ext.compileSdk
-
+    namespace "elieomatuku.cineast_android.cache"
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdk rootProject.ext.targetSdk
@@ -21,8 +21,17 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
 }

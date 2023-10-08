@@ -65,7 +65,7 @@ fun MovieItem(movie: Movie, onContentClick: (content: Content) -> Unit = {}) {
                     AppCompatRatingBar(
                         it,
                         null,
-                        R.attr.ratingBarStyleSmall
+                        androidx.legacy.preference.R.attr.ratingBarStyleSmall
                     ).apply {
                         val params = ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -105,7 +105,7 @@ fun MovieItem(movie: Movie, onContentClick: (content: Content) -> Unit = {}) {
                     AppCompatRatingBar(
                         it,
                         null,
-                        R.attr.ratingBarStyleSmall
+                        androidx.legacy.preference.R.attr.ratingBarStyleSmall
                     ).apply {
                         val params = ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
