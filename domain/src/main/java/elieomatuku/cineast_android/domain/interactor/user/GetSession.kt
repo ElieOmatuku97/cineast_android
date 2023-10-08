@@ -5,12 +5,13 @@ import elieomatuku.cineast_android.domain.interactor.UseCase
 import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.model.Session
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class GetSession(private val authenticationRepository: AuthenticationRepository) :
+class GetSession @Inject constructor(private val authenticationRepository: AuthenticationRepository) :
     UseCase<GetSession.Input, CompleteResult<Session>> {
 
     override suspend fun execute(params: Input): CompleteResult<Session> {
