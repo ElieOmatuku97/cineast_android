@@ -5,12 +5,13 @@ import elieomatuku.cineast_android.data.model.AccountEntity
 import elieomatuku.cineast_android.data.model.SessionEntity
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationCache
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationDataStore
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class AuthenticationCacheDataStore(private val authenticationCache: AuthenticationCache) :
+class AuthenticationCacheDataStore @Inject constructor (private val authenticationCache: AuthenticationCache) :
     AuthenticationDataStore {
     override suspend fun getAccessToken(): AccessTokenEntity {
         return authenticationCache.getAccessToken()

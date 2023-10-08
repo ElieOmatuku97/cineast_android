@@ -5,12 +5,13 @@ import elieomatuku.cineast_android.cache.entity.CachePerson
 import elieomatuku.cineast_android.data.PrefManager
 import elieomatuku.cineast_android.data.model.PersonEntity
 import elieomatuku.cineast_android.data.repository.person.PersonCache
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-09-01
  */
 
-class PersonCacheImpl(private val personDao: PersonDao, private val prefManager: PrefManager) :
+class PersonCacheImpl @Inject constructor (private val personDao: PersonDao, private val prefManager: PrefManager) :
     PersonCache {
 
     private val timeStamp: Long

@@ -5,12 +5,13 @@ import elieomatuku.cineast_android.data.model.AccountEntity
 import elieomatuku.cineast_android.data.model.SessionEntity
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationDataStore
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationRemote
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class AuthenticationRemoteDataStore(private val authenticationRemote: AuthenticationRemote) :
+class AuthenticationRemoteDataStore @Inject constructor (private val authenticationRemote: AuthenticationRemote) :
     AuthenticationDataStore {
     override suspend fun getAccessToken(): AccessTokenEntity {
         return authenticationRemote.getAccessToken()

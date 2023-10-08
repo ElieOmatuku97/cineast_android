@@ -11,12 +11,13 @@ import elieomatuku.cineast_android.data.model.GenreEntity
 import elieomatuku.cineast_android.data.model.MovieEntity
 import elieomatuku.cineast_android.data.model.MovieType
 import elieomatuku.cineast_android.data.repository.movie.MovieCache
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-09-01
  */
 
-class MovieCacheImpl(
+class MovieCacheImpl @Inject constructor (
     private val movieDao: MovieDao,
     private val joinDao: MovieTypeJoinDao,
     private val genreDao: GenreDao,

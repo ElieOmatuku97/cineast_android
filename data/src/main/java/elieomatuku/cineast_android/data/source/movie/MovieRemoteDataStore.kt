@@ -3,12 +3,14 @@ package elieomatuku.cineast_android.data.source.movie
 import elieomatuku.cineast_android.data.model.*
 import elieomatuku.cineast_android.data.repository.movie.MovieDataStore
 import elieomatuku.cineast_android.data.repository.movie.MovieRemote
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class MovieRemoteDataStore(private val movieRemote: MovieRemote) : MovieDataStore {
+class MovieRemoteDataStore @Inject constructor(private val movieRemote: MovieRemote) :
+    MovieDataStore {
     override suspend fun genres(): List<GenreEntity> {
         return movieRemote.getGenres()
     }

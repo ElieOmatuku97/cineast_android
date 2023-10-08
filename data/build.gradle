@@ -19,6 +19,8 @@ dependencies {
     implementation "com.squareup.moshi:moshi:${versions.moshi}"
     implementation "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
 
+    implementation 'javax.inject:javax.inject:1'
+
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlin}"
 }

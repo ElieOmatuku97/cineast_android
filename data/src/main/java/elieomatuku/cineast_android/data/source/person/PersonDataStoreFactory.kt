@@ -2,12 +2,13 @@ package elieomatuku.cineast_android.data.source.person
 
 import elieomatuku.cineast_android.data.repository.person.PersonCache
 import elieomatuku.cineast_android.data.repository.person.PersonDataStore
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class PersonDataStoreFactory(
+class PersonDataStoreFactory @Inject constructor(
     private val personCache: PersonCache,
     private val personCacheDataStore: PersonCacheDataStore,
     private val personRemoteDataStore: PersonRemoteDataStore

@@ -2,12 +2,13 @@ package elieomatuku.cineast_android.data.source.movie
 
 import elieomatuku.cineast_android.data.repository.movie.MovieCache
 import elieomatuku.cineast_android.data.repository.movie.MovieDataStore
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class MovieDataStoreFactory(
+class MovieDataStoreFactory @Inject constructor(
     private val movieCache: MovieCache,
     private val movieCacheDataStore: MovieCacheDataStore,
     private val movieRemoteDataStore: MovieRemoteDataStore

@@ -7,12 +7,13 @@ import elieomatuku.cineast_android.data.model.AccessTokenEntity
 import elieomatuku.cineast_android.data.model.AccountEntity
 import elieomatuku.cineast_android.data.model.SessionEntity
 import elieomatuku.cineast_android.data.repository.authentication.AuthenticationCache
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-09-01
  */
 
-class AuthenticationCacheImpl(private val prefManager: PrefManager) : AuthenticationCache {
+class AuthenticationCacheImpl @Inject constructor (private val prefManager: PrefManager) : AuthenticationCache {
     companion object {
         const val SESSION_KEY = "session_key"
         const val ACCOUNT_KEY = "account_key"

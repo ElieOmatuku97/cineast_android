@@ -7,12 +7,13 @@ import elieomatuku.cineast_android.remote.model.*
 import elieomatuku.cineast_android.remote.request.FavouritesMediaRequest
 import elieomatuku.cineast_android.remote.request.RateRequest
 import elieomatuku.cineast_android.remote.request.WatchListMediaRequest
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-07-04
  */
 
-class MovieRemoteImpl(private val movieApi: MovieApi) : MovieRemote {
+class MovieRemoteImpl @Inject constructor (private val movieApi: MovieApi) : MovieRemote {
 
     override suspend fun getPopularMovies(): List<MovieEntity> {
         val response = movieApi.getPopularMovies()

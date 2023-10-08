@@ -4,12 +4,13 @@ import elieomatuku.cineast_android.data.model.*
 import elieomatuku.cineast_android.data.source.movie.MovieDataStoreFactory
 import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.domain.repository.MovieRepository
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class MovieRepositoryImpl(private val factory: MovieDataStoreFactory) : MovieRepository {
+class MovieRepositoryImpl @Inject constructor(private val factory: MovieDataStoreFactory) : MovieRepository {
     override suspend fun genres(): List<Genre> {
         val genres = factory.retrieveDataStore().genres()
         return genres.map {

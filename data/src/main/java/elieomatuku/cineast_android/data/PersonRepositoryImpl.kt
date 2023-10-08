@@ -10,12 +10,13 @@ import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.domain.repository.PersonRepository
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class PersonRepositoryImpl(private val factory: PersonDataStoreFactory) : PersonRepository {
+class PersonRepositoryImpl @Inject constructor (private val factory: PersonDataStoreFactory) : PersonRepository {
     override suspend fun getPopularPeople(): List<Person> {
         return factory.retrieveDataStore().getPopularPeople().map {
             it.let(PersonEntity::toPerson)

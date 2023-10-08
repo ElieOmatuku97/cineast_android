@@ -52,6 +52,8 @@ dependencies {
     api "com.squareup.okio:okio:${versions.okio}"
     api "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
 
+    implementation 'javax.inject:javax.inject:1'
+
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlin}"
 }
