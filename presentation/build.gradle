@@ -8,6 +8,8 @@ apply plugin: 'androidx.navigation.safeargs'
 
 apply from: "../ktlint.gradle"
 
+apply plugin: 'com.google.dagger.hilt.android'
+
 android {
     compileSdk rootProject.ext.compileSdk
     namespace "elieomatuku.cineast_android"
@@ -77,6 +79,8 @@ dependencies {
     //dependency
     implementation "org.kodein.di:kodein-di-framework-android-x:$versions.kodein"
     implementation "org.kodein.di:kodein-di-framework-android-x-viewmodel-savedstate:$versions.kodein"
+    implementation "com.google.dagger:hilt-android:$versions.hilt"
+    kapt "com.google.dagger:hilt-compiler:$versions.hilt"
 
     // support
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -152,4 +156,9 @@ dependencies {
     androidTestImplementation 'org.mockito:mockito-android:2.23.4'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
     implementation 'androidx.test.espresso:espresso-idling-resource:3.3.0'
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }

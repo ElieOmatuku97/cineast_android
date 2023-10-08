@@ -6,6 +6,8 @@ apply plugin: 'kotlin-kapt'
 
 apply from: "../ktlint.gradle"
 
+apply plugin: 'com.google.dagger.hilt.android'
+
 android {
     namespace "elieomatuku.cineast_android"
     compileSdk rootProject.ext.compileSdk
@@ -102,8 +104,15 @@ dependencies {
 
     //dependency
     implementation "org.kodein.di:kodein-di-framework-android-x:$versions.kodein"
+    implementation "com.google.dagger:hilt-android:$versions.hilt"
+    kapt "com.google.dagger:hilt-compiler:$versions.hilt"
 
     //dev utils
     implementation 'com.github.ajalt:timberkt:1.4.0'
     implementation "com.jakewharton.timber:timber:4.7.1"
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }
