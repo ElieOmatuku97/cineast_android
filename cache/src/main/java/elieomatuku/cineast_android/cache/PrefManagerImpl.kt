@@ -1,6 +1,5 @@
 package elieomatuku.cineast_android.cache
 
-import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import elieomatuku.cineast_android.data.PrefManager
@@ -10,7 +9,7 @@ import javax.inject.Inject
  * Created by elieomatuku on 2021-09-01
  */
 
-class PrefManagerImpl @Inject constructor(storeKey: String, appContext: Application) : PrefManager {
+class PrefManagerImpl @Inject constructor(storeKey: String, appContext: Context) : PrefManager {
 
     private val prefs: SharedPreferences by lazy {
         appContext.getSharedPreferences(storeKey, Context.MODE_PRIVATE)
