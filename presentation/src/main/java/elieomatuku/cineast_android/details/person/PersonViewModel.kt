@@ -2,6 +2,7 @@ package elieomatuku.cineast_android.details.person
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.people.GetImages
@@ -12,6 +13,7 @@ import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 /**
@@ -20,7 +22,8 @@ import kotlinx.coroutines.launch
 
 private const val PERSON_ID = "personId"
 
-class PersonViewModel(
+@HiltViewModel
+class PersonViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val getPersonDetails: GetPersonDetails,
     private val getKnownForMovies: GetKnownForMovies,
@@ -58,6 +61,7 @@ class PersonViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> PersonViewState()
             }
         }
@@ -79,6 +83,7 @@ class PersonViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> PersonViewState()
             }
         }
@@ -100,6 +105,7 @@ class PersonViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> PersonViewState()
             }
         }

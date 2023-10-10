@@ -1,9 +1,12 @@
 package elieomatuku.cineast_android.settings
 
 import elieomatuku.cineast_android.fragment.WebViewFragment
+import javax.inject.Inject
 
 class LoginWebViewFragment : WebViewFragment() {
-    private val viewModel: SettingsViewModel by sharedViewModel()
+
+    @Inject
+    lateinit var viewModel: SettingsViewModel
 
     override fun closeIconListener() {
         viewModel.getSession()

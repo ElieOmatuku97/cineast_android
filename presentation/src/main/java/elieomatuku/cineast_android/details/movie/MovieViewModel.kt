@@ -2,6 +2,7 @@ package elieomatuku.cineast_android.details.movie
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.movie.*
@@ -14,6 +15,7 @@ import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-07-03
@@ -22,7 +24,8 @@ import kotlinx.coroutines.withContext
 private const val MOVIE_ID = "movieId"
 private const val SCREEN_NAME = "screen_name"
 
-class MovieViewModel(
+@HiltViewModel
+class MovieViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val getMovie: GetMovie,
     private val getMovieSummary: GetMovieSummary,
@@ -54,10 +57,12 @@ class MovieViewModel(
                         val state = getMovieSummary(result.data)
                         state
                     }
+
                     is Fail -> state.copy(
                         viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                         isLoading = false
                     )
+
                     else -> MovieViewState()
                 }
             }
@@ -85,6 +90,7 @@ class MovieViewModel(
                     ),
                     isLoading = false
                 )
+
                 else -> MovieViewState()
             }
             state

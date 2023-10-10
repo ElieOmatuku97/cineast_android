@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.search
 
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.movie.SearchMovies
@@ -10,12 +11,14 @@ import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-10-02
  */
 
-class SearchViewModel(
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     private val searchPeople: SearchPeople,
     private val searchMovies: SearchMovies
 ) : BaseViewModel<SearchViewState>(
@@ -37,6 +40,7 @@ class SearchViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> SearchViewState()
             }
         }
@@ -57,6 +61,7 @@ class SearchViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> SearchViewState()
             }
         }

@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.settings.usercontents
 
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.movie.*
@@ -11,12 +12,14 @@ import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-05-29
  */
 
-class UserContentsViewModel(
+@HiltViewModel
+class UserContentsViewModel @Inject constructor(
     private val getGenres: GetGenres,
     private val getFavorites: GetFavorites,
     private val getWatchList: GetWatchList,
@@ -47,6 +50,7 @@ class UserContentsViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> UserContentsViewState()
             }
         }
@@ -68,6 +72,7 @@ class UserContentsViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> UserContentsViewState()
             }
         }
@@ -88,6 +93,7 @@ class UserContentsViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> UserContentsViewState()
             }
         }
@@ -108,6 +114,7 @@ class UserContentsViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> UserContentsViewState()
             }
         }

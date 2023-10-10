@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.widgets.movieswidget
 
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.movie.GetGenres
@@ -9,12 +10,14 @@ import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-05-06
  */
 
-class MoviesViewModel(private val getGenres: GetGenres) :
+@HiltViewModel
+class MoviesViewModel @Inject constructor(private val getGenres: GetGenres) :
     BaseViewModel<MoviesViewState>(MoviesViewState()) {
     init {
         getGenres()
@@ -35,6 +38,7 @@ class MoviesViewModel(private val getGenres: GetGenres) :
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> MoviesViewState()
             }
         }

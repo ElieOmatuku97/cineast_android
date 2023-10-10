@@ -14,22 +14,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseActivity
 import elieomatuku.cineast_android.contents.ContentsScreen
 import elieomatuku.cineast_android.contents.SwipeableContentItem
 import elieomatuku.cineast_android.databinding.ActivityContentBinding
 import elieomatuku.cineast_android.details.movie.MovieFragment
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import java.io.Serializable
+import javax.inject.Inject
 
 class UserContentsActivity : BaseActivity() {
     companion object {
@@ -77,7 +77,8 @@ class UserContentsActivity : BaseActivity() {
         }
     }
 
-    private val viewModel: UserContentsViewModel by viewModel()
+    @Inject
+    lateinit var viewModel: UserContentsViewModel
 
     private lateinit var binding: ActivityContentBinding
 
@@ -150,8 +151,6 @@ class UserContentsActivity : BaseActivity() {
         binding.composeView.setContent {
             AppCompatTheme {
                 UserContentScreen(
-                    viewModelFactory = viewModelFactory,
-                    viewModel = viewModel,
                     hasNetworkConnection = connectionService.hasNetworkConnection,
                     onContentClick = {
                         if (it is Movie) {
@@ -205,8 +204,7 @@ class UserContentsActivity : BaseActivity() {
 
 @Composable
 fun UserContentScreen(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: UserContentsViewModel = viewModel(factory = viewModelFactory),
+    viewModel: UserContentsViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     onContentClick: (content: Content) -> Unit,
     onSwipeItem: ((content: Content) -> Unit)

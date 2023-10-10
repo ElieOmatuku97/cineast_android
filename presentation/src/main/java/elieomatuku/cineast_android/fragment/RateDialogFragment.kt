@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseDialogFragment
+import javax.inject.Inject
 
 class RateDialogFragment : BaseDialogFragment() {
     companion object {
@@ -25,7 +26,8 @@ class RateDialogFragment : BaseDialogFragment() {
         }
     }
 
-    private val viewModel: RateViewModel by viewModel<RateViewModel>()
+    @Inject
+    lateinit var viewModel: RateViewModel
 
     private var movie: Movie? = null
     private var submitBtn: TextView? = null

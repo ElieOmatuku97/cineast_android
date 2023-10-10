@@ -81,6 +81,7 @@ dependencies {
     implementation "org.kodein.di:kodein-di-framework-android-x-viewmodel-savedstate:$versions.kodein"
     implementation "com.google.dagger:hilt-android:$versions.hilt"
     kapt "com.google.dagger:hilt-compiler:$versions.hilt"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 
     // support
     implementation 'androidx.appcompat:appcompat:1.2.0'

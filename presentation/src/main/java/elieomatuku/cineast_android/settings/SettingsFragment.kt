@@ -27,9 +27,13 @@ import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.settings.usercontents.UserContentsActivity
 import elieomatuku.cineast_android.utils.*
+import javax.inject.Inject
 
 class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
-    private val viewModel: SettingsViewModel by sharedViewModel()
+
+    @Inject
+    lateinit var viewModel: SettingsViewModel
+
     lateinit var composeView: ComposeView
 
     override fun onCreateView(

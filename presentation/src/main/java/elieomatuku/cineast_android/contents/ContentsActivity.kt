@@ -49,7 +49,6 @@ class ContentsActivity : ComponentActivity(), DIAware {
         setContent {
             ContentsNavGraph(
                 contents = contents,
-                viewModelFactory = viewModelFactory,
                 hasNetworkConnection = connectionService.hasNetworkConnection
             ) {
                 it.asListOfType<Movie>()?.let { movies ->

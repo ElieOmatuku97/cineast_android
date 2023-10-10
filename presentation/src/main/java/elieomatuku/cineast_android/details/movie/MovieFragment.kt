@@ -2,10 +2,19 @@ package elieomatuku.cineast_android.details.movie
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,9 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
@@ -27,16 +35,22 @@ import elieomatuku.cineast_android.details.BareOverviewWidget
 import elieomatuku.cineast_android.details.DetailTabs
 import elieomatuku.cineast_android.details.movie.movie_staff.MovieStaffWidget
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
-import elieomatuku.cineast_android.domain.model.*
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.Person
+import elieomatuku.cineast_android.domain.model.Trailer
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.fragment.RateDialogFragment
-import elieomatuku.cineast_android.utils.*
+import elieomatuku.cineast_android.utils.ContentUtils
+import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.utils.consume
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import org.kodein.di.android.x.viewmodel.savedstate.viewModelWithSavedStateHandle
+import javax.inject.Inject
 
 class MovieFragment : BaseFragment() {
     private var isInWatchList: Boolean = false
@@ -50,7 +64,8 @@ class MovieFragment : BaseFragment() {
         PublishSubject.create()
     }
 
-    private val viewModel: MovieViewModel by viewModelWithSavedStateHandle()
+    @Inject
+    lateinit var viewModel: MovieViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,8 +77,6 @@ class MovieFragment : BaseFragment() {
             setContent {
                 AppCompatTheme {
                     MovieScreen(
-                        viewModelFactory = viewModelFactory,
-                        viewModel = viewModel,
                         hasNetworkConnection = connectionService.hasNetworkConnection,
                         goToGallery = { goToGallery() },
                         goToWebsite = { goToWebsite(it) },
@@ -322,8 +335,7 @@ class MovieFragment : BaseFragment() {
 
 @Composable
 fun MovieScreen(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: MovieViewModel = viewModel(factory = viewModelFactory),
+    viewModel: MovieViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     goToGallery: () -> Unit,
     goToWebsite: (String) -> Unit,
@@ -354,7 +366,6 @@ fun MovieScreen(
 
                     movie?.apply {
                         MovieTabs(
-                            viewModelFactory = viewModelFactory,
                             movieSummary = movieSummary,
                             movie = this,
                             onSeeAllClick = {
@@ -407,7 +418,6 @@ fun MovieScreen(
 
 @Composable
 fun MovieTabs(
-    viewModelFactory: ViewModelProvider.Factory,
     movieSummary: MovieSummary,
     movie: Movie,
     onSeeAllClick: (List<Content>) -> Unit,
@@ -452,8 +462,8 @@ fun MovieTabs(
             R.string.similar -> {
                 val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
                 MoviesWidget(
-                    viewModelFactory = viewModelFactory,
                     movies = similarMovies,
+                    genres = emptyList(),
                     sectionTitle = movie.title ?: stringResource(R.string.movies),
                     onItemClick = { content, _ ->
                         onItemClick(content)

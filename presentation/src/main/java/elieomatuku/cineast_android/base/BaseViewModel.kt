@@ -9,6 +9,7 @@ import androidx.lifecycle.distinctUntilChanged
  * Created by elieomatuku on 2021-07-03
  */
 
+
 abstract class BaseViewModel<T : Any>(initState: T) : ViewModel() {
 
     private val _viewState = MediatorLiveData<T>().apply { value = initState }

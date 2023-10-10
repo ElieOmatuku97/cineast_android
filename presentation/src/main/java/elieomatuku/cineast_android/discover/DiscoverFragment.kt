@@ -20,23 +20,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.*
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.*
-import elieomatuku.cineast_android.extensions.getWidgets
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
+import elieomatuku.cineast_android.domain.model.*
 import elieomatuku.cineast_android.extensions.DiscoverWidget
 import elieomatuku.cineast_android.extensions.asListOfType
+import elieomatuku.cineast_android.extensions.getWidgets
 import elieomatuku.cineast_android.utils.*
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
-import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 import elieomatuku.cineast_android.widgets.PeopleWidget
+import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 
 class DiscoverFragment : BaseFragment() {
 
@@ -49,7 +48,6 @@ class DiscoverFragment : BaseFragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 DiscoverScreen(
-                    viewModelFactory = viewModelFactory,
                     hasNetworkConnection = connectionService.hasNetworkConnection,
                     onSeeAllClick = { contents, titleResources ->
                         ContentsActivity.startActivity(
@@ -97,8 +95,7 @@ class DiscoverFragment : BaseFragment() {
 
 @Composable
 fun DiscoverScreen(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: DiscoverViewModel = viewModel(factory = viewModelFactory),
+    viewModel: DiscoverViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     onSeeAllClick: (contents: List<Content>, titleResources: Int) -> Unit,
     gotoMovie: (movie: Movie) -> Unit,
@@ -172,9 +169,9 @@ fun DiscoverScreen(
                                     }
                                     is DiscoverWidget.Movies -> {
                                         MoviesWidget(
-                                            viewModelFactory = viewModelFactory,
                                             movies = widget.value.asListOfType()
                                                 ?: emptyList(),
+                                            genres = emptyList(),
                                             sectionTitle = stringResource(widget.titleResources),
                                             onItemClick = { content, _ ->
                                                 if (content is Movie) {

@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.search.people
 
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.movie.GetGenres
@@ -11,12 +12,14 @@ import elieomatuku.cineast_android.contents.ContentGridViewState
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-06-05
  */
 
-class PeopleGridViewModel(
+@HiltViewModel
+class PeopleGridViewModel @Inject constructor(
     private val getPersonalities: GetPersonalities,
     getGenres: GetGenres
 ) : ContentGridViewModel(getGenres) {
@@ -39,6 +42,7 @@ class PeopleGridViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> ContentGridViewState()
             }
         }

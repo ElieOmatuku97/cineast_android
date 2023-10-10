@@ -17,9 +17,8 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
@@ -36,12 +35,14 @@ import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
-import org.kodein.di.android.x.viewmodel.savedstate.viewModelWithSavedStateHandle
+import javax.inject.Inject
 
 class PersonFragment : BaseFragment() {
 
     private lateinit var menuHost: MenuHost
-    private val viewModel: PersonViewModel by viewModelWithSavedStateHandle()
+
+    @Inject
+    lateinit var viewModel: PersonViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,8 +54,6 @@ class PersonFragment : BaseFragment() {
             setContent {
                 AppCompatTheme {
                     PersonScreen(
-                        viewModelFactory = viewModelFactory,
-                        viewModel = viewModel,
                         hasNetworkConnection = connectionService.hasNetworkConnection,
                         goToGallery = { navigateToGallery() },
                         goToWebsite = {
@@ -155,8 +154,7 @@ class PersonFragment : BaseFragment() {
 
 @Composable
 fun PersonScreen(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: PersonViewModel = viewModel(factory = viewModelFactory),
+    viewModel: PersonViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     goToGallery: () -> Unit,
     goToWebsite: (String) -> Unit,
@@ -184,7 +182,6 @@ fun PersonScreen(
                     )
 
                     PersonTabs(
-                        viewModelFactory = viewModelFactory,
                         person = person,
                         onSeeAllClick = {
                             onSeeAllClick(it)
@@ -228,7 +225,6 @@ fun PersonScreen(
 
 @Composable
 fun PersonTabs(
-    viewModelFactory: ViewModelProvider.Factory,
     person: PersonDetails,
     movies: List<Movie>,
     onSeeAllClick: (List<Content>) -> Unit,
@@ -251,8 +247,8 @@ fun PersonTabs(
             }
             R.string.known_for -> {
                 MoviesWidget(
-                    viewModelFactory = viewModelFactory,
                     movies = movies,
+                    genres = emptyList(),
                     sectionTitle = stringResource(R.string.cast),
                     onItemClick = { content, _ ->
                         onItemClick(content)

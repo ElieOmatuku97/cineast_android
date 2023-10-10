@@ -20,16 +20,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
+import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.search.movie.MoviesGrid
@@ -39,9 +38,12 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class SearchFragment : BaseFragment() {
-    private val viewModel: SearchViewModel by viewModel()
+
+    @Inject
+    lateinit var viewModel: SearchViewModel
 
     val searchQueryPublisher: PublishSubject<String> by lazy {
         PublishSubject.create()
@@ -97,7 +99,6 @@ class SearchFragment : BaseFragment() {
 
         composeView.setContent {
             SearchPager(
-                viewModelFactory = viewModelFactory,
                 hasNetworkConnection = connectionService.hasNetworkConnection,
                 onContentClick = {
                     if (it is Movie) {
@@ -138,7 +139,6 @@ class SearchFragment : BaseFragment() {
         composeView.setContent {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                 SearchPager(
-                    viewModelFactory = viewModelFactory,
                     hasNetworkConnection = connectionService.hasNetworkConnection,
                     onContentClick = {
                         if (it is Movie) {
@@ -182,7 +182,6 @@ class SearchFragment : BaseFragment() {
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun SearchPager(
-    viewModelFactory: ViewModelProvider.Factory,
     hasNetworkConnection: Boolean,
     onContentClick: (content: Content) -> Unit,
     updateCurrentPosition: (currentPosition: Int) -> Unit
@@ -230,7 +229,6 @@ fun SearchPager(
             when (pages[page]) {
                 R.string.movies -> {
                     MoviesGrid(
-                        viewModelFactory = viewModelFactory,
                         hasNetworkConnection = hasNetworkConnection
                     ) {
                         onContentClick(it)
@@ -238,7 +236,6 @@ fun SearchPager(
                 }
                 R.string.people -> {
                     PeopleGrid(
-                        viewModelFactory = viewModelFactory,
                         hasNetworkConnection = hasNetworkConnection
                     ) {
                         onContentClick(it)

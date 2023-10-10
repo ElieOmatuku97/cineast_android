@@ -1,12 +1,15 @@
 package elieomatuku.cineast_android.connection
 
-import android.app.Application
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import elieomatuku.cineast_android.broadReceiver.ConnectivitySink
 import elieomatuku.cineast_android.utils.NetUtils
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
+import javax.inject.Inject
 
-class ConnectionService(private val appContext: Application) : ConnectivitySink {
+class ConnectionService @Inject constructor(@ApplicationContext private val appContext: Context) :
+    ConnectivitySink {
     private val connectionChangedPublisher: PublishSubject<Boolean> by lazy {
         PublishSubject.create<Boolean>()
     }
