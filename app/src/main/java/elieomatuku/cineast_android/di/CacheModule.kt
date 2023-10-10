@@ -6,9 +6,19 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import elieomatuku.cineast_android.cache.AuthenticationCacheImpl
 import elieomatuku.cineast_android.cache.ContentDatabase
+import elieomatuku.cineast_android.cache.MovieCacheImpl
+import elieomatuku.cineast_android.cache.PersonCacheImpl
 import elieomatuku.cineast_android.cache.PrefManagerImpl
+import elieomatuku.cineast_android.cache.dao.GenreDao
+import elieomatuku.cineast_android.cache.dao.MovieDao
+import elieomatuku.cineast_android.cache.dao.MovieTypeJoinDao
+import elieomatuku.cineast_android.cache.dao.PersonDao
 import elieomatuku.cineast_android.data.PrefManager
+import elieomatuku.cineast_android.data.repository.authentication.AuthenticationCache
+import elieomatuku.cineast_android.data.repository.movie.MovieCache
+import elieomatuku.cineast_android.data.repository.person.PersonCache
 import javax.inject.Singleton
 
 @Module
@@ -35,7 +45,8 @@ object CacheModule {
 
     @Provides
     @Singleton
-    fun provideMovieTypeJoinDao(contentDatabase: ContentDatabase) = contentDatabase.movieTypeJoinDao()
+    fun provideMovieTypeJoinDao(contentDatabase: ContentDatabase) =
+        contentDatabase.movieTypeJoinDao()
 
     @Provides
     @Singleton
@@ -43,9 +54,37 @@ object CacheModule {
 
     @Provides
     @Singleton
-    fun provideBreedCache(@ApplicationContext context: Context): PrefManager {
+    fun providePrefManager(@ApplicationContext context: Context): PrefManager {
         val storeKey = "cineast_prefs"
         return PrefManagerImpl(storeKey, context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMovieCache(
+        movieDao: MovieDao,
+        joinDao: MovieTypeJoinDao,
+        genreDao: GenreDao,
+        prefManager: PrefManager
+    ): MovieCache {
+        return MovieCacheImpl(
+            movieDao,
+            joinDao,
+            genreDao,
+            prefManager
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthenticationCache(prefManager: PrefManager): AuthenticationCache {
+        return AuthenticationCacheImpl(prefManager)
+    }
+
+    @Provides
+    @Singleton
+    fun providePersonCache(personDao: PersonDao, prefManager: PrefManager): PersonCache {
+        return PersonCacheImpl(personDao, prefManager)
     }
 
 }
