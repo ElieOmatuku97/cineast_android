@@ -19,6 +19,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -38,12 +39,10 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class SearchFragment : BaseFragment() {
 
-    @Inject
-    lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by viewModels()
 
     val searchQueryPublisher: PublishSubject<String> by lazy {
         PublishSubject.create()

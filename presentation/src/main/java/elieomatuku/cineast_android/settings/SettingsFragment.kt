@@ -21,20 +21,20 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.settings.usercontents.UserContentsActivity
-import elieomatuku.cineast_android.utils.*
-import javax.inject.Inject
+import elieomatuku.cineast_android.utils.WebLink
+import elieomatuku.cineast_android.utils.consume
 
 class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
 
-    @Inject
-    lateinit var viewModel: SettingsViewModel
+    private val viewModel: SettingsViewModel by viewModels()
 
-    lateinit var composeView: ComposeView
+    private lateinit var composeView: ComposeView
 
     override fun onCreateView(
         inflater: LayoutInflater,

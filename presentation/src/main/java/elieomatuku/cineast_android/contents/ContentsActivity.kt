@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.connection.ConnectionService
 import elieomatuku.cineast_android.domain.model.Content
@@ -13,11 +13,11 @@ import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.Constants
-import org.kodein.di.*
-import org.kodein.di.android.closestDI
 import java.io.Serializable
+import javax.inject.Inject
 
-class ContentsActivity : ComponentActivity(), DIAware {
+@AndroidEntryPoint
+class ContentsActivity : ComponentActivity() {
     companion object {
         const val WIDGET_KEY = "content"
 
@@ -37,9 +37,8 @@ class ContentsActivity : ComponentActivity(), DIAware {
         }
     }
 
-    override val di: DI by closestDI()
-    private val connectionService: ConnectionService by instance()
-    val viewModelFactory: ViewModelProvider.Factory by instance()
+    @Inject
+    lateinit var connectionService: ConnectionService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

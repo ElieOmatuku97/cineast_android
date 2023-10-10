@@ -2,7 +2,12 @@ package elieomatuku.cineast_android.details.person
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +22,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -28,21 +34,21 @@ import elieomatuku.cineast_android.details.BareOverviewWidget
 import elieomatuku.cineast_android.details.DetailTabs
 import elieomatuku.cineast_android.details.Profile
 import elieomatuku.cineast_android.details.movie.MovieFragmentDirections
-import elieomatuku.cineast_android.domain.model.*
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
-import javax.inject.Inject
 
 class PersonFragment : BaseFragment() {
 
     private lateinit var menuHost: MenuHost
 
-    @Inject
-    lateinit var viewModel: PersonViewModel
+    private val viewModel: PersonViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

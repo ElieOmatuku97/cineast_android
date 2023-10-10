@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
@@ -50,7 +51,6 @@ import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
 
 class MovieFragment : BaseFragment() {
     private var isInWatchList: Boolean = false
@@ -64,8 +64,7 @@ class MovieFragment : BaseFragment() {
         PublishSubject.create()
     }
 
-    @Inject
-    lateinit var viewModel: MovieViewModel
+    private val viewModel by viewModels<MovieViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

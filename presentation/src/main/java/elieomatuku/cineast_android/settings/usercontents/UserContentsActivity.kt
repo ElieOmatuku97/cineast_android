@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +30,6 @@ import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import java.io.Serializable
-import javax.inject.Inject
 
 class UserContentsActivity : BaseActivity() {
     companion object {
@@ -77,8 +77,7 @@ class UserContentsActivity : BaseActivity() {
         }
     }
 
-    @Inject
-    lateinit var viewModel: UserContentsViewModel
+    private val viewModel: UserContentsViewModel by viewModels()
 
     private lateinit var binding: ActivityContentBinding
 
