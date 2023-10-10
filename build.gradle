@@ -20,7 +20,6 @@ buildscript {
             nodes_utils      : '1.0.0',
             nodes_utils_okhttp: '0.12.2',
             room : '2.2.5',
-            kodein: '7.13.0',
             swiperefresh: '1.1.0',
             okio: '2.10.0',
             moshi: '1.8.0',

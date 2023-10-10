@@ -6,10 +6,7 @@ import timber.log.Timber
 import timber.log.Timber.DebugTree
 
 @HiltAndroidApp
-class App : Application()/*, DIAware */{
-
-//    override val di: DI
-//        get() = depInjecT(this)
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()

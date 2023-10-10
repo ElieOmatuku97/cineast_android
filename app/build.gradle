@@ -103,7 +103,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     //dependency
-    implementation "org.kodein.di:kodein-di-framework-android-x:$versions.kodein"
     implementation "com.google.dagger:hilt-android:$versions.hilt"
     kapt "com.google.dagger:hilt-compiler:$versions.hilt"
 
