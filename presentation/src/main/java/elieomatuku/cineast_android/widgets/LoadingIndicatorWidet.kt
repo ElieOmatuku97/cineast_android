@@ -11,7 +11,5 @@ import elieomatuku.cineast_android.R
 
 @Composable
 fun LoadingIndicatorWidget() {
-    CircularProgressIndicator(
-        color = colorResource(id = R.color.color_orange_app),
-    )
+    CircularProgressIndicator()
 }

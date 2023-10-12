@@ -29,7 +29,6 @@ fun TrailersWidget(
     Column {
         Text(
             text = stringResource(id = R.string.trailers),
-            color = colorResource(R.color.color_white),
             fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(
@@ -73,7 +72,6 @@ fun TrailersItem(
         trailer.name?.let {
             Text(
                 text = it,
-                color = colorResource(R.color.color_grey_app),
                 maxLines = 1,
                 fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                 fontWeight = FontWeight.Bold,

@@ -21,8 +21,6 @@ fun DetailTabs(
     Column {
         TabRow(
             selectedTabIndex = state,
-            contentColor = colorResource(id = R.color.color_orange_app),
-            backgroundColor = colorResource(id = R.color.color_black_app),
             modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_small))
         ) {
             tabs.forEachIndexed { index, title ->
@@ -31,9 +29,7 @@ fun DetailTabs(
                     selected = state == index,
                     onClick = {
                         state = index
-                    },
-                    selectedContentColor = colorResource(id = R.color.color_orange_app),
-                    unselectedContentColor = colorResource(id = R.color.color_grey_app),
+                    }
                 )
             }
         }

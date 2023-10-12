@@ -64,15 +64,13 @@ fun Profile(
         ) {
             title?.let {
                 Text(
-                    it,
-                    color = colorResource(id = R.color.color_white),
+                    it
                 )
             }
 
             subTitle?.let {
                 Text(
                     text = it,
-                    color = colorResource(id = R.color.color_grey),
                     fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                     modifier = Modifier.padding(
                         top = dimensionResource(id = R.dimen.padding_small)
@@ -82,7 +80,6 @@ fun Profile(
 
             webSiteLink?.let {
                 val linkStyle = SpanStyle(
-                    color = colorResource(id = R.color.color_orange_app),
                     textDecoration = TextDecoration.Underline,
                 )
                 ClickableText(
@@ -101,7 +98,6 @@ fun Profile(
             description?.let {
                 Text(
                     text = it,
-                    color = colorResource(id = R.color.color_grey),
                     fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                     modifier = Modifier.padding(
                         top = dimensionResource(id = R.dimen.padding_small)

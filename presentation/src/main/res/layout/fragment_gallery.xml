@@ -3,14 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_black_app">
+    android:layout_height="match_parent">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager_images"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_black_app"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +23,6 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="@dimen/padding_medium"
         android:layout_marginEnd="@dimen/padding_medium"
-        android:background="@color/cosmos_trans_black"
         android:visibility="visible"
         android:padding="@dimen/padding_small"
         app:srcCompat="@drawable/ic_close_white_24dp"

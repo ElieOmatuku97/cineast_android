@@ -114,7 +114,7 @@ fun DiscoverScreen(
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(isRefreshing),
-                    modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
+//                    modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
                     onRefresh = {
                         viewModel.refresh()
                     }
@@ -165,7 +165,7 @@ fun DiscoverScreen(
                                         ) {
                                             onSeeAllClick(it, widget.titleResources)
                                         }
-                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                        Divider()
                                     }
                                     is DiscoverWidget.Movies -> {
                                         MoviesWidget(
@@ -182,7 +182,7 @@ fun DiscoverScreen(
                                                 onSeeAllClick(it, widget.titleResources)
                                             }
                                         )
-                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                        Divider()
                                     }
                                     is DiscoverWidget.Login -> {
                                         LoginItem(

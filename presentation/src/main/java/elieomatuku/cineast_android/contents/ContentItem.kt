@@ -55,7 +55,6 @@ fun MovieItem(movie: Movie, onContentClick: (content: Content) -> Unit = {}) {
                         voteAverage,
                         movie.voteCount
                     ),
-                    color = colorResource(id = R.color.color_white),
                     fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                     modifier = Modifier.padding(
                         end = dimensionResource(id = R.dimen.padding_small)
@@ -95,7 +94,6 @@ fun MovieItem(movie: Movie, onContentClick: (content: Content) -> Unit = {}) {
             ) {
                 Text(
                     text = String.format(USER_RATING_STRING_FORMAT, userRating),
-                    color = colorResource(id = R.color.color_white),
                     fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                     modifier = Modifier.padding(
                         end = dimensionResource(id = R.dimen.padding_small)
@@ -169,15 +167,13 @@ fun ContentItem(
                     Text(
                         it,
                         fontSize = dimensionResource(id = R.dimen.text_size_medium).value.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colorResource(id = R.color.color_white),
+                        fontWeight = FontWeight.Bold
                     )
                 }
 
                 content.subTitle?.let {
                     Text(
                         text = it,
-                        color = colorResource(id = R.color.color_grey),
                         fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                         modifier = Modifier.padding(
                             top = dimensionResource(id = R.dimen.padding_small)
@@ -191,7 +187,6 @@ fun ContentItem(
         }
         Divider(
             modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_xlarge)),
-            color = colorResource(id = R.color.color_grey_app),
             thickness = 0.5.dp,
             startIndent = dimensionResource(id = R.dimen.padding_xlarge)
         )

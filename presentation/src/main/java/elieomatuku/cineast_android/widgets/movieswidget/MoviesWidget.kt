@@ -79,17 +79,14 @@ fun MoviesWidget(
         ) {
             Text(
                 text = sectionTitle,
-                color = colorResource(R.color.color_white)
             )
             Row(horizontalArrangement = Arrangement.End) {
                 Text(
-                    stringResource(id = R.string.see_all),
-                    color = colorResource(R.color.color_orange_app)
+                    stringResource(id = R.string.see_all)
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.ic_keyboard_arrow_right_black_24dp),
                     contentDescription = null,
-                    tint = colorResource(R.color.color_orange_app)
                 )
             }
         }
@@ -127,7 +124,6 @@ fun MovieItem(
         (movie.title ?: movie.originalTitle)?.let {
             Text(
                 text = it,
-                color = colorResource(R.color.color_white),
                 maxLines = 1,
                 fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                 fontWeight = FontWeight.Bold,
@@ -144,7 +140,6 @@ fun MovieItem(
         movie.releaseDate?.let {
             Text(
                 text = it,
-                color = colorResource(R.color.color_white),
                 fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier

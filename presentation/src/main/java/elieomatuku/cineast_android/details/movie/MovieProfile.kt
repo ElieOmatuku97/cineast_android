@@ -90,7 +90,6 @@ fun MovieProfile(
                     Text(
                         stringResource(id = R.string.rate),
                         fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-                        color = colorResource(id = R.color.color_orange_app),
                         modifier = Modifier
                             .padding(end = dimensionResource(id = R.dimen.padding_xlarge))
                             .clickable(onClick = { onRateClick() })

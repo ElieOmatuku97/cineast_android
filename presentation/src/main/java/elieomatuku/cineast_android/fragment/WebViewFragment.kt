@@ -63,8 +63,7 @@ fun WebView(url: String, onCloseButtonClick: () -> Unit) {
 
         if (showProgress) {
             LinearProgressIndicator(
-                progress = progress.toFloat() / 10,
-                color = colorResource(id = R.color.color_orange_app)
+                progress = progress.toFloat() / 10
             )
         }
 

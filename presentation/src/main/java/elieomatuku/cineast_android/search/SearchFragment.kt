@@ -197,8 +197,6 @@ fun SearchPager(
     Column {
         TabRow(
             selectedTabIndex = pagerState.currentPage,
-            contentColor = colorResource(id = R.color.color_orange_app),
-            backgroundColor = colorResource(id = R.color.color_black_app),
             indicator = { tabPositions ->
                 updateCurrentPosition(pagerState.currentPage)
                 TabRowDefaults.Indicator(
@@ -215,8 +213,6 @@ fun SearchPager(
                             pagerState.animateScrollToPage(index)
                         }
                     },
-                    selectedContentColor = colorResource(id = R.color.color_orange_app),
-                    unselectedContentColor = colorResource(id = R.color.color_grey_app),
                 )
             }
         }

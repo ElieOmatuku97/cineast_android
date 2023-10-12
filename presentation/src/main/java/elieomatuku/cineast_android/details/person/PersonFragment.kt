@@ -92,7 +92,6 @@ class PersonFragment : BaseFragment() {
                 menuInflater.inflate(R.menu.item_menu, menu)
                 menu.findItem(R.id.action_share)?.apply {
                     isVisible = ContentUtils.supportsShare(viewModel.person?.id)
-                    UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
                 }
             }
 

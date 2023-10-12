@@ -161,7 +161,6 @@ fun SettingItem(title: String, summary: String = String(), onItemClick: () -> Un
         .clickable { onItemClick() }) {
         Text(
             title,
-            color = colorResource(R.color.color_orange_app),
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
             fontFamily = FontFamily.SansSerif,
@@ -169,7 +168,6 @@ fun SettingItem(title: String, summary: String = String(), onItemClick: () -> Un
         if (summary.isNotBlank()) {
             Text(
                 summary,
-                color = colorResource(R.color.color_white),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
                 fontFamily = FontFamily.SansSerif

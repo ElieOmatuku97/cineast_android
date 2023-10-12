@@ -50,18 +50,15 @@ fun PeopleWidget(
                 .clickable(onClick = { onSeeAllClick(people) })
         ) {
             Text(
-                text = sectionTitle,
-                color = colorResource(R.color.color_white)
+                text = sectionTitle
             )
             Row(horizontalArrangement = Arrangement.End) {
                 Text(
                     stringResource(id = R.string.see_all),
-                    color = colorResource(R.color.color_orange_app)
                 )
                 Icon(
                     painter = painterResource(id = R.drawable.ic_keyboard_arrow_right_black_24dp),
                     contentDescription = null,
-                    tint = colorResource(R.color.color_orange_app)
                 )
             }
         }
@@ -99,7 +96,6 @@ fun PeopleItem(
         person.name?.let {
             Text(
                 text = it,
-                color = colorResource(R.color.color_white),
                 maxLines = 1,
                 fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                 fontWeight = FontWeight.Bold,

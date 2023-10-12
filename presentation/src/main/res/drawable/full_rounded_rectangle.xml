@@ -9,7 +9,7 @@
         android:topRightRadius="10dp" />
 
 
-    <solid android:color="@color/color_grey_app" />
+    <solid />
 
 </shape>
 

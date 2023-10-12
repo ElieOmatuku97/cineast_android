@@ -23,8 +23,7 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
             modifier = Modifier.padding(
                 start = dimensionResource(id = R.dimen.padding_small),
                 top = dimensionResource(id = R.dimen.padding_small)
-            ),
-            color = colorResource(id = R.color.color_white)
+            )
         )
         Text(
             text = displayFacts(
@@ -37,8 +36,7 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
                 top = dimensionResource(id = R.dimen.padding_small),
                 end = dimensionResource(id = R.dimen.padding_large),
                 bottom = dimensionResource(id = R.dimen.padding_small)
-            ),
-            color = colorResource(id = R.color.color_white)
+            )
         )
         Text(
             text = displayFacts(
@@ -51,8 +49,7 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
                 top = dimensionResource(id = R.dimen.padding_xsmall),
                 end = dimensionResource(id = R.dimen.padding_large),
                 bottom = dimensionResource(id = R.dimen.padding_small)
-            ),
-            color = colorResource(id = R.color.color_white)
+            )
         )
         Text(
             text = displayFacts(
@@ -65,8 +62,7 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
                 top = dimensionResource(id = R.dimen.padding_xsmall),
                 end = dimensionResource(id = R.dimen.padding_large),
                 bottom = dimensionResource(id = R.dimen.padding_small)
-            ),
-            color = colorResource(id = R.color.color_white)
+            )
         )
         Text(
             text = displayFacts(
@@ -79,8 +75,7 @@ fun MovieFactsWidget(movieFacts: MovieFacts?) {
                 top = dimensionResource(id = R.dimen.padding_xsmall),
                 end = dimensionResource(id = R.dimen.padding_large),
                 bottom = dimensionResource(id = R.dimen.padding_large)
-            ),
-            color = colorResource(id = R.color.color_white)
+            )
         )
     }
 

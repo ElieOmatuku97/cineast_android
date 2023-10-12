@@ -21,7 +21,6 @@ fun BareOverviewWidget(
     Column {
         Text(
             text = title,
-            color = colorResource(id = R.color.color_white),
             fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -32,7 +31,6 @@ fun BareOverviewWidget(
         )
         Text(
             text = overview,
-            color = colorResource(id = R.color.color_white),
             fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
             textAlign = TextAlign.Justify,
             modifier = Modifier

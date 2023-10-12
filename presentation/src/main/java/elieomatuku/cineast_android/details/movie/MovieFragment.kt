@@ -116,7 +116,6 @@ class MovieFragment : BaseFragment() {
 
                 menu.findItem(R.id.action_share).apply {
                     isVisible = ContentUtils.supportsShare(viewModel.viewState.value?.movie?.id)
-                    UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
                 }
 
                 menu.findItem(R.id.action_watchlist).apply {
@@ -231,7 +230,6 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun updateWatchListIcon(item: MenuItem) {
-        val colorRes = R.color.color_orange_app
         if (item.isChecked) {
             item.icon =
                 ResourcesCompat.getDrawable(
@@ -245,7 +243,6 @@ class MovieFragment : BaseFragment() {
                 R.drawable.ic_nav_watch_list_unselected,
                 requireContext().theme
             )
-            UiUtils.tintMenuItem(item, requireContext(), colorRes)
         }
     }
 
@@ -262,7 +259,6 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun updateFavoriteListIcon(item: MenuItem) {
-        val colorRes = R.color.color_orange_app
         if (item.isChecked) {
             item.icon =
                 ResourcesCompat.getDrawable(
@@ -276,7 +272,6 @@ class MovieFragment : BaseFragment() {
                 R.drawable.ic_star_border_black_unselected,
                 requireContext().theme
             )
-            UiUtils.tintMenuItem(item, requireContext(), colorRes)
         }
     }
 
