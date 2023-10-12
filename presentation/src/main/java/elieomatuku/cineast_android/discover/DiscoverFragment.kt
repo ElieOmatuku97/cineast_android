@@ -114,10 +114,10 @@ fun DiscoverScreen(
 
     viewState?.apply {
         Scaffold {
+            val paddingValues = it
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(isRefreshing),
-//                    modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
                     onRefresh = {
                         viewModel.refresh()
                     }

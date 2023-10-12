@@ -10,11 +10,10 @@
         android:layout_height="wrap_content"
         android:visibility="gone">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/results_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_actionbar"
             android:minHeight="?android:attr/actionBarSize"
             app:layout_scrollFlags="scroll|enterAlways"/>
 
