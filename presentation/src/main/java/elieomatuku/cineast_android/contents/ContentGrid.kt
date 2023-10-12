@@ -1,17 +1,15 @@
 package elieomatuku.cineast_android.contents
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
@@ -23,11 +21,10 @@ import elieomatuku.cineast_android.utils.UiUtils
 
 const val GRID_VIEW_NUMBER_OF_COLUMNS = 2
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ContentGrid(contents: List<Content>, onContentClick: (content: Content) -> Unit) {
     LazyVerticalGrid(
-        cells = GridCells.Fixed(GRID_VIEW_NUMBER_OF_COLUMNS)
+        columns = GridCells.Fixed(GRID_VIEW_NUMBER_OF_COLUMNS)
     ) {
         items(contents) { content ->
             ContentGridItem(content = content) {
@@ -37,7 +34,6 @@ fun ContentGrid(contents: List<Content>, onContentClick: (content: Content) -> U
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ContentGridItem(content: Content, onContentClick: (content: Content) -> Unit) {
     val imagePath = content.imagePath

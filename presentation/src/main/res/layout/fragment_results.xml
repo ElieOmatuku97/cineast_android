@@ -16,9 +16,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_actionbar"
             android:minHeight="?android:attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextAppearance="@style/ToolbarTextStyle"/>
+            app:layout_scrollFlags="scroll|enterAlways"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

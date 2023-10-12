@@ -47,9 +47,3 @@ fun SingleEvent() = SingleEvent(Unit)
 @Suppress("FunctionName")
 fun ViewErrorEvent(throwable: Throwable) = SingleEvent(ViewErrorController.mapThrowable(throwable))
 
-class EventObserver<T>(private val onEventUnconsumedContent: (T) -> Unit) :
-    Observer<SingleEvent<T>> {
-    override fun onChanged(event: SingleEvent<T>?) {
-        event?.consume()?.run(onEventUnconsumedContent)
-    }
-}

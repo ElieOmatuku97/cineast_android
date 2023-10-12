@@ -29,6 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.appcompattheme.AppCompatTheme
+import elieomatuku.cineast_android.AppTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
@@ -74,7 +75,7 @@ class MovieFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                AppCompatTheme {
+                AppTheme {
                     MovieScreen(
                         hasNetworkConnection = connectionService.hasNetworkConnection,
                         goToGallery = { goToGallery() },

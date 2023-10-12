@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import elieomatuku.cineast_android.AppTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
@@ -47,19 +48,21 @@ class DiscoverFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                DiscoverScreen(
-                    hasNetworkConnection = connectionService.hasNetworkConnection,
-                    onSeeAllClick = { contents, titleResources ->
-                        ContentsActivity.startActivity(
-                            requireContext(),
-                            contents,
-                            titleResources
-                        )
-                    },
-                    gotoMovie = ::gotoMovie,
-                    gotoPerson = ::gotoPerson,
-                    gotoWebView = ::gotoWebView
-                )
+                AppTheme {
+                    DiscoverScreen(
+                        hasNetworkConnection = connectionService.hasNetworkConnection,
+                        onSeeAllClick = { contents, titleResources ->
+                            ContentsActivity.startActivity(
+                                requireContext(),
+                                contents,
+                                titleResources
+                            )
+                        },
+                        gotoMovie = ::gotoMovie,
+                        gotoPerson = ::gotoPerson,
+                        gotoWebView = ::gotoWebView
+                    )
+                }
             }
         }
     }
