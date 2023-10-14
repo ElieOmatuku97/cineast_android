@@ -28,8 +28,6 @@ import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.accompanist.appcompattheme.AppCompatTheme
-import elieomatuku.cineast_android.AppTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
@@ -44,6 +42,7 @@ import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.Trailer
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.fragment.RateDialogFragment
+import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.utils.consume

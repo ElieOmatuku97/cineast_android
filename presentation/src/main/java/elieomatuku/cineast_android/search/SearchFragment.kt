@@ -8,14 +8,16 @@ import androidx.appcompat.widget.SearchView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.*
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
@@ -199,9 +201,9 @@ fun SearchPager(
             selectedTabIndex = pagerState.currentPage,
             indicator = { tabPositions ->
                 updateCurrentPosition(pagerState.currentPage)
-                TabRowDefaults.Indicator(
-                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
-                )
+//                TabRowDefaults.Indicator(
+//                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+//                )
             }
         ) {
             pages.forEachIndexed { index, title ->
