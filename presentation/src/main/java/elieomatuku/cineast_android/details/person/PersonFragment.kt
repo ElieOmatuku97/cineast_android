@@ -26,7 +26,6 @@ import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
@@ -38,6 +37,7 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.extensions.asListOfType
+import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
@@ -58,7 +58,7 @@ class PersonFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                AppCompatTheme {
+                AppTheme {
                     PersonScreen(
                         hasNetworkConnection = connectionService.hasNetworkConnection,
                         goToGallery = { navigateToGallery() },
