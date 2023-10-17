@@ -58,7 +58,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    compileSdk = 33
+    compileSdk = 34
     targetSdk = 33
     minSdkVersion = 21
     appName = "Cineast"
