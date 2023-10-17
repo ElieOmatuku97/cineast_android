@@ -3,7 +3,7 @@ package elieomatuku.cineast_android.base
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
-import elieomatuku.cineast_android.connection.ConnectionService
+import elieomatuku.cineast_android.utils.connection.ConnectionService
 import javax.inject.Inject
 
 /**

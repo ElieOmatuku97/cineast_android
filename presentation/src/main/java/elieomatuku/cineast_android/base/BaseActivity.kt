@@ -5,8 +5,8 @@ import android.net.ConnectivityManager
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
-import elieomatuku.cineast_android.broadReceiver.NetworkConnectivityBroadcastReceiver
-import elieomatuku.cineast_android.connection.ConnectionService
+import elieomatuku.cineast_android.utils.broadReceiver.NetworkConnectivityBroadcastReceiver
+import elieomatuku.cineast_android.utils.connection.ConnectionService
 import javax.inject.Inject
 
 @AndroidEntryPoint

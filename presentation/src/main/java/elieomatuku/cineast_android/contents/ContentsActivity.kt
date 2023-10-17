@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.connection.ConnectionService
+import elieomatuku.cineast_android.utils.connection.ConnectionService
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
