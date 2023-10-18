@@ -17,6 +17,7 @@ import androidx.compose.material3.DismissValue
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.SwipeToDismiss
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDismissState
@@ -142,58 +143,60 @@ fun ContentItem(
     val imageUrl = remember {
         UiUtils.getImageUrl(content.imagePath, fallBackUrl)
     }
-    Column(
-        modifier = Modifier
-            .padding(bottom = dimensionResource(id = R.dimen.padding_small))
-            .clickable { onContentClick(content) }) {
-        Row {
-            Image(
-                painter = rememberImagePainter(
-                    data = imageUrl,
-                ),
-                contentDescription = null,
-                modifier = Modifier
-                    .height(dimensionResource(id = R.dimen.image_height_xxlarge))
-                    .width(dimensionResource(id = R.dimen.image_width_xlarge))
-                    .padding(
-                        top = dimensionResource(id = R.dimen.padding_small),
-                        start = dimensionResource(id = R.dimen.padding_small),
-                        bottom = dimensionResource(id = R.dimen.padding_medium)
-                    )
-
-            )
-            Column(
-                modifier = Modifier.padding(
-                    top = dimensionResource(id = R.dimen.padding_small),
-                    start = dimensionResource(id = R.dimen.padding_small)
-                )
-            ) {
-                content.title?.let {
-                    Text(
-                        it,
-                        fontSize = dimensionResource(id = R.dimen.text_size_medium).value.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-
-                content.subTitle?.let {
-                    Text(
-                        text = it,
-                        fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-                        modifier = Modifier.padding(
-                            top = dimensionResource(id = R.dimen.padding_small)
+    Surface {
+        Column(
+            modifier = Modifier
+                .padding(bottom = dimensionResource(id = R.dimen.padding_small))
+                .clickable { onContentClick(content) }) {
+            Row {
+                Image(
+                    painter = rememberImagePainter(
+                        data = imageUrl,
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .height(dimensionResource(id = R.dimen.image_height_xxlarge))
+                        .width(dimensionResource(id = R.dimen.image_width_xlarge))
+                        .padding(
+                            top = dimensionResource(id = R.dimen.padding_small),
+                            start = dimensionResource(id = R.dimen.padding_small),
+                            bottom = dimensionResource(id = R.dimen.padding_medium)
                         )
+
+                )
+                Column(
+                    modifier = Modifier.padding(
+                        top = dimensionResource(id = R.dimen.padding_small),
+                        start = dimensionResource(id = R.dimen.padding_small)
                     )
+                ) {
+                    content.title?.let {
+                        Text(
+                            it,
+                            fontSize = dimensionResource(id = R.dimen.text_size_medium).value.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    content.subTitle?.let {
+                        Text(
+                            text = it,
+                            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                            modifier = Modifier.padding(
+                                top = dimensionResource(id = R.dimen.padding_small)
+                            )
+                        )
+                    }
+
+                    child()
+
                 }
-
-                child()
-
             }
+            Divider(
+                modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_xlarge)),
+                thickness = 0.5.dp,
+            )
         }
-        Divider(
-            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_xlarge)),
-            thickness = 0.5.dp,
-        )
     }
 }
 

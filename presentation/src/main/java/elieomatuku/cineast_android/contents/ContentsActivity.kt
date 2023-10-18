@@ -12,6 +12,7 @@ import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.extensions.asListOfType
+import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import elieomatuku.cineast_android.utils.Constants
 import java.io.Serializable
 import javax.inject.Inject
@@ -46,24 +47,26 @@ class ContentsActivity : ComponentActivity() {
         val screenNameRes = intent.getIntExtra(Constants.SCREEN_NAME_KEY, 0)
 
         setContent {
-            ContentsNavGraph(
-                contents = contents,
-                hasNetworkConnection = connectionService.hasNetworkConnection
-            ) {
-                it.asListOfType<Movie>()?.let { movies ->
-                    startActivity(
-                        this,
-                        movies,
-                        R.string.movies
-                    )
-                }
+            AppTheme {
+                ContentsNavGraph(
+                    contents = contents,
+                    hasNetworkConnection = connectionService.hasNetworkConnection
+                ) {
+                    it.asListOfType<Movie>()?.let { movies ->
+                        startActivity(
+                            this,
+                            movies,
+                            R.string.movies
+                        )
+                    }
 
-                it.asListOfType<Person>()?.let { people ->
-                    startActivity(
-                        this,
-                        people,
-                        R.string.people
-                    )
+                    it.asListOfType<Person>()?.let { people ->
+                        startActivity(
+                            this,
+                            people,
+                            R.string.people
+                        )
+                    }
                 }
             }
         }
