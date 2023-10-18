@@ -5,8 +5,13 @@ import android.text.style.URLSpan
 import android.text.util.Linkify
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -18,12 +23,10 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.utils.UiUtils
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun Profile(
     imagePath: String?,
@@ -37,74 +40,76 @@ fun Profile(
 ) {
     val imageUrl = UiUtils.getImageUrl(imagePath, stringResource(id = R.string.image_small))
 
-    Row {
-        Image(
-            painter = rememberImagePainter(
-                data = imageUrl,
-            ),
-            contentDescription = null,
-            modifier = Modifier
-                .height(dimensionResource(id = R.dimen.image_height_xxlarge))
-                .width(dimensionResource(id = R.dimen.image_width_xlarge))
-                .padding(
-                    top = dimensionResource(id = R.dimen.padding_small),
-                    start = dimensionResource(id = R.dimen.padding_small),
-                    bottom = dimensionResource(id = R.dimen.padding_medium)
-                )
-                .clickable {
-                    onProfileClick()
-                }
-        )
-        Column(
-            modifier = Modifier.padding(
-                top = dimensionResource(id = R.dimen.padding_small),
-                start = dimensionResource(id = R.dimen.padding_large)
+    Surface {
+        Row {
+            Image(
+                painter = rememberImagePainter(
+                    data = imageUrl,
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(dimensionResource(id = R.dimen.image_height_xxlarge))
+                    .width(dimensionResource(id = R.dimen.image_width_xlarge))
+                    .padding(
+                        top = dimensionResource(id = R.dimen.padding_small),
+                        start = dimensionResource(id = R.dimen.padding_small),
+                        bottom = dimensionResource(id = R.dimen.padding_medium)
+                    )
+                    .clickable {
+                        onProfileClick()
+                    }
             )
-        ) {
-            title?.let {
-                Text(
-                    it
+            Column(
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    start = dimensionResource(id = R.dimen.padding_large)
                 )
-            }
-
-            subTitle?.let {
-                Text(
-                    text = it,
-                    fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.padding_small)
+            ) {
+                title?.let {
+                    Text(
+                        it
                     )
-                )
-            }
+                }
 
-            webSiteLink?.let {
-                val linkStyle = SpanStyle(
-                    textDecoration = TextDecoration.Underline,
-                )
-                ClickableText(
-                    text = remember(it) { it.linkify(linkStyle) },
-                    onClick = { position ->
-                        it.linkify(linkStyle).urlAt(position) { link ->
-                            onWebSiteLinkClick(link)
-                        }
-                    },
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.padding_small)
+                subTitle?.let {
+                    Text(
+                        text = it,
+                        fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                        modifier = Modifier.padding(
+                            top = dimensionResource(id = R.dimen.padding_small)
+                        )
                     )
-                )
-            }
+                }
 
-            description?.let {
-                Text(
-                    text = it,
-                    fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-                    modifier = Modifier.padding(
-                        top = dimensionResource(id = R.dimen.padding_small)
+                webSiteLink?.let {
+                    val linkStyle = SpanStyle(
+                        textDecoration = TextDecoration.Underline,
                     )
-                )
-            }
+                    ClickableText(
+                        text = remember(it) { it.linkify(linkStyle) },
+                        onClick = { position ->
+                            it.linkify(linkStyle).urlAt(position) { link ->
+                                onWebSiteLinkClick(link)
+                            }
+                        },
+                        modifier = Modifier.padding(
+                            top = dimensionResource(id = R.dimen.padding_small)
+                        )
+                    )
+                }
 
-            child()
+                description?.let {
+                    Text(
+                        text = it,
+                        fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                        modifier = Modifier.padding(
+                            top = dimensionResource(id = R.dimen.padding_small)
+                        )
+                    )
+                }
+
+                child()
+            }
         }
     }
 }

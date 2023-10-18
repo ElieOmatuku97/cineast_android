@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.details.movie.overview
 
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.domain.model.Trailer
@@ -14,10 +15,12 @@ fun MovieOverviewWidget(
 ) {
     LazyColumn {
         item {
-            bareOverviewComposable(
-                title = overviewTitle,
-                overview = movieSummary.movie?.overview ?: String()
-            )
+            Surface {
+                bareOverviewComposable(
+                    title = overviewTitle,
+                    overview = movieSummary.movie?.overview ?: String()
+                )
+            }
         }
         item {
             TrailersWidget(

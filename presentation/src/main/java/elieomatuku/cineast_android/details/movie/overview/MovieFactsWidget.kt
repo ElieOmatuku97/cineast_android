@@ -2,6 +2,7 @@ package elieomatuku.cineast_android.details.movie.overview
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,68 +15,70 @@ import elieomatuku.cineast_android.domain.model.MovieFacts
 
 @Composable
 fun MovieFactsWidget(movieFacts: MovieFacts?) {
-    Column {
-        Text(
-            text = stringResource(id = R.string.movie_facts),
-            fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.padding_small),
-                top = dimensionResource(id = R.dimen.padding_small)
+    Surface {
+        Column {
+            Text(
+                text = stringResource(id = R.string.movie_facts),
+                fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    top = dimensionResource(id = R.dimen.padding_small)
+                )
             )
-        )
-        Text(
-            text = displayFacts(
-                stringResource(id = R.string.release_date),
-                movieFacts?.releaseDate
-            ),
-            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-            modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.padding_small),
-                top = dimensionResource(id = R.dimen.padding_small),
-                end = dimensionResource(id = R.dimen.padding_large),
-                bottom = dimensionResource(id = R.dimen.padding_small)
+            Text(
+                text = displayFacts(
+                    stringResource(id = R.string.release_date),
+                    movieFacts?.releaseDate
+                ),
+                fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                modifier = Modifier.padding(
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    end = dimensionResource(id = R.dimen.padding_large),
+                    bottom = dimensionResource(id = R.dimen.padding_small)
+                )
             )
-        )
-        Text(
-            text = displayFacts(
-                stringResource(id = R.string.runtime),
-                movieFacts?.runtimeInHoursAndMinutes
-            ),
-            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-            modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.padding_small),
-                top = dimensionResource(id = R.dimen.padding_xsmall),
-                end = dimensionResource(id = R.dimen.padding_large),
-                bottom = dimensionResource(id = R.dimen.padding_small)
+            Text(
+                text = displayFacts(
+                    stringResource(id = R.string.runtime),
+                    movieFacts?.runtimeInHoursAndMinutes
+                ),
+                fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                modifier = Modifier.padding(
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    top = dimensionResource(id = R.dimen.padding_xsmall),
+                    end = dimensionResource(id = R.dimen.padding_large),
+                    bottom = dimensionResource(id = R.dimen.padding_small)
+                )
             )
-        )
-        Text(
-            text = displayFacts(
-                stringResource(id = R.string.budget),
-                String.format("$%,.2f", movieFacts?.budget?.toDouble())
-            ),
-            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-            modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.padding_small),
-                top = dimensionResource(id = R.dimen.padding_xsmall),
-                end = dimensionResource(id = R.dimen.padding_large),
-                bottom = dimensionResource(id = R.dimen.padding_small)
+            Text(
+                text = displayFacts(
+                    stringResource(id = R.string.budget),
+                    String.format("$%,.2f", movieFacts?.budget?.toDouble())
+                ),
+                fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                modifier = Modifier.padding(
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    top = dimensionResource(id = R.dimen.padding_xsmall),
+                    end = dimensionResource(id = R.dimen.padding_large),
+                    bottom = dimensionResource(id = R.dimen.padding_small)
+                )
             )
-        )
-        Text(
-            text = displayFacts(
-                stringResource(id = R.string.revenue),
-                String.format("$%,.2f", movieFacts?.revenue?.toDouble())
-            ),
-            fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
-            modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.padding_small),
-                top = dimensionResource(id = R.dimen.padding_xsmall),
-                end = dimensionResource(id = R.dimen.padding_large),
-                bottom = dimensionResource(id = R.dimen.padding_large)
+            Text(
+                text = displayFacts(
+                    stringResource(id = R.string.revenue),
+                    String.format("$%,.2f", movieFacts?.revenue?.toDouble())
+                ),
+                fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
+                modifier = Modifier.padding(
+                    start = dimensionResource(id = R.dimen.padding_small),
+                    top = dimensionResource(id = R.dimen.padding_xsmall),
+                    end = dimensionResource(id = R.dimen.padding_large),
+                    bottom = dimensionResource(id = R.dimen.padding_large)
+                )
             )
-        )
+        }
     }
 
 }

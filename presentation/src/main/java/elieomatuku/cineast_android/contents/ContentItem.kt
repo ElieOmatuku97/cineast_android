@@ -33,7 +33,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Content
@@ -133,7 +132,6 @@ fun MovieItem(movie: Movie, onContentClick: (content: Content) -> Unit = {}) {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ContentItem(
     content: Content,

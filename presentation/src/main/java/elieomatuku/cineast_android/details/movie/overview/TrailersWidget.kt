@@ -2,9 +2,14 @@ package elieomatuku.cineast_android.details.movie.overview
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.domain.model.Trailer
@@ -25,30 +29,31 @@ fun TrailersWidget(
     trailers: List<Trailer>,
     onItemClick: (trailer: Trailer) -> Unit,
 ) {
-    Column {
-        Text(
-            text = stringResource(id = R.string.trailers),
-            fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.padding_small)
+    Surface {
+        Column {
+            Text(
+                text = stringResource(id = R.string.trailers),
+                fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(
+                    start = dimensionResource(id = R.dimen.padding_small)
+                )
             )
-        )
 
-        LazyRow(
-            modifier = Modifier.padding(
-                top = dimensionResource(id = R.dimen.padding_small),
-                start = dimensionResource(id = R.dimen.padding_small)
-            )
-        ) {
-            items(trailers) { trailer ->
-                TrailersItem(trailer = trailer, onTrailerClick = onItemClick)
+            LazyRow(
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    start = dimensionResource(id = R.dimen.padding_small)
+                )
+            ) {
+                items(trailers) { trailer ->
+                    TrailersItem(trailer = trailer, onTrailerClick = onItemClick)
+                }
             }
         }
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun TrailersItem(
     trailer: Trailer,
