@@ -25,6 +25,7 @@ import elieomatuku.cineast_android.databinding.ActivityContentBinding
 import elieomatuku.cineast_android.details.movie.MovieFragment
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
@@ -148,7 +149,7 @@ class UserContentsActivity : BaseActivity() {
         val screenNameRes = intent.getIntExtra(Constants.SCREEN_NAME_KEY, 0)
         setToolbarTitle(screenNameRes)
         binding.composeView.setContent {
-            AppCompatTheme {
+            AppTheme {
                 UserContentScreen(
                     hasNetworkConnection = connectionService.hasNetworkConnection,
                     onContentClick = {

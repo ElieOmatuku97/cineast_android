@@ -1,9 +1,13 @@
 package elieomatuku.cineast_android.details.movie
 
-import android.util.TypedValue
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,7 +19,6 @@ import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.details.Profile
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.utils.UiUtils
-import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 @Composable
 fun MovieProfile(
@@ -62,24 +65,25 @@ fun MovieProfile(
             ) {
                 movie?.voteAverage?.let { voteAverage ->
                     AndroidView(factory = {
-                        MaterialRatingBar(
+                        AppCompatRatingBar(
                             it,
                             null,
-                            me.zhanghai.android.materialratingbar.R.style.Widget_MaterialRatingBar_RatingBar//Widget_MaterialRatingBar_RatingBar
+                            androidx.legacy.preference.R.attr.ratingBarStyleSmall
                         ).apply {
                             val params = ViewGroup.LayoutParams(
                                 ViewGroup.LayoutParams.WRAP_CONTENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT
                             )
-                            params.height = TypedValue.applyDimension(
-                                TypedValue.COMPLEX_UNIT_DIP,
-                                10f,
-                                resources.displayMetrics
-                            ).toInt()
+                            rating = 2f
+                            scaleX = 0.7f
+                            scaleY = 0.65f
+                            pivotX = 0f
+                            pivotY = 0f
                             layoutParams = params
 
                             numStars = 10
                             stepSize = 0.1f
+
                             rating = voteAverage
                         }
                     })
