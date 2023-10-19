@@ -5,15 +5,22 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import dagger.hilt.android.AndroidEntryPoint
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.utils.connection.ConnectionService
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import elieomatuku.cineast_android.utils.Constants
+import elieomatuku.cineast_android.utils.connection.ConnectionService
 import java.io.Serializable
 import javax.inject.Inject
 
@@ -41,6 +48,7 @@ class ContentsActivity : ComponentActivity() {
     @Inject
     lateinit var connectionService: ConnectionService
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val contents: List<Content> = intent.getSerializableExtra(WIDGET_KEY) as List<Content>
@@ -48,33 +56,39 @@ class ContentsActivity : ComponentActivity() {
 
         setContent {
             AppTheme {
-                ContentsNavGraph(
-                    contents = contents,
-                    hasNetworkConnection = connectionService.hasNetworkConnection
-                ) {
-                    it.asListOfType<Movie>()?.let { movies ->
-                        startActivity(
-                            this,
-                            movies,
-                            R.string.movies
+                Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(stringResource(id = screenNameRes))
+                            }
                         )
-                    }
 
-                    it.asListOfType<Person>()?.let { people ->
-                        startActivity(
-                            this,
-                            people,
-                            R.string.people
-                        )
+                    }) {
+                    val paddingValues = it
+                    ContentsNavGraph(
+                        modifier = Modifier.padding(paddingValues),
+                        contents = contents,
+                        hasNetworkConnection = connectionService.hasNetworkConnection
+                    ) {
+                        it.asListOfType<Movie>()?.let { movies ->
+                            startActivity(
+                                this,
+                                movies,
+                                R.string.movies
+                            )
+                        }
+
+                        it.asListOfType<Person>()?.let { people ->
+                            startActivity(
+                                this,
+                                people,
+                                R.string.people
+                            )
+                        }
                     }
                 }
             }
         }
-    }
-
-    private fun setToolbarTitle(screenNameRes: Int? = null) {
-//        binding.toolbar.title = screenNameRes?.let {
-//            resources.getString(it)
-//        } ?: resources.getString(R.string.nav_title_discover)
     }
 }
