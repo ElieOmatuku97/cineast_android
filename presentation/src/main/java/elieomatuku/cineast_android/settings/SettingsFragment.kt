@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -98,46 +100,47 @@ fun SettingsScreen(
 ) {
     val viewState by viewModel.viewState.observeAsState()
     viewState?.apply {
-        LazyColumn {
-            if (isLoggedIn) {
-                item {
-                    SettingItem(
-                        title = stringResource(id = R.string.settings_username),
-                        summary = account?.username ?: String()
-                    ) {}
-                }
+        Surface {
+            LazyColumn {
+                if (isLoggedIn) {
+                    item {
+                        SettingItem(
+                            title = stringResource(id = R.string.settings_username),
+                            summary = account?.username ?: String()
+                        ) {}
+                    }
 
-                item {
-                    SettingItem(title = stringResource(id = R.string.settings_favorites)) {
-                        onFavoritesClick()
+                    item {
+                        SettingItem(title = stringResource(id = R.string.settings_favorites)) {
+                            onFavoritesClick()
+                        }
+                    }
+
+                    item {
+                        SettingItem(title = stringResource(id = R.string.settings_watchlist)) {
+                            onWatchListClick()
+                        }
+                    }
+
+                    item {
+                        SettingItem(title = stringResource(id = R.string.settings_rated)) {
+                            onRatedClick()
+                        }
                     }
                 }
 
                 item {
-                    SettingItem(title = stringResource(id = R.string.settings_watchlist)) {
-                        onWatchListClick()
+                    val title =
+                        if (isLoggedIn) stringResource(R.string.settings_logout) else stringResource(
+                            R.string.settings_login
+                        )
+                    SettingItem(title = title) {
+                        onLoginClick()
                     }
                 }
 
                 item {
-                    SettingItem(title = stringResource(id = R.string.settings_rated)) {
-                        onRatedClick()
-                    }
-                }
-            }
-
-            item {
-                val title =
-                    if (isLoggedIn) stringResource(R.string.settings_logout) else stringResource(
-                        R.string.settings_login
-                    )
-                SettingItem(title = title) {
-                    onLoginClick()
-                }
-            }
-
-            item {
-                //        val appVersion = findPreference(getString(R.string.pref_app_version))
+                    //        val appVersion = findPreference(getString(R.string.pref_app_version))
 //        val summary = SpannableString("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
 //        summary.setSpan(
 //            ForegroundColorSpan(
@@ -148,7 +151,8 @@ fun SettingsScreen(
 //            ), 0, summary.length, 0
 //        )
 //        appVersion?.summary = summary
-                SettingItem(title = stringResource(id = R.string.settings_app_version)) {}
+                    SettingItem(title = stringResource(id = R.string.settings_app_version)) {}
+                }
             }
         }
     }
