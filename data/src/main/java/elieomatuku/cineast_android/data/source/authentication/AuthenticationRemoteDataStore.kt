@@ -17,21 +17,15 @@ class AuthenticationRemoteDataStore @Inject constructor (private val authenticat
         return authenticationRemote.getAccessToken()
     }
 
-    override suspend fun setAccessToken(accessTokenEntity: AccessTokenEntity) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun setAccessToken(accessTokenEntity: AccessTokenEntity) {}
 
-    override suspend fun setSession(sessionEntity: SessionEntity) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun setSession(sessionEntity: SessionEntity) {}
 
     override suspend fun getSession(requestToken: String): SessionEntity {
         return authenticationRemote.getSession(requestToken)
     }
 
-    override suspend fun setAccount(accountEntity: AccountEntity) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun setAccount(accountEntity: AccountEntity) {}
 
     override suspend fun getAccount(sessionId: String?): AccountEntity {
         return authenticationRemote.getAccount(sessionId)
@@ -41,9 +35,7 @@ class AuthenticationRemoteDataStore @Inject constructor (private val authenticat
         TODO("Not yet implemented")
     }
 
-    override suspend fun logout() {
-        TODO("Not yet implemented")
-    }
+    override suspend fun logout() {}
 
     override suspend fun isLoggedIn(): Boolean {
         TODO("Not yet implemented")

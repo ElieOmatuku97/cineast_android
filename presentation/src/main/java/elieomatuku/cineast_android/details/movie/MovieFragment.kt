@@ -36,16 +36,17 @@ import elieomatuku.cineast_android.details.DetailTabs
 import elieomatuku.cineast_android.details.movie.movie_staff.MovieStaffWidget
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
 import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.FavoriteState
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.domain.model.Trailer
+import elieomatuku.cineast_android.domain.model.WatchListState
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.fragment.RateDialogFragment
 import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
-import elieomatuku.cineast_android.utils.consume
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
@@ -121,13 +122,13 @@ class MovieFragment : BaseFragment() {
                 menu.findItem(R.id.action_watchlist).apply {
                     isChecked = isInWatchList
                     updateWatchListIcon(this)
-                    isVisible = viewModel.isLoggedIn()
+//                    isVisible = viewModel.isLoggedIn()
                 }
 
                 menu.findItem(R.id.action_favorites).apply {
                     isChecked = isInFavoriteList
                     updateFavoriteListIcon(this)
-                    isVisible = viewModel.isLoggedIn()
+//                    isVisible = viewModel.isLoggedIn()
                 }
             }
 
@@ -156,12 +157,6 @@ class MovieFragment : BaseFragment() {
 
         viewModel.viewState.observe(viewLifecycleOwner) {
             updateView(it)
-            it.isLoggedIn.consume { isLoggedIn ->
-                if (isLoggedIn) {
-                    viewModel.getFavorites()
-                    viewModel.getWatchLists()
-                }
-            }
         }
     }
 
@@ -170,7 +165,7 @@ class MovieFragment : BaseFragment() {
             watchListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { event: Boolean ->
-                        updateWatchList(event)
+//                        updateWatchList(event)
                     },
                     {}
                 )
@@ -180,7 +175,7 @@ class MovieFragment : BaseFragment() {
             favoriteListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { event: Boolean ->
-                        updateFavorite(event)
+//                        updateFavorite(event)
                     },
                     {}
                 )
@@ -189,17 +184,17 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun updateView(movieViewState: MovieViewState) {
-        updateWatchList(movieViewState.isInWatchList)
-        updateFavorite(movieViewState.isInFavorites)
+        updateWatchList(movieViewState.movie?.watchListState)
+        updateFavorite(movieViewState.movie?.favoritesState)
     }
 
-    private fun updateWatchList(event: Boolean) {
-        isInWatchList = event
+    private fun updateWatchList(watchListState: WatchListState?) {
+        isInWatchList = watchListState?.isSelected ?: false
         menuHost.invalidateMenu()
     }
 
-    private fun updateFavorite(event: Boolean) {
-        isInFavoriteList = event
+    private fun updateFavorite(favoriteState: FavoriteState?) {
+        isInFavoriteList = favoriteState?.isSelected ?: false
         menuHost.invalidateMenu()
     }
 
@@ -343,7 +338,7 @@ fun MovieScreen(
 
     viewState?.apply {
         Box(modifier = Modifier.fillMaxSize()) {
-            movieSummary?.let { movieSummary ->
+            movie?.movieSummary?.let { movieSummary ->
                 Column {
                     MovieProfile(
                         movieSummary = movieSummary,
@@ -358,7 +353,7 @@ fun MovieScreen(
                         }
                     )
 
-                    movie?.apply {
+                    movie.apply {
                         MovieTabs(
                             movieSummary = movieSummary,
                             movie = this,
@@ -438,6 +433,7 @@ fun MovieTabs(
                     BareOverviewWidget(title = title, overview = overview)
                 }
             }
+
             R.string.people -> {
                 val cast = movieSummary.cast
                 val crew = movieSummary.crew
@@ -453,6 +449,7 @@ fun MovieTabs(
                     }
                 }
             }
+
             R.string.similar -> {
                 val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
                 MoviesWidget(
