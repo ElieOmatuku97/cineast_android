@@ -1,15 +1,12 @@
 package elieomatuku.cineast_android
 
 import android.app.Application
-import org.kodein.di.DI
-import org.kodein.di.DIAware
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
-class App : Application(), DIAware {
-
-    override val di: DI
-        get() = depInjecT(this)
+@HiltAndroidApp
+class App : Application() {
 
     override fun onCreate() {
         super.onCreate()

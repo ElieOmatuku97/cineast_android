@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.discover
 
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.movie.GetDiscoverContent
@@ -17,12 +18,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-09-05
  */
 
-class DiscoverViewModel(
+@HiltViewModel
+class DiscoverViewModel @Inject constructor(
     private val getDiscoverContent: GetDiscoverContent,
     private val getGenres: GetGenres,
     private val isLoggedIn: IsLoggedIn,
@@ -55,10 +58,12 @@ class DiscoverViewModel(
                     discoverContents = result.data,
                     viewError = null
                 )
+
                 is Fail -> state.copy(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> DiscoverViewState()
             }
         }
@@ -130,6 +135,7 @@ class DiscoverViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> DiscoverViewState()
             }
         }

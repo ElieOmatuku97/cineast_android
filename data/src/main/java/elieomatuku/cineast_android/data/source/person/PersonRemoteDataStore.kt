@@ -6,12 +6,14 @@ import elieomatuku.cineast_android.data.model.PersonDetailsEntity
 import elieomatuku.cineast_android.data.model.PersonEntity
 import elieomatuku.cineast_android.data.repository.person.PersonDataStore
 import elieomatuku.cineast_android.data.repository.person.PersonRemote
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class PersonRemoteDataStore(private val personRemote: PersonRemote) : PersonDataStore {
+class PersonRemoteDataStore @Inject constructor(private val personRemote: PersonRemote) :
+    PersonDataStore {
     override suspend fun getPopularPeople(): List<PersonEntity> {
         return personRemote.getPopularPeople()
     }

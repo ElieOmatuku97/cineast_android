@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,24 +22,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
-import androidx.compose.ui.res.*
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.fragment.findNavController
+import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.*
-import elieomatuku.cineast_android.extensions.getWidgets
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
+import elieomatuku.cineast_android.domain.model.AccessToken
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.Person
 import elieomatuku.cineast_android.extensions.DiscoverWidget
 import elieomatuku.cineast_android.extensions.asListOfType
-import elieomatuku.cineast_android.utils.*
+import elieomatuku.cineast_android.extensions.getWidgets
+import elieomatuku.cineast_android.utils.consume
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
-import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 import elieomatuku.cineast_android.widgets.PeopleWidget
+import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 
 class DiscoverFragment : BaseFragment() {
 
@@ -48,20 +55,21 @@ class DiscoverFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                DiscoverScreen(
-                    viewModelFactory = viewModelFactory,
-                    hasNetworkConnection = connectionService.hasNetworkConnection,
-                    onSeeAllClick = { contents, titleResources ->
-                        ContentsActivity.startActivity(
-                            requireContext(),
-                            contents,
-                            titleResources
-                        )
-                    },
-                    gotoMovie = ::gotoMovie,
-                    gotoPerson = ::gotoPerson,
-                    gotoWebView = ::gotoWebView
-                )
+                AppTheme {
+                    DiscoverScreen(
+                        hasNetworkConnection = connectionService.hasNetworkConnection,
+                        onSeeAllClick = { contents, titleResources ->
+                            ContentsActivity.startActivity(
+                                requireContext(),
+                                contents,
+                                titleResources
+                            )
+                        },
+                        gotoMovie = ::gotoMovie,
+                        gotoPerson = ::gotoPerson,
+                        gotoWebView = ::gotoWebView
+                    )
+                }
             }
         }
     }
@@ -97,8 +105,7 @@ class DiscoverFragment : BaseFragment() {
 
 @Composable
 fun DiscoverScreen(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: DiscoverViewModel = viewModel(factory = viewModelFactory),
+    viewModel: DiscoverViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     onSeeAllClick: (contents: List<Content>, titleResources: Int) -> Unit,
     gotoMovie: (movie: Movie) -> Unit,
@@ -114,10 +121,10 @@ fun DiscoverScreen(
 
     viewState?.apply {
         Scaffold {
+            val paddingValues = it
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
                 SwipeRefresh(
                     state = rememberSwipeRefreshState(isRefreshing),
-                    modifier = Modifier.background(colorResource(id = R.color.color_black_app)),
                     onRefresh = {
                         viewModel.refresh()
                     }
@@ -168,13 +175,13 @@ fun DiscoverScreen(
                                         ) {
                                             onSeeAllClick(it, widget.titleResources)
                                         }
-                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                        Divider()
                                     }
                                     is DiscoverWidget.Movies -> {
                                         MoviesWidget(
-                                            viewModelFactory = viewModelFactory,
                                             movies = widget.value.asListOfType()
                                                 ?: emptyList(),
+                                            genres = emptyList(),
                                             sectionTitle = stringResource(widget.titleResources),
                                             onItemClick = { content, _ ->
                                                 if (content is Movie) {
@@ -185,7 +192,7 @@ fun DiscoverScreen(
                                                 onSeeAllClick(it, widget.titleResources)
                                             }
                                         )
-                                        Divider(color = colorResource(id = R.color.color_grey_app))
+                                        Divider()
                                     }
                                     is DiscoverWidget.Login -> {
                                         LoginItem(

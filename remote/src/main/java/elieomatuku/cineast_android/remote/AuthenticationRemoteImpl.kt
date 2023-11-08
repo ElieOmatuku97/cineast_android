@@ -9,12 +9,13 @@ import elieomatuku.cineast_android.remote.model.RemoteAccessToken
 import elieomatuku.cineast_android.remote.model.RemoteAccount
 import elieomatuku.cineast_android.remote.model.RemoteException
 import elieomatuku.cineast_android.remote.model.RemoteSession
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-07-04
  */
 
-class AuthenticationRemoteImpl(private val authenticationApi: AuthenticationApi) :
+class AuthenticationRemoteImpl @Inject constructor (private val authenticationApi: AuthenticationApi) :
     AuthenticationRemote {
 
     override suspend fun getAccessToken(): AccessTokenEntity {

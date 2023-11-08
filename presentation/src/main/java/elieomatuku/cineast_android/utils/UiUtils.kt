@@ -12,9 +12,9 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.google.android.material.appbar.MaterialToolbar
 import elieomatuku.cineast_android.domain.model.Genre
 
 object UiUtils {
@@ -34,7 +34,7 @@ object UiUtils {
         }
     }
 
-    fun initToolbar(activity: AppCompatActivity, toolbar: Toolbar?, showBack: Boolean = true) {
+    fun initToolbar(activity: AppCompatActivity, toolbar: MaterialToolbar?, showBack: Boolean = true) {
         activity.setSupportActionBar(toolbar)
         if (showBack) {
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)

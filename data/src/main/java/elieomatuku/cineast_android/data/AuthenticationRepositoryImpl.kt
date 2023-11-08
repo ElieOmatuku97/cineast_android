@@ -9,12 +9,13 @@ import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.domain.model.Account
 import elieomatuku.cineast_android.domain.model.Session
 import elieomatuku.cineast_android.domain.repository.AuthenticationRepository
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class AuthenticationRepositoryImpl(private val factory: AuthenticationDataStoreFactory) :
+class AuthenticationRepositoryImpl @Inject constructor (private val factory: AuthenticationDataStoreFactory) :
     AuthenticationRepository {
 
     override suspend fun getAccessToken(): AccessToken {

@@ -44,7 +44,6 @@
             android:layout_width="0dp"
             android:layout_height="0.5dp"
             android:layout_marginTop="10dp"
-            android:background="@color/grey_light"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/dialog_title" />
@@ -89,7 +88,6 @@
             android:layout_marginTop="15dp"
             android:isIndicator="false"
             android:numStars="10"
-            android:theme="@style/CineastRatingBarTheme"
             app:layout_constraintLeft_toLeftOf="@id/left_guideline"
             app:layout_constraintRight_toRightOf="@id/right_guideline"
             app:layout_constraintTop_toBottomOf="@id/separator"

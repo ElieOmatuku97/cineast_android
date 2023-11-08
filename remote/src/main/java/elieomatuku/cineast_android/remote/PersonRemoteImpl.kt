@@ -11,12 +11,13 @@ import elieomatuku.cineast_android.remote.model.RemoteImages
 import elieomatuku.cineast_android.remote.model.RemoteKnownFor
 import elieomatuku.cineast_android.remote.model.RemotePeople
 import elieomatuku.cineast_android.remote.model.RemotePersonDetails
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-07-04
  */
 
-class PersonRemoteImpl(private val personApi: PersonApi) : PersonRemote {
+class PersonRemoteImpl @Inject constructor (private val personApi: PersonApi) : PersonRemote {
 
     override suspend fun getPopularPeople(): List<PersonEntity> {
         val response = personApi.getPopularPeople()

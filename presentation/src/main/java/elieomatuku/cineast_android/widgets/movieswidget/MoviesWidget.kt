@@ -5,13 +5,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -64,49 +64,47 @@ fun MoviesWidget(
     onItemClick: (content: Content, genres: List<Genre>) -> Unit,
     onSeeAllClick: (contents: List<Content>) -> Unit
 ) {
-    Column(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_small))) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = dimensionResource(id = R.dimen.padding_small),
-                    end = dimensionResource(id = R.dimen.padding_small),
-                    top = dimensionResource(id = R.dimen.padding_small),
-                    bottom = dimensionResource(id = R.dimen.padding_xsmall)
-                )
-                .clickable(onClick = { onSeeAllClick(movies) })
-        ) {
-            Text(
-                text = sectionTitle,
-                color = colorResource(R.color.color_white)
-            )
-            Row(horizontalArrangement = Arrangement.End) {
+    Surface {
+        Column(modifier = Modifier.padding(bottom = dimensionResource(id = R.dimen.padding_small))) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = dimensionResource(id = R.dimen.padding_small),
+                        end = dimensionResource(id = R.dimen.padding_small),
+                        top = dimensionResource(id = R.dimen.padding_small),
+                        bottom = dimensionResource(id = R.dimen.padding_xsmall)
+                    )
+                    .clickable(onClick = { onSeeAllClick(movies) })
+            ) {
                 Text(
-                    stringResource(id = R.string.see_all),
-                    color = colorResource(R.color.color_orange_app)
+                    text = sectionTitle,
                 )
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_keyboard_arrow_right_black_24dp),
-                    contentDescription = null,
-                    tint = colorResource(R.color.color_orange_app)
-                )
+                Row(horizontalArrangement = Arrangement.End) {
+                    Text(
+                        stringResource(id = R.string.see_all)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_keyboard_arrow_right_black_24dp),
+                        contentDescription = null,
+                    )
+                }
             }
-        }
-        LazyRow(
-            modifier = Modifier.padding(
-                top = dimensionResource(id = R.dimen.padding_small),
-                start = dimensionResource(id = R.dimen.padding_small)
-            )
-        ) {
-            items(movies) { movie ->
-                MovieItem(movie = movie, genres = genres, onMovieClick = onItemClick)
+            LazyRow(
+                modifier = Modifier.padding(
+                    top = dimensionResource(id = R.dimen.padding_small),
+                    start = dimensionResource(id = R.dimen.padding_small)
+                )
+            ) {
+                items(movies) { movie ->
+                    MovieItem(movie = movie, genres = genres, onMovieClick = onItemClick)
+                }
             }
         }
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun MovieItem(
     movie: Movie,
@@ -127,7 +125,6 @@ fun MovieItem(
         (movie.title ?: movie.originalTitle)?.let {
             Text(
                 text = it,
-                color = colorResource(R.color.color_white),
                 maxLines = 1,
                 fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                 fontWeight = FontWeight.Bold,
@@ -144,7 +141,6 @@ fun MovieItem(
         movie.releaseDate?.let {
             Text(
                 text = it,
-                color = colorResource(R.color.color_white),
                 fontSize = dimensionResource(id = R.dimen.text_size_small).value.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier

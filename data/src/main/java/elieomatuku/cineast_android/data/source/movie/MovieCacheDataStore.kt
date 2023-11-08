@@ -3,12 +3,13 @@ package elieomatuku.cineast_android.data.source.movie
 import elieomatuku.cineast_android.data.model.*
 import elieomatuku.cineast_android.data.repository.movie.MovieCache
 import elieomatuku.cineast_android.data.repository.movie.MovieDataStore
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class MovieCacheDataStore(private val movieCache: MovieCache) : MovieDataStore {
+class MovieCacheDataStore @Inject constructor(private val movieCache: MovieCache) : MovieDataStore {
     override suspend fun genres(): List<GenreEntity> {
         return movieCache.getGenres()
     }

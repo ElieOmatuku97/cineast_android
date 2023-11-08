@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseDialogFragment
+import elieomatuku.cineast_android.domain.model.Movie
 
 class RateDialogFragment : BaseDialogFragment() {
     companion object {
@@ -25,7 +26,7 @@ class RateDialogFragment : BaseDialogFragment() {
         }
     }
 
-    private val viewModel: RateViewModel by viewModel<RateViewModel>()
+    private val viewModel: RateViewModel by viewModels()
 
     private var movie: Movie? = null
     private var submitBtn: TextView? = null

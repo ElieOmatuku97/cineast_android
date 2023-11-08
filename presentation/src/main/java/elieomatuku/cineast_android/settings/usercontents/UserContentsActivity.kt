@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,17 +15,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.domain.model.Content
-import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.base.BaseActivity
 import elieomatuku.cineast_android.contents.ContentsScreen
 import elieomatuku.cineast_android.contents.SwipeableContentItem
 import elieomatuku.cineast_android.databinding.ActivityContentBinding
 import elieomatuku.cineast_android.details.movie.MovieFragment
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import elieomatuku.cineast_android.utils.Constants
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
@@ -77,7 +78,7 @@ class UserContentsActivity : BaseActivity() {
         }
     }
 
-    private val viewModel: UserContentsViewModel by viewModel()
+    private val viewModel: UserContentsViewModel by viewModels()
 
     private lateinit var binding: ActivityContentBinding
 
@@ -148,10 +149,8 @@ class UserContentsActivity : BaseActivity() {
         val screenNameRes = intent.getIntExtra(Constants.SCREEN_NAME_KEY, 0)
         setToolbarTitle(screenNameRes)
         binding.composeView.setContent {
-            AppCompatTheme {
+            AppTheme {
                 UserContentScreen(
-                    viewModelFactory = viewModelFactory,
-                    viewModel = viewModel,
                     hasNetworkConnection = connectionService.hasNetworkConnection,
                     onContentClick = {
                         if (it is Movie) {
@@ -205,8 +204,7 @@ class UserContentsActivity : BaseActivity() {
 
 @Composable
 fun UserContentScreen(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: UserContentsViewModel = viewModel(factory = viewModelFactory),
+    viewModel: UserContentsViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     onContentClick: (content: Content) -> Unit,
     onSwipeItem: ((content: Content) -> Unit)

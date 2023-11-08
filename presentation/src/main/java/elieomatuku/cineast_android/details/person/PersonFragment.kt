@@ -2,7 +2,12 @@ package elieomatuku.cineast_android.details.person
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,11 +22,10 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
@@ -29,19 +33,22 @@ import elieomatuku.cineast_android.details.BareOverviewWidget
 import elieomatuku.cineast_android.details.DetailTabs
 import elieomatuku.cineast_android.details.Profile
 import elieomatuku.cineast_android.details.movie.MovieFragmentDirections
-import elieomatuku.cineast_android.domain.model.*
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.PersonDetails
 import elieomatuku.cineast_android.extensions.asListOfType
+import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import elieomatuku.cineast_android.utils.ContentUtils
 import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
-import org.kodein.di.android.x.viewmodel.savedstate.viewModelWithSavedStateHandle
 
 class PersonFragment : BaseFragment() {
 
     private lateinit var menuHost: MenuHost
-    private val viewModel: PersonViewModel by viewModelWithSavedStateHandle()
+
+    private val viewModel: PersonViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,10 +58,8 @@ class PersonFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                AppCompatTheme {
+                AppTheme {
                     PersonScreen(
-                        viewModelFactory = viewModelFactory,
-                        viewModel = viewModel,
                         hasNetworkConnection = connectionService.hasNetworkConnection,
                         goToGallery = { navigateToGallery() },
                         goToWebsite = {
@@ -87,7 +92,6 @@ class PersonFragment : BaseFragment() {
                 menuInflater.inflate(R.menu.item_menu, menu)
                 menu.findItem(R.id.action_share)?.apply {
                     isVisible = ContentUtils.supportsShare(viewModel.person?.id)
-                    UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
                 }
             }
 
@@ -155,8 +159,7 @@ class PersonFragment : BaseFragment() {
 
 @Composable
 fun PersonScreen(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: PersonViewModel = viewModel(factory = viewModelFactory),
+    viewModel: PersonViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     goToGallery: () -> Unit,
     goToWebsite: (String) -> Unit,
@@ -184,7 +187,6 @@ fun PersonScreen(
                     )
 
                     PersonTabs(
-                        viewModelFactory = viewModelFactory,
                         person = person,
                         onSeeAllClick = {
                             onSeeAllClick(it)
@@ -228,7 +230,6 @@ fun PersonScreen(
 
 @Composable
 fun PersonTabs(
-    viewModelFactory: ViewModelProvider.Factory,
     person: PersonDetails,
     movies: List<Movie>,
     onSeeAllClick: (List<Content>) -> Unit,
@@ -251,8 +252,8 @@ fun PersonTabs(
             }
             R.string.known_for -> {
                 MoviesWidget(
-                    viewModelFactory = viewModelFactory,
                     movies = movies,
+                    genres = emptyList(),
                     sectionTitle = stringResource(R.string.cast),
                     onItemClick = { content, _ ->
                         onItemClick(content)

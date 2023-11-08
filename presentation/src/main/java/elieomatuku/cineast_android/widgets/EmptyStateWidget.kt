@@ -1,8 +1,8 @@
 package elieomatuku.cineast_android.widgets
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +26,6 @@ fun EmptyStateWidget(
     ) {
         Text(
             text = if (hasNetworkConnection) stringResource(id = R.string.no_content_title) else "No Internet",
-            color = colorResource(id = R.color.color_white),
             fontFamily = FontFamily(listOf(Font(R.font.barlow_bold))),
             fontSize = 20.sp
         )
@@ -34,7 +33,6 @@ fun EmptyStateWidget(
         Text(
             text = errorMsg?.uppercase()
                 ?: stringResource(id = R.string.empty_state_no_internet_msg),
-            color = colorResource(id = R.color.color_white),
             fontFamily = FontFamily(listOf(Font(R.font.barlow_bold))),
             fontSize = dimensionResource(id = R.dimen.text_size_large).value.sp,
             modifier = Modifier
@@ -51,8 +49,7 @@ fun EmptyStateWidget(
             modifier = Modifier
                 .width(35.dp)
                 .height(35.dp)
-                .padding(top = 8.dp),
-            tint = colorResource(id = R.color.color_accent)
+                .padding(top = 8.dp)
         )
     }
 }

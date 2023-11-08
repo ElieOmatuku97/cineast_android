@@ -8,7 +8,7 @@ apply from: "../ktlint.gradle"
 
 android {
     compileSdk rootProject.ext.compileSdk
-
+    namespace "elieomatuku.cineast_android.remote"
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdk rootProject.ext.targetSdk
@@ -24,11 +24,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 }
 
@@ -47,6 +51,8 @@ dependencies {
     api "com.squareup.okhttp3:okhttp:${versions.okhttp}"
     api "com.squareup.okio:okio:${versions.okio}"
     api "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}"
+
+    implementation 'javax.inject:javax.inject:1'
 
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.mockito.kotlin:mockito-kotlin:${versions.mockitoKotlin}"

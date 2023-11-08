@@ -9,12 +9,13 @@ import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-06-05
  */
 
-abstract class ContentGridViewModel(private val getGenres: GetGenres) :
+abstract class ContentGridViewModel (private val getGenres: GetGenres) :
     BaseViewModel<ContentGridViewState>(ContentGridViewState()) {
 
     abstract fun getContent()

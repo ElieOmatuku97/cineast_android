@@ -1,7 +1,5 @@
 package elieomatuku.cineast_android.utils
 
-import androidx.lifecycle.Observer
-
 open class SingleEvent<out T>(private val content: T) {
 
     var consumed = false
@@ -44,12 +42,3 @@ fun <T> SingleEvent<T>?.consume(block: (T) -> Unit) {
 @Suppress("FunctionName")
 fun SingleEvent() = SingleEvent(Unit)
 
-@Suppress("FunctionName")
-fun ViewErrorEvent(throwable: Throwable) = SingleEvent(ViewErrorController.mapThrowable(throwable))
-
-class EventObserver<T>(private val onEventUnconsumedContent: (T) -> Unit) :
-    Observer<SingleEvent<T>> {
-    override fun onChanged(event: SingleEvent<T>?) {
-        event?.consume()?.run(onEventUnconsumedContent)
-    }
-}

@@ -3,8 +3,7 @@ package elieomatuku.cineast_android.search.movie
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import elieomatuku.cineast_android.contents.ContentGrid
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
@@ -15,8 +14,7 @@ import elieomatuku.cineast_android.widgets.EmptyStateWidget
 
 @Composable
 fun MoviesGrid(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: MoviesGridViewModel = viewModel(factory = viewModelFactory),
+    viewModel: MoviesGridViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     onContentClick: (content: Content) -> Unit
 ) {

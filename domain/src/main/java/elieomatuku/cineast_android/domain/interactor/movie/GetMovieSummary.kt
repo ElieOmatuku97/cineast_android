@@ -6,13 +6,14 @@ import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.MovieSummary
 import elieomatuku.cineast_android.domain.repository.MovieRepository
+import javax.inject.Inject
 
 
 /**
  * Created by elieomatuku on 2021-09-12
  */
 
-class GetMovieSummary(private val movieRepository: MovieRepository) :
+class GetMovieSummary @Inject constructor (private val movieRepository: MovieRepository) :
     UseCase<GetMovieSummary.Input, CompleteResult<MovieSummary>> {
     override suspend fun execute(params: Input): CompleteResult<MovieSummary> {
         return safeUseCaseCall {

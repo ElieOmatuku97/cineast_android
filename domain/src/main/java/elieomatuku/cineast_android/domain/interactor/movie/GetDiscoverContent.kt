@@ -6,12 +6,13 @@ import elieomatuku.cineast_android.domain.interactor.safeUseCaseCall
 import elieomatuku.cineast_android.domain.model.DiscoverContents
 import elieomatuku.cineast_android.domain.repository.MovieRepository
 import elieomatuku.cineast_android.domain.repository.PersonRepository
+import javax.inject.Inject
 
 /**
  * Created by elieomatuku on 2021-08-22
  */
 
-class GetDiscoverContent(
+class GetDiscoverContent @Inject constructor(
     private val movieRepository: MovieRepository,
     private val personRepository: PersonRepository
 ) :

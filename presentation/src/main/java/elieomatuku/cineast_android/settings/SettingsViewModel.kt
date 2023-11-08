@@ -1,6 +1,7 @@
 package elieomatuku.cineast_android.settings
 
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.runUseCase
@@ -9,13 +10,15 @@ import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 /**
  * Created by elieomatuku on 2021-10-17
  */
 
-class SettingsViewModel(
+@HiltViewModel
+class SettingsViewModel @Inject constructor(
     private val isLoggedInUseCase: IsLoggedIn,
     private val logout: Logout,
     private val getSession: GetSession,
@@ -46,6 +49,7 @@ class SettingsViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> SettingsViewState()
             }
         }
@@ -68,6 +72,7 @@ class SettingsViewModel(
                         viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                         isLoading = false
                     )
+
                     else -> SettingsViewState()
                 }
             }
@@ -96,6 +101,7 @@ class SettingsViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> SettingsViewState()
             }
         }
@@ -116,6 +122,7 @@ class SettingsViewModel(
                     viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
                     isLoading = false
                 )
+
                 else -> SettingsViewState()
             }
         }

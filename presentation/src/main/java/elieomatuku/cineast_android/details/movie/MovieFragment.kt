@@ -2,10 +2,19 @@ package elieomatuku.cineast_android.details.movie
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,11 +24,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.fragment.findNavController
-import com.google.accompanist.appcompattheme.AppCompatTheme
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.contents.ContentsActivity
@@ -27,16 +35,23 @@ import elieomatuku.cineast_android.details.BareOverviewWidget
 import elieomatuku.cineast_android.details.DetailTabs
 import elieomatuku.cineast_android.details.movie.movie_staff.MovieStaffWidget
 import elieomatuku.cineast_android.details.movie.overview.MovieOverviewWidget
-import elieomatuku.cineast_android.domain.model.*
+import elieomatuku.cineast_android.domain.model.Content
+import elieomatuku.cineast_android.domain.model.FavoriteState
+import elieomatuku.cineast_android.domain.model.Movie
+import elieomatuku.cineast_android.domain.model.MovieSummary
+import elieomatuku.cineast_android.domain.model.Person
+import elieomatuku.cineast_android.domain.model.Trailer
+import elieomatuku.cineast_android.domain.model.WatchListState
 import elieomatuku.cineast_android.extensions.asListOfType
 import elieomatuku.cineast_android.fragment.RateDialogFragment
-import elieomatuku.cineast_android.utils.*
+import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
+import elieomatuku.cineast_android.utils.ContentUtils
+import elieomatuku.cineast_android.utils.UiUtils
 import elieomatuku.cineast_android.widgets.EmptyStateWidget
 import elieomatuku.cineast_android.widgets.LoadingIndicatorWidget
 import elieomatuku.cineast_android.widgets.movieswidget.MoviesWidget
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
-import org.kodein.di.android.x.viewmodel.savedstate.viewModelWithSavedStateHandle
 
 class MovieFragment : BaseFragment() {
     private var isInWatchList: Boolean = false
@@ -50,7 +65,7 @@ class MovieFragment : BaseFragment() {
         PublishSubject.create()
     }
 
-    private val viewModel: MovieViewModel by viewModelWithSavedStateHandle()
+    private val viewModel by viewModels<MovieViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,10 +75,8 @@ class MovieFragment : BaseFragment() {
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                AppCompatTheme {
+                AppTheme {
                     MovieScreen(
-                        viewModelFactory = viewModelFactory,
-                        viewModel = viewModel,
                         hasNetworkConnection = connectionService.hasNetworkConnection,
                         goToGallery = { goToGallery() },
                         goToWebsite = { goToWebsite(it) },
@@ -104,19 +117,18 @@ class MovieFragment : BaseFragment() {
 
                 menu.findItem(R.id.action_share).apply {
                     isVisible = ContentUtils.supportsShare(viewModel.viewState.value?.movie?.id)
-                    UiUtils.tintMenuItem(this, requireContext(), R.color.color_orange_app)
                 }
 
                 menu.findItem(R.id.action_watchlist).apply {
                     isChecked = isInWatchList
                     updateWatchListIcon(this)
-                    isVisible = viewModel.isLoggedIn()
+//                    isVisible = viewModel.isLoggedIn()
                 }
 
                 menu.findItem(R.id.action_favorites).apply {
                     isChecked = isInFavoriteList
                     updateFavoriteListIcon(this)
-                    isVisible = viewModel.isLoggedIn()
+//                    isVisible = viewModel.isLoggedIn()
                 }
             }
 
@@ -145,12 +157,6 @@ class MovieFragment : BaseFragment() {
 
         viewModel.viewState.observe(viewLifecycleOwner) {
             updateView(it)
-            it.isLoggedIn.consume { isLoggedIn ->
-                if (isLoggedIn) {
-                    viewModel.getFavorites()
-                    viewModel.getWatchLists()
-                }
-            }
         }
     }
 
@@ -159,7 +165,7 @@ class MovieFragment : BaseFragment() {
             watchListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { event: Boolean ->
-                        updateWatchList(event)
+//                        updateWatchList(event)
                     },
                     {}
                 )
@@ -169,7 +175,7 @@ class MovieFragment : BaseFragment() {
             favoriteListCheckPublisher.observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { event: Boolean ->
-                        updateFavorite(event)
+//                        updateFavorite(event)
                     },
                     {}
                 )
@@ -178,17 +184,17 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun updateView(movieViewState: MovieViewState) {
-        updateWatchList(movieViewState.isInWatchList)
-        updateFavorite(movieViewState.isInFavorites)
+        updateWatchList(movieViewState.movie?.watchListState)
+        updateFavorite(movieViewState.movie?.favoritesState)
     }
 
-    private fun updateWatchList(event: Boolean) {
-        isInWatchList = event
+    private fun updateWatchList(watchListState: WatchListState?) {
+        isInWatchList = watchListState?.isSelected ?: false
         menuHost.invalidateMenu()
     }
 
-    private fun updateFavorite(event: Boolean) {
-        isInFavoriteList = event
+    private fun updateFavorite(favoriteState: FavoriteState?) {
+        isInFavoriteList = favoriteState?.isSelected ?: false
         menuHost.invalidateMenu()
     }
 
@@ -219,7 +225,6 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun updateWatchListIcon(item: MenuItem) {
-        val colorRes = R.color.color_orange_app
         if (item.isChecked) {
             item.icon =
                 ResourcesCompat.getDrawable(
@@ -233,7 +238,6 @@ class MovieFragment : BaseFragment() {
                 R.drawable.ic_nav_watch_list_unselected,
                 requireContext().theme
             )
-            UiUtils.tintMenuItem(item, requireContext(), colorRes)
         }
     }
 
@@ -250,7 +254,6 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun updateFavoriteListIcon(item: MenuItem) {
-        val colorRes = R.color.color_orange_app
         if (item.isChecked) {
             item.icon =
                 ResourcesCompat.getDrawable(
@@ -264,7 +267,6 @@ class MovieFragment : BaseFragment() {
                 R.drawable.ic_star_border_black_unselected,
                 requireContext().theme
             )
-            UiUtils.tintMenuItem(item, requireContext(), colorRes)
         }
     }
 
@@ -322,8 +324,7 @@ class MovieFragment : BaseFragment() {
 
 @Composable
 fun MovieScreen(
-    viewModelFactory: ViewModelProvider.Factory,
-    viewModel: MovieViewModel = viewModel(factory = viewModelFactory),
+    viewModel: MovieViewModel = hiltViewModel(),
     hasNetworkConnection: Boolean,
     goToGallery: () -> Unit,
     goToWebsite: (String) -> Unit,
@@ -337,7 +338,7 @@ fun MovieScreen(
 
     viewState?.apply {
         Box(modifier = Modifier.fillMaxSize()) {
-            movieSummary?.let { movieSummary ->
+            movie?.movieSummary?.let { movieSummary ->
                 Column {
                     MovieProfile(
                         movieSummary = movieSummary,
@@ -352,9 +353,8 @@ fun MovieScreen(
                         }
                     )
 
-                    movie?.apply {
+                    movie.apply {
                         MovieTabs(
-                            viewModelFactory = viewModelFactory,
                             movieSummary = movieSummary,
                             movie = this,
                             onSeeAllClick = {
@@ -407,7 +407,6 @@ fun MovieScreen(
 
 @Composable
 fun MovieTabs(
-    viewModelFactory: ViewModelProvider.Factory,
     movieSummary: MovieSummary,
     movie: Movie,
     onSeeAllClick: (List<Content>) -> Unit,
@@ -434,6 +433,7 @@ fun MovieTabs(
                     BareOverviewWidget(title = title, overview = overview)
                 }
             }
+
             R.string.people -> {
                 val cast = movieSummary.cast
                 val crew = movieSummary.crew
@@ -449,11 +449,12 @@ fun MovieTabs(
                     }
                 }
             }
+
             R.string.similar -> {
                 val similarMovies: List<Movie> = movieSummary.similarMovies ?: listOf()
                 MoviesWidget(
-                    viewModelFactory = viewModelFactory,
                     movies = similarMovies,
+                    genres = emptyList(),
                     sectionTitle = movie.title ?: stringResource(R.string.movies),
                     onItemClick = { content, _ ->
                         onItemClick(content)
