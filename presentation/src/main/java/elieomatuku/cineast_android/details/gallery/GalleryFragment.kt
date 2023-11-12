@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
-import com.eftimoff.viewpagertransformers.TabletTransformer
 import elieomatuku.cineast_android.base.BaseFragment
 import elieomatuku.cineast_android.databinding.FragmentGalleryBinding
 
@@ -35,7 +34,6 @@ class GalleryFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.viewpagerImages.setPageTransformer(true, TabletTransformer())
         binding.viewpagerImages.adapter = galleryPagerAdapter
         galleryPagerAdapter.notifyDataSetChanged()
 
