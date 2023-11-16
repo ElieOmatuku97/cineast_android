@@ -195,10 +195,11 @@ fun DiscoverScreen(
                                         Divider()
                                     }
                                     is DiscoverWidget.Login -> {
+                                        val isLoggedIn = viewState?.isLoggedIn ?: false
                                         LoginItem(
-                                            isLoggedIn = viewState?.isLoggedIn ?: false
+                                            isLoggedIn = isLoggedIn
                                         ) {
-                                            if (!viewModel.isLoggedIn()) {
+                                            if (!isLoggedIn) {
                                                 viewModel.logIn()
                                             } else {
                                                 viewModel.logout()

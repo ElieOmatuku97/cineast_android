@@ -17,7 +17,7 @@ import javax.inject.Inject
  * Created by elieomatuku on 2021-08-22
  */
 
-internal class UnAuthedGetMovie @Inject constructor(
+class UnAuthedGetMovie @Inject constructor(
     private val movieRepository: MovieRepository,
     private val getMovieSummary: GetMovieSummary,
 ) : BaseGetMovie {
@@ -40,8 +40,8 @@ internal class UnAuthedGetMovie @Inject constructor(
     }
 }
 
-internal class AuthedGetMovie(
-    private val baseGetMovie: BaseGetMovie,
+class AuthedGetMovie @Inject constructor (
+    private val baseGetMovie: UnAuthedGetMovie,
     private val getWatchList: GetWatchList,
     private val getFavorites: GetFavorites,
 ) : BaseGetMovie {
@@ -98,40 +98,25 @@ internal class AuthedGetMovie(
 
 class GetMovieFactory @Inject constructor(
     private val isLoggedIn: IsLoggedIn,
-    private val movieRepository: MovieRepository,
-    private val getMovieSummary: GetMovieSummary,
-    private val getWatchList: GetWatchList,
-    private val getFavorites: GetFavorites,
+    private val unAuthedUseCase: UnAuthedGetMovie,
+    private val authedUseCase: AuthedGetMovie
 ) {
 
     suspend fun obtainGetMovieUseCase(): BaseGetMovie {
-        val getMovie = when (val result = runUseCase(isLoggedIn, Unit)) {
+        val result = when (val result = runUseCase(isLoggedIn, Unit)) {
             is Success -> {
                 if (result.data) {
-                    AuthedGetMovie(
-                        baseGetMovie = UnAuthedGetMovie(
-                            movieRepository = movieRepository,
-                            getMovieSummary = getMovieSummary
-                        ),
-                        getWatchList = getWatchList,
-                        getFavorites = getFavorites
-                    )
+                    authedUseCase
                 } else {
-                    UnAuthedGetMovie(
-                        movieRepository = movieRepository,
-                        getMovieSummary = getMovieSummary
-                    )
+                    unAuthedUseCase
                 }
             }
 
             is Fail -> {
-                UnAuthedGetMovie(
-                    movieRepository = movieRepository,
-                    getMovieSummary = getMovieSummary
-                )
+                unAuthedUseCase
             }
         }
-        return getMovie
+        return result
     }
 }
 

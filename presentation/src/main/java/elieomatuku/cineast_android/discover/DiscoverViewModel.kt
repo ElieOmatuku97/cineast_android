@@ -2,16 +2,15 @@ package elieomatuku.cineast_android.discover
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
-import elieomatuku.cineast_android.domain.interactor.movie.GetDiscoverContent
+import elieomatuku.cineast_android.domain.interactor.movie.GetDiscoverContentFactory
 import elieomatuku.cineast_android.domain.interactor.movie.GetGenres
 import elieomatuku.cineast_android.domain.interactor.runUseCase
 import elieomatuku.cineast_android.domain.interactor.user.GetAccessToken
-import elieomatuku.cineast_android.domain.interactor.user.IsLoggedIn
 import elieomatuku.cineast_android.domain.interactor.user.Logout
 import elieomatuku.cineast_android.domain.model.Genre
-import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,9 +25,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
-    private val getDiscoverContent: GetDiscoverContent,
+    private val getDiscoverContentFactory: GetDiscoverContentFactory,
     private val getGenres: GetGenres,
-    private val isLoggedIn: IsLoggedIn,
     private val logout: Logout,
     private val getAccessToken: GetAccessToken
 ) : BaseViewModel<DiscoverViewState>(
@@ -37,7 +35,6 @@ class DiscoverViewModel @Inject constructor(
     init {
         getDiscoverContent()
         getGenres()
-        getIsLoggedIn()
     }
 
     val genres: List<Genre>?
@@ -51,11 +48,12 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch {
             state = state.copy(isLoading = true)
             val result =
-                runUseCase(getDiscoverContent, Unit)
+                runUseCase(getDiscoverContentFactory.obtainUseCase(), Unit)
             state = when (result) {
                 is Success -> state.copy(
                     isLoading = false,
-                    discoverContents = result.data,
+                    discoverContents = result.data.content,
+                    isLoggedIn = result.data.isLoggedIn,
                     viewError = null
                 )
 
@@ -65,22 +63,6 @@ class DiscoverViewModel @Inject constructor(
                 )
 
                 else -> DiscoverViewState()
-            }
-        }
-    }
-
-    private fun getIsLoggedIn() {
-        viewModelScope.launch {
-            state = when (val result = runUseCase(isLoggedIn, Unit)) {
-                is Success -> {
-                    state.copy(isLoggedIn = result.data)
-                }
-
-                is Fail -> {
-                    state.copy(
-                        viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
-                    )
-                }
             }
         }
     }
@@ -99,10 +81,6 @@ class DiscoverViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun isLoggedIn(): Boolean {
-        return state.isLoggedIn
     }
 
     fun logout() {
