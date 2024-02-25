@@ -63,6 +63,7 @@ class AuthenticationCacheImpl @Inject constructor (private val prefManager: Pref
     }
 
     override suspend fun logout() {
+        prefManager.remove(ACCESS_TOKEN_KEY)
         prefManager.remove(SESSION_KEY)
         prefManager.remove(ACCOUNT_KEY)
     }

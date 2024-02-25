@@ -48,6 +48,7 @@ class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
             setContent {
                 AppTheme {
                     SettingsScreen(
+                        viewModel = viewModel,
                         onLoginClick = {
                             viewModel.onLoginClicked()
                         },
