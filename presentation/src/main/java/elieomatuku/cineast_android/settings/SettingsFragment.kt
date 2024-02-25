@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
@@ -94,6 +95,13 @@ fun SettingsScreen(
     onRatedClick: () -> Unit,
     onFavoritesClick: () -> Unit
 ) {
+    LifecycleResumeEffect {
+        viewModel.isLoggedIn()
+
+        onPauseOrDispose {
+        }
+    }
+
     val viewState by viewModel.viewState.observeAsState()
     viewState?.apply {
         Surface {

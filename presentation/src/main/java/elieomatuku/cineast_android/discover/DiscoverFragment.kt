@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -114,6 +115,13 @@ fun DiscoverScreen(
 ) {
     val viewState by viewModel.viewState.observeAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
+
+    LifecycleResumeEffect {
+        viewModel.refresh()
+
+        onPauseOrDispose {
+        }
+    }
 
     viewState?.accessToken.consume {
         gotoWebView(it)
