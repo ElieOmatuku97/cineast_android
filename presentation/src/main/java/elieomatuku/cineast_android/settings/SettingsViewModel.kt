@@ -33,28 +33,6 @@ class SettingsViewModel @Inject constructor(
     val isLoggedIn: Boolean
         get() = state.isLoggedIn
 
-    fun getAccessToken() {
-        viewModelScope.launch {
-            state = state.copy(isLoading = true)
-            val result =
-                runUseCase(getAccessToken, Unit)
-            state = when (result) {
-                is Success -> state.copy(
-                    accessToken = SingleEvent(result.data),
-                    requestToken = SingleEvent(result.data.requestToken),
-                    isLoading = false,
-                )
-
-                is Fail -> state.copy(
-                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
-                    isLoading = false
-                )
-
-                else -> SettingsViewState()
-            }
-        }
-    }
-
     fun getSession() {
         state.requestToken?.consume()?.let { requestToken ->
             viewModelScope.launch {
@@ -79,7 +57,59 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun logout() {
+    fun getAccount() {
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            val result =
+                runUseCase(getAccount, Unit)
+            state = when (result) {
+                is Success -> state.copy(
+                    isLoading = false,
+                    account = result.data,
+                )
+
+                is Fail -> state.copy(
+                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    isLoading = false
+                )
+
+                else -> SettingsViewState()
+            }
+        }
+
+    }
+
+    fun onLoginClicked() {
+        if (!isLoggedIn) {
+            getAccessToken()
+        } else {
+            logout()
+        }
+    }
+
+    private fun getAccessToken() {
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            val result =
+                runUseCase(getAccessToken, Unit)
+            state = when (result) {
+                is Success -> state.copy(
+                    accessToken = SingleEvent(result.data),
+                    requestToken = SingleEvent(result.data.requestToken),
+                    isLoading = false,
+                )
+
+                is Fail -> state.copy(
+                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    isLoading = false
+                )
+
+                else -> SettingsViewState()
+            }
+        }
+    }
+
+    private fun logout() {
         viewModelScope.launch {
             runUseCase(logout, Unit)
             state = SettingsViewState()
@@ -107,25 +137,4 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun getAccount() {
-        viewModelScope.launch {
-            state = state.copy(isLoading = true)
-            val result =
-                runUseCase(getAccount, Unit)
-            state = when (result) {
-                is Success -> state.copy(
-                    isLoading = false,
-                    account = result.data,
-                )
-
-                is Fail -> state.copy(
-                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
-                    isLoading = false
-                )
-
-                else -> SettingsViewState()
-            }
-        }
-
-    }
 }

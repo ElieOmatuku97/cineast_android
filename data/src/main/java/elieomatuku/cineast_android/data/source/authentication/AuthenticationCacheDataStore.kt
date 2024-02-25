@@ -34,7 +34,7 @@ class AuthenticationCacheDataStore @Inject constructor (private val authenticati
     }
 
     override suspend fun getAccount(sessionId: String?): AccountEntity {
-        TODO("Not yet implemented")
+        return authenticationCache.getAccount() ?: throw Exception()
     }
 
     override suspend fun getAccount(): AccountEntity? {
