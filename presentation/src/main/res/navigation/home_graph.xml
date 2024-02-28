@@ -35,7 +35,11 @@
         </action>
         <action
             android:id="@+id/navigate_to_login"
-            app:destination="@id/login"/>
+            app:destination="@id/login">
+            <argument
+                android:name="request_token"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment

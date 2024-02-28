@@ -2,11 +2,11 @@ package elieomatuku.cineast_android.settings
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.domain.interactor.Fail
 import elieomatuku.cineast_android.domain.interactor.Success
 import elieomatuku.cineast_android.domain.interactor.runUseCase
 import elieomatuku.cineast_android.domain.interactor.user.*
-import elieomatuku.cineast_android.base.BaseViewModel
 import elieomatuku.cineast_android.utils.SingleEvent
 import elieomatuku.cineast_android.utils.ViewErrorController
 import kotlinx.coroutines.launch
@@ -16,6 +16,8 @@ import javax.inject.Inject
 /**
  * Created by elieomatuku on 2021-10-17
  */
+
+
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -75,12 +77,39 @@ class SettingsViewModel @Inject constructor(
 
     }
 
+    fun isLoggedIn() {
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            val result =
+                runUseCase(isLoggedInUseCase, Unit)
+            state = when (result) {
+                is Success -> state.copy(
+                    isLoggedIn = result.data,
+                    isLoading = false
+                )
+
+                is Fail -> state.copy(
+                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
+                    isLoading = false
+                )
+
+                else -> SettingsViewState()
+            }
+        }
+    }
+
     fun onLoginClicked() {
         if (!isLoggedIn) {
             getAccessToken()
         } else {
             logout()
         }
+    }
+
+    fun setRequestToken(requestToken: String) {
+        state = state.copy(
+            requestToken = SingleEvent(requestToken)
+        )
     }
 
     private fun getAccessToken() {
@@ -109,27 +138,6 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             runUseCase(logout, Unit)
             state = SettingsViewState()
-        }
-    }
-
-    fun isLoggedIn() {
-        viewModelScope.launch {
-            state = state.copy(isLoading = true)
-            val result =
-                runUseCase(isLoggedInUseCase, Unit)
-            state = when (result) {
-                is Success -> state.copy(
-                    isLoggedIn = result.data,
-                    isLoading = false
-                )
-
-                is Fail -> state.copy(
-                    viewError = SingleEvent(ViewErrorController.mapThrowable(result.throwable)),
-                    isLoading = false
-                )
-
-                else -> SettingsViewState()
-            }
         }
     }
 

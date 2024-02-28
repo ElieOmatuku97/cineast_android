@@ -13,7 +13,7 @@ import elieomatuku.cineast_android.utils.ViewError
 
 data class SettingsViewState(
     val isLoggedIn: Boolean = false,
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val userName: String? = null,
     val accessToken: SingleEvent<AccessToken>? = null,
     val requestToken: SingleEvent<String?>? = null,

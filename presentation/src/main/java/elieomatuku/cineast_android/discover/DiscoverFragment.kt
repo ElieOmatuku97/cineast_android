@@ -82,7 +82,10 @@ class DiscoverFragment : BaseFragment() {
                 .appendPath(it.requestToken)
                 .build()
                 .toString()
-            val directions = DiscoverFragmentDirections.navigateToLogin(authenticateUrl)
+            val directions = DiscoverFragmentDirections.navigateToLogin(
+                it.requestToken ?: String(),
+                authenticateUrl
+            )
             findNavController().navigate(directions)
         }
     }
