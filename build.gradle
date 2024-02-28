@@ -4,7 +4,7 @@ buildscript {
     ext.versions = [
             coroutines       : '1.4.0',
             constraint_layout: '2.0.0-beta4',
-            lifecycle        : "2.6.2",
+            lifecycle        : "2.7.0",
             timber           : "4.7.1",
             junit            : '4.13.2',
             espresso         : '3.2.0',

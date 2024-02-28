@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,8 +23,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.R
 import elieomatuku.cineast_android.base.BaseFragment
@@ -37,7 +37,7 @@ import elieomatuku.cineast_android.utils.consume
 
 class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
 
-    private val viewModel: SettingsViewModel by viewModels()
+    private val viewModel: SettingsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,12 +49,9 @@ class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
             setContent {
                 AppTheme {
                     SettingsScreen(
+                        viewModel = viewModel,
                         onLoginClick = {
-                            if (!viewModel.isLoggedIn) {
-                                viewModel.getAccessToken()
-                            } else {
-                                viewModel.logout()
-                            }
+                            viewModel.onLoginClicked()
                         },
                         onWatchListClick = { UserContentsActivity.gotoWatchList(requireContext()) },
                         onRatedClick = { UserContentsActivity.gotoRatedMovies(requireContext()) },
@@ -98,6 +95,13 @@ fun SettingsScreen(
     onRatedClick: () -> Unit,
     onFavoritesClick: () -> Unit
 ) {
+    LifecycleResumeEffect {
+        viewModel.isLoggedIn()
+
+        onPauseOrDispose {
+        }
+    }
+
     val viewState by viewModel.viewState.observeAsState()
     viewState?.apply {
         Surface {

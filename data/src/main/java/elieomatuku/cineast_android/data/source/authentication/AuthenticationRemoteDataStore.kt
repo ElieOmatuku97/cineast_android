@@ -11,7 +11,7 @@ import javax.inject.Inject
  * Created by elieomatuku on 2021-08-22
  */
 
-class AuthenticationRemoteDataStore @Inject constructor (private val authenticationRemote: AuthenticationRemote) :
+class AuthenticationRemoteDataStore @Inject constructor(private val authenticationRemote: AuthenticationRemote) :
     AuthenticationDataStore {
     override suspend fun getAccessToken(): AccessTokenEntity {
         return authenticationRemote.getAccessToken()
@@ -38,6 +38,6 @@ class AuthenticationRemoteDataStore @Inject constructor (private val authenticat
     override suspend fun logout() {}
 
     override suspend fun isLoggedIn(): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 }

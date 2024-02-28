@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.fragment.findNavController
 import elieomatuku.cineast_android.materialtheme.ui.theme.AppTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -81,7 +82,10 @@ class DiscoverFragment : BaseFragment() {
                 .appendPath(it.requestToken)
                 .build()
                 .toString()
-            val directions = DiscoverFragmentDirections.navigateToLogin(authenticateUrl)
+            val directions = DiscoverFragmentDirections.navigateToLogin(
+                it.requestToken ?: String(),
+                authenticateUrl
+            )
             findNavController().navigate(directions)
         }
     }
@@ -114,6 +118,13 @@ fun DiscoverScreen(
 ) {
     val viewState by viewModel.viewState.observeAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
+
+    LifecycleResumeEffect {
+        viewModel.refresh()
+
+        onPauseOrDispose {
+        }
+    }
 
     viewState?.accessToken.consume {
         gotoWebView(it)
@@ -195,10 +206,11 @@ fun DiscoverScreen(
                                         Divider()
                                     }
                                     is DiscoverWidget.Login -> {
+                                        val isLoggedIn = viewState?.isLoggedIn ?: false
                                         LoginItem(
-                                            isLoggedIn = viewState?.isLoggedIn ?: false
+                                            isLoggedIn = isLoggedIn
                                         ) {
-                                            if (!viewModel.isLoggedIn()) {
+                                            if (!isLoggedIn) {
                                                 viewModel.logIn()
                                             } else {
                                                 viewModel.logout()
