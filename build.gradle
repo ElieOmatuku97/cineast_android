@@ -63,6 +63,6 @@ ext {
     targetSdk = 33
     minSdkVersion = 21
     appName = "Cineast"
-    versionName = "1.0.2"
-    versionCode = 3
+    versionName = "2.0.0"
+    versionCode = 15
 }
