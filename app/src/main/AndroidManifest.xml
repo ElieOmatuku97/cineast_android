@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name="elieomatuku.cineast_android.home.HomeActivity"
+            android:name="elieomatuku.cineast_android.presentation.home.HomeActivity"
             android:exported="true"
             android:theme="@style/AppTheme">
 
@@ -33,10 +33,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="elieomatuku.cineast_android.settings.usercontents.UserContentsActivity"
+            android:name="elieomatuku.cineast_android.presentation.settings.usercontents.UserContentsActivity"
             android:exported="true" />
         <activity
-            android:name="elieomatuku.cineast_android.contents.ContentsActivity"
+            android:name="elieomatuku.cineast_android.presentation.contents.ContentsActivity"
             android:exported="true" />
 
     </application>

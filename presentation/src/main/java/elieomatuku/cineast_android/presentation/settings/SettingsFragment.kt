@@ -67,7 +67,7 @@ class SettingsFragment : BaseFragment(), WebLink<AccessToken?> {
             if (state.isLoggedIn) {
                 viewModel.getAccount()
             }
-            state.accessToken.consume{
+            state.accessToken?.consume()?.let{
                 gotoLink(it)
             }
         }
