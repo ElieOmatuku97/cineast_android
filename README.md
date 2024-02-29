@@ -7,8 +7,6 @@
 
 Cineast is an android app querying [TMDb API](https://developers.themoviedb.org/3/getting-started/introduction) to provide information on popular, trending, upcoming, top rated movies and popular actors. Cineast comes in with sharing, searching features, when signed in a user can add movies to their Favorites and  watch lists or rate them.  
 
-This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/cineast/id376167296) App which uses [TMDb API](https://developers.themoviedb.org/3/getting-started/introduction) as well.
-
 ## Prerequisites
 
   #### 1. Obtain Key
@@ -24,14 +22,14 @@ This Android App is a clone of the iOS [Cineast](https://apps.apple.com/us/app/c
  On completion of the above steps, the app will be able to pick up your TMDb API KEY.
 
 
-## Clean Architecture Boilerplate
+## Clean Architecture
 This Application makes use of clean Architecture, hence the project is divided into the following packages:
 
-- Cache
-- Data
-- Domain
-- Remote
-- Presentation
+- `Cache module`: uses [Room ORM](https://developer.android.com/training/data-storage/room) and [SharedPreferences](https://developer.android.com/reference/android/content/SharedPreferences) (to be updated in the future, to use [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)) to store data locally.
+- `Remote module`: uses [Retrofit](https://square.github.io/retrofit/) and [Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) to make api calls. 
+- `Data module`: an intermediate layer between the `Cache module`/`Remote module` and the `Domain module`.
+- `Domain module`: nuclear module of the app, contains business logic and is written in [Kotlin](https://kotlinlang.org/). It doesn't have any external dependencies. 
+- `Presentation module` : uses [JetPack Compose](https://developer.android.com/jetpack/compose) to build different UI components with [Material 3 design system](https://developer.android.com/jetpack/compose/designsystems/material3). 
 
 For more details on Clean Architecture, check out the following links:
 
@@ -48,39 +46,41 @@ This [blog post](https://proandroiddev.com/build-a-modular-android-app-architect
 
 This app uses the MVVM architecture. 
 
-[Room ORM](https://developer.android.com/topic/libraries/architecture/room) which is part of Android Architecture Components is used. 
-
+## Async/Background Operations
 Coroutines are used for async/background. This [blog post](https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb) explains the basics of Coroutines in kotlin.   
  
 ## Screenshots
 
-<img src="screenshots/Screenshot_20200101-014642.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014651.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014702.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014722.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014737.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014823.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014833.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014848.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014901.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014915.jpg" width="200">  <img src="screenshots/Screenshot_20200101-014924.jpg" width="200"> <img src="screenshots/Screenshot_20200101-014958.jpg" width="200"> <img src="screenshots/Screenshot_20200101-015015.jpg" width="200">  <img src="screenshots/Screenshot_20200101-015050.jpg" width="200"> 
+### Light Mode
+<img src="screenshots/Screenshot_20240229_225417_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225426_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225435_Cineast_beta.jpg" width="200"> 
+<img src="screenshots/Screenshot_20240229_225447_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225502_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225523_Cineast_beta.jpg" width="200"> 
+<img src="screenshots/Screenshot_20240229_225539_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225548_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225606_Cineast_beta.jpg" width="200"> 
+<img src="screenshots/Screenshot_20240229_225612_Cineast_beta.jpg" width="200">  <img src="screenshots/Screenshot_20240229_225647_Cineast_beta.jpg" width="200">
 
 
+### Dark Mode
 
-
+<img src="screenshots/Screenshot_20240229_225721_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225727_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225733_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225742_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225752_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225801_Cineast_beta.jpg" width="200">  <img src="screenshots/Screenshot_20240229_225808_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225813_Cineast_beta.jpg" width="200">  <img src="screenshots/Screenshot_20240229_225817_Cineast_beta.jpg" width="200"> <img src="screenshots/Screenshot_20240229_225826_Cineast_beta.jpg" width="200">  <img src="screenshots/Screenshot_20240229_225830_Cineast_beta.jpg" width="200"> 
 
 
 ## Libraries Used
 
-[Leak Canary](https://github.com/square/leakcanary) - Capture Memory Leaks
+[JetPack Compose](https://developer.android.com/jetpack/compose) - UI Library
 
+[Material 3](https://developer.android.com/jetpack/compose/designsystems/material3) - Design system
+
+[Hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Dependency Injection Library
+
+[Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) - Coroutines
+
+[Coil](https://coil-kt.github.io/coil/compose/) - Image Loading Library
 
 [Retrofit](https://square.github.io/retrofit/) - Http Client for Api Calls
 
-
 [Gson](https://github.com/google/gson) - Serialization/Deserialization Library
-
 
 [Okhttp](https://github.com/square/okhttp) - An HTTP+HTTP/2 client for Android
 
+[Room ORM](https://developer.android.com/training/data-storage/room) - Local Database
 
-[Picasso](https://square.github.io/picasso/) - Image Loading Library
-
-
-[Kodein](https://github.com/Kodein-Framework/Kodein-DI) - Dependency Injection Library
-
-
-[Architecture Components](https://developer.android.com/topic/libraries/architecture) - Room ORM
-
-[Coroutines](https://kotlinlang.org/docs/coroutines-overview.html) - Coroutines
+[Leak Canary](https://github.com/square/leakcanary) - Capture Memory Leaks
