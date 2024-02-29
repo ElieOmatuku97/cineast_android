@@ -16,8 +16,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.databinding.ActivityContentBinding
+import elieomatuku.cineast_android.presentation.R
+import elieomatuku.cineast_android.presentation.databinding.ActivityContentBinding
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.presentation.base.BaseActivity

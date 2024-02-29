@@ -11,7 +11,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 
 @Composable
 fun EmptyStateWidget(

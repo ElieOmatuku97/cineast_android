@@ -9,7 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 
 @Composable
 fun DetailTabs(

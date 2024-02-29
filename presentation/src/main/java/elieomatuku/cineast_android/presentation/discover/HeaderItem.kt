@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import coil.compose.rememberImagePainter
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.presentation.utils.UiUtils
 

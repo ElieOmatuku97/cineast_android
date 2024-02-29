@@ -1,6 +1,6 @@
 package elieomatuku.cineast_android.presentation.extensions
 
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.DiscoverContents
 

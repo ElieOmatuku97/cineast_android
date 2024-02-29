@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
-import elieomatuku.cineast_android.databinding.FragmentGalleryBinding
+import elieomatuku.cineast_android.presentation.databinding.FragmentGalleryBinding
 import elieomatuku.cineast_android.presentation.base.BaseFragment
 
 class GalleryFragment : BaseFragment() {

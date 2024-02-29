@@ -17,7 +17,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dagger.hilt.android.AndroidEntryPoint
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person

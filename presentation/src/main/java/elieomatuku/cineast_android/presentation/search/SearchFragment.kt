@@ -30,7 +30,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.domain.model.Person

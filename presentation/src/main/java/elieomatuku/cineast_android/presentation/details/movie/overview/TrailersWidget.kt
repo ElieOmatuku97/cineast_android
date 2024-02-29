@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.domain.model.Trailer
 import elieomatuku.cineast_android.presentation.utils.UiUtils
 

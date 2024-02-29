@@ -24,7 +24,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.presentation.utils.UiUtils
 
 @Composable

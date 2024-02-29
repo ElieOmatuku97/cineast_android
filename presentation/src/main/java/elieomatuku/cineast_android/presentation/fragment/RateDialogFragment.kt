@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.domain.model.Movie
 import elieomatuku.cineast_android.presentation.base.BaseDialogFragment
 

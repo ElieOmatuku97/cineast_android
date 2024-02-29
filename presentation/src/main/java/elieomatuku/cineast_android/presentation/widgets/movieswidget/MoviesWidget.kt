@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.domain.model.Content
 import elieomatuku.cineast_android.domain.model.Genre
 import elieomatuku.cineast_android.domain.model.Movie

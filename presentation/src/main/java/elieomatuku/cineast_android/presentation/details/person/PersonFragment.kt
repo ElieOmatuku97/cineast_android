@@ -26,7 +26,7 @@ import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.presentation.details.BareOverviewWidget
 import elieomatuku.cineast_android.presentation.details.DetailTabs
 import elieomatuku.cineast_android.presentation.details.Profile

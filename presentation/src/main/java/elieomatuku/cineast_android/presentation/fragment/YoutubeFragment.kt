@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.pierfrancescosoffritti.youtubeplayer.player.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.youtubeplayer.player.PlayerConstants
 import com.pierfrancescosoffritti.youtubeplayer.player.YouTubePlayer
-import elieomatuku.cineast_android.databinding.WidgetYoutubeBinding
+import elieomatuku.cineast_android.presentation.databinding.WidgetYoutubeBinding
 import elieomatuku.cineast_android.presentation.base.BaseFragment
 
 class YoutubeFragment : BaseFragment() {

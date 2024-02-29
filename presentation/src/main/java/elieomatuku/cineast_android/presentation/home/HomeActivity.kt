@@ -8,8 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import elieomatuku.cineast_android.R
-import elieomatuku.cineast_android.databinding.ActivityHomeBinding
+import elieomatuku.cineast_android.presentation.R
+import elieomatuku.cineast_android.presentation.databinding.ActivityHomeBinding
 import elieomatuku.cineast_android.presentation.base.BaseActivity
 
 private const val SHOW_APP_BAR_ARG = "showAppBar"

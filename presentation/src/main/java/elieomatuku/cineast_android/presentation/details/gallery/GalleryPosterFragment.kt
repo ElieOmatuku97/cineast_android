@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.presentation.base.BaseFragment
 import elieomatuku.cineast_android.presentation.utils.UiUtils
 

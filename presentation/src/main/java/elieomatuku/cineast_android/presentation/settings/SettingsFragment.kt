@@ -27,7 +27,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.navigation.fragment.findNavController
-import elieomatuku.cineast_android.R
+import elieomatuku.cineast_android.presentation.R
 import elieomatuku.cineast_android.domain.model.AccessToken
 import elieomatuku.cineast_android.presentation.base.BaseFragment
 import elieomatuku.cineast_android.presentation.materialtheme.ui.theme.AppTheme
