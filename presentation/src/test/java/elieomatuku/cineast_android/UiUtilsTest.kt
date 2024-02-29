@@ -1,7 +1,7 @@
 package elieomatuku.cineast_android
 
 import elieomatuku.cineast_android.domain.model.Genre
-import elieomatuku.cineast_android.utils.UiUtils
+import elieomatuku.cineast_android.presentation.utils.UiUtils
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner

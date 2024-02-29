@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/person_detail"
-        android:name="elieomatuku.cineast_android.details.person.PersonFragment"
+        android:name="elieomatuku.cineast_android.presentation.details.person.PersonFragment"
         android:label="Person Detail">
         <action
             android:id="@+id/navigate_to_gallery"
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/gallery"
-        android:name="elieomatuku.cineast_android.details.gallery.GalleryFragment"
+        android:name="elieomatuku.cineast_android.presentation.details.gallery.GalleryFragment"
         android:label="Gallery"
         tools:layout="@layout/fragment_gallery">
         <argument
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/website"
-        android:name="elieomatuku.cineast_android.fragment.WebViewFragment">
+        android:name="elieomatuku.cineast_android.presentation.fragment.WebViewFragment">
         <argument
             android:name="showAppBar"
             android:defaultValue="false" />

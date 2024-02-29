@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/discover"
-        android:name="elieomatuku.cineast_android.discover.DiscoverFragment"
+        android:name="elieomatuku.cineast_android.presentation.discover.DiscoverFragment"
         android:label="@string/nav_title_discover">
         <action
             android:id="@+id/navigate_to_movie_detail"
@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/search"
-        android:name="elieomatuku.cineast_android.search.SearchFragment"
+        android:name="elieomatuku.cineast_android.presentation.search.SearchFragment"
         android:label="@string/nav_title_search">
         <action
             android:id="@+id/navigate_to_movie_detail"
@@ -75,7 +75,7 @@
 
     <fragment
         android:id="@+id/settings"
-        android:name="elieomatuku.cineast_android.settings.SettingsFragment"
+        android:name="elieomatuku.cineast_android.presentation.settings.SettingsFragment"
         android:label="@string/nav_title_my_tmdb" >
         <action
             android:id="@+id/navigate_to_login"
@@ -84,7 +84,7 @@
 
     <fragment
         android:id="@+id/login"
-        android:name="elieomatuku.cineast_android.settings.LoginWebViewFragment"
+        android:name="elieomatuku.cineast_android.presentation.settings.LoginWebViewFragment"
         android:label="@string/login">
         <argument
             android:name="showAppBar"

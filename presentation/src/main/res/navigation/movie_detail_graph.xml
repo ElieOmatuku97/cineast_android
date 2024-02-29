@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/movie_detail"
-        android:name="elieomatuku.cineast_android.details.movie.MovieFragment"
+        android:name="elieomatuku.cineast_android.presentation.details.movie.MovieFragment"
         android:label="Movie Detail">
         <action
             android:id="@+id/navigate_to_video"
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/gallery"
-        android:name="elieomatuku.cineast_android.details.gallery.GalleryFragment"
+        android:name="elieomatuku.cineast_android.presentation.details.gallery.GalleryFragment"
         android:label="Movie Gallery"
         tools:layout="@layout/fragment_gallery">
         <argument
@@ -58,7 +58,7 @@
 
     <fragment
         android:id="@+id/video"
-        android:name="elieomatuku.cineast_android.fragment.YoutubeFragment"
+        android:name="elieomatuku.cineast_android.presentation.fragment.YoutubeFragment"
         android:label="Movie Gallery"
         tools:layout="@layout/widget_youtube">
         <argument
@@ -74,7 +74,7 @@
 
     <fragment
         android:id="@+id/website"
-        android:name="elieomatuku.cineast_android.fragment.WebViewFragment">
+        android:name="elieomatuku.cineast_android.presentation.fragment.WebViewFragment">
         <argument
             android:name="showAppBar"
             android:defaultValue="false" />
